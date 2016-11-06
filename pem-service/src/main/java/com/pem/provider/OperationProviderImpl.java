@@ -6,6 +6,7 @@ import com.pem.provider.annotatin.RegistrGlobalCalculator;
 import com.pem.provider.annotatin.RegisterGlobalOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.Assert;
@@ -23,7 +24,6 @@ public class OperationProviderImpl implements OperationProvider {
 
     @Override
     public <O extends Operation> O createBasicOperation(Class<O> operationClass) {
-        Assert.isTrue(operationClass.isInterface(), String.format("Can`t create bean by Class %s. %s is not Interface.", operationClass, operationClass));
         LOGGER.trace("Start to create operation {}.", operationClass);
         String beanName = getBeanName(operationClass);
         LOGGER.trace("Get Prototype bean {}.", beanName);
@@ -33,8 +33,10 @@ public class OperationProviderImpl implements OperationProvider {
 
     @Override
     public <O extends Operation> O createBasicOperation(String beanName, Class<O> operationClass) {
+        Assert.isTrue(operationClass.isInterface(), String.format("Can`t create bean by Class %s. %s is not Interface.", operationClass, operationClass));
         Assert.isTrue(applicationContext.isPrototype(beanName), "Basic operation can't have scope different from 'Prototype'.");
-        Object bean = getOperation(beanName);
+        Operation bean = getOperation(beanName);
+
         Assert.isAssignable(operationClass, bean.getClass(), String.format("Bean %s is not Instance Of %s", beanName, operationClass));
         return operationClass.cast(bean);
     }
@@ -71,15 +73,17 @@ public class OperationProviderImpl implements OperationProvider {
 
     private <T> Map<String, T> findBeansByAnnotation(Class<? extends Annotation> annotation, Class<T> tClass) {
         Map<String, T> result = new HashMap<>();
-        Map<String, Object> beans = applicationContext.getBeansWithAnnotation(annotation);
-        LOGGER.trace("Try to Find beans {} with annotation {}.", beans, annotation);
+        Map<String, T> beans = applicationContext.getBeansOfType(tClass, true, true);
+        LOGGER.trace("Try to Find beans {} with annotation {}.", tClass, annotation);
 
-        for (Map.Entry<String, Object> entry : beans.entrySet()) {
+        for (Map.Entry<String, T> entry : beans.entrySet()) {
             String key = entry.getKey();
-            Object value = entry.getValue();
-            Assert.isInstanceOf(tClass, value, String.format("Bean %s is not instance of %s", value, tClass));
+            T value = entry.getValue();
+            Class clazz = AopProxyUtils.ultimateTargetClass(value);
 
-            result.put(key, (T) value);
+            if (clazz.isAnnotationPresent(annotation)) {
+                result.put(key, value);
+            }
         }
 
         return result;

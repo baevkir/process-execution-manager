@@ -51,6 +51,6 @@ public class TestConfig {
 
     @Bean
     public Operation globalOperation() {
-        return new GlobalOperationImpl();
+        return new GlobalOperation();
     }
 }
