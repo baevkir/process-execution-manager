@@ -1,8 +1,6 @@
 package com.pem.basic.persistence.service;
 
 import com.pem.basic.config.FongoConfig;
-import com.pem.persistence.model.calculator.BinaryCalculator;
-import com.pem.persistence.model.calculator.common.BeanCalculatorEntity;
 import com.pem.persistence.model.common.bean.BeanEntity;
 import com.pem.persistence.model.operation.basic.BeanOperationEntity;
 import com.pem.persistence.model.operation.common.OperationEntity;
@@ -44,7 +42,7 @@ public class OperationServiceTest {
     public void testSaveCompositeToDBOperation() {
         CompositeOperationEntity compositeOperationEntity = new SyncCompositeOperationEntity();
         compositeOperationEntity.setName("Test composite operation " + random.nextLong());
-        ConditionOperationEntity operation = createBinaryConditionOperationEntity();
+        OperationEntity operation = createBinaryConditionOperationEntity();
         List<OperationEntity> operationEntities = new ArrayList<>();
         operationEntities.add(operation);
         operationEntities.add(createSimpleBeanOperation());
@@ -65,24 +63,17 @@ public class OperationServiceTest {
         bean.setBeanName("sumOperation");
         operationEntity.setBean(bean);
 
-        return operationEntity;
+        return operationService.createOperation(operationEntity);
     }
 
-    private ConditionOperationEntity createBinaryConditionOperationEntity() {
+    private OperationEntity createBinaryConditionOperationEntity() {
         ConditionOperationEntity operationEntity = new BinaryConditionOperationEntity();
         operationEntity.setName("Test operation " + random.nextLong());
         operationEntity.setDescription("Test description " + random.nextLong());
-        BeanCalculatorEntity calculatorEntity = new BinaryCalculator();
-        operationEntity.setCalculatorEntity(calculatorEntity);
 
         operationEntity.setStates(Arrays.asList(createSimpleBinaryState(true), createSimpleBinaryState(false)));
 
-        BinaryCalculator calculator = new BinaryCalculator();
-        calculator.setName("Test calculator " + random.nextLong());
-        calculator.setDescription("Test calculator description " + random.nextLong());
-
-        operationEntity.setCalculatorEntity(calculator);
-        return operationEntity;
+        return operationService.createOperation(operationEntity);
     }
 
     private BooleanState createSimpleBinaryState(Boolean value) {

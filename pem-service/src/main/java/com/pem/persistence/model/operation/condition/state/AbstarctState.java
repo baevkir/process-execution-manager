@@ -1,9 +1,12 @@
 package com.pem.persistence.model.operation.condition.state;
 
 import com.pem.persistence.model.operation.common.OperationEntity;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 public abstract class AbstarctState<C> {
     private C conditionValue;
+
+    @DBRef
     private OperationEntity operationEntity;
 
     public C getConditionValue() {
