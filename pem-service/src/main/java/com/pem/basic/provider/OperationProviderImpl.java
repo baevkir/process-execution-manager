@@ -1,15 +1,13 @@
 package com.pem.basic.provider;
 
-import com.pem.operation.basic.Operation;
 import com.pem.conditioncalculator.ConditionCalculator;
+import com.pem.operation.basic.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-@Component
 public class OperationProviderImpl implements OperationProvider {
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationProviderImpl.class);
     private static final String OPERATION_BEAN_PREF = "basic-operation.";

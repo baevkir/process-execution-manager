@@ -26,4 +26,7 @@
     <bean id="basic-operation.WhileOperation"
           class="com.pem.operation.loop.condition.WhileOperationImpl"
           scope="prototype"/>
+
+    <bean id="operationProvider"
+          class="com.pem.basic.provider.OperationProviderImpl"/>
 </beans>
