@@ -1,4 +1,4 @@
-package com.pem.operation.condition.calculator;
+package com.pem.conditioncalculator;
 
 public interface BinaryConditionCalculator extends ConditionCalculator<Boolean> {
 }

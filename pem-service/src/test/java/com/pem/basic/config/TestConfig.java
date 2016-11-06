@@ -3,7 +3,7 @@ package com.pem.basic.config;
 import com.pem.common.*;
 import com.pem.context.OperationContext;
 import com.pem.operation.basic.Operation;
-import com.pem.operation.condition.calculator.ConditionCalculator;
+import com.pem.conditioncalculator.ConditionCalculator;
 import org.junit.Assert;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

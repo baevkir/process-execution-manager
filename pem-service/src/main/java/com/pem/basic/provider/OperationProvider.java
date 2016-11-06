@@ -1,7 +1,7 @@
 package com.pem.basic.provider;
 
 import com.pem.operation.basic.Operation;
-import com.pem.operation.condition.calculator.ConditionCalculator;
+import com.pem.conditioncalculator.ConditionCalculator;
 
 public interface OperationProvider {
 

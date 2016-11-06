@@ -5,7 +5,7 @@ import com.pem.common.MultiplyOperation;
 import com.pem.config.AppConfig;
 import com.pem.context.OperationContext;
 import com.pem.operation.basic.Operation;
-import com.pem.operation.condition.calculator.BinaryConditionCalculator;
+import com.pem.conditioncalculator.BinaryConditionCalculator;
 import com.pem.operation.loop.condition.ConditionLoopOperation;
 import com.pem.operation.loop.condition.DoWhileOperationImpl;
 import com.pem.operation.loop.condition.WhileOperationImpl;

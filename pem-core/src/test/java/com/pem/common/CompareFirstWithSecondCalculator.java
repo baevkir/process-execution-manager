@@ -1,8 +1,7 @@
 package com.pem.common;
 
 import com.pem.context.OperationContext;
-import com.pem.operation.condition.AbstractConditionOperation;
-import com.pem.operation.condition.calculator.ConditionCalculator;
+import com.pem.conditioncalculator.ConditionCalculator;
 
 public class CompareFirstWithSecondCalculator implements ConditionCalculator<Integer> {
 

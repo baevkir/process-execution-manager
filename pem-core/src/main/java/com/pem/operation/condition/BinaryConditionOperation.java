@@ -1,6 +1,6 @@
 package com.pem.operation.condition;
 
-import com.pem.operation.condition.calculator.BinaryConditionCalculator;
+import com.pem.conditioncalculator.BinaryConditionCalculator;
 
 public interface BinaryConditionOperation extends ConditionOperation<Boolean, BinaryConditionCalculator> {
 }

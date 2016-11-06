@@ -1,7 +1,7 @@
 package com.pem.operation.condition;
 
 
-import com.pem.operation.condition.calculator.BinaryConditionCalculator;
+import com.pem.conditioncalculator.BinaryConditionCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
