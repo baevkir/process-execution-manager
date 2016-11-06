@@ -1,0 +1,24 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="http://www.springframework.org/schema/data/mongo
+          http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <mongo:db-factory
+            host="127.0.0.1"
+            port="27017"
+            dbname="pem-db"
+            username="mongouser"
+            password="kv2QGZFzM2"/>
+
+    <mongo:repositories base-package="com.pem.persistence.repository"/>
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+    </bean>
+
+    <bean id="operationService" class="com.pem.persistence.service.operation.OperationServiceImpl"/>
+
+</beans>
