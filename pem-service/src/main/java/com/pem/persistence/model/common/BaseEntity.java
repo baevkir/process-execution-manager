@@ -1,6 +1,7 @@
 package com.pem.persistence.model.common;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.math.BigInteger;
 
@@ -9,6 +10,7 @@ public class BaseEntity {
     @Id
     private BigInteger id;
 
+    @Indexed
     private String name;
 
     private String description;

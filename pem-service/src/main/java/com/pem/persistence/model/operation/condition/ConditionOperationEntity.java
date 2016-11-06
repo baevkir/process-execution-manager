@@ -7,9 +7,10 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.List;
 
-public abstract class ConditionOperationEntity<S extends AbstarctState<?>> extends OperationEntity {
+public abstract class ConditionOperationEntity<S extends AbstarctState> extends OperationEntity {
 
     private List<S> states;
+
     @DBRef
     private CalculatorEntity calculatorEntity;
 

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,6 +52,28 @@ public class OperationServiceTest {
         OperationEntity newCompositeOperationEntity = operationService.createOperation(compositeOperationEntity);
         OperationEntity queryOperation = operationService.getOperation(newCompositeOperationEntity.getId());
         Assert.assertEquals(newCompositeOperationEntity.getClass(), queryOperation.getClass());
+    }
+
+    @Test
+    public void testDeleteOperation() {
+        BinaryConditionOperationEntity operation = (BinaryConditionOperationEntity) createBinaryConditionOperationEntity();
+        BigInteger id = operation.getId();
+
+        List<BigInteger> innerOperationIds = new ArrayList<>();
+        for (BooleanState state : operation.getStates()) {
+            innerOperationIds.add(state.getOperationEntity().getId());
+        }
+
+        operationService.deleteOperation(id);
+
+        OperationEntity testOperation = operationService.getOperation(id);
+        Assert.assertNull(testOperation);
+
+        for (BigInteger innerId : innerOperationIds) {
+            OperationEntity innerOperation = operationService.getOperation(innerId);
+            Assert.assertNotNull(innerOperation);
+        }
+
     }
 
     private OperationEntity createSimpleBeanOperation() {

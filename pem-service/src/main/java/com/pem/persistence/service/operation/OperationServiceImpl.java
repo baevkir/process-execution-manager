@@ -41,4 +41,9 @@ public class OperationServiceImpl extends AbstractPersistenceService<OperationEn
     public List<OperationEntity> getAllOperations() {
         return getAll();
     }
+
+    @Override
+    public void deleteOperation(BigInteger id) {
+        delete(id);
+    }
 }

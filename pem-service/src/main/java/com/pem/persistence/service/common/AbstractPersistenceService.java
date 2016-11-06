@@ -39,4 +39,9 @@ public abstract class AbstractPersistenceService<E extends BaseEntity, R extends
     public List<E> getAll(){
         return getRepository().findAll();
     }
+
+    public void delete(BigInteger id){
+        Assert.notNull(id, "Id is empty, can`t delete Entity.");
+        getRepository().delete(id);
+    }
 }

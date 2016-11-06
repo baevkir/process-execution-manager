@@ -10,4 +10,5 @@ public interface OperationService {
     void updateOperation(OperationEntity operationEntity);
     OperationEntity getOperation(BigInteger id);
     List<OperationEntity> getAllOperations();
+    void deleteOperation(BigInteger id);
 }
