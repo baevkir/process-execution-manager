@@ -4,7 +4,7 @@ import com.pem.persistence.model.operation.common.OperationEntity;
 
 import java.util.List;
 
-public abstract class AbstractCompositeOperationEntity extends OperationEntity {
+public abstract class CompositeOperationEntity extends OperationEntity {
 
     private List<OperationEntity> operationEntities;
 
@@ -18,7 +18,7 @@ public abstract class AbstractCompositeOperationEntity extends OperationEntity {
 
     @Override
     public String toString() {
-        return "AbstractCompositeOperationEntity{" +
+        return "CompositeOperationEntity{" +
                 super.toString() +
                 "operationEntities=" + operationEntities +
                 '}';

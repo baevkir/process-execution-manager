@@ -6,7 +6,7 @@ import com.pem.persistence.model.operation.common.OperationEntity;
 
 import java.util.List;
 
-public abstract class AbstractConditionOperationEntity<S extends AbstarctState<?>> extends OperationEntity {
+public abstract class ConditionOperationEntity<S extends AbstarctState<?>> extends OperationEntity {
 
     private List<S> states;
     private CalculatorEntity calculatorEntity;
@@ -29,7 +29,7 @@ public abstract class AbstractConditionOperationEntity<S extends AbstarctState<?
 
     @Override
     public String toString() {
-        return "AbstractConditionOperationEntity{" +
+        return "ConditionOperationEntity{" +
                 "states=" + states +
                 ", calculatorEntity=" + calculatorEntity +
                 "} " + super.toString();

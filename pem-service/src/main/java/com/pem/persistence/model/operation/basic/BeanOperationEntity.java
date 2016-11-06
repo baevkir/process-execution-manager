@@ -1,16 +1,16 @@
 package com.pem.persistence.model.operation.basic;
 
-import com.pem.persistence.model.common.bean.OperationBeanEntity;
+import com.pem.persistence.model.common.bean.BeanEntity;
 import com.pem.persistence.model.operation.common.OperationEntity;
 
 public class BeanOperationEntity extends OperationEntity {
-    private OperationBeanEntity bean;
+    private BeanEntity bean;
 
-    public OperationBeanEntity getBean() {
+    public BeanEntity getBean() {
         return bean;
     }
 
-    public void setBean(OperationBeanEntity bean) {
+    public void setBean(BeanEntity bean) {
         this.bean = bean;
     }
 

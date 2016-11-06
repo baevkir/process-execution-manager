@@ -1,16 +1,16 @@
 package com.pem.persistence.model.calculator.common;
 
-import com.pem.persistence.model.common.bean.OperationBeanEntity;
+import com.pem.persistence.model.common.bean.BeanEntity;
 
-public class BeanCalculatorEntity extends CalculatorEntity {
+public abstract class BeanCalculatorEntity extends CalculatorEntity {
 
-    private OperationBeanEntity beanEntity;
+    private BeanEntity beanEntity;
 
-    public OperationBeanEntity getBeanEntity() {
+    public BeanEntity getBeanEntity() {
         return beanEntity;
     }
 
-    public void setBeanEntity(OperationBeanEntity beanEntity) {
+    public void setBeanEntity(BeanEntity beanEntity) {
         this.beanEntity = beanEntity;
     }
 

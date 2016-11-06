@@ -1,6 +1,6 @@
 package com.pem.persistence.model.common.bean;
 
-public class OperationBeanEntity {
+public class BeanEntity {
     private String name;
     private String beanName;
 
@@ -22,7 +22,7 @@ public class OperationBeanEntity {
 
     @Override
     public String toString() {
-        return "OperationBeanEntity{" +
+        return "BeanEntity{" +
                 "name='" + name + '\'' +
                 ", beanName='" + beanName + '\'' +
                 '}';
