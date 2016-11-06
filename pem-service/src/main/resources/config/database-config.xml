@@ -19,6 +19,6 @@
         <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
     </bean>
 
-    <bean id="operationService" class="com.pem.persistence.service.operation.OperationServiceImpl"/>
+    <bean id="operationService" class="com.pem.persistence.service.operation.OperationPersistenceServiceImpl"/>
 
 </beans>

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.math.BigInteger;
 import java.util.List;
 
-public class OperationServiceImpl extends AbstractPersistenceService<OperationEntity, OperationRepository> implements OperationService {
+public class OperationPersistenceServiceImpl extends AbstractPersistenceService<OperationEntity, OperationRepository> implements OperationPersistenceService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPersistenceService.class);
 

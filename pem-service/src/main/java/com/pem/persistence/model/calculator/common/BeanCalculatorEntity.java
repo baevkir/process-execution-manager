@@ -4,20 +4,20 @@ import com.pem.persistence.model.common.bean.BeanEntity;
 
 public abstract class BeanCalculatorEntity extends CalculatorEntity {
 
-    private BeanEntity beanEntity;
+    private BeanEntity bean;
 
-    public BeanEntity getBeanEntity() {
-        return beanEntity;
+    public BeanEntity getBean() {
+        return bean;
     }
 
-    public void setBeanEntity(BeanEntity beanEntity) {
-        this.beanEntity = beanEntity;
+    public void setBean(BeanEntity bean) {
+        this.bean = bean;
     }
 
     @Override
     public String toString() {
         return "BeanCalculatorEntity{" +
-                "beanEntity=" + beanEntity +
+                "bean=" + bean +
                 "} " + super.toString();
     }
 }

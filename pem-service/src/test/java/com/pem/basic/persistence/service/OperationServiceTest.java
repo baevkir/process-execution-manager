@@ -9,7 +9,7 @@ import com.pem.persistence.model.operation.composite.SyncCompositeOperationEntit
 import com.pem.persistence.model.operation.condition.BinaryConditionOperationEntity;
 import com.pem.persistence.model.operation.condition.ConditionOperationEntity;
 import com.pem.persistence.model.operation.condition.state.BooleanState;
-import com.pem.persistence.service.operation.OperationService;
+import com.pem.persistence.service.operation.OperationPersistenceService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,12 +30,12 @@ public class OperationServiceTest {
     private Random random = new Random();
 
     @Autowired
-    private OperationService operationService;
+    private OperationPersistenceService operationPersistenceService;
 
     @Test
     public void testSaveToDBOperation() {
-        OperationEntity operationEntity = operationService.createOperation(createSimpleBeanOperation());
-        OperationEntity queryOperation = operationService.getOperation(operationEntity.getId());
+        OperationEntity operationEntity = createSimpleBeanOperation();
+        OperationEntity queryOperation = operationPersistenceService.getOperation(operationEntity.getId());
         Assert.assertEquals(operationEntity.getClass(), queryOperation.getClass());
     }
 
@@ -49,8 +49,8 @@ public class OperationServiceTest {
         operationEntities.add(createSimpleBeanOperation());
         compositeOperationEntity.setOperationEntities(operationEntities);
 
-        OperationEntity newCompositeOperationEntity = operationService.createOperation(compositeOperationEntity);
-        OperationEntity queryOperation = operationService.getOperation(newCompositeOperationEntity.getId());
+        OperationEntity newCompositeOperationEntity = operationPersistenceService.createOperation(compositeOperationEntity);
+        OperationEntity queryOperation = operationPersistenceService.getOperation(newCompositeOperationEntity.getId());
         Assert.assertEquals(newCompositeOperationEntity.getClass(), queryOperation.getClass());
     }
 
@@ -64,13 +64,13 @@ public class OperationServiceTest {
             innerOperationIds.add(state.getOperationEntity().getId());
         }
 
-        operationService.deleteOperation(id);
+        operationPersistenceService.deleteOperation(id);
 
-        OperationEntity testOperation = operationService.getOperation(id);
+        OperationEntity testOperation = operationPersistenceService.getOperation(id);
         Assert.assertNull(testOperation);
 
         for (BigInteger innerId : innerOperationIds) {
-            OperationEntity innerOperation = operationService.getOperation(innerId);
+            OperationEntity innerOperation = operationPersistenceService.getOperation(innerId);
             Assert.assertNotNull(innerOperation);
         }
 
@@ -86,7 +86,7 @@ public class OperationServiceTest {
         bean.setBeanName("sumOperation");
         operationEntity.setBean(bean);
 
-        return operationService.createOperation(operationEntity);
+        return operationPersistenceService.createOperation(operationEntity);
     }
 
     private OperationEntity createBinaryConditionOperationEntity() {
@@ -96,7 +96,7 @@ public class OperationServiceTest {
 
         operationEntity.setStates(Arrays.asList(createSimpleBinaryState(true), createSimpleBinaryState(false)));
 
-        return operationService.createOperation(operationEntity);
+        return operationPersistenceService.createOperation(operationEntity);
     }
 
     private BooleanState createSimpleBinaryState(Boolean value) {
