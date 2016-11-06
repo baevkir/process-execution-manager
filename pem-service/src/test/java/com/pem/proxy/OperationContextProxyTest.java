@@ -1,10 +1,9 @@
-package com.pem.basic.proxy;
+package com.pem.proxy;
 
 
-import com.pem.basic.config.TestConfig;
-import com.pem.basic.provider.OperationProviderImpl;
 import com.pem.common.CompareFirstWithSecondCalculator;
 import com.pem.common.MathOperationContext;
+import com.pem.config.TestConfig;
 import com.pem.context.OperationContext;
 import com.pem.context.OperationContextImpl;
 import com.pem.operation.basic.Operation;
@@ -12,6 +11,7 @@ import com.pem.operation.composite.CompositeOperation;
 import com.pem.operation.composite.SyncCompositeOperation;
 import com.pem.operation.condition.BinaryConditionOperation;
 import com.pem.operation.condition.ConditionOperation;
+import com.pem.provider.OperationProvider;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +35,7 @@ public class OperationContextProxyTest {
     private Operation checkOpenContextOperation;
 
     @Autowired
-    private OperationProviderImpl provider;
+    private OperationProvider provider;
 
     @Test
     public void testProxyOpenContext() {

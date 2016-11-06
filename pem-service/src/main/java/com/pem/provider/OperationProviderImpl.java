@@ -1,12 +1,18 @@
-package com.pem.basic.provider;
+package com.pem.provider;
 
 import com.pem.conditioncalculator.ConditionCalculator;
 import com.pem.operation.basic.Operation;
+import com.pem.provider.annotatin.RegistrGlobalCalculator;
+import com.pem.provider.annotatin.RegisterGlobalOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.Assert;
+
+import java.lang.annotation.Annotation;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OperationProviderImpl implements OperationProvider {
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationProviderImpl.class);
@@ -43,13 +49,39 @@ public class OperationProviderImpl implements OperationProvider {
     @Override
     public <O extends ConditionCalculator> O getConditionCalculator(String beanName) {
         Object bean = applicationContext.getBean(beanName);
-        Assert.isAssignable(ConditionCalculator.class, bean.getClass(), String.format("Bean %s is not Instance Of ConditionCalculator", beanName));
+        Assert.isAssignable(ConditionCalculator.class, bean.getClass(), String.format("Bean %s is not Instance Of ConditionCalculatorService", beanName));
         return (O) bean;
+    }
+
+    @Override
+    public Map<String, Operation> getAllGlobalOperations() {
+        return findBeansByAnnotation(RegisterGlobalOperation.class, Operation.class);
+    }
+
+    @Override
+    public Map<String, ConditionCalculator> getAllGlobalConditionCalculators() {
+        return findBeansByAnnotation(RegistrGlobalCalculator.class, ConditionCalculator.class);
     }
 
     private <O extends Operation> String getBeanName(Class<O> operationClass) {
         String className = operationClass.getSimpleName();
         LOGGER.trace("Get class name {}.", className);
         return OPERATION_BEAN_PREF + className;
+    }
+
+    private <T> Map<String, T> findBeansByAnnotation(Class<? extends Annotation> annotation, Class<T> tClass) {
+        Map<String, T> result = new HashMap<>();
+        Map<String, Object> beans = applicationContext.getBeansWithAnnotation(annotation);
+        LOGGER.trace("Try to Find beans {} with annotation {}.", beans, annotation);
+
+        for (Map.Entry<String, Object> entry : beans.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            Assert.isInstanceOf(tClass, value, String.format("Bean %s is not instance of %s", value, tClass));
+
+            result.put(key, (T) value);
+        }
+
+        return result;
     }
 }

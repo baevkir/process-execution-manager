@@ -1,9 +1,9 @@
-package com.pem.basic.config;
+package com.pem.config;
 
 import com.pem.common.*;
+import com.pem.conditioncalculator.ConditionCalculator;
 import com.pem.context.OperationContext;
 import com.pem.operation.basic.Operation;
-import com.pem.conditioncalculator.ConditionCalculator;
 import org.junit.Assert;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,4 +49,8 @@ public class TestConfig {
         return new CompareFirstWithSecondCalculator();
     }
 
+    @Bean
+    public Operation globalOperation() {
+        return new GlobalOperationImpl();
+    }
 }

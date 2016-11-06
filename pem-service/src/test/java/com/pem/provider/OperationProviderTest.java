@@ -1,7 +1,7 @@
-package com.pem.basic.provider;
+package com.pem.provider;
 
 
-import com.pem.basic.config.TestConfig;
+import com.pem.config.TestConfig;
 import com.pem.operation.basic.Operation;
 import com.pem.operation.composite.SyncCompositeOperation;
 import com.pem.operation.condition.BinaryConditionOperation;
@@ -19,13 +19,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class OperationProviderTest {
 
     @Autowired
-    private OperationProviderImpl operationProvider;
+    private OperationProvider operationProvider;
 
     private List<Class<? extends Operation>> commonOperations = new ArrayList<>();
 
@@ -63,12 +64,16 @@ public class OperationProviderTest {
         Assert.assertNotNull(operation);
     }
 
+    @Test
+    public void testFindGlobalOperations() {
+        Map<String, Operation> operations = operationProvider.getAllGlobalOperations();
+        Assert.assertTrue(!operations.isEmpty());
+    }
+
     private void createDifferentOperationTest(Class<? extends Operation> clazz) {
         Operation operation1 = operationProvider.createBasicOperation(clazz);
         Operation operation2 = operationProvider.createBasicOperation(clazz);
         Assert.assertTrue(operation1 != operation2);
         Assert.assertTrue(operation1.getClass().equals(operation2.getClass()));
     }
-
-
 }
