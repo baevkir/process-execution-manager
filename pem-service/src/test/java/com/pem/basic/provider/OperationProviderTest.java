@@ -1,0 +1,74 @@
+package com.pem.basic.provider;
+
+
+import com.pem.basic.config.TestConfig;
+import com.pem.operation.basic.Operation;
+import com.pem.operation.composite.SyncCompositeOperation;
+import com.pem.operation.condition.BinaryConditionOperation;
+import com.pem.operation.condition.IntegerConditionOperation;
+import com.pem.operation.loop.condition.DoWhileOperation;
+import com.pem.operation.loop.condition.WhileOperation;
+import com.pem.operation.loop.counter.CounterLoopOperation;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = TestConfig.class)
+public class OperationProviderTest {
+
+    @Autowired
+    private OperationProviderImpl operationProvider;
+
+    private List<Class<? extends Operation>> commonOperations = new ArrayList<>();
+
+    @Before
+    public void setUp() {
+        commonOperations.add(SyncCompositeOperation.class);
+        commonOperations.add(BinaryConditionOperation.class);
+        commonOperations.add(IntegerConditionOperation.class);
+        commonOperations.add(CounterLoopOperation.class);
+        commonOperations.add(DoWhileOperation.class);
+        commonOperations.add(WhileOperation.class);
+    }
+
+    @Test
+    public void testBeanExist() {
+        Assert.assertNotNull(operationProvider);
+    }
+
+    @Test
+    public void testCreateOperation() {
+        Operation operation = operationProvider.createBasicOperation(SyncCompositeOperation.class);
+        Assert.assertNotNull(operation);
+    }
+
+    @Test
+    public void testCreateDifferentOperation() {
+        for (Class<? extends Operation> clazz : commonOperations) {
+            createDifferentOperationTest(clazz);
+        }
+    }
+
+    @Test
+    public void testGetCommonOperation() {
+        Operation operation = operationProvider.getOperation("sumOperation");
+        Assert.assertNotNull(operation);
+    }
+
+    private void createDifferentOperationTest(Class<? extends Operation> clazz) {
+        Operation operation1 = operationProvider.createBasicOperation(clazz);
+        Operation operation2 = operationProvider.createBasicOperation(clazz);
+        Assert.assertTrue(operation1 != operation2);
+        Assert.assertTrue(operation1.getClass().equals(operation2.getClass()));
+    }
+
+
+}

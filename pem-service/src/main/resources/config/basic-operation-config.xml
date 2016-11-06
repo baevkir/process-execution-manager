@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <bean id="basic-operation.SyncCompositeOperation"
+          class="com.pem.operation.composite.SyncCompositeOperationImp"
+          scope="prototype"/>
+
+    <bean id="basic-operation.BinaryConditionOperation"
+          class="com.pem.operation.condition.BinaryConditionOperationImpl"
+          scope="prototype"/>
+
+    <bean id="basic-operation.IntegerConditionOperation"
+          class="com.pem.operation.condition.IntegerConditionOperationImpl"
+          scope="prototype"/>
+
+    <bean id="basic-operation.CounterLoopOperation"
+          class="com.pem.operation.loop.counter.CounterLoopOperationImpl"
+          scope="prototype"/>
+
+    <bean id="basic-operation.DoWhileOperation"
+          class="com.pem.operation.loop.condition.DoWhileOperationImpl"
+          scope="prototype"/>
+
+    <bean id="basic-operation.WhileOperation"
+          class="com.pem.operation.loop.condition.WhileOperationImpl"
+          scope="prototype"/>
+</beans>
