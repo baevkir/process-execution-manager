@@ -1,6 +1,6 @@
 package com.pem.operation.loop.condition;
 
-import com.pem.operation.basic.AnnotationOperation;
+import com.pem.operation.basic.util.AnnotationOperation;
 import com.pem.operation.basic.Operation;
 import com.pem.conditioncalculator.BinaryConditionCalculator;
 import org.slf4j.Logger;

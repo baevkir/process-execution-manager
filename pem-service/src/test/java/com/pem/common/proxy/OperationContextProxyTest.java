@@ -1,4 +1,4 @@
-package com.pem.proxy;
+package com.pem.common.proxy;
 
 
 import com.pem.common.CompareFirstWithSecondCalculator;
@@ -11,7 +11,7 @@ import com.pem.operation.composite.CompositeOperation;
 import com.pem.operation.composite.SyncCompositeOperation;
 import com.pem.operation.condition.BinaryConditionOperation;
 import com.pem.operation.condition.ConditionOperation;
-import com.pem.provider.OperationProvider;
+import com.pem.common.provider.OperationProvider;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

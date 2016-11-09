@@ -1,7 +1,7 @@
 package com.pem.operation.loop.counter;
 
 import com.pem.context.OperationContext;
-import com.pem.operation.basic.AnnotationOperation;
+import com.pem.operation.basic.util.AnnotationOperation;
 import com.pem.operation.basic.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,6 @@
-package com.pem.proxy;
+package com.pem.common.proxy;
 
-import com.pem.provider.OperationProviderImpl;
+import com.pem.common.provider.OperationProviderImpl;
 import com.pem.context.OperationContext;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

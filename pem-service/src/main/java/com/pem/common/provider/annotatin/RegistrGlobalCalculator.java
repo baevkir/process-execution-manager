@@ -1,4 +1,4 @@
-package com.pem.provider.annotatin;
+package com.pem.common.provider.annotatin;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,9 +1,9 @@
-package com.pem.provider;
+package com.pem.common.provider;
 
 import com.pem.conditioncalculator.ConditionCalculator;
 import com.pem.operation.basic.Operation;
-import com.pem.provider.annotatin.RegistrGlobalCalculator;
-import com.pem.provider.annotatin.RegisterGlobalOperation;
+import com.pem.common.provider.annotatin.RegistrGlobalCalculator;
+import com.pem.common.provider.annotatin.RegisterGlobalOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;

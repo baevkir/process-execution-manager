@@ -1,9 +1,9 @@
 package com.pem.common;
 
 
-import com.pem.operation.basic.AnnotationOperation;
-import com.pem.operation.basic.reflection.annotions.OperationMethod;
-import com.pem.operation.basic.reflection.annotions.Param;
+import com.pem.operation.basic.util.AnnotationOperation;
+import com.pem.operation.basic.util.reflection.annotions.OperationMethod;
+import com.pem.operation.basic.util.reflection.annotions.Param;
 
 import java.math.BigDecimal;
 

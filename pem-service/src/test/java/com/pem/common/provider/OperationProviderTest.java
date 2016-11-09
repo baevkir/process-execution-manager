@@ -1,4 +1,4 @@
-package com.pem.provider;
+package com.pem.common.provider;
 
 
 import com.pem.config.TestConfig;

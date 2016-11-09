@@ -1,8 +1,9 @@
-package com.pem.operation.basic;
+package com.pem.operation.basic.util;
 
 import com.pem.context.OperationContext;
-import com.pem.operation.basic.reflection.ReflectionManager;
-import com.pem.operation.basic.reflection.ReflectionManagerImpl;
+import com.pem.operation.basic.Operation;
+import com.pem.operation.basic.util.reflection.ReflectionManager;
+import com.pem.operation.basic.util.reflection.ReflectionManagerImpl;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
