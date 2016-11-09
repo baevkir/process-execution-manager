@@ -1,9 +1,9 @@
 package com.pem.common;
 
+import com.pem.conditioncalculator.IntegerConditionCalculator;
 import com.pem.context.OperationContext;
-import com.pem.conditioncalculator.ConditionCalculator;
 
-public class CompareFirstWithSecondCalculator implements ConditionCalculator<Integer> {
+public class CompareFirstWithSecondCalculator implements IntegerConditionCalculator {
 
     @Override
     public Integer calculate(OperationContext context) {

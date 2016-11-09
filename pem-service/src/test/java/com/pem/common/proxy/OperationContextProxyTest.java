@@ -12,6 +12,7 @@ import com.pem.operation.composite.SyncCompositeOperation;
 import com.pem.operation.condition.BinaryConditionOperation;
 import com.pem.operation.condition.ConditionOperation;
 import com.pem.common.provider.OperationProvider;
+import com.pem.operation.condition.IntegerConditionOperation;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -62,7 +63,7 @@ public class OperationContextProxyTest {
         MathOperationContext context = new MathOperationContext();
         context.setFirstParam(BigDecimal.valueOf(12));
         context.setSecondParam(BigDecimal.valueOf(13));
-        ConditionOperation conditionOperation = provider.createBasicOperation(BinaryConditionOperation.class);
+        IntegerConditionOperation conditionOperation = provider.createBasicOperation(IntegerConditionOperation.class);
         conditionOperation.addCondition(1, subtractOperation);
         conditionOperation.addCondition(0, subtractOperation);
         conditionOperation.addCondition(-1, sumOperation);
