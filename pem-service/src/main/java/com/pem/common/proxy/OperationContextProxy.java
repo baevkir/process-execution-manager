@@ -1,6 +1,5 @@
 package com.pem.common.proxy;
 
-import com.pem.common.provider.OperationProviderImpl;
 import com.pem.context.OperationContext;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class OperationContextProxy {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(OperationProviderImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OperationContextProxy.class);
 
     @Pointcut("within(com.pem.operation.basic.Operation+)")
     public void heirOfOperationInterface() {}
