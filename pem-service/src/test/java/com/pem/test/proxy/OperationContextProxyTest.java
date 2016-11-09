@@ -1,17 +1,15 @@
-package com.pem.common.proxy;
+package com.pem.test.proxy;
 
 
 import com.pem.common.CompareFirstWithSecondCalculator;
 import com.pem.common.MathOperationContext;
-import com.pem.config.TestConfig;
+import com.pem.test.common.config.TestConfig;
 import com.pem.context.OperationContext;
 import com.pem.context.OperationContextImpl;
 import com.pem.operation.basic.Operation;
 import com.pem.operation.composite.CompositeOperation;
 import com.pem.operation.composite.SyncCompositeOperation;
-import com.pem.operation.condition.BinaryConditionOperation;
-import com.pem.operation.condition.ConditionOperation;
-import com.pem.common.provider.OperationProvider;
+import com.pem.test.provider.OperationProvider;
 import com.pem.operation.condition.IntegerConditionOperation;
 import org.junit.Assert;
 import org.junit.Test;

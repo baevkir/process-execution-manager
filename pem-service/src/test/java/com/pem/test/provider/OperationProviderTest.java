@@ -1,7 +1,8 @@
-package com.pem.common.provider;
+package com.pem.test.provider;
 
 
-import com.pem.config.TestConfig;
+import com.pem.common.provider.OperationProvider;
+import com.pem.test.common.config.TestConfig;
 import com.pem.operation.basic.Operation;
 import com.pem.operation.composite.SyncCompositeOperation;
 import com.pem.operation.condition.BinaryConditionOperation;

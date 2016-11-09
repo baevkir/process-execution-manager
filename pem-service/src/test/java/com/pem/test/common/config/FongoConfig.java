@@ -1,4 +1,4 @@
-package com.pem.config;
+package com.pem.test.common.config;
 
 import com.github.fakemongo.Fongo;
 import com.mongodb.Mongo;

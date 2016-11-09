@@ -1,6 +1,6 @@
-package com.pem.persistence.service;
+package com.pem.test.persistence.service;
 
-import com.pem.config.FongoConfig;
+import com.pem.test.common.config.FongoConfig;
 import com.pem.persistence.model.calculator.BinaryCalculator;
 import com.pem.persistence.model.calculator.common.BeanCalculatorEntity;
 import com.pem.persistence.model.calculator.common.CalculatorEntity;

@@ -1,6 +1,6 @@
-package com.pem.persistence.service;
+package com.pem.test.persistence.service;
 
-import com.pem.config.FongoConfig;
+import com.pem.test.common.config.FongoConfig;
 import com.pem.persistence.model.common.bean.BeanEntity;
 import com.pem.persistence.model.operation.basic.BeanOperationEntity;
 import com.pem.persistence.model.operation.common.OperationEntity;

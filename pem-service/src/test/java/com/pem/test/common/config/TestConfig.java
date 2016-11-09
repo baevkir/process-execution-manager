@@ -1,9 +1,10 @@
-package com.pem.config;
+package com.pem.test.common.config;
 
 import com.pem.common.*;
 import com.pem.conditioncalculator.ConditionCalculator;
 import com.pem.context.OperationContext;
 import com.pem.operation.basic.Operation;
+import com.pem.test.common.GlobalOperation;
 import org.junit.Assert;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
