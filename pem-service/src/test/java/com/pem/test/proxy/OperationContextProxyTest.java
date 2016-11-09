@@ -3,14 +3,14 @@ package com.pem.test.proxy;
 
 import com.pem.common.CompareFirstWithSecondCalculator;
 import com.pem.common.MathOperationContext;
-import com.pem.test.common.config.TestConfig;
+import com.pem.common.provider.OperationProvider;
 import com.pem.context.OperationContext;
 import com.pem.context.OperationContextImpl;
 import com.pem.operation.basic.Operation;
 import com.pem.operation.composite.CompositeOperation;
 import com.pem.operation.composite.SyncCompositeOperation;
-import com.pem.test.provider.OperationProvider;
 import com.pem.operation.condition.IntegerConditionOperation;
+import com.pem.test.common.config.TestConfig;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
