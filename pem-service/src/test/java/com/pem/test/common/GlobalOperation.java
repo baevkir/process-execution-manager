@@ -1,11 +1,13 @@
 package com.pem.test.common;
 
-import com.pem.common.provider.annotatin.RegisterGlobalOperation;
+import com.pem.common.provider.operation.impl.RegisterGlobalOperation;
 import com.pem.context.OperationContext;
 import com.pem.operation.basic.Operation;
+import org.springframework.context.annotation.Scope;
 
 
 @RegisterGlobalOperation("Test global operation.")
+@Scope(scopeName = "prototype")
 public class GlobalOperation implements Operation {
 
     @Override

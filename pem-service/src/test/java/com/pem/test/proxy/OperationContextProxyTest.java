@@ -3,7 +3,7 @@ package com.pem.test.proxy;
 
 import com.pem.common.CompareFirstWithSecondCalculator;
 import com.pem.common.MathOperationContext;
-import com.pem.common.provider.OperationProvider;
+import com.pem.common.provider.operation.OperationProvider;
 import com.pem.context.OperationContext;
 import com.pem.context.OperationContextImpl;
 import com.pem.operation.basic.Operation;
@@ -48,7 +48,7 @@ public class OperationContextProxyTest {
         MathOperationContext context = new MathOperationContext();
         context.setFirstParam(BigDecimal.valueOf(12));
         context.setSecondParam(BigDecimal.valueOf(13));
-        CompositeOperation compositeOperation = provider.createBasicOperation(SyncCompositeOperation.class);
+        CompositeOperation compositeOperation = provider.createCommonOperation(SyncCompositeOperation.class);
         compositeOperation.addOperation(checkOpenContextOperation);
         compositeOperation.addOperation(sumOperation);
         compositeOperation.addOperation(checkOpenContextOperation);
@@ -61,7 +61,7 @@ public class OperationContextProxyTest {
         MathOperationContext context = new MathOperationContext();
         context.setFirstParam(BigDecimal.valueOf(12));
         context.setSecondParam(BigDecimal.valueOf(13));
-        IntegerConditionOperation conditionOperation = provider.createBasicOperation(IntegerConditionOperation.class);
+        IntegerConditionOperation conditionOperation = provider.createCommonOperation(IntegerConditionOperation.class);
         conditionOperation.addCondition(1, subtractOperation);
         conditionOperation.addCondition(0, subtractOperation);
         conditionOperation.addCondition(-1, sumOperation);

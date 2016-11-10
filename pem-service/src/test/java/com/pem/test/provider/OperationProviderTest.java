@@ -1,7 +1,7 @@
 package com.pem.test.provider;
 
 
-import com.pem.common.provider.OperationProvider;
+import com.pem.common.provider.operation.OperationProvider;
 import com.pem.test.common.config.TestConfig;
 import com.pem.operation.basic.Operation;
 import com.pem.operation.composite.SyncCompositeOperation;
@@ -48,7 +48,7 @@ public class OperationProviderTest {
 
     @Test
     public void testCreateOperation() {
-        Operation operation = operationProvider.createBasicOperation(SyncCompositeOperation.class);
+        Operation operation = operationProvider.createCommonOperation(SyncCompositeOperation.class);
         Assert.assertNotNull(operation);
     }
 
@@ -61,7 +61,7 @@ public class OperationProviderTest {
 
     @Test
     public void testGetCommonOperation() {
-        Operation operation = operationProvider.getOperation("sumOperation");
+        Operation operation = operationProvider.createOperation("sumOperation", Operation.class);
         Assert.assertNotNull(operation);
     }
 
@@ -72,8 +72,8 @@ public class OperationProviderTest {
     }
 
     private void createDifferentOperationTest(Class<? extends Operation> clazz) {
-        Operation operation1 = operationProvider.createBasicOperation(clazz);
-        Operation operation2 = operationProvider.createBasicOperation(clazz);
+        Operation operation1 = operationProvider.createCommonOperation(clazz);
+        Operation operation2 = operationProvider.createCommonOperation(clazz);
         Assert.assertTrue(operation1 != operation2);
         Assert.assertTrue(operation1.getClass().equals(operation2.getClass()));
     }

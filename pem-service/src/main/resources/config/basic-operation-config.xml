@@ -28,5 +28,5 @@
           scope="prototype"/>
 
     <bean id="operationProvider"
-          class="com.pem.common.provider.OperationProviderImpl"/>
+          class="com.pem.common.provider.operation.impl.OperationProviderImpl"/>
 </beans>

@@ -1,4 +1,4 @@
-package com.pem.common.provider.annotatin;
+package com.pem.common.provider.operation.impl;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RegisterGlobalCalculator {
+public @interface RegisterGlobalOperation {
     String value();
 }
