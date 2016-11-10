@@ -6,19 +6,19 @@ import com.pem.persistence.converter.common.AbstractConverter;
 import com.pem.persistence.converter.common.RegisterInConverterFactory;
 import com.pem.persistence.model.common.bean.BeanEntity;
 import com.pem.persistence.model.operation.basic.BeanOperationEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")
-@Component
 public class BeanOperationConverter extends AbstractConverter<BeanOperationEntity, Operation>{
 
-    @Autowired
-    private OperationProvider provider;
+    private OperationProvider operationProvider;
+
+    public void setOperationProvider(OperationProvider operationProvider) {
+        this.operationProvider = operationProvider;
+    }
 
     @Override
     public Operation convert(BeanOperationEntity source) {
         BeanEntity beanEntity = source.getBean();
-        return provider.createOperation(beanEntity.getBeanName(), Operation.class);
+        return operationProvider.createOperation(beanEntity.getBeanName(), Operation.class);
     }
 }

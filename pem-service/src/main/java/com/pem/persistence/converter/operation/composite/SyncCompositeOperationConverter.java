@@ -7,19 +7,24 @@ import com.pem.persistence.converter.ConverterFactory;
 import com.pem.persistence.converter.common.AbstractConverter;
 import com.pem.persistence.model.operation.common.OperationEntity;
 import com.pem.persistence.model.operation.composite.SyncCompositeOperationEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class SyncCompositeOperationConverter extends AbstractConverter<SyncCompositeOperationEntity, Operation> {
 
-    @Autowired
-    private OperationProvider provider;
+    private OperationProvider operationProvider;
 
-    @Autowired
     private ConverterFactory converterFactory;
+
+    public void setOperationProvider(OperationProvider operationProvider) {
+        this.operationProvider = operationProvider;
+    }
+
+    public void setConverterFactory(ConverterFactory converterFactory) {
+        this.converterFactory = converterFactory;
+    }
 
     @Override
     public Operation convert(SyncCompositeOperationEntity source) {
-        SyncCompositeOperation syncCompositeOperation = provider.createCommonOperation(SyncCompositeOperation.class);
+        SyncCompositeOperation syncCompositeOperation = operationProvider.createCommonOperation(SyncCompositeOperation.class);
 
         for (OperationEntity operationEntity: source.getOperationEntities()) {
             syncCompositeOperation.addOperation(converterFactory.convert(operationEntity, Operation.class));

@@ -11,7 +11,6 @@ import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.GenericTypeResolver;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import javax.annotation.PostConstruct;
@@ -19,7 +18,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-@Component("converterFactory")
 public class ConverterFactoryImpl implements ConverterFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConverterFactoryImpl.class);
 
