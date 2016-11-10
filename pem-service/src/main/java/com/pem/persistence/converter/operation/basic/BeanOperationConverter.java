@@ -2,13 +2,13 @@ package com.pem.persistence.converter.operation.basic;
 
 import com.pem.common.provider.operation.OperationProvider;
 import com.pem.operation.basic.Operation;
-import com.pem.persistence.converter.common.AbstractConverter;
+import com.pem.persistence.converter.common.AbstractOperationConverter;
 import com.pem.persistence.converter.common.RegisterInConverterFactory;
 import com.pem.persistence.model.common.bean.BeanEntity;
 import com.pem.persistence.model.operation.basic.BeanOperationEntity;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")
-public class BeanOperationConverter extends AbstractConverter<BeanOperationEntity, Operation>{
+public class BeanOperationConverter extends AbstractOperationConverter<BeanOperationEntity> {
 
     private OperationProvider operationProvider;
 

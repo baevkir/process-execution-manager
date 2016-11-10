@@ -10,6 +10,10 @@
         <property name="operationProvider" ref="operationProvider"/>
     </bean>
 
+    <bean id="binaryCalculatorConverter" class="com.pem.persistence.converter.calculator.BinaryCalculatorConverter">
+        <property name="calculatorProvider" ref="conditionCalculatorProvider"/>
+    </bean>
+
     <bean id="syncCompositeOperationConverter" class="com.pem.persistence.converter.operation.composite.SyncCompositeOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
         <property name="converterFactory" ref="converterFactory"/>

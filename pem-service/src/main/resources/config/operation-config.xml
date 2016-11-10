@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
     <bean id="basic-operation.SyncCompositeOperation"
           class="com.pem.operation.composite.SyncCompositeOperationImp"
@@ -29,4 +30,7 @@
 
     <bean id="operationProvider"
           class="com.pem.common.provider.operation.impl.OperationProviderImpl"/>
+
+    <bean id="conditionCalculatorProvider"
+          class="com.pem.common.provider.calculator.impl.ConditionCalculatorProviderImpl"/>
 </beans>

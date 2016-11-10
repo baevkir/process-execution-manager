@@ -4,11 +4,13 @@ import com.pem.common.provider.operation.OperationProvider;
 import com.pem.operation.basic.Operation;
 import com.pem.operation.composite.SyncCompositeOperation;
 import com.pem.persistence.converter.ConverterFactory;
-import com.pem.persistence.converter.common.AbstractConverter;
+import com.pem.persistence.converter.common.AbstractOperationConverter;
+import com.pem.persistence.converter.common.RegisterInConverterFactory;
 import com.pem.persistence.model.operation.common.OperationEntity;
 import com.pem.persistence.model.operation.composite.SyncCompositeOperationEntity;
 
-public class SyncCompositeOperationConverter extends AbstractConverter<SyncCompositeOperationEntity, Operation> {
+@RegisterInConverterFactory(factoryName = "converterFactory")
+public class SyncCompositeOperationConverter extends AbstractOperationConverter<SyncCompositeOperationEntity> {
 
     private OperationProvider operationProvider;
 
