@@ -1,7 +1,5 @@
 package com.pem.service.calculator.impl;
 
-import com.pem.common.provider.calculator.ConditionCalculatorProvider;
-import com.pem.common.provider.calculator.impl.RegisterGlobalCalculator;
 import com.pem.conditioncalculator.ConditionCalculator;
 import com.pem.persistence.model.calculator.common.CalculatorEntity;
 import com.pem.persistence.model.common.bean.BeanEntity;
@@ -9,20 +7,17 @@ import com.pem.persistence.service.calculator.CalculatorPersistenceService;
 import com.pem.service.calculator.ConditionCalculatorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.aop.framework.AopProxyUtils;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ConditionCalculatorServiceImpl implements ConditionCalculatorService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConditionCalculatorServiceImpl.class);
 
-    private ConditionCalculatorProvider calculatorProvider;
-
     private CalculatorPersistenceService persistenceService;
+
+    private CalculatorBeanEntityProvider beanEntityProvider;
 
     @Override
     public CalculatorEntity createConditionCalculator(CalculatorEntity calculatorEntity) {
@@ -56,33 +51,14 @@ public class ConditionCalculatorServiceImpl implements ConditionCalculatorServic
 
     @Override
     public <C extends ConditionCalculator> List<BeanEntity> getConditionCalculatorBeanEntitiesForClass(Class<C> tClass) {
-        LOGGER.debug("Get All ConditionCalculatorBeanEntities for class {}.", tClass);
-        List<BeanEntity> calculators = new ArrayList<>();
-
-        Map<String, C> beans = calculatorProvider.getAllGlobalCalculators(tClass);
-        for (Map.Entry<String, C> entry : beans.entrySet()) {
-            BeanEntity calculator = new BeanEntity();
-            String beanName = entry.getKey();
-            LOGGER.trace("Add bean with name {}", beanName);
-            calculator.setBeanName(beanName);
-
-            Class clazz = AopProxyUtils.ultimateTargetClass(entry.getValue());
-            RegisterGlobalCalculator annotation = (RegisterGlobalCalculator) clazz.getAnnotation(RegisterGlobalCalculator.class);
-            String name = annotation.value();
-            LOGGER.trace("Presentation name for bean {}", name);
-            calculator.setName(name);
-
-            calculators.add(calculator);
-        }
-
-        return calculators;
-    }
-
-    public void setCalculatorProvider(ConditionCalculatorProvider calculatorProvider) {
-        this.calculatorProvider = calculatorProvider;
+        return beanEntityProvider.getCalculatorBeanEntity(tClass);
     }
 
     public void setPersistenceService(CalculatorPersistenceService persistenceService) {
         this.persistenceService = persistenceService;
+    }
+
+    public void setBeanEntityProvider(CalculatorBeanEntityProvider beanEntityProvider) {
+        this.beanEntityProvider = beanEntityProvider;
     }
 }
