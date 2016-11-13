@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CoditionCalculatorServiceImpl implements ConditionCalculatorService {
+public class ConditionCalculatorServiceImpl implements ConditionCalculatorService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CoditionCalculatorServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConditionCalculatorServiceImpl.class);
 
     private ConditionCalculatorProvider calculatorProvider;
 

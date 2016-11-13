@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-    <bean id="conditionCalculatorService" class="com.pem.service.calculator.impl.CoditionCalculatorServiceImpl">
+    <bean id="conditionCalculatorService" class="com.pem.service.calculator.impl.ConditionCalculatorServiceImpl">
         <property name="calculatorProvider" ref="conditionCalculatorProvider"/>
         <property name="persistenceService" ref="calculatorPersistenceService"/>
     </bean>
