@@ -1,9 +1,7 @@
 package com.pem.persistence.converter.operation.composite;
 
-import com.pem.common.provider.operation.OperationProvider;
 import com.pem.operation.basic.Operation;
 import com.pem.operation.composite.SyncCompositeOperation;
-import com.pem.persistence.converter.ConverterFactory;
 import com.pem.persistence.converter.common.AbstractOperationConverter;
 import com.pem.persistence.converter.common.RegisterInConverterFactory;
 import com.pem.persistence.model.operation.common.OperationEntity;
@@ -12,21 +10,15 @@ import com.pem.persistence.model.operation.composite.SyncCompositeOperationEntit
 @RegisterInConverterFactory(factoryName = "converterFactory")
 public class SyncCompositeOperationConverter extends AbstractOperationConverter<SyncCompositeOperationEntity> {
 
-    private OperationProvider operationProvider;
+    private com.pem.persistence.converter.ConverterFactory converterFactory;
 
-    private ConverterFactory converterFactory;
-
-    public void setOperationProvider(OperationProvider operationProvider) {
-        this.operationProvider = operationProvider;
-    }
-
-    public void setConverterFactory(ConverterFactory converterFactory) {
+    public void setConverterFactory(com.pem.persistence.converter.ConverterFactory converterFactory) {
         this.converterFactory = converterFactory;
     }
 
     @Override
     public Operation convert(SyncCompositeOperationEntity source) {
-        SyncCompositeOperation syncCompositeOperation = operationProvider.createCommonOperation(SyncCompositeOperation.class);
+        SyncCompositeOperation syncCompositeOperation = getOperationProvider().createCommonOperation(SyncCompositeOperation.class);
 
         for (OperationEntity operationEntity: source.getOperationEntities()) {
             syncCompositeOperation.addOperation(converterFactory.convert(operationEntity, Operation.class));

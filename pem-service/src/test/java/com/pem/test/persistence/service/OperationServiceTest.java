@@ -1,15 +1,15 @@
 package com.pem.test.persistence.service;
 
-import com.pem.test.common.config.FongoConfig;
-import com.pem.persistence.model.common.bean.BeanEntity;
-import com.pem.persistence.model.operation.basic.BeanOperationEntity;
+import com.pem.persistence.model.calculator.BinaryCalculator;
 import com.pem.persistence.model.operation.common.OperationEntity;
 import com.pem.persistence.model.operation.composite.CompositeOperationEntity;
 import com.pem.persistence.model.operation.composite.SyncCompositeOperationEntity;
 import com.pem.persistence.model.operation.condition.BinaryConditionOperationEntity;
-import com.pem.persistence.model.operation.condition.ConditionOperationEntity;
 import com.pem.persistence.model.operation.condition.state.BooleanState;
+import com.pem.persistence.service.calculator.CalculatorPersistenceService;
 import com.pem.persistence.service.operation.OperationPersistenceService;
+import com.pem.test.common.TestEntityCreator;
+import com.pem.test.common.config.FongoConfig;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,14 +21,15 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = FongoConfig.class)
 public class OperationServiceTest {
 
-    private Random random = new Random();
+    private TestEntityCreator creator = new TestEntityCreator();
 
+    @Autowired
+    private CalculatorPersistenceService calculatorPersistenceService;
     @Autowired
     private OperationPersistenceService operationPersistenceService;
 
@@ -42,7 +43,6 @@ public class OperationServiceTest {
     @Test
     public void testSaveCompositeToDBOperation() {
         CompositeOperationEntity compositeOperationEntity = new SyncCompositeOperationEntity();
-        compositeOperationEntity.setName("Test composite operation " + random.nextLong());
         OperationEntity operation = createBinaryConditionOperationEntity();
         List<OperationEntity> operationEntities = new ArrayList<>();
         operationEntities.add(operation);
@@ -56,7 +56,7 @@ public class OperationServiceTest {
 
     @Test
     public void testDeleteOperation() {
-        BinaryConditionOperationEntity operation = (BinaryConditionOperationEntity) createBinaryConditionOperationEntity();
+        BinaryConditionOperationEntity operation = createBinaryConditionOperationEntity();
         BigInteger id = operation.getId();
 
         List<BigInteger> innerOperationIds = new ArrayList<>();
@@ -76,27 +76,13 @@ public class OperationServiceTest {
 
     }
 
-    private OperationEntity createSimpleBeanOperation() {
-        BeanOperationEntity operationEntity = new BeanOperationEntity();
-        operationEntity.setName("Test operation " + random.nextLong());
-        operationEntity.setDescription("Test description " + random.nextLong());
-
-        BeanEntity bean = new BeanEntity();
-        bean.setName("Sum Operation");
-        bean.setBeanName("sumOperation");
-        operationEntity.setBean(bean);
-
-        return operationPersistenceService.createOperation(operationEntity);
-    }
-
-    private OperationEntity createBinaryConditionOperationEntity() {
-        ConditionOperationEntity operationEntity = new BinaryConditionOperationEntity();
-        operationEntity.setName("Test operation " + random.nextLong());
-        operationEntity.setDescription("Test description " + random.nextLong());
+    private BinaryConditionOperationEntity createBinaryConditionOperationEntity() {
+        BinaryConditionOperationEntity operationEntity = new BinaryConditionOperationEntity();
+        operationEntity.setName("Test operation.");
+        operationEntity.setDescription("Test description.");
 
         operationEntity.setStates(Arrays.asList(createSimpleBinaryState(true), createSimpleBinaryState(false)));
-
-        return operationPersistenceService.createOperation(operationEntity);
+        return (BinaryConditionOperationEntity) operationPersistenceService.createOperation(operationEntity);
     }
 
     private BooleanState createSimpleBinaryState(Boolean value) {
@@ -106,4 +92,13 @@ public class OperationServiceTest {
 
         return state;
     }
+
+    private OperationEntity createSimpleBeanOperation() {
+        return operationPersistenceService.createOperation(creator.createSimpleBeanOperation());
+    }
+
+    private BinaryCalculator createBinaryCalculator() {
+        return (BinaryCalculator)calculatorPersistenceService.createCalculator(creator.createBinaryCalculator());
+    }
+
 }

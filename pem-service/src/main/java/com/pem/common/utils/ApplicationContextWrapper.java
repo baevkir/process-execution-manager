@@ -1,7 +1,6 @@
 package com.pem.common.utils;
 
 import com.pem.common.provider.calculator.impl.ConditionCalculatorProviderImpl;
-import com.pem.operation.basic.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -50,7 +49,7 @@ public class ApplicationContextWrapper {
         Assert.isTrue(applicationContext.isPrototype(beanName), String.format("Can't have scope different from 'Prototype' for bean %s.", beanName));
 
         Object bean = applicationContext.getBean(beanName);
-        Assert.isInstanceOf(Operation.class, bean, String.format("Bean %s is not Instance Of %s", beanName, type));
+        Assert.isInstanceOf(type, bean, String.format("Bean %s is not Instance Of %s", beanName, type));
 
         return type.cast(bean);
     }

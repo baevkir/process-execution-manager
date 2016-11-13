@@ -1,11 +1,9 @@
 package com.pem.test.persistence.service;
 
-import com.pem.test.common.config.FongoConfig;
-import com.pem.persistence.model.calculator.BinaryCalculator;
-import com.pem.persistence.model.calculator.common.BeanCalculatorEntity;
 import com.pem.persistence.model.calculator.common.CalculatorEntity;
-import com.pem.persistence.model.common.bean.BeanEntity;
 import com.pem.persistence.service.calculator.CalculatorPersistenceService;
+import com.pem.test.common.TestEntityCreator;
+import com.pem.test.common.config.FongoConfig;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,13 +12,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigInteger;
-import java.util.Random;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = FongoConfig.class)
 public class CalculatorServiceTest {
 
-    private Random random = new Random();
+    private TestEntityCreator creator = new TestEntityCreator();
 
     @Autowired
     private CalculatorPersistenceService calculatorPersistenceService;
@@ -44,15 +41,6 @@ public class CalculatorServiceTest {
     }
 
     private CalculatorEntity createBinaryCalculator() {
-        BeanCalculatorEntity calculatorEntity = new BinaryCalculator();
-        calculatorEntity.setName("Test Calculator " + random.nextLong());
-        calculatorEntity.setDescription("Test Calculator description " + random.nextLong());
-
-        BeanEntity bean = new BeanEntity();
-        bean.setName("Test Calculation");
-        bean.setBeanName("testCalculation");
-        calculatorEntity.setBean(bean);
-
-        return calculatorPersistenceService.createCalculator(calculatorEntity);
+        return calculatorPersistenceService.createCalculator(creator.createBinaryCalculator());
     }
 }

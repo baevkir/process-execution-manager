@@ -1,7 +1,8 @@
 package com.pem.test.common.config;
 
 import com.pem.common.*;
-import com.pem.conditioncalculator.ConditionCalculator;
+import com.pem.conditioncalculator.BinaryConditionCalculator;
+import com.pem.conditioncalculator.IntegerConditionCalculator;
 import com.pem.context.OperationContext;
 import com.pem.operation.basic.Operation;
 import com.pem.test.common.GlobalOperation;
@@ -53,8 +54,19 @@ public class TestConfig {
 
     @Bean
     @Scope("prototype")
-    public ConditionCalculator<Integer> compareFirstWithSecondCalculator() {
+    public IntegerConditionCalculator compareFirstWithSecondCalculator() {
         return new CompareFirstWithSecondCalculator();
+    }
+
+    @Bean("testBinaryConditionCalculator")
+    @Scope("prototype")
+    public BinaryConditionCalculator testBinaryConditionCalculator() {
+        return new BinaryConditionCalculator() {
+            @Override
+            public Boolean calculate(OperationContext context) {
+                return true;
+            }
+        };
     }
 
     @Bean

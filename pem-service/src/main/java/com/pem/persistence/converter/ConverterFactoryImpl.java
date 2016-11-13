@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class ConverterFactoryImpl implements ConverterFactory {
+public class ConverterFactoryImpl implements com.pem.persistence.converter.ConverterFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConverterFactoryImpl.class);
 
     @Autowired
@@ -81,8 +81,8 @@ public class ConverterFactoryImpl implements ConverterFactory {
     }
 
     private String getCurrentBeanName() {
-        Map<String, ConverterFactory> beans = applicationContext.getBeansOfType(ConverterFactory.class, true, true);
-        for (Map.Entry<String, ConverterFactory> entry : beans.entrySet()) {
+        Map<String, com.pem.persistence.converter.ConverterFactory> beans = applicationContext.getBeansOfType(com.pem.persistence.converter.ConverterFactory.class, true, true);
+        for (Map.Entry<String, com.pem.persistence.converter.ConverterFactory> entry : beans.entrySet()) {
             if (entry.getValue() == this) {
                 return entry.getKey();
             }

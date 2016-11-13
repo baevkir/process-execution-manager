@@ -18,4 +18,9 @@
         <property name="operationProvider" ref="operationProvider"/>
         <property name="converterFactory" ref="converterFactory"/>
     </bean>
+
+    <bean id="binaryConditionOperationConverter" class="com.pem.persistence.converter.operation.condition.BinaryConditionOperationConverter">
+        <property name="operationProvider" ref="operationProvider"/>
+        <property name="converterFactory" ref="converterFactory"/>
+    </bean>
 </beans>
