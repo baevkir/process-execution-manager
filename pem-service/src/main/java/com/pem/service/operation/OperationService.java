@@ -9,6 +9,7 @@ import java.util.List;
 public interface OperationService {
     OperationEntity createOperation(OperationEntity operationEntity);
     void updateOperation(OperationEntity operationEntity);
+    void deleteOperation(BigInteger id);
     OperationEntity getOperation(BigInteger id);
     List<OperationEntity> getAllOperation();
     void runOperation(BigInteger id);

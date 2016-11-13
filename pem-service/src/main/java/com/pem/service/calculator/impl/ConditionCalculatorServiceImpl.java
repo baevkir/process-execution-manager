@@ -51,7 +51,7 @@ public class ConditionCalculatorServiceImpl implements ConditionCalculatorServic
 
     @Override
     public <C extends ConditionCalculator> List<BeanEntity> getConditionCalculatorBeanEntitiesForClass(Class<C> tClass) {
-        return beanEntityProvider.getCalculatorBeanEntity(tClass);
+        return beanEntityProvider.provideCalculatorBeanEntities(tClass);
     }
 
     public void setPersistenceService(CalculatorPersistenceService persistenceService) {

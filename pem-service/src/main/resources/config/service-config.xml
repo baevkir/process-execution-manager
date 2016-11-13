@@ -13,4 +13,12 @@
         <property name="persistenceService" ref="calculatorPersistenceService"/>
     </bean>
 
+    <bean id="operationBeanEntityProvider" class="com.pem.service.operation.impl.OperationBeanEntityProviderImpl">
+        <property name="operationProvider" ref="operationProvider"/>
+    </bean>
+
+    <bean id="operationService" class="com.pem.service.operation.impl.OperationServiceImpl">
+        <property name="beanEntityProvider" ref="operationBeanEntityProvider"/>
+        <property name="persistenceService" ref="operationPersistenceService"/>
+    </bean>
  </beans>

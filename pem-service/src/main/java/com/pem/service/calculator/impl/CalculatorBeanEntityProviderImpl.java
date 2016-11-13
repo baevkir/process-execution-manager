@@ -14,7 +14,6 @@ import java.util.Map;
 
 public class CalculatorBeanEntityProviderImpl implements CalculatorBeanEntityProvider {
 
-
     private static final Logger LOGGER = LoggerFactory.getLogger(CalculatorBeanEntityProviderImpl.class);
 
     private ConditionCalculatorProvider calculatorProvider;
@@ -24,7 +23,7 @@ public class CalculatorBeanEntityProviderImpl implements CalculatorBeanEntityPro
     }
 
     @Override
-    public <C extends ConditionCalculator> List<BeanEntity> getCalculatorBeanEntity(Class<C>  calculatorClass) {
+    public <C extends ConditionCalculator> List<BeanEntity> provideCalculatorBeanEntities(Class<C>  calculatorClass) {
         LOGGER.debug("Get All ConditionCalculatorBeanEntities for class {}.", calculatorClass);
         List<BeanEntity> calculators = new ArrayList<>();
 
