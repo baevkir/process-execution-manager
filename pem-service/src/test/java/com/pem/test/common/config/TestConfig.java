@@ -69,6 +69,17 @@ public class TestConfig {
         };
     }
 
+    @Bean("testIntegerConditionCalculator")
+    @Scope("prototype")
+    public IntegerConditionCalculator testIntegerConditionCalculator() {
+        return new IntegerConditionCalculator() {
+            @Override
+            public Integer calculate(OperationContext context) {
+                return 0;
+            }
+        };
+    }
+
     @Bean
     @Scope("prototype")
     public Operation globalOperation() {

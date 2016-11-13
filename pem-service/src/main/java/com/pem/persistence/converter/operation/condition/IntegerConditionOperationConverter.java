@@ -10,11 +10,11 @@ import com.pem.persistence.model.operation.condition.IntegerConditionOperationEn
 import com.pem.persistence.model.operation.condition.state.IntegerState;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")
-public class IntegerConditionOperationConverter  extends AbstractOperationConverter<IntegerConditionOperationEntity> {
+public class IntegerConditionOperationConverter extends AbstractOperationConverter<IntegerConditionOperationEntity> {
 
     private ConverterFactory converterFactory;
 
-    public void setConverterFactory(com.pem.persistence.converter.ConverterFactory converterFactory) {
+    public void setConverterFactory(ConverterFactory converterFactory) {
         this.converterFactory = converterFactory;
     }
 

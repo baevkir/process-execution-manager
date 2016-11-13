@@ -1,6 +1,6 @@
 package com.pem.persistence.model.operation.loop;
 
-public class CountLoopOperatinEntity extends LoopOperationEntity {
+public class CounterLoopOperationEntity extends LoopOperationEntity {
     private int count;
 
     public int getCount() {
@@ -13,7 +13,7 @@ public class CountLoopOperatinEntity extends LoopOperationEntity {
 
     @Override
     public String toString() {
-        return "CountLoopOperatinEntity{" +
+        return "CounterLoopOperationEntity{" +
                 "count=" + count +
                 "} " + super.toString();
     }

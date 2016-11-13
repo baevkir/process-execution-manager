@@ -14,12 +14,36 @@
         <property name="calculatorProvider" ref="conditionCalculatorProvider"/>
     </bean>
 
+    <bean id="integerCalculatorConverter" class="com.pem.persistence.converter.calculator.IntegerCalculatorConverter">
+        <property name="calculatorProvider" ref="conditionCalculatorProvider"/>
+    </bean>
+
     <bean id="syncCompositeOperationConverter" class="com.pem.persistence.converter.operation.composite.SyncCompositeOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
         <property name="converterFactory" ref="converterFactory"/>
     </bean>
 
     <bean id="binaryConditionOperationConverter" class="com.pem.persistence.converter.operation.condition.BinaryConditionOperationConverter">
+        <property name="operationProvider" ref="operationProvider"/>
+        <property name="converterFactory" ref="converterFactory"/>
+    </bean>
+
+    <bean id="integerConditionOperationConverter" class="com.pem.persistence.converter.operation.condition.IntegerConditionOperationConverter">
+        <property name="operationProvider" ref="operationProvider"/>
+        <property name="converterFactory" ref="converterFactory"/>
+    </bean>
+
+    <bean id="counterLoopOperationConverter" class="com.pem.persistence.converter.operation.loop.CounterLoopOperationConverter">
+        <property name="operationProvider" ref="operationProvider"/>
+        <property name="converterFactory" ref="converterFactory"/>
+    </bean>
+
+    <bean id="doWhileOperationConverter" class="com.pem.persistence.converter.operation.loop.DoWhileOperationConverter">
+        <property name="operationProvider" ref="operationProvider"/>
+        <property name="converterFactory" ref="converterFactory"/>
+    </bean>
+
+    <bean id="whileOperationConverter" class="com.pem.persistence.converter.operation.loop.WhileOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
         <property name="converterFactory" ref="converterFactory"/>
     </bean>

@@ -14,7 +14,7 @@ public class BinaryConditionOperationConverter extends AbstractOperationConverte
 
     private ConverterFactory converterFactory;
 
-    public void setConverterFactory(com.pem.persistence.converter.ConverterFactory converterFactory) {
+    public void setConverterFactory(ConverterFactory converterFactory) {
         this.converterFactory = converterFactory;
     }
 
