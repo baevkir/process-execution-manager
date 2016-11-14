@@ -1,6 +1,7 @@
 package com.pem.persistence.converter;
 
 
+import com.pem.common.utils.ApplicationContextWrapper;
 import com.pem.persistence.converter.common.Converter;
 import com.pem.persistence.converter.common.RegisterInConverterFactory;
 import org.apache.commons.collections.CollectionUtils;
@@ -57,7 +58,8 @@ public class ConverterFactoryImpl implements com.pem.persistence.converter.Conve
     @PostConstruct
     public void initConverters(){
         Map<String, Converter> converters = applicationContext.getBeansOfType(Converter.class, true, true);
-        String currentFactoryName = getCurrentBeanName();
+        ApplicationContextWrapper contextWrapper = new ApplicationContextWrapper(applicationContext);
+        String currentFactoryName = contextWrapper.getBeanName(this);
         for (Map.Entry<String, Converter> converter : converters.entrySet()) {
             Converter value = converter.getValue();
             Class<? extends Converter> clazz = (Class<? extends Converter>) AopProxyUtils.ultimateTargetClass(value);
@@ -78,15 +80,5 @@ public class ConverterFactoryImpl implements com.pem.persistence.converter.Conve
         Class sClass = generics[0];
         Class tClass = generics[1];
         convertersMap.put(sClass, tClass, converter);
-    }
-
-    private String getCurrentBeanName() {
-        Map<String, com.pem.persistence.converter.ConverterFactory> beans = applicationContext.getBeansOfType(com.pem.persistence.converter.ConverterFactory.class, true, true);
-        for (Map.Entry<String, com.pem.persistence.converter.ConverterFactory> entry : beans.entrySet()) {
-            if (entry.getValue() == this) {
-                return entry.getKey();
-            }
-        }
-        throw new RuntimeException("Can't find currant ConverterFactory bean name.");
     }
 }

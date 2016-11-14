@@ -54,5 +54,14 @@ public class ApplicationContextWrapper {
         return type.cast(bean);
     }
 
-
+    public <B> String getBeanName(B bean) {
+        Class<B> beanClass = (Class<B>) bean.getClass();
+        Map<String, B> beans = applicationContext.getBeansOfType(beanClass, true, true);
+        for (Map.Entry<String, B> entry : beans.entrySet()) {
+            if (entry.getValue() == bean) {
+                return entry.getKey();
+            }
+        }
+        throw new RuntimeException("Can't find currant ConverterFactory bean name.");
+    }
 }
