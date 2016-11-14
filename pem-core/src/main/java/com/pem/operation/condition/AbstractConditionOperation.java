@@ -1,6 +1,7 @@
 package com.pem.operation.condition;
 
 import com.pem.context.OperationContext;
+import com.pem.operation.basic.AbstractOperation;
 import com.pem.operation.basic.Operation;
 import com.pem.conditioncalculator.ConditionCalculator;
 import org.slf4j.Logger;
@@ -10,7 +11,7 @@ import org.springframework.util.Assert;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractConditionOperation<S, C extends ConditionCalculator<S>> implements ConditionOperation<S, C> {
+public abstract class AbstractConditionOperation<S, C extends ConditionCalculator<S>> extends AbstractOperation implements ConditionOperation<S, C> {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractConditionOperation.class);
 
     private final Map<S, Operation> conditions = new HashMap<>();

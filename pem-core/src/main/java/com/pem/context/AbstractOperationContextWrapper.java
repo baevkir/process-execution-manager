@@ -8,6 +8,16 @@ public abstract class AbstractOperationContextWrapper implements OperationContex
     }
 
     @Override
+    public String getContextId() {
+        return context.getContextId();
+    }
+
+    @Override
+    public void setContextId(String id) {
+        context.setContextId(id);
+    }
+
+    @Override
     public <S> void setContextParam(String key, S value) {
         context.setContextParam(key, value);
     }

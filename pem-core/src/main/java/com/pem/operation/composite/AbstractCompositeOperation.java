@@ -1,5 +1,6 @@
 package com.pem.operation.composite;
 
+import com.pem.operation.basic.AbstractOperation;
 import com.pem.operation.basic.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class AbstractCompositeOperation implements CompositeOperation {
+public abstract class AbstractCompositeOperation extends AbstractOperation implements CompositeOperation {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractCompositeOperation.class);
 

@@ -1,13 +1,14 @@
 package com.pem.operation.loop.counter;
 
 import com.pem.context.OperationContext;
+import com.pem.operation.basic.AbstractOperation;
 import com.pem.operation.basic.util.AnnotationOperation;
 import com.pem.operation.basic.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
-public class CounterLoopOperationImpl implements CounterLoopOperation {
+public class CounterLoopOperationImpl extends AbstractOperation implements CounterLoopOperation {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnotationOperation.class);
 
@@ -19,7 +20,7 @@ public class CounterLoopOperationImpl implements CounterLoopOperation {
         Assert.notNull(count, String.format("Can`t execute %s. Count isn't specified.", getClass()));
         Assert.notNull(operation, String.format("Can`t execute %s. Operation isn't specified.", getClass()));
 
-        for (int i=0; i<count; i++) {
+        for (int i = 0; i < count; i++) {
             operation.execute(context);
         }
     }

@@ -12,6 +12,16 @@ public class OperationContextImpl implements OperationContext {
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationContextImpl.class);
     private boolean isOpen = false;
     private Map<String, Object> contextParams = new HashMap<>();
+    private String id;
+    @Override
+    public String getContextId() {
+        return id;
+    }
+
+    @Override
+    public void setContextId(String id) {
+        this.id = id;
+    }
 
     @Override
     public <S> void setContextParam(String key, S value) {
