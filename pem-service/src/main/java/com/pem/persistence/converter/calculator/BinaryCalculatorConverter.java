@@ -12,6 +12,8 @@ public class BinaryCalculatorConverter extends AbstractConditionCalculatorConver
     @Override
     public BinaryConditionCalculator convert(BinaryCalculator source) {
         BeanEntity bean = source.getBean();
-        return getCalculatorProvider().createCalculator(bean.getBeanName(), BinaryConditionCalculator.class);
+        BinaryConditionCalculator calculator = getCalculatorProvider().createCalculator(bean.getBeanName(), BinaryConditionCalculator.class);
+        calculator.setConditionCalculatorId(String.valueOf(source.getId()));
+        return calculator;
     }
 }

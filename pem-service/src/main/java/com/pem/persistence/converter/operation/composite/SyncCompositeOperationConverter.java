@@ -19,6 +19,7 @@ public class SyncCompositeOperationConverter extends AbstractOperationConverter<
     @Override
     public Operation convert(SyncCompositeOperationEntity source) {
         SyncCompositeOperation syncCompositeOperation = getOperationProvider().createCommonOperation(SyncCompositeOperation.class);
+        syncCompositeOperation.setOperationId(String.valueOf(source.getId()));
 
         for (OperationEntity operationEntity: source.getOperationEntities()) {
             syncCompositeOperation.addOperation(converterFactory.convert(operationEntity, Operation.class));

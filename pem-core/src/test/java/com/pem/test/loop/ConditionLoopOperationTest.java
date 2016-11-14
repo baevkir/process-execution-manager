@@ -32,7 +32,20 @@ public class ConditionLoopOperationTest {
 
         multiplyOperation = new MultiplyOperation();
 
-        calculator = new BinaryConditionCalculator() {
+        calculator = new BinaryConditionCalculator () {
+
+            private String id;
+
+            @Override
+            public String getConditionCalculatorId() {
+                return id;
+            }
+
+            @Override
+            public void setConditionCalculatorId(String id) {
+                this.id = id;
+            }
+
             @Override
             public Boolean calculate(OperationContext context) {
                 MathOperationContext contextWrapper = new MathOperationContext(context);
@@ -41,6 +54,18 @@ public class ConditionLoopOperationTest {
         };
 
         calculatorFalse = new BinaryConditionCalculator() {
+            private String id;
+
+            @Override
+            public String getConditionCalculatorId() {
+                return id;
+            }
+
+            @Override
+            public void setConditionCalculatorId(String id) {
+                this.id = id;
+            }
+
             @Override
             public Boolean calculate(OperationContext context) {
                return false;

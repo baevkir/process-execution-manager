@@ -21,6 +21,7 @@ public class BinaryConditionOperationConverter extends AbstractOperationConverte
     @Override
     public Operation convert(BinaryConditionOperationEntity source) {
         BinaryConditionOperation binaryConditionOperation = getOperationProvider().createCommonOperation(BinaryConditionOperation.class);
+        binaryConditionOperation.setOperationId(String.valueOf(source.getId()));
 
         BinaryConditionCalculator calculator = converterFactory.convert(source.getCalculatorEntity(), BinaryConditionCalculator.class);
         binaryConditionOperation.setCalculator(calculator);

@@ -12,6 +12,8 @@ public class IntegerCalculatorConverter extends AbstractConditionCalculatorConve
     @Override
     public IntegerConditionCalculator convert(IntegerCalculator source) {
         BeanEntity bean = source.getBean();
-        return getCalculatorProvider().createCalculator(bean.getBeanName(), IntegerConditionCalculator.class);
+        IntegerConditionCalculator calculator = getCalculatorProvider().createCalculator(bean.getBeanName(), IntegerConditionCalculator.class);
+        calculator.setConditionCalculatorId(String.valueOf(source.getId()));
+        return calculator;
     }
 }

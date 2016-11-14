@@ -4,6 +4,7 @@ import com.pem.common.*;
 import com.pem.conditioncalculator.BinaryConditionCalculator;
 import com.pem.conditioncalculator.IntegerConditionCalculator;
 import com.pem.context.OperationContext;
+import com.pem.operation.basic.AbstractOperation;
 import com.pem.operation.basic.Operation;
 import com.pem.test.common.GlobalOperation;
 import org.junit.Assert;
@@ -44,7 +45,8 @@ public class TestConfig {
     @Bean
     @Scope("prototype")
     public Operation checkOpenContextOperation() {
-        return new Operation() {
+        return new AbstractOperation() {
+
             @Override
             public void execute(OperationContext context) {
                 Assert.assertTrue(context.isOpen());
@@ -62,6 +64,17 @@ public class TestConfig {
     @Scope("prototype")
     public BinaryConditionCalculator testBinaryConditionCalculator() {
         return new BinaryConditionCalculator() {
+            private String id;
+
+            @Override
+            public String getConditionCalculatorId() {
+                return id;
+            }
+
+            @Override
+            public void setConditionCalculatorId(String id) {
+                this.id = id;
+            }
             @Override
             public Boolean calculate(OperationContext context) {
                 return true;
@@ -73,6 +86,18 @@ public class TestConfig {
     @Scope("prototype")
     public IntegerConditionCalculator testIntegerConditionCalculator() {
         return new IntegerConditionCalculator() {
+            private String id;
+
+            @Override
+            public String getConditionCalculatorId() {
+                return id;
+            }
+
+            @Override
+            public void setConditionCalculatorId(String id) {
+                this.id = id;
+            }
+
             @Override
             public Integer calculate(OperationContext context) {
                 return 0;

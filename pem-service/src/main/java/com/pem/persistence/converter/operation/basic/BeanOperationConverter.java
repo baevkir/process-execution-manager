@@ -11,6 +11,9 @@ public class BeanOperationConverter extends AbstractOperationConverter<BeanOpera
     @Override
     public Operation convert(BeanOperationEntity source) {
         BeanEntity beanEntity = source.getBean();
-        return getOperationProvider().createOperation(beanEntity.getBeanName(), Operation.class);
+        Operation operation = getOperationProvider().createOperation(beanEntity.getBeanName(), Operation.class);
+        operation.setOperationId(String.valueOf(source.getId()));
+
+        return operation;
     }
 }

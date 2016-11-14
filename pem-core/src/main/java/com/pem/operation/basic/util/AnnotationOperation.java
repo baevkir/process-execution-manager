@@ -1,6 +1,7 @@
 package com.pem.operation.basic.util;
 
 import com.pem.context.OperationContext;
+import com.pem.operation.basic.AbstractOperation;
 import com.pem.operation.basic.Operation;
 import com.pem.operation.basic.util.reflection.ReflectionManager;
 import com.pem.operation.basic.util.reflection.ReflectionManagerImpl;
@@ -11,7 +12,7 @@ import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Method;
 
-public abstract class AnnotationOperation implements Operation {
+public abstract class AnnotationOperation extends AbstractOperation implements Operation {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnotationOperation.class);
 

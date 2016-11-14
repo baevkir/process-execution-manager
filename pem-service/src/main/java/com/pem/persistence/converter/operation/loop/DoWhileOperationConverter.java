@@ -20,7 +20,7 @@ public class DoWhileOperationConverter extends AbstractOperationConverter<DoWhil
     @Override
     public Operation convert(DoWhileLoopOperationEntity source) {
         DoWhileOperation loopOperation = getOperationProvider().createCommonOperation(DoWhileOperation.class);
-
+        loopOperation.setOperationId(String.valueOf(source.getId()));
         loopOperation.setCalculator(converterFactory.convert(source.getCalculator(), BinaryConditionCalculator.class));
         loopOperation.setOperation(converterFactory.convert(source.getOperation(), Operation.class));
 

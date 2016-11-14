@@ -21,7 +21,7 @@ public class WhileOperationConverter extends AbstractOperationConverter<WhileLoo
     @Override
     public Operation convert(WhileLoopOperationEntity source) {
         WhileOperation loopOperation = getOperationProvider().createCommonOperation(WhileOperation.class);
-
+        loopOperation.setOperationId(String.valueOf(source.getId()));
         loopOperation.setCalculator(converterFactory.convert(source.getCalculator(), BinaryConditionCalculator.class));
         loopOperation.setOperation(converterFactory.convert(source.getOperation(), Operation.class));
 

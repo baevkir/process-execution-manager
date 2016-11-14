@@ -21,6 +21,7 @@ public class IntegerConditionOperationConverter extends AbstractOperationConvert
     @Override
     public Operation convert(IntegerConditionOperationEntity source) {
         IntegerConditionOperation conditionOperation = getOperationProvider().createCommonOperation(IntegerConditionOperation.class);
+        conditionOperation.setOperationId(String.valueOf(source.getId()));
 
         IntegerConditionCalculator calculator = converterFactory.convert(source.getCalculatorEntity(), IntegerConditionCalculator.class);
         conditionOperation.setCalculator(calculator);
