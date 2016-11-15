@@ -59,6 +59,12 @@
             <artifactId>aspectjweaver</artifactId>
         </dependency>
 
+        <!-- joda-time -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+
         <!-- logger -->
         <dependency>
             <groupId>org.slf4j</groupId>

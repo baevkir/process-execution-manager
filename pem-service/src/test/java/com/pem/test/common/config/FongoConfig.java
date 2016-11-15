@@ -9,10 +9,12 @@ import com.pem.persistence.service.operation.OperationPersistenceServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
 @EnableMongoRepositories("com.pem.persistence.repository")
+@EnableMongoAuditing
 public class FongoConfig extends AbstractMongoConfiguration {
 
     @Override

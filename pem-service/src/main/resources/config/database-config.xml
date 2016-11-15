@@ -2,9 +2,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mongo="http://www.springframework.org/schema/data/mongo"
        xsi:schemaLocation="http://www.springframework.org/schema/data/mongo
-          http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+          http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
           http://www.springframework.org/schema/beans
-          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+          http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <mongo:db-factory
             host="127.0.0.1"
@@ -13,10 +13,16 @@
             username="mongouser"
             password="kv2QGZFzM2"/>
 
+    <mongo:mapping-converter id="converter" base-package="com.pem.persistence.model" />
+
+    <mongo:auditing mapping-context-ref="mappingContext" set-dates="true" modify-on-creation="true"/>
+    <bean id="mappingContext" factory-bean="converter" factory-method="getMappingContext"/>
+
     <mongo:repositories base-package="com.pem.persistence.repository"/>
 
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+        <constructor-arg name="mongoConverter" ref="converter"/>
     </bean>
 
     <bean id="operationService" class="com.pem.persistence.service.operation.OperationPersistenceServiceImpl"/>
