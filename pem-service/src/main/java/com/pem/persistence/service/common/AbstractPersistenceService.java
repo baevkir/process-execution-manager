@@ -1,6 +1,6 @@
 package com.pem.persistence.service.common;
 
-import com.pem.persistence.model.common.BaseEntity;
+import com.pem.persistence.model.common.IdentifiableEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -9,7 +9,7 @@ import org.springframework.util.Assert;
 import java.math.BigInteger;
 import java.util.List;
 
-public abstract class AbstractPersistenceService<E extends BaseEntity, R extends MongoRepository<E, BigInteger>> {
+public abstract class AbstractPersistenceService<E extends IdentifiableEntity, R extends MongoRepository<E, BigInteger>> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPersistenceService.class);
     protected abstract R getRepository();

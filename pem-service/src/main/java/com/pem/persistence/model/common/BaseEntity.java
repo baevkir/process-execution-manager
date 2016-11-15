@@ -2,17 +2,11 @@ package com.pem.persistence.model.common;
 
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.index.Indexed;
 
-import java.math.BigInteger;
-
-public class BaseEntity {
-
-    @Id
-    private BigInteger id;
+public abstract class BaseEntity extends IdentifiableEntity {
 
     @Indexed
     private String name;
@@ -27,14 +21,6 @@ public class BaseEntity {
 
     @LastModifiedDate
     private DateTime modifyWhen;
-
-    public BigInteger getId() {
-        return id;
-    }
-
-    public void setId(BigInteger id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -78,12 +64,13 @@ public class BaseEntity {
 
     @Override
     public String toString() {
-        return "BaseEntity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+        return super.toString() + '\'' +
+                "BaseEntity{" +
+                "name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", version=" + version +
                 ", createdWhen=" + createdWhen +
                 ", modifyWhen=" + modifyWhen +
-                '}';
+                "} ";
     }
 }
