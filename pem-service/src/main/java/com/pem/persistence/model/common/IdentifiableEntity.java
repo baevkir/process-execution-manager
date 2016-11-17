@@ -1,9 +1,11 @@
 package com.pem.persistence.model.common;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.springframework.data.annotation.Id;
 
 import java.math.BigInteger;
 
+@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="type")
 public abstract class IdentifiableEntity {
     @Id
     private BigInteger id;

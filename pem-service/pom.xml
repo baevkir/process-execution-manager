@@ -58,16 +58,26 @@
             <artifactId>aspectjweaver</artifactId>
         </dependency>
 
+        <!-- jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
         <!-- joda-time -->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
         </dependency>
 
-        <!-- dozer -->
+        <!-- cloning -->
         <dependency>
-            <groupId>net.sf.dozer</groupId>
-            <artifactId>dozer</artifactId>
+            <groupId>uk.com.robust-it</groupId>
+            <artifactId>cloning</artifactId>
         </dependency>
 
         <!-- logger -->

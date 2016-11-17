@@ -44,8 +44,10 @@
         <fongo.version>2.0.9</fongo.version>
         <!-- joda time -->
         <joda-time.version>2.9.5</joda-time.version>
-        <!-- dozer -->
-        <dozer.version>5.51</dozer.version>
+        <!-- cloning -->
+        <cloning.version>1.9.3</cloning.version>
+        <!-- jackson -->
+        <jackson.version>2.8.4</jackson.version>
     </properties>
 
     <dependencyManagement>
@@ -97,7 +99,6 @@
                 <artifactId>spring-aop</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjrt</artifactId>
@@ -107,6 +108,18 @@
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
                 <version>${aspectj.version}</version>
+            </dependency>
+
+            <!-- jackson -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
 
             <!-- guava -->
@@ -135,11 +148,11 @@
                 <version>${joda-time.version}</version>
             </dependency>
 
-            <!-- dozer -->
+            <!-- cloning -->
             <dependency>
-                <groupId>net.sf.dozer</groupId>
-                <artifactId>dozer</artifactId>
-                <version>${dozer.version}</version>
+                <groupId>uk.com.robust-it</groupId>
+                <artifactId>cloning</artifactId>
+                <version>${cloning.version}</version>
             </dependency>
 
             <!-- tests -->

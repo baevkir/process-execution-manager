@@ -1,13 +1,13 @@
 package com.pem.persistence.model.operation.condition;
 
 import com.pem.persistence.model.calculator.common.CalculatorEntity;
-import com.pem.persistence.model.operation.condition.state.AbstarctState;
+import com.pem.persistence.model.operation.condition.state.AbstractState;
 import com.pem.persistence.model.operation.common.OperationEntity;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.List;
 
-public abstract class ConditionOperationEntity<S extends AbstarctState> extends OperationEntity {
+public abstract class ConditionOperationEntity<S extends AbstractState> extends OperationEntity {
 
     private List<S> states;
 

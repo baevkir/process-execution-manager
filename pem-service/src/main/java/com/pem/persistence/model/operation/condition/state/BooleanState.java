@@ -1,6 +1,6 @@
 package com.pem.persistence.model.operation.condition.state;
 
-public class BooleanState extends AbstarctState<Boolean> {
+public class BooleanState extends AbstractState<Boolean> {
 
     @Override
     public String toString() {

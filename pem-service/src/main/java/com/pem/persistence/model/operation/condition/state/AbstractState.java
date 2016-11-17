@@ -1,9 +1,11 @@
 package com.pem.persistence.model.operation.condition.state;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.pem.persistence.model.operation.common.OperationEntity;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-public abstract class AbstarctState<C> {
+@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="type")
+public abstract class AbstractState<C> {
     private C conditionValue;
 
     @DBRef
@@ -27,7 +29,7 @@ public abstract class AbstarctState<C> {
 
     @Override
     public String toString() {
-        return "AbstarctState{" +
+        return "AbstractState{" +
                 "conditionValue=" + conditionValue +
                 ", operationEntity=" + operationEntity +
                 '}';
