@@ -18,7 +18,11 @@ public class DefaultContextFactory extends AbstractFactoryBean<OperationContext>
     @Override
     protected OperationContext createInstance() throws Exception {
         LOGGER.trace("Create OperationContext");
-        OperationContext context = new OperationContextImpl();
-        return context;
+        return new OperationContextImpl();
+    }
+
+    @Override
+    public boolean isSingleton() {
+        return false;
     }
 }
