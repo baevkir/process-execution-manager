@@ -1,6 +1,5 @@
 package com.pem.common.utils;
 
-import com.pem.common.provider.calculator.impl.ConditionCalculatorProviderImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -13,7 +12,7 @@ import java.util.Map;
 
 public class ApplicationContextWrapper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConditionCalculatorProviderImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationContextWrapper.class);
 
     private ApplicationContext applicationContext;
 
