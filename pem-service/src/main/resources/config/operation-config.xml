@@ -33,4 +33,6 @@
 
     <bean id="conditionCalculatorProvider"
           class="com.pem.common.provider.calculator.impl.ConditionCalculatorProviderImpl"/>
+
+    <bean id="operationContext" class="com.pem.common.provider.context.DefaultContextFactory"/>
 </beans>
