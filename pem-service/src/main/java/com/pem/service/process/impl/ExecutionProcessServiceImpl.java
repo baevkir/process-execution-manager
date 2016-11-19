@@ -1,5 +1,7 @@
 package com.pem.service.process.impl;
 
+import com.pem.operation.basic.Operation;
+import com.pem.persistence.model.operation.common.OperationEntity;
 import com.pem.persistence.model.proccess.ExecutionProcessEntity;
 import com.pem.persistence.service.process.ProcessPersistenceService;
 import com.pem.service.process.ExecutionProcessService;
@@ -15,8 +17,20 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService {
     private ProcessPersistenceService persistenceService;
 
     @Override
-    public ExecutionProcessEntity createExecutionProcess(ExecutionProcessEntity processEntity) {
-        LOGGER.debug("Create new ExecutionProcess: {}.", processEntity);
+    public ExecutionProcessEntity createExecutionProcess(OperationEntity operationEntity) {
+        LOGGER.debug("Create new ExecutionProcess for: {}.", operationEntity);
+        ExecutionProcessEntity processEntity = new ExecutionProcessEntity();
+        processEntity.setName(operationEntity.getName());
+
+
+        return persistenceService.createProcess(processEntity);
+    }
+
+    @Override
+    public ExecutionProcessEntity createExecutionProcess(Operation operation) {
+        LOGGER.debug("Create new ExecutionProcess for: {}.", operation);
+        ExecutionProcessEntity processEntity = new ExecutionProcessEntity();
+
         return persistenceService.createProcess(processEntity);
     }
 
