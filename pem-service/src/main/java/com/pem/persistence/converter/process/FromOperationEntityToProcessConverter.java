@@ -1,7 +1,8 @@
 package com.pem.persistence.converter.process;
 
+import com.pem.common.utils.IdGenerator;
 import com.pem.common.utils.ReflectiveDTOProcessor;
-import com.pem.persistence.converter.common.AbstractConverter;
+import com.pem.persistence.converter.common.Converter;
 import com.pem.persistence.converter.common.RegisterInConverterFactory;
 import com.pem.persistence.model.common.IdentifiableEntity;
 import com.pem.persistence.model.operation.common.OperationEntity;
@@ -11,10 +12,9 @@ import com.rits.cloning.Cloner;
 import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")
-public class FromOperationEntityToProcessConverter extends AbstractConverter<OperationEntity, ExecutionProcessEntity> {
+public class FromOperationEntityToProcessConverter implements Converter<OperationEntity, ExecutionProcessEntity> {
     private Cloner cloner = new Cloner();
     private ReflectiveDTOProcessor<OperationEntity> reflectiveProcessor = new ReflectiveDTOProcessor<>();
 
@@ -36,7 +36,6 @@ public class FromOperationEntityToProcessConverter extends AbstractConverter<Ope
 
     private class GenerateIdAction implements ReflectiveDTOProcessor.HandleAction {
 
-        private Random random = new Random();
         private List<BigInteger> generatedIds = new LinkedList<>();
 
         @Override
@@ -45,7 +44,7 @@ public class FromOperationEntityToProcessConverter extends AbstractConverter<Ope
                 return;
             }
             IdentifiableEntity entity = (IdentifiableEntity) object;
-            BigInteger newId = new BigInteger(95, random);
+            BigInteger newId = IdGenerator.generateId();
             generatedIds.add(newId);
 
             entity.setId(newId);

@@ -3,7 +3,7 @@ package com.pem.persistence.converter.common;
 import com.pem.common.provider.calculator.ConditionCalculatorProvider;
 import com.pem.conditioncalculator.ConditionCalculator;
 
-public abstract class AbstractConditionCalculatorConverter<S, T extends ConditionCalculator> extends AbstractConverter<S, T> {
+public abstract class AbstractConditionCalculatorConverter<S, T extends ConditionCalculator> implements Converter<S, T> {
 
     private ConditionCalculatorProvider calculatorProvider;
 

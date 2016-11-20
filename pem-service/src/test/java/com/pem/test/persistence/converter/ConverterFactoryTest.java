@@ -97,7 +97,7 @@ public class ConverterFactoryTest {
     @Test
     public void testExecutionProcessConverter() {
         OperationEntity operationEntity = creator.createSyncCompositeOperationEntity();
-        ExecutionProcessEntity processEntity = converterFactory.convert(operationEntity, ExecutionProcessEntity.class);
+        ExecutionProcessEntity processEntity = converterFactory.convert(operationEntity, OperationEntity.class, ExecutionProcessEntity.class);
         Assert.assertNotNull(processEntity);
         Assert.assertTrue(processEntity instanceof ExecutionProcessEntity);
     }
