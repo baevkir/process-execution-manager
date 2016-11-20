@@ -29,8 +29,8 @@ public class ConverterFactoryImpl implements com.pem.persistence.converter.Conve
 
     @Override
     public <S, T> T convert(S source, Class<T> targetClass) {
-        Converter<S, T> converter = getConverter((Class<S>) source.getClass(), targetClass);
-        T result = converter.convert(source);
+        Converter converter = getConverter(source.getClass(), targetClass);
+        T result = (T) converter.convert(source);
         LOGGER.trace("Conversion result for {} is: {}.", source.getClass(), result);
         return result;
     }
@@ -43,12 +43,15 @@ public class ConverterFactoryImpl implements com.pem.persistence.converter.Conve
         }
 
         Class sClass = sources.iterator().next().getClass();
-        Converter<S, T> converter = getConverter(sClass, targetClass);
+        Converter converter = getConverter(sClass, targetClass);
         return converter.convertAll(sources);
     }
 
-    private <S, T> Converter<S, T> getConverter(Class<S> sClass, Class<T> tClass) {
-        Converter<S, T> converter = (Converter<S, T>) convertersMap.get(sClass, tClass);
+    private <S, T> Converter<?, T> getConverter(Class<S> sClass, Class<T> tClass) {
+        Converter<?, T> converter = (Converter<?, T>) convertersMap.get(sClass, tClass);
+        if (converter == null && sClass.getSuperclass() != null) {
+            converter = getConverter(sClass.getSuperclass(), tClass);
+        }
         Assert.notNull(converter, String.format("Can't find Converter from %s to %s.", sClass, tClass));
 
         LOGGER.debug("Find converter for {} and {}: {}.", sClass, tClass, converter.getClass());

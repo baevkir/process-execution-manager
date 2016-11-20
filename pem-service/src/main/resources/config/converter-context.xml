@@ -18,22 +18,26 @@
         <property name="calculatorProvider" ref="conditionCalculatorProvider"/>
     </bean>
 
-    <bean id="syncCompositeOperationConverter" class="com.pem.persistence.converter.operation.composite.SyncCompositeOperationConverter">
+    <bean id="syncCompositeOperationConverter"
+          class="com.pem.persistence.converter.operation.composite.SyncCompositeOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
         <property name="converterFactory" ref="converterFactory"/>
     </bean>
 
-    <bean id="binaryConditionOperationConverter" class="com.pem.persistence.converter.operation.condition.BinaryConditionOperationConverter">
+    <bean id="binaryConditionOperationConverter"
+          class="com.pem.persistence.converter.operation.condition.BinaryConditionOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
         <property name="converterFactory" ref="converterFactory"/>
     </bean>
 
-    <bean id="integerConditionOperationConverter" class="com.pem.persistence.converter.operation.condition.IntegerConditionOperationConverter">
+    <bean id="integerConditionOperationConverter"
+          class="com.pem.persistence.converter.operation.condition.IntegerConditionOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
         <property name="converterFactory" ref="converterFactory"/>
     </bean>
 
-    <bean id="counterLoopOperationConverter" class="com.pem.persistence.converter.operation.loop.CounterLoopOperationConverter">
+    <bean id="counterLoopOperationConverter"
+          class="com.pem.persistence.converter.operation.loop.CounterLoopOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
         <property name="converterFactory" ref="converterFactory"/>
     </bean>
@@ -47,4 +51,8 @@
         <property name="operationProvider" ref="operationProvider"/>
         <property name="converterFactory" ref="converterFactory"/>
     </bean>
+
+    <bean id="fromOperationEntityToProcessConverter"
+          class="com.pem.persistence.converter.process.FromOperationEntityToProcessConverter"/>
+
 </beans>

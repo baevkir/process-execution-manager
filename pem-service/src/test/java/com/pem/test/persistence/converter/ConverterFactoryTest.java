@@ -14,6 +14,7 @@ import com.pem.persistence.model.operation.condition.IntegerConditionOperationEn
 import com.pem.persistence.model.operation.loop.CounterLoopOperationEntity;
 import com.pem.persistence.model.operation.loop.condition.DoWhileLoopOperationEntity;
 import com.pem.persistence.model.operation.loop.condition.WhileLoopOperationEntity;
+import com.pem.persistence.model.proccess.ExecutionProcessEntity;
 import com.pem.test.common.TestEntityCreator;
 import com.pem.test.common.config.TestConfig;
 import org.junit.Assert;
@@ -22,6 +23,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.math.BigInteger;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
@@ -91,5 +94,13 @@ public class ConverterFactoryTest {
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
         Assert.assertNotNull(operation);
         Assert.assertTrue(operation instanceof WhileOperation);
+    }
+
+    @Test
+    public void testExecutionProcessConverter() {
+        IntegerConditionOperationEntity operationEntity = creator.createIntegerConditionOperationEntity();
+        ExecutionProcessEntity processEntity = converterFactory.convert(operationEntity, ExecutionProcessEntity.class);
+        Assert.assertNotNull(processEntity);
+        Assert.assertTrue(processEntity instanceof ExecutionProcessEntity);
     }
 }
