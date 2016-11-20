@@ -29,6 +29,10 @@ public class FromOperationToProcessConverter implements Converter<Operation, Exe
         String beanName = contextWrapper.getBeanName(source);
         String name = NamingUtils.getHumanReadableName(beanName);
 
+        ExecutionProcessEntity processEntity = new ExecutionProcessEntity();
+        processEntity.setId(IdGenerator.generateId());
+        processEntity.setName(name);
+
         BeanEntity beanEntity = new BeanEntity();
         beanEntity.setName(name);
         beanEntity.setBeanName(beanName);
@@ -39,16 +43,17 @@ public class FromOperationToProcessConverter implements Converter<Operation, Exe
         beanOperationEntity.setBean(beanEntity);
 
         ExecutionRecordEntity executionRecordEntity = new ExecutionRecordEntity();
+        executionRecordEntity.setId(IdGenerator.generateId());
         executionRecordEntity.setState(ExecutionRecordState.CREATED);
 
         ExecutionRecordPK pk = new ExecutionRecordPK();
         pk.setOperationId(beanOperationEntity.getId());
+        pk.setProcessId(processEntity.getId());
         executionRecordEntity.setPk(pk);
 
-        ExecutionProcessEntity processEntity = new ExecutionProcessEntity();
-        processEntity.setName(name);
         processEntity.setExecutionOperation(beanOperationEntity);
         processEntity.setExecutionRecords(Collections.singletonList(executionRecordEntity));
+
         return processEntity;
     }
 

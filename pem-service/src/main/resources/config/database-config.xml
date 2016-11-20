@@ -29,5 +29,5 @@
 
     <bean id="calculatorPersistenceService" class="com.pem.persistence.service.calculator.CalculatorPersistenceServiceImpl"/>
 
-    <bean id="processPersistenceService" class="com.pem.persistence.service.process.ProcessPersistenceServiceImpl"/>
+    <bean id="processPersistenceService" class="com.pem.persistence.service.process.impl.ProcessPersistenceServiceImpl"/>
 </beans>

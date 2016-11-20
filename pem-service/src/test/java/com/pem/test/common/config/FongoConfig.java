@@ -7,7 +7,7 @@ import com.pem.persistence.service.calculator.CalculatorPersistenceServiceImpl;
 import com.pem.persistence.service.operation.OperationPersistenceService;
 import com.pem.persistence.service.operation.OperationPersistenceServiceImpl;
 import com.pem.persistence.service.process.ProcessPersistenceService;
-import com.pem.persistence.service.process.ProcessPersistenceServiceImpl;
+import com.pem.persistence.service.process.impl.ProcessPersistenceServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
