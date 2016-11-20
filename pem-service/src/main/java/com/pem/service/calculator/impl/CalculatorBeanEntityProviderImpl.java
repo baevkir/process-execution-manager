@@ -2,8 +2,10 @@ package com.pem.service.calculator.impl;
 
 import com.pem.common.provider.calculator.ConditionCalculatorProvider;
 import com.pem.common.provider.calculator.impl.RegisterGlobalCalculator;
+import com.pem.common.utils.NamingUtils;
 import com.pem.conditioncalculator.ConditionCalculator;
 import com.pem.persistence.model.common.bean.BeanEntity;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -37,6 +39,9 @@ public class CalculatorBeanEntityProviderImpl implements CalculatorBeanEntityPro
             Class clazz = AopProxyUtils.ultimateTargetClass(entry.getValue());
             RegisterGlobalCalculator annotation = (RegisterGlobalCalculator) clazz.getAnnotation(RegisterGlobalCalculator.class);
             String name = annotation.value();
+            if (StringUtils.isEmpty(name)) {
+                name = NamingUtils.getHumanReadableName(beanName);
+            }
             LOGGER.trace("Presentation name for bean {}", name);
             calculator.setName(name);
 

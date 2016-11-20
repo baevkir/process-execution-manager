@@ -2,9 +2,11 @@ package com.pem.service.operation.impl;
 
 import com.pem.common.provider.operation.OperationProvider;
 import com.pem.common.provider.operation.impl.RegisterGlobalOperation;
+import com.pem.common.utils.NamingUtils;
 import com.pem.operation.basic.Operation;
 import com.pem.persistence.model.common.bean.BeanEntity;
 import com.pem.service.calculator.impl.CalculatorBeanEntityProviderImpl;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -37,6 +39,9 @@ public class OperationBeanEntityProviderImpl implements OperationBeanEntityProvi
             Class clazz = AopProxyUtils.ultimateTargetClass(entry.getValue());
             RegisterGlobalOperation annotation = (RegisterGlobalOperation) clazz.getAnnotation(RegisterGlobalOperation.class);
             String name = annotation.value();
+            if (StringUtils.isEmpty(name)) {
+                name = NamingUtils.getHumanReadableName(beanName);
+            }
             LOGGER.trace("Presentation name for bean {}", name);
             operation.setName(name);
 
