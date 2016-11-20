@@ -6,6 +6,8 @@ import com.pem.persistence.service.calculator.CalculatorPersistenceService;
 import com.pem.persistence.service.calculator.CalculatorPersistenceServiceImpl;
 import com.pem.persistence.service.operation.OperationPersistenceService;
 import com.pem.persistence.service.operation.OperationPersistenceServiceImpl;
+import com.pem.persistence.service.process.ProcessPersistenceService;
+import com.pem.persistence.service.process.ProcessPersistenceServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
@@ -43,4 +45,8 @@ public class FongoConfig extends AbstractMongoConfiguration {
         return new CalculatorPersistenceServiceImpl();
     }
 
+    @Bean
+    public ProcessPersistenceService processPersistenceService() {
+        return new ProcessPersistenceServiceImpl();
+    }
 }

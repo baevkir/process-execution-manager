@@ -61,6 +61,6 @@ public class ApplicationContextWrapper {
                 return entry.getKey();
             }
         }
-        throw new RuntimeException("Can't find currant ConverterFactory bean name.");
+        throw new RuntimeException("Can't find currant Bean name.");
     }
 }
