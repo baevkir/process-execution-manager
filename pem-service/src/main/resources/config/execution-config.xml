@@ -9,4 +9,9 @@
         <property name="persistenceService" ref="processPersistenceService"/>
     </bean>
 
+    <bean id="operationExecutor" class="com.pem.service.executor.impl.OperationExecutorImpl">
+        <property name="contextProvider" ref="operationContextProvider"/>
+        <property name="converterFactory" ref="converterFactory"/>
+        <property name="processService" ref="executionProcessService"/>
+    </bean>
 </beans>
