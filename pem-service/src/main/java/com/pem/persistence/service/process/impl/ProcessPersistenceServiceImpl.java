@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pem.persistence.model.operation.common.OperationEntity;
 import com.pem.persistence.model.proccess.ExecutionProcessEntity;
+import com.pem.persistence.model.proccess.record.ExecutionRecordEntity;
 import com.pem.persistence.repository.process.ProcessRepository;
 import com.pem.persistence.service.common.AbstractPersistenceService;
+import com.pem.persistence.service.process.ExecutionRecordPersistenceService;
 import com.pem.persistence.service.process.ProcessPersistenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,8 @@ public class ProcessPersistenceServiceImpl extends AbstractPersistenceService<Ex
     @Autowired
     private ProcessRepository repository;
 
+    private ExecutionRecordPersistenceService executionRecordPersistenceService;
+
     @Override
     protected ProcessRepository getRepository() {
         return repository;
@@ -32,6 +36,9 @@ public class ProcessPersistenceServiceImpl extends AbstractPersistenceService<Ex
         OperationEntity operationEntity = processEntity.getExecutionOperation();
         if (operationEntity != null) {
             processEntity.setExecutionPlan(serializeExecutionOperation(operationEntity));
+        }
+        for (ExecutionRecordEntity executionRecordEntity : processEntity.getExecutionRecords()) {
+            executionRecordPersistenceService.createExecutionRecord(executionRecordEntity);
         }
         return create(processEntity);
     }
@@ -63,9 +70,9 @@ public class ProcessPersistenceServiceImpl extends AbstractPersistenceService<Ex
     private String serializeExecutionOperation(OperationEntity operation) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-           return mapper.writeValueAsString(operation);
+            return mapper.writeValueAsString(operation);
         } catch (JsonProcessingException exception) {
-           throw new RuntimeException("Can`t serialize Execution Operation " + operation, exception);
+            throw new RuntimeException("Can`t serialize Execution Operation " + operation, exception);
         }
     }
 
@@ -76,5 +83,9 @@ public class ProcessPersistenceServiceImpl extends AbstractPersistenceService<Ex
         } catch (IOException exception) {
             throw new RuntimeException("Can`t deserialize Execution Operation " + json, exception);
         }
+    }
+
+    public void setExecutionRecordPersistenceService(ExecutionRecordPersistenceService executionRecordPersistenceService) {
+        this.executionRecordPersistenceService = executionRecordPersistenceService;
     }
 }

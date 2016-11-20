@@ -18,6 +18,11 @@ public class ExecutionRecordPersistenceServiceImpl  extends AbstractPersistenceS
     }
 
     @Override
+    public ExecutionRecordEntity createExecutionRecord(ExecutionRecordEntity executionRecord) {
+        return create(executionRecord);
+    }
+
+    @Override
     public void updateExecutionRecord(ExecutionRecordEntity executionRecord) {
         update(executionRecord);
     }
