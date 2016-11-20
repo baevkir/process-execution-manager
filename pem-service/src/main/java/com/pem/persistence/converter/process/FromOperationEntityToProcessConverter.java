@@ -45,7 +45,7 @@ public class FromOperationEntityToProcessConverter extends AbstractConverter<Ope
                 return;
             }
             IdentifiableEntity entity = (IdentifiableEntity) object;
-            BigInteger newId = new BigInteger(512, random);
+            BigInteger newId = new BigInteger(95, random);
             generatedIds.add(newId);
 
             entity.setId(newId);
