@@ -17,18 +17,17 @@ public class OperationContextProxy {
     public void heirOfOperationInterface() {}
 
     @Around("heirOfOperationInterface() && execution(* *execute(com.pem.context.OperationContext))")
-    public void executeOperationInOpenContext(ProceedingJoinPoint joinPoint) throws Throwable  {
+    public Object executeOperationInOpenContext(ProceedingJoinPoint joinPoint) throws Throwable  {
         OperationContext context = (OperationContext) joinPoint.getArgs()[0];
         if (context.isOpen()) {
             LOGGER.trace("Context already open run without any actions.");
-            joinPoint.proceed();
-            return;
+            return joinPoint.proceed();
         }
 
         LOGGER.trace("Start to Open context in {}.", joinPoint.getThis().getClass());
         context.open();
         try {
-            joinPoint.proceed();
+            return joinPoint.proceed();
         }finally {
             context.close();
         }
