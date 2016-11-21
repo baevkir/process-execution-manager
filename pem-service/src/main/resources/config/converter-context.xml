@@ -55,4 +55,7 @@
     <bean id="fromOperationEntityToProcessConverter"
           class="com.pem.persistence.converter.process.FromOperationEntityToProcessConverter"/>
 
+    <bean id="fromOperationToProcessConverter"
+          class="com.pem.persistence.converter.process.FromOperationToProcessConverter"/>
+
 </beans>

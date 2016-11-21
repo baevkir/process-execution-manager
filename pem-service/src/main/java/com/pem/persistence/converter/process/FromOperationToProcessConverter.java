@@ -12,20 +12,20 @@ import com.pem.persistence.model.proccess.ExecutionProcessEntity;
 import com.pem.persistence.model.proccess.record.ExecutionRecordEntity;
 import com.pem.persistence.model.proccess.record.ExecutionRecordPK;
 import com.pem.persistence.model.proccess.record.ExecutionRecordState;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import java.util.Collections;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")
-public class FromOperationToProcessConverter implements Converter<Operation, ExecutionProcessEntity> {
+public class FromOperationToProcessConverter implements Converter<Operation, ExecutionProcessEntity>, ApplicationContextAware {
 
-    @Autowired
-    private ApplicationContext context;
+    private ApplicationContext applicationContext;
 
     @Override
     public ExecutionProcessEntity convert(Operation source) {
-        ApplicationContextWrapper contextWrapper = new ApplicationContextWrapper(context);
+        ApplicationContextWrapper contextWrapper = new ApplicationContextWrapper(applicationContext);
         String beanName = contextWrapper.getBeanName(source);
         String name = NamingUtils.getHumanReadableName(beanName);
 
@@ -57,4 +57,8 @@ public class FromOperationToProcessConverter implements Converter<Operation, Exe
         return processEntity;
     }
 
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
 }

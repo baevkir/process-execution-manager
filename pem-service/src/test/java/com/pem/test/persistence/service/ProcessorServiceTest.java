@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Collections;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = FongoConfig.class)
 public class ProcessorServiceTest {
@@ -21,11 +23,11 @@ public class ProcessorServiceTest {
     private ProcessPersistenceService processPersistenceService;
 
     @Test
-    public void testSaveToDBCalculator() {
+    public void testSaveToDBProcess() {
         ExecutionProcessEntity processEntity = new ExecutionProcessEntity();
         processEntity.setName("Test Process");
         processEntity.setExecutionOperation(creator.createBinaryConditionOperationEntity());
-
+        processEntity.setExecutionRecords(Collections.EMPTY_LIST);
         ExecutionProcessEntity newProcessEntity = processPersistenceService.createProcess(processEntity);
         Assert.assertNotNull(newProcessEntity.getExecutionPlan());
 

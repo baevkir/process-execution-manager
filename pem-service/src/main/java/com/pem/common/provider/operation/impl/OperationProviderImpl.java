@@ -5,16 +5,16 @@ import com.pem.common.utils.ApplicationContextWrapper;
 import com.pem.operation.basic.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import java.util.Map;
 
-public class OperationProviderImpl implements OperationProvider {
+public class OperationProviderImpl implements OperationProvider, ApplicationContextAware {
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationProviderImpl.class);
     private static final String OPERATION_BEAN_PREF = "basic-operation.";
 
-    @Autowired
     private ApplicationContext applicationContext;
 
     @Override
@@ -44,4 +44,8 @@ public class OperationProviderImpl implements OperationProvider {
         return OPERATION_BEAN_PREF + className;
     }
 
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
 }

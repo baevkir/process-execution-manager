@@ -5,20 +5,25 @@ import com.pem.common.utils.ApplicationContextWrapper;
 import com.pem.context.OperationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
-public class OperationContextProviderImpl implements OperationContextProvider {
+public class OperationContextProviderImpl implements OperationContextProvider, ApplicationContextAware {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationContextProviderImpl.class);
     private static final String CONTEXT_BEAN_NAME = "operationContext";
 
-    @Autowired
-    private ApplicationContext context;
+    private ApplicationContext applicationContext;
 
     @Override
     public OperationContext createContext() {
-        ApplicationContextWrapper wrapper = new ApplicationContextWrapper(context);
+        ApplicationContextWrapper wrapper = new ApplicationContextWrapper(applicationContext);
         return wrapper.getPrototypeBeanByType(CONTEXT_BEAN_NAME, OperationContext.class);
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }

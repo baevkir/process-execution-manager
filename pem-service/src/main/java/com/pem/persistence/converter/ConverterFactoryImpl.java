@@ -8,18 +8,18 @@ import org.apache.commons.collections.map.MultiKeyMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.util.Assert;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
 
-public class ConverterFactoryImpl implements com.pem.persistence.converter.ConverterFactory {
+public class ConverterFactoryImpl implements ConverterFactory, ApplicationContextAware {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConverterFactoryImpl.class);
 
-    @Autowired
     private ApplicationContext applicationContext;
 
     private MultiKeyMap convertersMap = new MultiKeyMap();
@@ -70,5 +70,10 @@ public class ConverterFactoryImpl implements com.pem.persistence.converter.Conve
         Class sClass = generics[0];
         Class tClass = generics[1];
         convertersMap.put(sClass, tClass, converter);
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }

@@ -9,17 +9,18 @@ import com.pem.persistence.service.process.ProcessPersistenceService;
 import com.pem.service.process.ExecutionProcessService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import java.math.BigInteger;
 import java.util.List;
 
-public class ExecutionProcessServiceImpl implements ExecutionProcessService {
+public class ExecutionProcessServiceImpl implements ExecutionProcessService, ApplicationContextAware {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExecutionProcessServiceImpl.class);
 
-    @Autowired
-    private ApplicationContext context;
+    private ApplicationContext applicationContext;
+
     private ProcessPersistenceService persistenceService;
     private ConverterFactory converterFactory;
 
@@ -33,7 +34,7 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService {
     @Override
     public ExecutionProcessEntity createExecutionProcess(Operation operation) {
         LOGGER.debug("Create new ExecutionProcess for: {}.", operation);
-        ApplicationContextWrapper contextWrapper = new ApplicationContextWrapper(context);
+        ApplicationContextWrapper contextWrapper = new ApplicationContextWrapper(applicationContext);
         ExecutionProcessEntity processEntity = new ExecutionProcessEntity();
         processEntity.setName(contextWrapper.getBeanName(operation));
         return persistenceService.createProcess(processEntity);
@@ -63,5 +64,10 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService {
 
     public void setConverterFactory(ConverterFactory converterFactory) {
         this.converterFactory = converterFactory;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }

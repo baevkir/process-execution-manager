@@ -5,16 +5,16 @@ import com.pem.common.utils.ApplicationContextWrapper;
 import com.pem.conditioncalculator.ConditionCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import java.util.Map;
 
-public class ConditionCalculatorProviderImpl implements ConditionCalculatorProvider {
+public class ConditionCalculatorProviderImpl implements ConditionCalculatorProvider, ApplicationContextAware {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConditionCalculatorProviderImpl.class);
 
-    @Autowired
     private ApplicationContext applicationContext;
 
     @Override
@@ -30,4 +30,8 @@ public class ConditionCalculatorProviderImpl implements ConditionCalculatorProvi
         return wrapper.findBeanByAnnotation(RegisterGlobalCalculator.class, conditionCalculatorClass);
     }
 
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
 }
