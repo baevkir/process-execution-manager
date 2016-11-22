@@ -1,9 +1,12 @@
 package com.pem.test.loader;
 
 import com.pem.conditioncalculator.BinaryConditionCalculator;
-import com.pem.integration.loader.ProcessExecutionManagerProvider;
+import com.pem.integration.launcher.ProcessExecutionManagerLauncher;
 import com.pem.persistence.model.common.bean.BeanEntity;
+import com.pem.service.calculator.ConditionCalculatorService;
 import com.pem.service.operation.OperationService;
+import org.apache.commons.collections.CollectionUtils;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +20,15 @@ import java.util.List;
 public class ProcessExecutionManagerContextLoaderTest {
 
     @Autowired
-    public ProcessExecutionManagerProvider contextLoader;
+    public ProcessExecutionManagerLauncher contextLoader;
 
     @Test
-    public void processExecutionManagerContextLoaderTest(){
+    public void processExecutionManagerContextLoaderTest() {
         OperationService operationService = contextLoader.getOperationService();
+        ConditionCalculatorService conditionCalculatorService = contextLoader.getConditionCalculatorService();
         List<BeanEntity> operations = operationService.getAllOperationBeanEntities();
-        List<BeanEntity> calculators = contextLoader.getConditionCalculatorService().getConditionCalculatorBeanEntitiesForClass(BinaryConditionCalculator.class);
+        List<BeanEntity> calculators = conditionCalculatorService.getConditionCalculatorBeanEntitiesForClass(BinaryConditionCalculator.class);
+
+        Assert.assertTrue(CollectionUtils.isNotEmpty(operations));
     }
 }
