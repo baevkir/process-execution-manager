@@ -1,6 +1,5 @@
 package com.pem.integration.launcher;
 
-import com.mongodb.Mongo;
 import com.pem.integration.launcher.bean.ParentContextFactoryBean;
 import com.pem.service.calculator.ConditionCalculatorService;
 import com.pem.service.executor.OperationExecutor;
@@ -16,6 +15,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.data.mongodb.MongoDbFactory;
 
 import java.util.Map;
 
@@ -25,11 +25,11 @@ public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionMana
     private ApplicationContext parentContext;
     private ApplicationContext applicationContext;
 
-    private Mongo mongoDBConnect;
+    private MongoDbFactory mongoDbFactory;
     private Map<String, String> beans;
 
-    public void setMongoDBConnect(Mongo mongoDBConnect) {
-        this.mongoDBConnect = mongoDBConnect;
+    public void setMongoDbFactory(MongoDbFactory mongoDbFactory) {
+        this.mongoDbFactory = mongoDbFactory;
     }
 
     public void setBeans(Map<String, String> beans) {
@@ -74,6 +74,7 @@ public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionMana
         LOGGER.trace("Start to load ProcessExecutionManagerContext.");
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
         context.setParent(parentContext);
+        registerMongoDbFactory(context);
         registerParentBeans(context);
         context.start();
 
@@ -92,5 +93,12 @@ public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionMana
 
             beanFactory.registerBeanDefinition(beanName, builder.getBeanDefinition());
         }
+    }
+
+    private void registerMongoDbFactory(ClassPathXmlApplicationContext context) {
+        if (mongoDbFactory == null) {
+            return;
+        }
+        context.getAutowireCapableBeanFactory().initializeBean(mongoDbFactory, "mongoDbFactory");
     }
 }

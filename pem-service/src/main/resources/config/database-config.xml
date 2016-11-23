@@ -6,15 +6,20 @@
           http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <mongo:db-factory
-            host="127.0.0.1"
-            port="27017"
-            dbname="pem-db"
-            username="mongouser"
-            password="kv2QGZFzM2"/>
+    <!--<mongo:db-factory-->
+            <!--host="127.0.0.1"-->
+            <!--port="27017"-->
+            <!--dbname="pem-db"-->
+            <!--username="mongouser"-->
+            <!--password="kv2QGZFzM2"/>-->
 
-    <mongo:mapping-converter id="converter" base-package="com.pem.persistence.model"/>
+    <bean id="fongo" class="com.github.fakemongo.Fongo">
+        <constructor-arg value="pem-db"/>
+    </bean>
+    <bean id="mongo" factory-bean="fongo" factory-method="getMongo"/>
 
+    <mongo:db-factory mongo-ref="mongo"/>
+    <mongo:mapping-converter id="converter"/>
     <mongo:auditing mapping-context-ref="mappingContext" set-dates="true" modify-on-creation="true"/>
     <bean id="mappingContext" factory-bean="converter" factory-method="getMappingContext"/>
 

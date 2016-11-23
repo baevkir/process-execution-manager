@@ -92,6 +92,11 @@
                 <artifactId>spring-data-mongodb</artifactId>
                 <version>${mongodb-spring.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.github.fakemongo</groupId>
+                <artifactId>fongo</artifactId>
+                <version>${fongo.version}</version>
+            </dependency>
 
             <!-- Spring AOP + AspectJ -->
             <dependency>
@@ -166,12 +171,6 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.github.fakemongo</groupId>
-                <artifactId>fongo</artifactId>
-                <version>${fongo.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
