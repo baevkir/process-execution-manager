@@ -72,7 +72,7 @@ public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionMana
 
     private ApplicationContext initContext(){
         LOGGER.trace("Start to load ProcessExecutionManagerContext.");
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:pemApplicationContext.xml");
         context.setParent(parentContext);
         registerMongoDbFactory(context);
         registerParentBeans(context);

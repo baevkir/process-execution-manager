@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Scope;
 
 
 @Configuration
-@ImportResource("classpath:applicationContext.xml")
+@ImportResource("classpath:pemApplicationContext.xml")
 public class TestConfig {
 
     @Bean
