@@ -3,7 +3,7 @@ package com.pem.test.persistence.service;
 import com.pem.persistence.model.calculator.common.CalculatorEntity;
 import com.pem.persistence.service.calculator.CalculatorPersistenceService;
 import com.pem.test.common.TestEntityCreator;
-import com.pem.test.common.config.FongoConfig;
+import com.pem.test.common.config.TestConfig;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.math.BigInteger;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = FongoConfig.class)
+@ContextConfiguration(classes = TestConfig.class)
 public class CalculatorServiceTest {
 
     private TestEntityCreator creator = new TestEntityCreator();
