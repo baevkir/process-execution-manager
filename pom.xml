@@ -96,6 +96,7 @@
                 <groupId>com.github.fakemongo</groupId>
                 <artifactId>fongo</artifactId>
                 <version>${fongo.version}</version>
+                <scope>test</scope>
             </dependency>
 
             <!-- Spring AOP + AspectJ -->
@@ -171,6 +172,12 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.fakemongo</groupId>
+                <artifactId>fongo</artifactId>
+                <version>${fongo.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
