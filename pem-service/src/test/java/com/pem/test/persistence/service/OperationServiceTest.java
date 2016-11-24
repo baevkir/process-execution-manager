@@ -9,7 +9,7 @@ import com.pem.persistence.model.operation.condition.state.BooleanState;
 import com.pem.persistence.service.calculator.CalculatorPersistenceService;
 import com.pem.persistence.service.operation.OperationPersistenceService;
 import com.pem.test.common.TestEntityCreator;
-import com.pem.test.common.config.TestConfig;
+import com.pem.test.common.config.FongoConfig;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = FongoConfig.class)
 public class OperationServiceTest {
 
     private TestEntityCreator creator = new TestEntityCreator();
