@@ -8,14 +8,12 @@ import com.pem.operation.basic.AbstractOperation;
 import com.pem.operation.basic.Operation;
 import com.pem.test.common.GlobalOperation;
 import org.junit.Assert;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.*;
 
 
 @Configuration
 @ImportResource("classpath:pemApplicationContext.xml")
+@Import(PersistenceMockConfig.class)
 public class TestConfig {
 
     @Bean
