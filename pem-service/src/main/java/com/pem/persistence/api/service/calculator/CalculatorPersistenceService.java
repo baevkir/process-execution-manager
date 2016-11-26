@@ -1,4 +1,4 @@
-package com.pem.persistence.service.calculator;
+package com.pem.persistence.api.service.calculator;
 
 import com.pem.persistence.model.calculator.common.CalculatorEntity;
 

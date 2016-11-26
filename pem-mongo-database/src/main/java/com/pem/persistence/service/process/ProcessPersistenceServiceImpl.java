@@ -1,14 +1,14 @@
-package com.pem.persistence.service.process.impl;
+package com.pem.persistence.service.process;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pem.persistence.api.service.process.ExecutionRecordPersistenceService;
+import com.pem.persistence.api.service.process.ProcessPersistenceService;
 import com.pem.persistence.model.operation.common.OperationEntity;
 import com.pem.persistence.model.proccess.ExecutionProcessEntity;
 import com.pem.persistence.model.proccess.record.ExecutionRecordEntity;
 import com.pem.persistence.repository.process.ProcessRepository;
 import com.pem.persistence.service.common.AbstractPersistenceService;
-import com.pem.persistence.service.process.ExecutionRecordPersistenceService;
-import com.pem.persistence.service.process.ProcessPersistenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

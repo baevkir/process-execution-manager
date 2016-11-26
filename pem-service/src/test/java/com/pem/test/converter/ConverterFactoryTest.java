@@ -1,4 +1,4 @@
-package com.pem.test.persistence.converter;
+package com.pem.test.converter;
 
 import com.pem.operation.basic.Operation;
 import com.pem.operation.composite.SyncCompositeOperation;

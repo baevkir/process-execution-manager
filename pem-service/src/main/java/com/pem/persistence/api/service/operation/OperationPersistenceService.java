@@ -1,4 +1,4 @@
-package com.pem.persistence.service.operation;
+package com.pem.persistence.api.service.operation;
 
 import com.pem.persistence.model.operation.common.OperationEntity;
 

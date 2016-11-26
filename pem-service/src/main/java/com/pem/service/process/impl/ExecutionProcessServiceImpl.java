@@ -5,7 +5,7 @@ import com.pem.operation.basic.Operation;
 import com.pem.persistence.converter.ConverterFactory;
 import com.pem.persistence.model.operation.common.OperationEntity;
 import com.pem.persistence.model.proccess.ExecutionProcessEntity;
-import com.pem.persistence.service.process.ProcessPersistenceService;
+import com.pem.persistence.api.service.process.ProcessPersistenceService;
 import com.pem.service.process.ExecutionProcessService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

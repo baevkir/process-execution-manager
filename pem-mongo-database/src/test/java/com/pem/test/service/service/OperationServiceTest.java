@@ -1,15 +1,15 @@
-package com.pem.test.persistence.service;
+package com.pem.test.service.service;
 
+import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
+import com.pem.persistence.api.service.operation.OperationPersistenceService;
 import com.pem.persistence.model.calculator.BinaryCalculator;
 import com.pem.persistence.model.operation.common.OperationEntity;
 import com.pem.persistence.model.operation.composite.CompositeOperationEntity;
 import com.pem.persistence.model.operation.composite.SyncCompositeOperationEntity;
 import com.pem.persistence.model.operation.condition.BinaryConditionOperationEntity;
 import com.pem.persistence.model.operation.condition.state.BooleanState;
-import com.pem.persistence.service.calculator.CalculatorPersistenceService;
-import com.pem.persistence.service.operation.OperationPersistenceService;
+import com.pem.test.common.FongoConfig;
 import com.pem.test.common.TestEntityCreator;
-import com.pem.test.common.config.FongoConfig;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

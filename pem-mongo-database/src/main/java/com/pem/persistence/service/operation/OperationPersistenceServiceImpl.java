@@ -1,5 +1,6 @@
 package com.pem.persistence.service.operation;
 
+import com.pem.persistence.api.service.operation.OperationPersistenceService;
 import com.pem.persistence.model.operation.common.OperationEntity;
 import com.pem.persistence.repository.operation.OperationRepository;
 import com.pem.persistence.service.common.AbstractPersistenceService;

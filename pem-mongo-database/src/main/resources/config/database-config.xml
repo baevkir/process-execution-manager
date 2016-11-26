@@ -32,9 +32,9 @@
           class="com.pem.persistence.service.calculator.CalculatorPersistenceServiceImpl"/>
 
     <bean id="executionRecordPersistenceService"
-          class="com.pem.persistence.service.process.impl.ExecutionRecordPersistenceServiceImpl"/>
+          class="com.pem.persistence.service.process.ExecutionRecordPersistenceServiceImpl"/>
 
-    <bean id="processPersistenceService" class="com.pem.persistence.service.process.impl.ProcessPersistenceServiceImpl">
+    <bean id="processPersistenceService" class="com.pem.persistence.service.process.ProcessPersistenceServiceImpl">
         <property name="executionRecordPersistenceService" ref="executionRecordPersistenceService"/>
     </bean>
 </beans>

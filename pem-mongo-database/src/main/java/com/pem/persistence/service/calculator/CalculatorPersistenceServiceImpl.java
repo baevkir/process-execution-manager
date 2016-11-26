@@ -1,5 +1,6 @@
 package com.pem.persistence.service.calculator;
 
+import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import com.pem.persistence.model.calculator.common.CalculatorEntity;
 import com.pem.persistence.repository.calculator.CalculatorRepository;
 import com.pem.persistence.service.common.AbstractPersistenceService;

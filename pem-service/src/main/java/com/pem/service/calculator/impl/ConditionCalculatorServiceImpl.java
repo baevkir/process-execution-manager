@@ -3,7 +3,7 @@ package com.pem.service.calculator.impl;
 import com.pem.conditioncalculator.ConditionCalculator;
 import com.pem.persistence.model.calculator.common.CalculatorEntity;
 import com.pem.persistence.model.common.bean.BeanEntity;
-import com.pem.persistence.service.calculator.CalculatorPersistenceService;
+import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import com.pem.service.calculator.ConditionCalculatorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

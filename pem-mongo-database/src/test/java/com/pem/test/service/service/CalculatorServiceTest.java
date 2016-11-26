@@ -1,9 +1,9 @@
-package com.pem.test.persistence.service;
+package com.pem.test.service.service;
 
+import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import com.pem.persistence.model.calculator.common.CalculatorEntity;
-import com.pem.persistence.service.calculator.CalculatorPersistenceService;
+import com.pem.test.common.FongoConfig;
 import com.pem.test.common.TestEntityCreator;
-import com.pem.test.common.config.FongoConfig;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

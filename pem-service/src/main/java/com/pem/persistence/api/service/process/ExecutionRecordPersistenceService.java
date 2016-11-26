@@ -1,4 +1,4 @@
-package com.pem.persistence.service.process;
+package com.pem.persistence.api.service.process;
 
 import com.pem.persistence.model.proccess.record.ExecutionRecordEntity;
 import com.pem.persistence.model.proccess.record.ExecutionRecordPK;

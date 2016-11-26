@@ -2,7 +2,7 @@ package com.pem.service.operation.impl;
 
 import com.pem.persistence.model.common.bean.BeanEntity;
 import com.pem.persistence.model.operation.common.OperationEntity;
-import com.pem.persistence.service.operation.OperationPersistenceService;
+import com.pem.persistence.api.service.operation.OperationPersistenceService;
 import com.pem.service.operation.OperationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
