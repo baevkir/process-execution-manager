@@ -3,13 +3,13 @@ package com.pem.persistence.service.calculator;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import com.pem.persistence.model.calculator.common.CalculatorEntity;
 import com.pem.persistence.repository.calculator.CalculatorRepository;
-import com.pem.persistence.service.common.AbstractPersistenceService;
+import com.pem.persistence.service.common.AbstractMongoPersistenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigInteger;
 import java.util.List;
 
-public class CalculatorPersistenceServiceImpl extends AbstractPersistenceService<CalculatorEntity, CalculatorRepository> implements CalculatorPersistenceService {
+public class MongoCalculatorPersistenceService extends AbstractMongoPersistenceService<CalculatorEntity, CalculatorRepository> implements CalculatorPersistenceService {
 
     @Autowired
     private CalculatorRepository repository;

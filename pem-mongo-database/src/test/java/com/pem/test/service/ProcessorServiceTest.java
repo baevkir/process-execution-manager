@@ -1,4 +1,4 @@
-package com.pem.test.service.service;
+package com.pem.test.service;
 
 import com.pem.persistence.api.service.process.ProcessPersistenceService;
 import com.pem.persistence.model.proccess.ExecutionProcessEntity;

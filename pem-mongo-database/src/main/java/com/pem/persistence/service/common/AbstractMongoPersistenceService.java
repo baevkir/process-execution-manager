@@ -9,9 +9,9 @@ import org.springframework.util.Assert;
 import java.math.BigInteger;
 import java.util.List;
 
-public abstract class AbstractPersistenceService<E extends IdentifiableEntity, R extends MongoRepository<E, BigInteger>> {
+public abstract class AbstractMongoPersistenceService<E extends IdentifiableEntity, R extends MongoRepository<E, BigInteger>> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPersistenceService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractMongoPersistenceService.class);
     protected abstract R getRepository();
 
     protected E create(E entity){
