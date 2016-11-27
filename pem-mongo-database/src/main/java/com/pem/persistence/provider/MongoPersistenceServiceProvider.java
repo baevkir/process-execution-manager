@@ -6,7 +6,6 @@ import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;
 import com.pem.persistence.api.service.process.ExecutionRecordPersistenceService;
 import com.pem.persistence.api.service.process.ProcessPersistenceService;
-import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -16,7 +15,6 @@ import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.util.Assert;
 
 import javax.annotation.PostConstruct;
-import java.util.Map;
 
 public class MongoPersistenceServiceProvider implements PersistenceServiceProvider, ApplicationContextAware {
 
@@ -25,8 +23,6 @@ public class MongoPersistenceServiceProvider implements PersistenceServiceProvid
     private ApplicationContext parentContext;
     private ApplicationContext applicationContext;
     private MongoDbFactory mongoDbFactory;
-
-    private Map<String, String> beansForInject;
 
     @Override
     public CalculatorPersistenceService getCalculatorPersistenceService() {
@@ -57,10 +53,6 @@ public class MongoPersistenceServiceProvider implements PersistenceServiceProvid
         this.mongoDbFactory = mongoDbFactory;
     }
 
-    public void setBeansForInject(Map<String, String> beansForInject) {
-        this.beansForInject = beansForInject;
-    }
-
     @PostConstruct
     public void initPersistenceApplicationContext() {
         Assert.notNull(parentContext, "Can't create PersistenceApplicationContext without parent context.");
@@ -70,10 +62,6 @@ public class MongoPersistenceServiceProvider implements PersistenceServiceProvid
                 .setParentContext(parentContext)
                 .addXMLConfiguration("classpath:config/database-config.xml")
                 .addSingletonBean(MONGO_DB_FACTORY_NAME, mongoDbFactory);
-
-        if (MapUtils.isNotEmpty(beansForInject)) {
-            contextBuilder.addParentBeans(beansForInject);
-        }
 
         applicationContext = contextBuilder.build();
     }
