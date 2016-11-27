@@ -1,4 +1,4 @@
-package com.pem.integration.launcher.bean;
+package com.pem.common.applicationcontext.bean;
 
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 import org.springframework.context.ApplicationContext;

@@ -6,12 +6,12 @@
           http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <mongo:db-factory
-            host="127.0.0.1"
-            port="27017"
-            dbname="pem-db"
-            username="mongouser"
-            password="kv2QGZFzM2"/>
+    <!--<mongo:db-factory-->
+            <!--host="127.0.0.1"-->
+            <!--port="27017"-->
+            <!--dbname="pem-db"-->
+            <!--username="mongouser"-->
+            <!--password="kv2QGZFzM2"/>-->
 
     <mongo:mapping-converter id="converter" base-package="com.pem.persistence.model"/>
 

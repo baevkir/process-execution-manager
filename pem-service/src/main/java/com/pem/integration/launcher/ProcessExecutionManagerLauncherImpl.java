@@ -1,6 +1,6 @@
 package com.pem.integration.launcher;
 
-import com.pem.integration.launcher.bean.ParentContextFactoryBean;
+import com.pem.common.applicationcontext.bean.ParentContextFactoryBean;
 import com.pem.service.calculator.ConditionCalculatorService;
 import com.pem.service.executor.OperationExecutor;
 import com.pem.service.operation.OperationService;
