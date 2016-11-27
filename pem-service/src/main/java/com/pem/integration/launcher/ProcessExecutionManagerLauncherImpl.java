@@ -1,40 +1,34 @@
 package com.pem.integration.launcher;
 
-import com.pem.common.applicationcontext.bean.ParentContextFactoryBean;
+import com.pem.common.applicationcontext.ChildApplicationContextBuilder;
+import com.pem.persistence.api.provider.PersistenceServiceProvider;
 import com.pem.service.calculator.ConditionCalculatorService;
 import com.pem.service.executor.OperationExecutor;
 import com.pem.service.operation.OperationService;
 import com.pem.service.process.ExecutionProcessService;
+import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.data.mongodb.MongoDbFactory;
 
+import javax.annotation.PostConstruct;
 import java.util.Map;
 
-public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionManagerLauncher, ApplicationContextAware, ApplicationListener<ContextRefreshedEvent> {
+public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionManagerLauncher, ApplicationContextAware {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProcessExecutionManagerLauncherImpl.class);
+    private static final String PERSISTENCE_SERVICE_PROVIDER_BEAN = "persistenceServiceProvider";
+    private static final String CALCULATOR_PERSISTENCE_SERVICE_BEAN = "calculatorPersistenceService";
+    private static final String OPERATION_PERSISTENCE_SERVICE_BEAN = "operationPersistenceService";
+    private static final String EXECUTION_RECORD_PERSISTENCE_SERVICE_BEAN = "executionRecordPersistenceService";
+    private static final String PROCESS_PERSISTENCE_SERVICE_BEAN = "processPersistenceService";
 
     private ApplicationContext parentContext;
     private ApplicationContext applicationContext;
 
-    private MongoDbFactory mongoDbFactory;
-    private Map<String, String> beans;
-
-    public void setMongoDbFactory(MongoDbFactory mongoDbFactory) {
-        this.mongoDbFactory = mongoDbFactory;
-    }
-
-    public void setBeans(Map<String, String> beans) {
-        this.beans = beans;
-    }
+    private PersistenceServiceProvider persistenceServiceProvider;
+    private Map<String, String> parentBeans;
 
     @Override
     public ExecutionProcessService getExecutionProcessService() {
@@ -61,44 +55,34 @@ public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionMana
         parentContext = applicationContext;
     }
 
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
-        applicationContext = initContext();
+    public void setParentBeans(Map<String, String> beans) {
+        this.parentBeans = beans;
+    }
+
+    public void setPersistenceServiceProvider(PersistenceServiceProvider persistenceServiceProvider) {
+        this.persistenceServiceProvider = persistenceServiceProvider;
+    }
+
+    @PostConstruct
+    public void initApplicationContext() {
+        LOGGER.trace("Start to load ProcessExecutionManagerContext.");
+        ChildApplicationContextBuilder contextBuilder = new  ChildApplicationContextBuilder()
+                .setParentContext(parentContext)
+                .addXMLConfiguration("classpath:pemApplicationContext.xml")
+                .addSingletonBean(PERSISTENCE_SERVICE_PROVIDER_BEAN, persistenceServiceProvider)
+                .addSingletonBean(CALCULATOR_PERSISTENCE_SERVICE_BEAN, persistenceServiceProvider.getCalculatorPersistenceService())
+                .addSingletonBean(OPERATION_PERSISTENCE_SERVICE_BEAN, persistenceServiceProvider.getOperationPersistenceService())
+                .addSingletonBean(EXECUTION_RECORD_PERSISTENCE_SERVICE_BEAN, persistenceServiceProvider.getExecutionRecordPersistenceService())
+                .addSingletonBean(PROCESS_PERSISTENCE_SERVICE_BEAN, persistenceServiceProvider.getProcessPersistenceService());
+
+        if (MapUtils.isNotEmpty(parentBeans)) {
+            contextBuilder.addParentBeans(parentBeans);
+        }
+
+        applicationContext = contextBuilder.build();
     }
 
     protected ApplicationContext getApplicationContext() {
         return applicationContext;
-    }
-
-    private ApplicationContext initContext(){
-        LOGGER.trace("Start to load ProcessExecutionManagerContext.");
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:pemApplicationContext.xml");
-        context.setParent(parentContext);
-        registerMongoDbFactory(context);
-        registerParentBeans(context);
-        context.start();
-
-        return context;
-    }
-
-    private void registerParentBeans(ClassPathXmlApplicationContext context) {
-        DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory) context.getBeanFactory();
-        for (Map.Entry<String,String> entry : beans.entrySet()) {
-            String beanName = entry.getKey();
-            String parentBeanName = entry.getValue();
-
-            BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(ParentContextFactoryBean.class);
-            builder.addPropertyValue("parentBeanName", parentBeanName);
-            builder.addPropertyValue("parentContext", parentContext);
-
-            beanFactory.registerBeanDefinition(beanName, builder.getBeanDefinition());
-        }
-    }
-
-    private void registerMongoDbFactory(ClassPathXmlApplicationContext context) {
-        if (mongoDbFactory == null) {
-            return;
-        }
-        context.getAutowireCapableBeanFactory().initializeBean(mongoDbFactory, "mongoDbFactory");
     }
 }

@@ -1,4 +1,4 @@
-package com.pem.common.applicationcontext.bean;
+package com.pem.common.applicationcontext;
 
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 import org.springframework.context.ApplicationContext;

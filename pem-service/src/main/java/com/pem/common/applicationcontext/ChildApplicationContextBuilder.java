@@ -1,4 +1,4 @@
-package com.pem.common.applicationcontext.bean;
+package com.pem.common.applicationcontext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,10 +54,11 @@ public class ChildApplicationContextBuilder {
         context.refresh();
         context.setConfigLocations(getConfigLocations());
 
-        ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
-        registerSingletonBeans(beanFactory);
-        registerParentContextBeans(beanFactory);
+        registerSingletonBeans(context.getBeanFactory());
         context.refresh();
+
+        registerParentContextBeans(context.getBeanFactory());
+
         return context;
     }
 
@@ -75,7 +76,7 @@ public class ChildApplicationContextBuilder {
             Assert.notNull(beanObject, "Can't register Singleton Bean for Null Bean Object");
 
             LOGGER.debug("Register Singleton Bean: {}.", beanName);
-            beanFactory.initializeBean(beanObject, beanName);
+            beanFactory.registerSingleton(beanName, beanObject);
         }
     }
 
@@ -94,6 +95,8 @@ public class ChildApplicationContextBuilder {
             builder.addPropertyValue("parentContext", parentContext);
 
             listableBeanFactory.registerBeanDefinition(beanName, builder.getBeanDefinition());
+            Object bean = listableBeanFactory.getBean(beanName);
+            Assert.notNull(bean, String.format("Can't initialize bean %s from %s.", beanName, parentBeanName));
         }
     }
 }
