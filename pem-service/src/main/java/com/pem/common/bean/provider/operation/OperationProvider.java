@@ -1,4 +1,4 @@
-package com.pem.common.provider.operation;
+package com.pem.common.bean.provider.operation;
 
 import com.pem.operation.basic.Operation;
 

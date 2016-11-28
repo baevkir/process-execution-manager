@@ -1,6 +1,6 @@
-package com.pem.common.provider.operation.impl;
+package com.pem.common.bean.provider.operation.impl;
 
-import com.pem.common.provider.operation.OperationProvider;
+import com.pem.common.bean.provider.operation.OperationProvider;
 import com.pem.common.utils.ApplicationContextWrapper;
 import com.pem.operation.basic.Operation;
 import org.slf4j.Logger;

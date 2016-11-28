@@ -1,4 +1,4 @@
-package com.pem.common.provider.context;
+package com.pem.common.bean.provider.context;
 
 import com.pem.context.OperationContext;
 import com.pem.context.OperationContextImpl;

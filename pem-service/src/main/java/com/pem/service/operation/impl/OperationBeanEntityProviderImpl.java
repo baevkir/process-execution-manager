@@ -1,7 +1,7 @@
 package com.pem.service.operation.impl;
 
-import com.pem.common.provider.operation.OperationProvider;
-import com.pem.common.provider.operation.impl.RegisterGlobalOperation;
+import com.pem.common.bean.provider.operation.OperationProvider;
+import com.pem.common.bean.provider.operation.impl.RegisterGlobalOperation;
 import com.pem.common.utils.NamingUtils;
 import com.pem.operation.basic.Operation;
 import com.pem.persistence.model.common.bean.BeanEntity;

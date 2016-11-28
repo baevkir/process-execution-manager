@@ -3,7 +3,7 @@ package com.pem.test.proxy;
 
 import com.pem.common.CompareFirstWithSecondCalculator;
 import com.pem.common.MathOperationContext;
-import com.pem.common.provider.operation.OperationProvider;
+import com.pem.common.bean.provider.operation.OperationProvider;
 import com.pem.context.OperationContext;
 import com.pem.context.OperationContextImpl;
 import com.pem.operation.basic.Operation;

@@ -1,7 +1,7 @@
 package com.pem.service.calculator.impl;
 
-import com.pem.common.provider.calculator.ConditionCalculatorProvider;
-import com.pem.common.provider.calculator.impl.RegisterGlobalCalculator;
+import com.pem.common.bean.provider.calculator.ConditionCalculatorProvider;
+import com.pem.common.bean.provider.calculator.impl.RegisterGlobalCalculator;
 import com.pem.common.utils.NamingUtils;
 import com.pem.conditioncalculator.ConditionCalculator;
 import com.pem.persistence.model.common.bean.BeanEntity;

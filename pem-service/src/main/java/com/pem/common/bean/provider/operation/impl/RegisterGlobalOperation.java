@@ -1,4 +1,4 @@
-package com.pem.common.provider.operation.impl;
+package com.pem.common.bean.provider.operation.impl;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

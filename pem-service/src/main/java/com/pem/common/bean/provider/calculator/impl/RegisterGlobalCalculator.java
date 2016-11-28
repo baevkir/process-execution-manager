@@ -1,4 +1,4 @@
-package com.pem.common.provider.calculator.impl;
+package com.pem.common.bean.provider.calculator.impl;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

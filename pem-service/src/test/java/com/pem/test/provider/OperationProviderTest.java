@@ -1,7 +1,7 @@
 package com.pem.test.provider;
 
 
-import com.pem.common.provider.operation.OperationProvider;
+import com.pem.common.bean.provider.operation.OperationProvider;
 import com.pem.test.common.config.TestConfig;
 import com.pem.operation.basic.Operation;
 import com.pem.operation.composite.SyncCompositeOperation;

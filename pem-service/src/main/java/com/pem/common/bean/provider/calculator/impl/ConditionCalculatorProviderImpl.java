@@ -1,6 +1,6 @@
-package com.pem.common.provider.calculator.impl;
+package com.pem.common.bean.provider.calculator.impl;
 
-import com.pem.common.provider.calculator.ConditionCalculatorProvider;
+import com.pem.common.bean.provider.calculator.ConditionCalculatorProvider;
 import com.pem.common.utils.ApplicationContextWrapper;
 import com.pem.conditioncalculator.ConditionCalculator;
 import org.slf4j.Logger;

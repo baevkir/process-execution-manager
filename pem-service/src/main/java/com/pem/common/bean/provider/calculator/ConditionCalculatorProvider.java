@@ -1,4 +1,4 @@
-package com.pem.common.provider.calculator;
+package com.pem.common.bean.provider.calculator;
 
 import com.pem.conditioncalculator.ConditionCalculator;
 

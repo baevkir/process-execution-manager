@@ -1,6 +1,6 @@
 package com.pem.service.executor.impl;
 
-import com.pem.common.provider.context.OperationContextProvider;
+import com.pem.common.bean.provider.context.OperationContextProvider;
 import com.pem.context.OperationContext;
 import com.pem.operation.basic.Operation;
 import com.pem.common.converter.ConverterFactory;
