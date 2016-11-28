@@ -2,7 +2,7 @@ package com.pem.test.composite;
 
 import com.pem.operation.composite.CompositeOperation;
 import com.pem.operation.basic.Operation;
-import com.pem.common.*;
+import com.pem.logic.*;
 import com.pem.config.AppConfig;
 import com.pem.context.OperationContextImpl;
 import com.pem.operation.composite.SyncCompositeOperationImp;

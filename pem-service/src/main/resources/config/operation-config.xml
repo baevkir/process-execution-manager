@@ -29,12 +29,12 @@
           scope="prototype"/>
 
     <bean id="operationProvider"
-          class="com.pem.common.bean.provider.operation.impl.OperationProviderImpl"/>
+          class="com.pem.logic.bean.provider.operation.impl.OperationProviderImpl"/>
 
     <bean id="conditionCalculatorProvider"
-          class="com.pem.common.bean.provider.calculator.impl.ConditionCalculatorProviderImpl"/>
+          class="com.pem.logic.bean.provider.calculator.impl.ConditionCalculatorProviderImpl"/>
 
-    <bean id="operationContext" class="com.pem.common.bean.provider.context.DefaultContextFactory"/>
+    <bean id="operationContext" class="com.pem.logic.bean.provider.context.DefaultContextFactory"/>
 
-    <bean id="operationContextProvider" class="com.pem.common.bean.provider.context.impl.OperationContextProviderImpl"/>
+    <bean id="operationContextProvider" class="com.pem.logic.bean.provider.context.impl.OperationContextProviderImpl"/>
 </beans>

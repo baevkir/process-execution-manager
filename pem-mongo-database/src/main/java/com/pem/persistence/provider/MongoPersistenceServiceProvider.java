@@ -1,6 +1,6 @@
 package com.pem.persistence.provider;
 
-import com.pem.common.applicationcontext.ChildApplicationContextBuilder;
+import com.pem.logic.common.applicationcontext.ChildApplicationContextBuilder;
 import com.pem.persistence.api.provider.PersistenceServiceProvider;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;

@@ -1,6 +1,6 @@
 package com.pem.test.loop;
 
-import com.pem.common.*;
+import com.pem.logic.*;
 import com.pem.config.AppConfig;
 import com.pem.operation.basic.Operation;
 import com.pem.operation.loop.counter.CounterLoopOperation;

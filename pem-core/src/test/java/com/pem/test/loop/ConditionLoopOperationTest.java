@@ -1,7 +1,7 @@
 package com.pem.test.loop;
 
-import com.pem.common.MathOperationContext;
-import com.pem.common.MultiplyOperation;
+import com.pem.logic.MathOperationContext;
+import com.pem.logic.MultiplyOperation;
 import com.pem.config.AppConfig;
 import com.pem.context.OperationContext;
 import com.pem.operation.basic.Operation;

@@ -1,7 +1,7 @@
 package com.pem.test.state;
 
 import com.pem.operation.basic.Operation;
-import com.pem.common.*;
+import com.pem.logic.*;
 import com.pem.config.AppConfig;
 import com.pem.operation.composite.SyncCompositeOperationImp;
 import com.pem.operation.condition.ConditionOperation;

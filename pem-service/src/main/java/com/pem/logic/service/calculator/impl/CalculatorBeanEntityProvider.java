@@ -1,0 +1,10 @@
+package com.pem.logic.service.calculator.impl;
+
+import com.pem.conditioncalculator.ConditionCalculator;
+import com.pem.persistence.model.common.bean.BeanEntity;
+
+import java.util.List;
+
+public interface CalculatorBeanEntityProvider {
+    <C extends ConditionCalculator> List<BeanEntity> provideCalculatorBeanEntities(Class<C> calculatorClass);
+}

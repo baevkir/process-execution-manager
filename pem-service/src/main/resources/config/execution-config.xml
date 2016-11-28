@@ -4,12 +4,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="executionProcessService" class="com.pem.service.process.impl.ExecutionProcessServiceImpl">
+    <bean id="executionProcessService" class="com.pem.logic.service.process.impl.ExecutionProcessServiceImpl">
         <property name="converterFactory" ref="converterFactory"/>
         <property name="persistenceService" ref="processPersistenceService"/>
     </bean>
 
-    <bean id="operationExecutor" class="com.pem.service.executor.impl.OperationExecutorImpl">
+    <bean id="operationExecutor" class="com.pem.logic.service.executor.impl.OperationExecutorImpl">
         <property name="contextProvider" ref="operationContextProvider"/>
         <property name="converterFactory" ref="converterFactory"/>
         <property name="processService" ref="executionProcessService"/>

@@ -1,6 +1,6 @@
 package com.pem.test.common;
 
-import com.pem.common.bean.provider.operation.impl.RegisterGlobalOperation;
+import com.pem.logic.bean.provider.operation.impl.RegisterGlobalOperation;
 import com.pem.context.OperationContext;
 import com.pem.operation.basic.AbstractOperation;
 import com.pem.operation.basic.Operation;

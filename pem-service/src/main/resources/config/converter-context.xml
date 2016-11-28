@@ -4,58 +4,58 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="converterFactory" class="com.pem.common.converter.ConverterFactoryImpl"/>
+    <bean id="converterFactory" class="com.pem.logic.converter.ConverterFactoryImpl"/>
 
-    <bean id="beanOperationConverter" class="com.pem.common.converter.operation.basic.BeanOperationConverter">
+    <bean id="beanOperationConverter" class="com.pem.logic.converter.operation.basic.BeanOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
     </bean>
 
-    <bean id="binaryCalculatorConverter" class="com.pem.common.converter.calculator.BinaryCalculatorConverter">
+    <bean id="binaryCalculatorConverter" class="com.pem.logic.converter.calculator.BinaryCalculatorConverter">
         <property name="calculatorProvider" ref="conditionCalculatorProvider"/>
     </bean>
 
-    <bean id="integerCalculatorConverter" class="com.pem.common.converter.calculator.IntegerCalculatorConverter">
+    <bean id="integerCalculatorConverter" class="com.pem.logic.converter.calculator.IntegerCalculatorConverter">
         <property name="calculatorProvider" ref="conditionCalculatorProvider"/>
     </bean>
 
     <bean id="syncCompositeOperationConverter"
-          class="com.pem.common.converter.operation.composite.SyncCompositeOperationConverter">
+          class="com.pem.logic.converter.operation.composite.SyncCompositeOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
         <property name="converterFactory" ref="converterFactory"/>
     </bean>
 
     <bean id="binaryConditionOperationConverter"
-          class="com.pem.common.converter.operation.condition.BinaryConditionOperationConverter">
+          class="com.pem.logic.converter.operation.condition.BinaryConditionOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
         <property name="converterFactory" ref="converterFactory"/>
     </bean>
 
     <bean id="integerConditionOperationConverter"
-          class="com.pem.common.converter.operation.condition.IntegerConditionOperationConverter">
+          class="com.pem.logic.converter.operation.condition.IntegerConditionOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
         <property name="converterFactory" ref="converterFactory"/>
     </bean>
 
     <bean id="counterLoopOperationConverter"
-          class="com.pem.common.converter.operation.loop.CounterLoopOperationConverter">
+          class="com.pem.logic.converter.operation.loop.CounterLoopOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
         <property name="converterFactory" ref="converterFactory"/>
     </bean>
 
-    <bean id="doWhileOperationConverter" class="com.pem.common.converter.operation.loop.DoWhileOperationConverter">
+    <bean id="doWhileOperationConverter" class="com.pem.logic.converter.operation.loop.DoWhileOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
         <property name="converterFactory" ref="converterFactory"/>
     </bean>
 
-    <bean id="whileOperationConverter" class="com.pem.common.converter.operation.loop.WhileOperationConverter">
+    <bean id="whileOperationConverter" class="com.pem.logic.converter.operation.loop.WhileOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
         <property name="converterFactory" ref="converterFactory"/>
     </bean>
 
     <bean id="fromOperationEntityToProcessConverter"
-          class="com.pem.common.converter.process.FromOperationEntityToProcessConverter"/>
+          class="com.pem.logic.converter.process.FromOperationEntityToProcessConverter"/>
 
     <bean id="fromOperationToProcessConverter"
-          class="com.pem.common.converter.process.FromOperationToProcessConverter"/>
+          class="com.pem.logic.converter.process.FromOperationToProcessConverter"/>
 
 </beans>

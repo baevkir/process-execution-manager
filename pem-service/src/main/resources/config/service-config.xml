@@ -4,20 +4,20 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="calculatorBeanEntityProvider" class="com.pem.service.calculator.impl.CalculatorBeanEntityProviderImpl">
+    <bean id="calculatorBeanEntityProvider" class="com.pem.logic.service.calculator.impl.CalculatorBeanEntityProviderImpl">
         <property name="calculatorProvider" ref="conditionCalculatorProvider"/>
     </bean>
 
-    <bean id="conditionCalculatorService" class="com.pem.service.calculator.impl.ConditionCalculatorServiceImpl">
+    <bean id="conditionCalculatorService" class="com.pem.logic.service.calculator.impl.ConditionCalculatorServiceImpl">
         <property name="beanEntityProvider" ref="calculatorBeanEntityProvider"/>
         <property name="persistenceService" ref="calculatorPersistenceService"/>
     </bean>
 
-    <bean id="operationBeanEntityProvider" class="com.pem.service.operation.impl.OperationBeanEntityProviderImpl">
+    <bean id="operationBeanEntityProvider" class="com.pem.logic.service.operation.impl.OperationBeanEntityProviderImpl">
         <property name="operationProvider" ref="operationProvider"/>
     </bean>
 
-    <bean id="operationService" class="com.pem.service.operation.impl.OperationServiceImpl">
+    <bean id="operationService" class="com.pem.logic.service.operation.impl.OperationServiceImpl">
         <property name="beanEntityProvider" ref="operationBeanEntityProvider"/>
         <property name="persistenceService" ref="operationPersistenceService"/>
     </bean>

@@ -7,7 +7,7 @@ import com.pem.operation.condition.IntegerConditionOperation;
 import com.pem.operation.loop.condition.DoWhileOperation;
 import com.pem.operation.loop.condition.WhileOperation;
 import com.pem.operation.loop.counter.CounterLoopOperation;
-import com.pem.common.converter.ConverterFactory;
+import com.pem.logic.converter.ConverterFactory;
 import com.pem.persistence.model.operation.common.OperationEntity;
 import com.pem.persistence.model.operation.composite.SyncCompositeOperationEntity;
 import com.pem.persistence.model.operation.condition.IntegerConditionOperationEntity;

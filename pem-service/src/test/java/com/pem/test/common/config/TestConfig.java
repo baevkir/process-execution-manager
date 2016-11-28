@@ -1,6 +1,6 @@
 package com.pem.test.common.config;
 
-import com.pem.common.*;
+import com.pem.logic.*;
 import com.pem.conditioncalculator.BinaryConditionCalculator;
 import com.pem.conditioncalculator.IntegerConditionCalculator;
 import com.pem.context.OperationContext;

@@ -2,7 +2,7 @@ package com.pem.test.operation;
 
 import com.pem.operation.basic.Operation;
 import com.pem.context.OperationContext;
-import com.pem.common.MathOperationContext;
+import com.pem.logic.MathOperationContext;
 import com.pem.config.AppConfig;
 import com.pem.operation.basic.util.AnnotationOperation;
 import com.pem.operation.basic.util.reflection.annotions.OperationMethod;
@@ -16,7 +16,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.math.BigDecimal;
 
-import static com.pem.common.MathOperationContext.*;
+import static com.pem.logic.MathOperationContext.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AppConfig.class, loader = AnnotationConfigContextLoader.class)

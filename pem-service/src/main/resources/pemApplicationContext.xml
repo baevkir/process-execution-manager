@@ -13,5 +13,5 @@
     <import resource="classpath:/config/operation-config.xml"/>
     <import resource="classpath:/config/service-config.xml"/>
 
-    <bean id="operationContextProxy" class="com.pem.common.proxy.OperationContextProxy"/>
+    <bean id="operationContextProxy" class="com.pem.logic.common.proxy.OperationContextProxy"/>
 </beans>
