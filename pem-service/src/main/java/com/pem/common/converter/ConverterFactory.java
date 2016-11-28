@@ -1,4 +1,4 @@
-package com.pem.persistence.converter;
+package com.pem.common.converter;
 
 public interface ConverterFactory {
     <S, T> T convert(S source, Class<T> targetClass);

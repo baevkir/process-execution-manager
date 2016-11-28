@@ -2,7 +2,7 @@ package com.pem.service.process.impl;
 
 import com.pem.common.utils.ApplicationContextWrapper;
 import com.pem.operation.basic.Operation;
-import com.pem.persistence.converter.ConverterFactory;
+import com.pem.common.converter.ConverterFactory;
 import com.pem.persistence.model.operation.common.OperationEntity;
 import com.pem.persistence.model.proccess.ExecutionProcessEntity;
 import com.pem.persistence.api.service.process.ProcessPersistenceService;

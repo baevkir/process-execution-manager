@@ -3,7 +3,7 @@ package com.pem.service.executor.impl;
 import com.pem.common.provider.context.OperationContextProvider;
 import com.pem.context.OperationContext;
 import com.pem.operation.basic.Operation;
-import com.pem.persistence.converter.ConverterFactory;
+import com.pem.common.converter.ConverterFactory;
 import com.pem.persistence.model.operation.common.OperationEntity;
 import com.pem.persistence.model.proccess.ExecutionProcessEntity;
 import com.pem.service.executor.OperationExecutor;

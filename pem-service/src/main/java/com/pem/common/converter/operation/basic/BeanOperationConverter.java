@@ -1,8 +1,8 @@
-package com.pem.persistence.converter.operation.basic;
+package com.pem.common.converter.operation.basic;
 
 import com.pem.operation.basic.Operation;
-import com.pem.persistence.converter.common.AbstractOperationConverter;
-import com.pem.persistence.converter.common.RegisterInConverterFactory;
+import com.pem.common.converter.common.AbstractOperationConverter;
+import com.pem.common.converter.common.RegisterInConverterFactory;
 import com.pem.persistence.model.common.bean.BeanEntity;
 import com.pem.persistence.model.operation.basic.BeanOperationEntity;
 

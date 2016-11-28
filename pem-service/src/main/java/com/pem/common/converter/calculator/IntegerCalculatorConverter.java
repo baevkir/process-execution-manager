@@ -1,8 +1,8 @@
-package com.pem.persistence.converter.calculator;
+package com.pem.common.converter.calculator;
 
 import com.pem.conditioncalculator.IntegerConditionCalculator;
-import com.pem.persistence.converter.common.AbstractConditionCalculatorConverter;
-import com.pem.persistence.converter.common.RegisterInConverterFactory;
+import com.pem.common.converter.common.AbstractConditionCalculatorConverter;
+import com.pem.common.converter.common.RegisterInConverterFactory;
 import com.pem.persistence.model.calculator.IntegerCalculator;
 import com.pem.persistence.model.common.bean.BeanEntity;
 

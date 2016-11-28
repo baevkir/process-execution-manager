@@ -1,4 +1,4 @@
-package com.pem.persistence.converter.common;
+package com.pem.common.converter.common;
 
 import com.pem.common.provider.calculator.ConditionCalculatorProvider;
 import com.pem.conditioncalculator.ConditionCalculator;

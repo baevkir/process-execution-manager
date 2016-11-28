@@ -1,9 +1,9 @@
-package com.pem.persistence.converter.process;
+package com.pem.common.converter.process;
 
 import com.pem.common.utils.IdGenerator;
 import com.pem.common.utils.ReflectiveDTOProcessor;
-import com.pem.persistence.converter.common.Converter;
-import com.pem.persistence.converter.common.RegisterInConverterFactory;
+import com.pem.common.converter.common.Converter;
+import com.pem.common.converter.common.RegisterInConverterFactory;
 import com.pem.persistence.model.common.IdentifiableEntity;
 import com.pem.persistence.model.operation.common.OperationEntity;
 import com.pem.persistence.model.proccess.ExecutionProcessEntity;

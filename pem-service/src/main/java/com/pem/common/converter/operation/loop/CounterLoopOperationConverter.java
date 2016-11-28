@@ -1,10 +1,10 @@
-package com.pem.persistence.converter.operation.loop;
+package com.pem.common.converter.operation.loop;
 
 import com.pem.operation.basic.Operation;
 import com.pem.operation.loop.counter.CounterLoopOperation;
-import com.pem.persistence.converter.ConverterFactory;
-import com.pem.persistence.converter.common.AbstractOperationConverter;
-import com.pem.persistence.converter.common.RegisterInConverterFactory;
+import com.pem.common.converter.ConverterFactory;
+import com.pem.common.converter.common.AbstractOperationConverter;
+import com.pem.common.converter.common.RegisterInConverterFactory;
 import com.pem.persistence.model.operation.loop.CounterLoopOperationEntity;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")

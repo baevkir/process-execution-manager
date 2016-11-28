@@ -1,11 +1,11 @@
-package com.pem.persistence.converter.process;
+package com.pem.common.converter.process;
 
 import com.pem.common.utils.ApplicationContextWrapper;
 import com.pem.common.utils.IdGenerator;
 import com.pem.common.utils.NamingUtils;
 import com.pem.operation.basic.Operation;
-import com.pem.persistence.converter.common.Converter;
-import com.pem.persistence.converter.common.RegisterInConverterFactory;
+import com.pem.common.converter.common.Converter;
+import com.pem.common.converter.common.RegisterInConverterFactory;
 import com.pem.persistence.model.common.bean.BeanEntity;
 import com.pem.persistence.model.operation.basic.BeanOperationEntity;
 import com.pem.persistence.model.proccess.ExecutionProcessEntity;

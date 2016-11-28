@@ -1,9 +1,9 @@
-package com.pem.persistence.converter;
+package com.pem.common.converter;
 
 
 import com.pem.common.utils.ApplicationContextWrapper;
-import com.pem.persistence.converter.common.Converter;
-import com.pem.persistence.converter.common.RegisterInConverterFactory;
+import com.pem.common.converter.common.Converter;
+import com.pem.common.converter.common.RegisterInConverterFactory;
 import org.apache.commons.collections.map.MultiKeyMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

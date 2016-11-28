@@ -1,15 +1,15 @@
-package com.pem.persistence.converter.operation.loop;
+package com.pem.common.converter.operation.loop;
 
 import com.pem.conditioncalculator.BinaryConditionCalculator;
 import com.pem.operation.basic.Operation;
-import com.pem.operation.loop.condition.WhileOperation;
-import com.pem.persistence.converter.ConverterFactory;
-import com.pem.persistence.converter.common.AbstractOperationConverter;
-import com.pem.persistence.converter.common.RegisterInConverterFactory;
-import com.pem.persistence.model.operation.loop.condition.WhileLoopOperationEntity;
+import com.pem.operation.loop.condition.DoWhileOperation;
+import com.pem.common.converter.ConverterFactory;
+import com.pem.common.converter.common.AbstractOperationConverter;
+import com.pem.common.converter.common.RegisterInConverterFactory;
+import com.pem.persistence.model.operation.loop.condition.DoWhileLoopOperationEntity;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")
-public class WhileOperationConverter extends AbstractOperationConverter<WhileLoopOperationEntity> {
+public class DoWhileOperationConverter extends AbstractOperationConverter<DoWhileLoopOperationEntity> {
 
     private ConverterFactory converterFactory;
 
@@ -17,10 +17,9 @@ public class WhileOperationConverter extends AbstractOperationConverter<WhileLoo
         this.converterFactory = converterFactory;
     }
 
-
     @Override
-    public Operation convert(WhileLoopOperationEntity source) {
-        WhileOperation loopOperation = getOperationProvider().createCommonOperation(WhileOperation.class);
+    public Operation convert(DoWhileLoopOperationEntity source) {
+        DoWhileOperation loopOperation = getOperationProvider().createCommonOperation(DoWhileOperation.class);
         loopOperation.setOperationId(String.valueOf(source.getId()));
         loopOperation.setCalculator(converterFactory.convert(source.getCalculator(), BinaryConditionCalculator.class));
         loopOperation.setOperation(converterFactory.convert(source.getOperation(), Operation.class));
