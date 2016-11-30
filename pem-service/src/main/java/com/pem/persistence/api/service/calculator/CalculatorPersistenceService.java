@@ -10,5 +10,6 @@ public interface CalculatorPersistenceService {
     void updateCalculator(CalculatorEntity operationEntity);
     CalculatorEntity getCalculator(BigInteger id);
     List<CalculatorEntity> getAllCalculators();
+    <C extends CalculatorEntity> List<C> getCalculatorsByType(final Class<C> targetClass);
     void deleteCalculator(BigInteger id);
 }
