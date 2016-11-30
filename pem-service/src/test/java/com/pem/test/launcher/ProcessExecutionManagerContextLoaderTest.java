@@ -1,8 +1,8 @@
 package com.pem.test.launcher;
 
 import com.pem.integration.launcher.ProcessExecutionManagerLauncher;
-import com.pem.persistence.model.common.bean.BeanEntity;
 import com.pem.logic.service.operation.OperationService;
+import com.pem.persistence.model.operation.common.OperationEntity;
 import org.apache.commons.collections.CollectionUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,7 +28,7 @@ public class ProcessExecutionManagerContextLoaderTest {
         Assert.assertNotNull(contextLoader.getOperationService());
 
         OperationService operationService = contextLoader.getOperationService();
-        List<BeanEntity> operations = operationService.getAllOperationBeanEntities();
+        List<OperationEntity> operations = operationService.getAllOperations();
 
         Assert.assertTrue(CollectionUtils.isNotEmpty(operations));
     }

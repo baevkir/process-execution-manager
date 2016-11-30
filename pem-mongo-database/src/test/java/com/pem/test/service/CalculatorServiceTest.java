@@ -41,6 +41,6 @@ public class CalculatorServiceTest {
     }
 
     private CalculatorEntity createBinaryCalculator() {
-        return calculatorPersistenceService.createCalculator(creator.createBinaryCalculator());
+        return calculatorPersistenceService.createCalculator(creator.createRandomBinaryCalculator());
     }
 }

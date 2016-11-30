@@ -1,6 +1,5 @@
 package com.pem.logic.service.operation;
 
-import com.pem.persistence.model.common.bean.BeanEntity;
 import com.pem.persistence.model.operation.common.OperationEntity;
 
 import java.math.BigInteger;
@@ -11,7 +10,6 @@ public interface OperationService {
     void updateOperation(OperationEntity operationEntity);
     void deleteOperation(BigInteger id);
     OperationEntity getOperation(BigInteger id);
-    List<OperationEntity> getAllOperation();
+    List<OperationEntity> getAllOperations();
     void runOperation(BigInteger id);
-    List<BeanEntity> getAllOperationBeanEntities();
 }

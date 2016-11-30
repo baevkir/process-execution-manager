@@ -10,5 +10,6 @@ public interface OperationPersistenceService {
     void updateOperation(OperationEntity operationEntity);
     OperationEntity getOperation(BigInteger id);
     List<OperationEntity> getAllOperations();
+    <O extends OperationEntity> List<O> getOperationsByType(Class<O> targetClass);
     void deleteOperation(BigInteger id);
 }

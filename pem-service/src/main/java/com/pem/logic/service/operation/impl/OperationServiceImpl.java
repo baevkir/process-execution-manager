@@ -1,9 +1,8 @@
 package com.pem.logic.service.operation.impl;
 
-import com.pem.persistence.model.common.bean.BeanEntity;
-import com.pem.persistence.model.operation.common.OperationEntity;
-import com.pem.persistence.api.service.operation.OperationPersistenceService;
 import com.pem.logic.service.operation.OperationService;
+import com.pem.persistence.api.service.operation.OperationPersistenceService;
+import com.pem.persistence.model.operation.common.OperationEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +13,6 @@ public class OperationServiceImpl implements OperationService {
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationServiceImpl.class);
 
     private OperationPersistenceService persistenceService;
-    private OperationBeanEntityProvider beanEntityProvider;
 
     @Override
     public OperationEntity createOperation(OperationEntity operationEntity) {
@@ -41,7 +39,7 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public List<OperationEntity> getAllOperation() {
+    public List<OperationEntity> getAllOperations() {
         return persistenceService.getAllOperations();
     }
 
@@ -50,16 +48,7 @@ public class OperationServiceImpl implements OperationService {
 
     }
 
-    @Override
-    public List<BeanEntity> getAllOperationBeanEntities() {
-        return beanEntityProvider.provideOperationBeanEntity();
-    }
-
     public void setPersistenceService(OperationPersistenceService persistenceService) {
         this.persistenceService = persistenceService;
-    }
-
-    public void setBeanEntityProvider(OperationBeanEntityProvider beanEntityProvider) {
-        this.beanEntityProvider = beanEntityProvider;
     }
 }

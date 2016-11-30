@@ -1,9 +1,11 @@
 package com.pem.persistence.model.calculator.common;
 
 import com.pem.persistence.model.common.bean.BeanEntity;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 public abstract class BeanCalculatorEntity extends CalculatorEntity {
 
+    @Indexed(unique = true)
     private BeanEntity bean;
 
     public BeanEntity getBean() {

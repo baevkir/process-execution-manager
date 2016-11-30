@@ -21,41 +21,27 @@ public class TestEntityCreator {
     private Random random = new Random();
 
     public BinaryCalculator createBinaryCalculator() {
-        BinaryCalculator calculatorEntity = new BinaryCalculator();
-        calculatorEntity.setName("Test Calculator " + random.nextLong());
-        calculatorEntity.setDescription("Test Calculator description " + random.nextLong());
+        return createBinaryCalculator("testBinaryConditionCalculator");
+    }
 
-        BeanEntity beanEntity = new BeanEntity();
-        beanEntity.setBeanName("testBinaryConditionCalculator");
-        calculatorEntity.setBean(beanEntity);
-
-        return calculatorEntity;
+    public BinaryCalculator createRandomBinaryCalculator() {
+        return createBinaryCalculator(String.valueOf(random.nextInt()));
     }
 
     public IntegerCalculator createIntegerCalculator() {
-        IntegerCalculator calculatorEntity = new IntegerCalculator();
-        calculatorEntity.setName("Test Calculator " + random.nextLong());
-        calculatorEntity.setDescription("Test Calculator description " + random.nextLong());
+        return createIntegerCalculator("testIntegerConditionCalculator");
+    }
 
-        BeanEntity beanEntity = new BeanEntity();
-        beanEntity.setBeanName("testIntegerConditionCalculator");
-        calculatorEntity.setBean(beanEntity);
-
-        return calculatorEntity;
+    public IntegerCalculator createRandomIntegerCalculator() {
+        return createIntegerCalculator(String.valueOf(random.nextInt()));
     }
     public BeanOperationEntity createSimpleBeanOperation() {
-        BeanOperationEntity operationEntity = new BeanOperationEntity();
-        operationEntity.setName("Test operation " + random.nextLong());
-        operationEntity.setDescription("Test description " + random.nextLong());
-
-        BeanEntity bean = new BeanEntity();
-        bean.setName("Sum Operation");
-        bean.setBeanName("sumOperation");
-        operationEntity.setBean(bean);
-
-        return operationEntity;
+        return createSimpleBeanOperation("sumOperation");
     }
 
+    public BeanOperationEntity createRandomSimpleBeanOperation() {
+        return createSimpleBeanOperation(String.valueOf(random.nextInt()));
+    }
     public BinaryConditionOperationEntity createBinaryConditionOperationEntity(){
         BinaryConditionOperationEntity operationEntity = new BinaryConditionOperationEntity();
         operationEntity.setName("Test operation " + random.nextLong());
@@ -105,5 +91,42 @@ public class TestEntityCreator {
         state.setOperationEntity(createSimpleBeanOperation());
 
         return state;
+    }
+
+    private BeanOperationEntity createSimpleBeanOperation(String beanName) {
+        BeanOperationEntity operationEntity = new BeanOperationEntity();
+        operationEntity.setName("Test operation " + random.nextLong());
+        operationEntity.setDescription("Test description " + random.nextLong());
+
+        BeanEntity bean = new BeanEntity();
+        bean.setName("Test Operation");
+        bean.setBeanName(beanName);
+        operationEntity.setBean(bean);
+
+        return operationEntity;
+    }
+
+    private BinaryCalculator createBinaryCalculator(String beanName) {
+        BinaryCalculator calculatorEntity = new BinaryCalculator();
+        calculatorEntity.setName("Test Calculator " + random.nextLong());
+        calculatorEntity.setDescription("Test Calculator description " + random.nextLong());
+
+        BeanEntity beanEntity = new BeanEntity();
+        beanEntity.setBeanName(beanName);
+        calculatorEntity.setBean(beanEntity);
+
+        return calculatorEntity;
+    }
+
+    private IntegerCalculator createIntegerCalculator(String beanName) {
+        IntegerCalculator calculatorEntity = new IntegerCalculator();
+        calculatorEntity.setName("Test Calculator " + random.nextLong());
+        calculatorEntity.setDescription("Test Calculator description " + random.nextLong());
+
+        BeanEntity beanEntity = new BeanEntity();
+        beanEntity.setBeanName(beanName);
+        calculatorEntity.setBean(beanEntity);
+
+        return calculatorEntity;
     }
 }

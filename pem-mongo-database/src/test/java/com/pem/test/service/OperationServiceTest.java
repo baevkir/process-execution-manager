@@ -3,6 +3,7 @@ package com.pem.test.service;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;
 import com.pem.persistence.model.calculator.BinaryCalculator;
+import com.pem.persistence.model.operation.basic.BeanOperationEntity;
 import com.pem.persistence.model.operation.common.OperationEntity;
 import com.pem.persistence.model.operation.composite.CompositeOperationEntity;
 import com.pem.persistence.model.operation.composite.SyncCompositeOperationEntity;
@@ -72,8 +73,26 @@ public class OperationServiceTest {
         for (BigInteger innerId : innerOperationIds) {
             OperationEntity innerOperation = operationPersistenceService.getOperation(innerId);
             Assert.assertNotNull(innerOperation);
+
+            operationPersistenceService.deleteOperation(innerOperation.getId());
         }
 
+    }
+
+    @Test
+    public void testGetByImplementationOperation() {
+        createSimpleBeanOperation();
+        createSimpleBeanOperation();
+        createBinaryConditionOperationEntity();
+
+        List<OperationEntity> fullList = operationPersistenceService.getAllOperations();
+        Assert.assertTrue(fullList.size() == 5);
+
+        List<BeanOperationEntity> beanOperationEntities = operationPersistenceService.getOperationsByType(BeanOperationEntity.class);
+        Assert.assertTrue(beanOperationEntities.size() == 4);
+
+        List<BinaryConditionOperationEntity> conditionOperationEntities = operationPersistenceService.getOperationsByType(BinaryConditionOperationEntity.class);
+        Assert.assertTrue(conditionOperationEntities.size() == 1);
     }
 
     private BinaryConditionOperationEntity createBinaryConditionOperationEntity() {
@@ -94,11 +113,11 @@ public class OperationServiceTest {
     }
 
     private OperationEntity createSimpleBeanOperation() {
-        return operationPersistenceService.createOperation(creator.createSimpleBeanOperation());
+        return operationPersistenceService.createOperation(creator.createRandomSimpleBeanOperation());
     }
 
     private BinaryCalculator createBinaryCalculator() {
-        return (BinaryCalculator)calculatorPersistenceService.createCalculator(creator.createBinaryCalculator());
+        return (BinaryCalculator) calculatorPersistenceService.createCalculator(creator.createRandomBinaryCalculator());
     }
 
 }
