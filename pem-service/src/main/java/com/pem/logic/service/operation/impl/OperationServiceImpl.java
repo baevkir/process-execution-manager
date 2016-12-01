@@ -1,7 +1,7 @@
 package com.pem.logic.service.operation.impl;
 
 import com.pem.logic.service.operation.OperationService;
-import com.pem.persistence.api.model.operation.common.OperationObject;
+import com.pem.model.operation.common.OperationDTO;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,13 +15,13 @@ public class OperationServiceImpl implements OperationService {
     private OperationPersistenceService persistenceService;
 
     @Override
-    public OperationObject createOperation(OperationObject operationEntity) {
+    public OperationDTO createOperation(OperationDTO operationEntity) {
         LOGGER.debug("Create new Operation: {}.", operationEntity);
         return persistenceService.createOperation(operationEntity);
     }
 
     @Override
-    public void updateOperation(OperationObject operationEntity) {
+    public void updateOperation(OperationDTO operationEntity) {
         LOGGER.debug("Update Operation: {}.", operationEntity);
         persistenceService.updateOperation(operationEntity);
     }
@@ -33,13 +33,13 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public OperationObject getOperation(BigInteger id) {
+    public OperationDTO getOperation(BigInteger id) {
         LOGGER.debug("Get Operation by id: {}.", id);
         return persistenceService.getOperation(id);
     }
 
     @Override
-    public List<OperationObject> getAllOperations() {
+    public List<OperationDTO> getAllOperations() {
         return persistenceService.getAllOperations();
     }
 

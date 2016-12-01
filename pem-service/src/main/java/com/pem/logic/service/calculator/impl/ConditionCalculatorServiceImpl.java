@@ -1,8 +1,8 @@
 package com.pem.logic.service.calculator.impl;
 
 import com.pem.conditioncalculator.ConditionCalculator;
-import com.pem.persistence.api.model.calculator.common.ConditionCalculatorObject;
-import com.pem.persistence.api.model.common.bean.BeanObject;
+import com.pem.model.calculator.common.ConditionCalculatorDTO;
+import com.pem.model.common.bean.BeanObject;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import com.pem.logic.service.calculator.ConditionCalculatorService;
 import org.slf4j.Logger;
@@ -20,13 +20,13 @@ public class ConditionCalculatorServiceImpl implements ConditionCalculatorServic
     private CalculatorBeanEntityProvider beanEntityProvider;
 
     @Override
-    public ConditionCalculatorObject createConditionCalculator(ConditionCalculatorObject calculatorEntity) {
+    public ConditionCalculatorDTO createConditionCalculator(ConditionCalculatorDTO calculatorEntity) {
         LOGGER.debug("Create new ConditionCalculator: {}.", calculatorEntity);
         return persistenceService.createCalculator(calculatorEntity);
     }
 
     @Override
-    public void updateConditionCalculator(ConditionCalculatorObject calculatorEntity) {
+    public void updateConditionCalculator(ConditionCalculatorDTO calculatorEntity) {
         LOGGER.debug("Update ConditionCalculator: {}.", calculatorEntity);
         persistenceService.updateCalculator(calculatorEntity);
     }
@@ -38,13 +38,13 @@ public class ConditionCalculatorServiceImpl implements ConditionCalculatorServic
     }
 
     @Override
-    public ConditionCalculatorObject getConditionCalculator(BigInteger id) {
+    public ConditionCalculatorDTO getConditionCalculator(BigInteger id) {
         LOGGER.debug("Get ConditionCalculator by id: {}.", id);
         return persistenceService.getCalculator(id);
     }
 
     @Override
-    public List<ConditionCalculatorObject> getAllConditionCalculators() {
+    public List<ConditionCalculatorDTO> getAllConditionCalculators() {
         LOGGER.debug("Get All ConditionCalculators.");
         return persistenceService.getAllCalculators();
     }

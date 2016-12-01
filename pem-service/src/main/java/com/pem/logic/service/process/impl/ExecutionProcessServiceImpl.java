@@ -1,10 +1,10 @@
 package com.pem.logic.service.process.impl;
 
 import com.pem.logic.common.utils.ApplicationContextWrapper;
+import com.pem.model.operation.common.OperationDTO;
 import com.pem.operation.basic.Operation;
 import com.pem.logic.converter.ConverterFactory;
-import com.pem.persistence.api.model.operation.common.OperationObject;
-import com.pem.persistence.api.model.proccess.ExecutionProcess;
+import com.pem.model.proccess.ExecutionProcess;
 import com.pem.persistence.api.service.process.ProcessPersistenceService;
 import com.pem.logic.service.process.ExecutionProcessService;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService, App
     private ConverterFactory converterFactory;
 
     @Override
-    public ExecutionProcess createExecutionProcess(OperationObject operationEntity) {
+    public ExecutionProcess createExecutionProcess(OperationDTO operationEntity) {
         LOGGER.debug("Create new ExecutionProcess for: {}.", operationEntity);
         ExecutionProcess processEntity = converterFactory.convert(operationEntity, ExecutionProcess.class);
         return persistenceService.createProcess(processEntity);

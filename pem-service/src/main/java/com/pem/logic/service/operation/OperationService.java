@@ -1,15 +1,15 @@
 package com.pem.logic.service.operation;
 
-import com.pem.persistence.api.model.operation.common.OperationObject;
+import com.pem.model.operation.common.OperationDTO;
 
 import java.math.BigInteger;
 import java.util.List;
 
 public interface OperationService {
-    OperationObject createOperation(OperationObject operationEntity);
-    void updateOperation(OperationObject operationEntity);
+    OperationDTO createOperation(OperationDTO operationEntity);
+    void updateOperation(OperationDTO operationEntity);
     void deleteOperation(BigInteger id);
-    OperationObject getOperation(BigInteger id);
-    List<OperationObject> getAllOperations();
+    OperationDTO getOperation(BigInteger id);
+    List<OperationDTO> getAllOperations();
     void runOperation(BigInteger id);
 }

@@ -1,11 +1,11 @@
 package com.pem.logic.service.executor;
 
 import com.pem.operation.basic.Operation;
-import com.pem.persistence.api.model.operation.common.OperationObject;
-import com.pem.persistence.api.model.proccess.ExecutionProcess;
+import com.pem.model.operation.common.OperationDTO;
+import com.pem.model.proccess.ExecutionProcess;
 
 public interface OperationExecutor {
-    void execute(OperationObject operationEntity);
+    void execute(OperationDTO operationEntity);
     void execute(ExecutionProcess executionProcess);
     void execute(Operation operation);
 }

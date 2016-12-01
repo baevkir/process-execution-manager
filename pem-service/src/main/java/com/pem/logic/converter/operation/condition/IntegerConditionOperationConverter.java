@@ -1,16 +1,18 @@
 package com.pem.logic.converter.operation.condition;
 
 import com.pem.conditioncalculator.IntegerConditionCalculator;
-import com.pem.operation.basic.Operation;
-import com.pem.operation.condition.IntegerConditionOperation;
 import com.pem.logic.converter.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
-import com.pem.persistence.api.model.operation.condition.IntegerConditionOperationObject;
-import com.pem.persistence.api.model.operation.condition.state.IntegerState;
+import com.pem.model.operation.common.OperationDTO;
+import com.pem.model.operation.condition.IntegerConditionOperationDTO;
+import com.pem.operation.basic.Operation;
+import com.pem.operation.condition.IntegerConditionOperation;
+
+import java.util.Map;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")
-public class IntegerConditionOperationConverter extends AbstractOperationConverter<IntegerConditionOperationObject> {
+public class IntegerConditionOperationConverter extends AbstractOperationConverter<IntegerConditionOperationDTO> {
 
     private ConverterFactory converterFactory;
 
@@ -19,16 +21,16 @@ public class IntegerConditionOperationConverter extends AbstractOperationConvert
     }
 
     @Override
-    public Operation convert(IntegerConditionOperationObject source) {
+    public Operation convert(IntegerConditionOperationDTO source) {
         IntegerConditionOperation conditionOperation = getOperationProvider().createCommonOperation(IntegerConditionOperation.class);
         conditionOperation.setOperationId(String.valueOf(source.getId()));
 
         IntegerConditionCalculator calculator = converterFactory.convert(source.getCalculatorEntity(), IntegerConditionCalculator.class);
         conditionOperation.setCalculator(calculator);
 
-        for (IntegerState state : source.getStates() ) {
-            Operation operation = converterFactory.convert(state.getOperationEntity(), Operation.class);
-            conditionOperation.addCondition(state.getConditionValue(), operation);
+        for (Map.Entry<Integer, OperationDTO> state : source.getStates().entrySet()) {
+            Operation operation = converterFactory.convert(state.getValue(), Operation.class);
+            conditionOperation.addCondition(state.getKey(), operation);
         }
         return conditionOperation;
     }

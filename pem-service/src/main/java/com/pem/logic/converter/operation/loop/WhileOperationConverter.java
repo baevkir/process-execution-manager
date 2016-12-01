@@ -6,7 +6,7 @@ import com.pem.operation.loop.condition.WhileOperation;
 import com.pem.logic.converter.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
-import com.pem.persistence.api.model.operation.loop.condition.WhileLoopOperationObject;
+import com.pem.model.operation.loop.condition.WhileLoopOperationObject;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")
 public class WhileOperationConverter extends AbstractOperationConverter<WhileLoopOperationObject> {

@@ -6,12 +6,12 @@ import com.pem.logic.common.utils.NamingUtils;
 import com.pem.operation.basic.Operation;
 import com.pem.logic.converter.common.Converter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
-import com.pem.persistence.api.model.common.bean.BeanObject;
-import com.pem.persistence.api.model.operation.basic.BeanOperationObject;
-import com.pem.persistence.api.model.proccess.ExecutionProcess;
-import com.pem.persistence.api.model.proccess.record.ExecutionRecord;
-import com.pem.persistence.api.model.proccess.record.ExecutionRecordPK;
-import com.pem.persistence.api.model.proccess.record.ExecutionRecordState;
+import com.pem.model.common.bean.BeanObject;
+import com.pem.model.operation.basic.BeanOperationDTO;
+import com.pem.model.proccess.ExecutionProcess;
+import com.pem.model.proccess.record.ExecutionRecord;
+import com.pem.model.proccess.record.ExecutionRecordPK;
+import com.pem.model.proccess.record.ExecutionRecordState;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -37,7 +37,7 @@ public class FromOperationToProcessConverter implements Converter<Operation, Exe
         beanEntity.setName(name);
         beanEntity.setBeanName(beanName);
 
-        BeanOperationObject beanOperationEntity = new BeanOperationObject();
+        BeanOperationDTO beanOperationEntity = new BeanOperationDTO();
         beanOperationEntity.setId(IdGenerator.generateId());
         beanOperationEntity.setName(name);
         beanOperationEntity.setBean(beanEntity);

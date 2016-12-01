@@ -4,7 +4,7 @@ import com.pem.logic.bean.provider.operation.OperationProvider;
 import com.pem.logic.bean.provider.operation.impl.RegisterGlobalOperation;
 import com.pem.logic.common.utils.NamingUtils;
 import com.pem.operation.basic.Operation;
-import com.pem.persistence.api.model.common.bean.BeanObject;
+import com.pem.model.common.bean.BeanObject;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -32,7 +32,7 @@ public class OperationDatabaseSynchronizer {
 
     @PostConstruct
     public void synchronizeOperationsWithDatabase() {
-//        List<OperationObject> operationEntities = operationPersistenceService.getOperationsByType(BeanOperationObject.class);
+//        List<OperationDTO> operationEntities = operationPersistenceService.getOperationsByType(BeanOperationDTO.class);
         List<BeanObject> operations = provideOperationBeanEntity();
         for (BeanObject operation : operations) {
             

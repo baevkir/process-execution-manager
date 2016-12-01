@@ -4,12 +4,12 @@ import com.pem.logic.common.utils.IdGenerator;
 import com.pem.logic.common.utils.ReflectiveDTOProcessor;
 import com.pem.logic.converter.common.Converter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
-import com.pem.persistence.api.model.common.IdentifiableObject;
-import com.pem.persistence.api.model.operation.common.OperationObject;
-import com.pem.persistence.api.model.proccess.ExecutionProcess;
-import com.pem.persistence.api.model.proccess.record.ExecutionRecord;
-import com.pem.persistence.api.model.proccess.record.ExecutionRecordPK;
-import com.pem.persistence.api.model.proccess.record.ExecutionRecordState;
+import com.pem.model.common.IdentifiableDTO;
+import com.pem.model.operation.common.OperationDTO;
+import com.pem.model.proccess.ExecutionProcess;
+import com.pem.model.proccess.record.ExecutionRecord;
+import com.pem.model.proccess.record.ExecutionRecordPK;
+import com.pem.model.proccess.record.ExecutionRecordState;
 import com.rits.cloning.Cloner;
 
 import java.math.BigInteger;
@@ -18,19 +18,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")
-public class FromOperationEntityToProcessConverter implements Converter<OperationObject, ExecutionProcess> {
+public class FromOperationEntityToProcessConverter implements Converter<OperationDTO, ExecutionProcess> {
     private Cloner cloner = new Cloner();
-    private ReflectiveDTOProcessor<OperationObject> reflectiveProcessor = new ReflectiveDTOProcessor<>();
+    private ReflectiveDTOProcessor<OperationDTO> reflectiveProcessor = new ReflectiveDTOProcessor<>();
 
     @Override
-    public ExecutionProcess convert(OperationObject source) {
+    public ExecutionProcess convert(OperationDTO source) {
         ExecutionProcess processEntity = new ExecutionProcess();
         processEntity.setId(IdGenerator.generateId());
         processEntity.setName(source.getName());
 
         GenerateIdAction generateIdAction = new GenerateIdAction();
 
-        OperationObject executionOperation = reflectiveProcessor
+        OperationDTO executionOperation = reflectiveProcessor
                 .setSource(cloner.deepClone(source))
                 .setAction(generateIdAction)
                 .process();
@@ -70,10 +70,10 @@ public class FromOperationEntityToProcessConverter implements Converter<Operatio
 
         @Override
         public void execute(Object object) {
-            if (!(object instanceof IdentifiableObject)) {
+            if (!(object instanceof IdentifiableDTO)) {
                 return;
             }
-            IdentifiableObject entity = (IdentifiableObject) object;
+            IdentifiableDTO entity = (IdentifiableDTO) object;
             BigInteger newId = IdGenerator.generateId();
             generatedIds.add(newId);
 

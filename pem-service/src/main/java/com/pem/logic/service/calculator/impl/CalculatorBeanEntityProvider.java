@@ -1,7 +1,7 @@
 package com.pem.logic.service.calculator.impl;
 
 import com.pem.conditioncalculator.ConditionCalculator;
-import com.pem.persistence.api.model.common.bean.BeanObject;
+import com.pem.model.common.bean.BeanObject;
 
 import java.util.List;
 

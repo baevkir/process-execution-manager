@@ -1,6 +1,6 @@
 package com.pem.persistence.api.service.process;
 
-import com.pem.persistence.api.model.proccess.ExecutionProcess;
+import com.pem.model.proccess.ExecutionProcess;
 
 import java.math.BigInteger;
 import java.util.List;

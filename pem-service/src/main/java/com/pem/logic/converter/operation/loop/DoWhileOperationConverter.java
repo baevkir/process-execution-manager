@@ -1,15 +1,15 @@
 package com.pem.logic.converter.operation.loop;
 
 import com.pem.conditioncalculator.BinaryConditionCalculator;
+import com.pem.model.operation.loop.condition.DoWhileLoopOperationDTO;
 import com.pem.operation.basic.Operation;
 import com.pem.operation.loop.condition.DoWhileOperation;
 import com.pem.logic.converter.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
-import com.pem.persistence.api.model.operation.loop.condition.DoWhileLoopOperationObject;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")
-public class DoWhileOperationConverter extends AbstractOperationConverter<DoWhileLoopOperationObject> {
+public class DoWhileOperationConverter extends AbstractOperationConverter<DoWhileLoopOperationDTO> {
 
     private ConverterFactory converterFactory;
 
@@ -18,7 +18,7 @@ public class DoWhileOperationConverter extends AbstractOperationConverter<DoWhil
     }
 
     @Override
-    public Operation convert(DoWhileLoopOperationObject source) {
+    public Operation convert(DoWhileLoopOperationDTO source) {
         DoWhileOperation loopOperation = getOperationProvider().createCommonOperation(DoWhileOperation.class);
         loopOperation.setOperationId(String.valueOf(source.getId()));
         loopOperation.setCalculator(converterFactory.convert(source.getCalculator(), BinaryConditionCalculator.class));

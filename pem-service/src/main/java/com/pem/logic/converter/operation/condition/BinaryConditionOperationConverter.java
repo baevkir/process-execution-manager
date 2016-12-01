@@ -1,16 +1,18 @@
 package com.pem.logic.converter.operation.condition;
 
 import com.pem.conditioncalculator.BinaryConditionCalculator;
-import com.pem.operation.basic.Operation;
-import com.pem.operation.condition.BinaryConditionOperation;
 import com.pem.logic.converter.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
-import com.pem.persistence.api.model.operation.condition.BinaryConditionOperationObject;
-import com.pem.persistence.api.model.operation.condition.state.BooleanState;
+import com.pem.model.operation.common.OperationDTO;
+import com.pem.model.operation.condition.BinaryConditionOperationDTO;
+import com.pem.operation.basic.Operation;
+import com.pem.operation.condition.BinaryConditionOperation;
+
+import java.util.Map;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")
-public class BinaryConditionOperationConverter extends AbstractOperationConverter<BinaryConditionOperationObject> {
+public class BinaryConditionOperationConverter extends AbstractOperationConverter<BinaryConditionOperationDTO> {
 
     private ConverterFactory converterFactory;
 
@@ -19,16 +21,16 @@ public class BinaryConditionOperationConverter extends AbstractOperationConverte
     }
 
     @Override
-    public Operation convert(BinaryConditionOperationObject source) {
+    public Operation convert(BinaryConditionOperationDTO source) {
         BinaryConditionOperation binaryConditionOperation = getOperationProvider().createCommonOperation(BinaryConditionOperation.class);
         binaryConditionOperation.setOperationId(String.valueOf(source.getId()));
 
         BinaryConditionCalculator calculator = converterFactory.convert(source.getCalculatorEntity(), BinaryConditionCalculator.class);
         binaryConditionOperation.setCalculator(calculator);
 
-        for (BooleanState state : source.getStates() ) {
-            Operation operation = converterFactory.convert(state.getOperationEntity(), Operation.class);
-            binaryConditionOperation.addCondition(state.getConditionValue(), operation);
+        for (Map.Entry<Boolean, OperationDTO> state : source.getStates().entrySet()) {
+            Operation operation = converterFactory.convert(state.getValue(), Operation.class);
+            binaryConditionOperation.addCondition(state.getKey(), operation);
         }
         return binaryConditionOperation;
     }

@@ -2,10 +2,10 @@ package com.pem.logic.service.executor.impl;
 
 import com.pem.logic.bean.provider.context.OperationContextProvider;
 import com.pem.context.OperationContext;
+import com.pem.model.operation.common.OperationDTO;
 import com.pem.operation.basic.Operation;
 import com.pem.logic.converter.ConverterFactory;
-import com.pem.persistence.api.model.operation.common.OperationObject;
-import com.pem.persistence.api.model.proccess.ExecutionProcess;
+import com.pem.model.proccess.ExecutionProcess;
 import com.pem.logic.service.executor.OperationExecutor;
 import com.pem.logic.service.process.ExecutionProcessService;
 import org.slf4j.Logger;
@@ -21,7 +21,7 @@ public class OperationExecutorImpl implements OperationExecutor {
     private OperationContextProvider contextProvider;
 
     @Override
-    public void execute(OperationObject operationEntity) {
+    public void execute(OperationDTO operationEntity) {
         ExecutionProcess executionProcess = processService.createExecutionProcess(operationEntity);
         execute(executionProcess);
     }
