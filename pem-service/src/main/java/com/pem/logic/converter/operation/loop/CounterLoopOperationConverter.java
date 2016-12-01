@@ -1,5 +1,6 @@
 package com.pem.logic.converter.operation.loop;
 
+import com.pem.logic.common.Constants;
 import com.pem.model.operation.loop.CounterLoopOperationDTO;
 import com.pem.operation.basic.Operation;
 import com.pem.operation.loop.counter.CounterLoopOperation;
@@ -7,7 +8,7 @@ import com.pem.logic.converter.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
 
-@RegisterInConverterFactory(factoryName = "converterFactory")
+@RegisterInConverterFactory(factoryName = Constants.CONVERTER_FACTORY_NAME)
 public class CounterLoopOperationConverter extends AbstractOperationConverter<CounterLoopOperationDTO> {
 
     private ConverterFactory converterFactory;

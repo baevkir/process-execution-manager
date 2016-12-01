@@ -1,5 +1,6 @@
 package com.pem.logic.converter.process;
 
+import com.pem.logic.common.Constants;
 import com.pem.logic.common.utils.IdGenerator;
 import com.pem.logic.common.utils.ReflectiveDTOProcessor;
 import com.pem.logic.converter.common.Converter;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-@RegisterInConverterFactory(factoryName = "converterFactory")
+@RegisterInConverterFactory(factoryName = Constants.CONVERTER_FACTORY_NAME)
 public class FromOperationEntityToProcessConverter implements Converter<OperationDTO, ExecutionProcess> {
     private Cloner cloner = new Cloner();
     private ReflectiveDTOProcessor<OperationDTO> reflectiveProcessor = new ReflectiveDTOProcessor<>();

@@ -1,6 +1,7 @@
 package com.pem.logic.converter.operation.condition;
 
 import com.pem.conditioncalculator.BinaryConditionCalculator;
+import com.pem.logic.common.Constants;
 import com.pem.logic.converter.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
@@ -11,7 +12,7 @@ import com.pem.operation.condition.BinaryConditionOperation;
 
 import java.util.Map;
 
-@RegisterInConverterFactory(factoryName = "converterFactory")
+@RegisterInConverterFactory(factoryName = Constants.CONVERTER_FACTORY_NAME)
 public class BinaryConditionOperationConverter extends AbstractOperationConverter<BinaryConditionOperationDTO> {
 
     private ConverterFactory converterFactory;

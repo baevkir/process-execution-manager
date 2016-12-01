@@ -1,73 +1,74 @@
 package com.pem.test.common;
 
-import com.pem.persistence.api.model.calculator.bean.BinaryBeanConditionCalculator;
-import com.pem.persistence.api.model.calculator.bean.IntegerBeanConditionCalculator;
-import com.pem.persistence.api.model.common.bean.BeanObject;
-import com.pem.persistence.api.model.operation.basic.BeanOperationObject;
-import com.pem.persistence.api.model.operation.common.OperationObject;
-import com.pem.persistence.api.model.operation.composite.SyncCompositeOperationObject;
-import com.pem.persistence.api.model.operation.condition.BinaryConditionOperationObject;
-import com.pem.persistence.api.model.operation.condition.IntegerConditionOperationObject;
-import com.pem.persistence.api.model.operation.condition.state.BooleanState;
-import com.pem.persistence.api.model.operation.condition.state.IntegerState;
+import com.pem.model.calculator.bean.BinaryBeanConditionCalculatorDTO;
+import com.pem.model.calculator.bean.IntegerBeanConditionCalculatorDTO;
+import com.pem.model.common.bean.BeanObject;
+import com.pem.model.operation.basic.BeanOperationDTO;
+import com.pem.model.operation.common.OperationDTO;
+import com.pem.model.operation.composite.SyncCompositeOperationDTO;
+import com.pem.model.operation.condition.BinaryConditionOperationDTO;
+import com.pem.model.operation.condition.IntegerConditionOperationDTO;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class TestEntityCreator {
 
     private Random random = new Random();
 
-    public BinaryBeanConditionCalculator createBinaryCalculator() {
+    public BinaryBeanConditionCalculatorDTO createBinaryCalculator() {
         return createBinaryCalculator("testBinaryConditionCalculator");
     }
 
-    public BinaryBeanConditionCalculator createRandomBinaryCalculator() {
+    public BinaryBeanConditionCalculatorDTO createRandomBinaryCalculator() {
         return createBinaryCalculator(String.valueOf(random.nextInt()));
     }
 
-    public IntegerBeanConditionCalculator createIntegerCalculator() {
+    public IntegerBeanConditionCalculatorDTO createIntegerCalculator() {
         return createIntegerCalculator("testIntegerConditionCalculator");
     }
 
-    public IntegerBeanConditionCalculator createRandomIntegerCalculator() {
+    public IntegerBeanConditionCalculatorDTO createRandomIntegerCalculator() {
         return createIntegerCalculator(String.valueOf(random.nextInt()));
     }
-    public BeanOperationObject createSimpleBeanOperation() {
+    public BeanOperationDTO createSimpleBeanOperation() {
         return createSimpleBeanOperation("sumOperation");
     }
 
-    public BeanOperationObject createRandomSimpleBeanOperation() {
+    public BeanOperationDTO createRandomSimpleBeanOperation() {
         return createSimpleBeanOperation(String.valueOf(random.nextInt()));
     }
-    public BinaryConditionOperationObject createBinaryConditionOperationEntity(){
-        BinaryConditionOperationObject operationEntity = new BinaryConditionOperationObject();
+    public BinaryConditionOperationDTO createBinaryConditionOperationEntity(){
+        BinaryConditionOperationDTO operationEntity = new BinaryConditionOperationDTO();
         operationEntity.setName("Test operation " + random.nextLong());
         operationEntity.setDescription("Test description " + random.nextLong());
 
-        operationEntity.setStates(Arrays.asList(createSimpleBinaryState(true), createSimpleBinaryState(false)));
+        Map<Boolean, OperationDTO> states = new HashMap<>();
+        states.putAll(createSimpleBinaryState(true));
+        states.putAll(createSimpleBinaryState(false));
+        operationEntity.setStates(states);
 
         operationEntity.setCalculatorEntity(createBinaryCalculator());
         return operationEntity;
     }
 
-    public IntegerConditionOperationObject createIntegerConditionOperationEntity(){
-        IntegerConditionOperationObject operationEntity = new IntegerConditionOperationObject();
+    public IntegerConditionOperationDTO createIntegerConditionOperationEntity(){
+        IntegerConditionOperationDTO operationEntity = new IntegerConditionOperationDTO();
         operationEntity.setName("Test operation " + random.nextLong());
         operationEntity.setDescription("Test description " + random.nextLong());
 
-        operationEntity.setStates(Arrays.asList(createSimpleIntegerState(0),createSimpleIntegerState(1)));
+        Map<Integer, OperationDTO> states = new HashMap<>();
+        states.putAll(createSimpleIntegerState(0));
+        states.putAll(createSimpleIntegerState(1));
+        operationEntity.setStates(states);
 
         operationEntity.setCalculatorEntity(createIntegerCalculator());
         return operationEntity;
     }
 
-    public SyncCompositeOperationObject createSyncCompositeOperationEntity() {
-        SyncCompositeOperationObject operationEntity = new SyncCompositeOperationObject();
+    public SyncCompositeOperationDTO createSyncCompositeOperationEntity() {
+        SyncCompositeOperationDTO operationEntity = new SyncCompositeOperationDTO();
         operationEntity.setName("Test composite operation " + random.nextLong());
-        List<OperationObject> operationEntities = new ArrayList<>();
+        List<OperationDTO> operationEntities = new ArrayList<>();
         operationEntities.add(createSimpleBeanOperation());
         operationEntities.add(createSimpleBeanOperation());
         operationEntities.add(createSimpleBeanOperation());
@@ -77,24 +78,20 @@ public class TestEntityCreator {
         return operationEntity;
     }
 
-    private BooleanState createSimpleBinaryState(Boolean value) {
-        BooleanState state = new BooleanState();
-        state.setConditionValue(value);
-        state.setOperationEntity(createSimpleBeanOperation());
-
+    private Map<Boolean, OperationDTO> createSimpleBinaryState(Boolean value) {
+        Map<Boolean, OperationDTO> state = new HashMap<>();
+        state.put(value, createSimpleBeanOperation());
         return state;
     }
 
-    private IntegerState createSimpleIntegerState(Integer value) {
-        IntegerState state = new IntegerState();
-        state.setConditionValue(value);
-        state.setOperationEntity(createSimpleBeanOperation());
-
+    private Map<Integer, OperationDTO> createSimpleIntegerState(Integer value) {
+        Map<Integer, OperationDTO> state = new HashMap<>();
+        state.put(value, createSimpleBeanOperation());
         return state;
     }
 
-    private BeanOperationObject createSimpleBeanOperation(String beanName) {
-        BeanOperationObject operationEntity = new BeanOperationObject();
+    private BeanOperationDTO createSimpleBeanOperation(String beanName) {
+        BeanOperationDTO operationEntity = new BeanOperationDTO();
         operationEntity.setName("Test operation " + random.nextLong());
         operationEntity.setDescription("Test description " + random.nextLong());
 
@@ -106,8 +103,8 @@ public class TestEntityCreator {
         return operationEntity;
     }
 
-    private BinaryBeanConditionCalculator createBinaryCalculator(String beanName) {
-        BinaryBeanConditionCalculator calculatorEntity = new BinaryBeanConditionCalculator();
+    private BinaryBeanConditionCalculatorDTO createBinaryCalculator(String beanName) {
+        BinaryBeanConditionCalculatorDTO calculatorEntity = new BinaryBeanConditionCalculatorDTO();
         calculatorEntity.setName("Test Calculator " + random.nextLong());
         calculatorEntity.setDescription("Test Calculator description " + random.nextLong());
 
@@ -118,8 +115,8 @@ public class TestEntityCreator {
         return calculatorEntity;
     }
 
-    private IntegerBeanConditionCalculator createIntegerCalculator(String beanName) {
-        IntegerBeanConditionCalculator calculatorEntity = new IntegerBeanConditionCalculator();
+    private IntegerBeanConditionCalculatorDTO createIntegerCalculator(String beanName) {
+        IntegerBeanConditionCalculatorDTO calculatorEntity = new IntegerBeanConditionCalculatorDTO();
         calculatorEntity.setName("Test Calculator " + random.nextLong());
         calculatorEntity.setDescription("Test Calculator description " + random.nextLong());
 

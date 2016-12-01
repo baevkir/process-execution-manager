@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="converterFactory" class="com.pem.logic.converter.ConverterFactoryImpl"/>
+    <bean id="pem.service.ConverterFactory" class="com.pem.logic.converter.ConverterFactoryImpl"/>
 
     <bean id="beanOperationConverter" class="com.pem.logic.converter.operation.basic.BeanOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
@@ -21,35 +21,35 @@
     <bean id="syncCompositeOperationConverter"
           class="com.pem.logic.converter.operation.composite.SyncCompositeOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
-        <property name="converterFactory" ref="converterFactory"/>
+        <property name="converterFactory" ref="pem.service.ConverterFactory"/>
     </bean>
 
     <bean id="binaryConditionOperationConverter"
           class="com.pem.logic.converter.operation.condition.BinaryConditionOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
-        <property name="converterFactory" ref="converterFactory"/>
+        <property name="converterFactory" ref="pem.service.ConverterFactory"/>
     </bean>
 
     <bean id="integerConditionOperationConverter"
           class="com.pem.logic.converter.operation.condition.IntegerConditionOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
-        <property name="converterFactory" ref="converterFactory"/>
+        <property name="converterFactory" ref="pem.service.ConverterFactory"/>
     </bean>
 
     <bean id="counterLoopOperationConverter"
           class="com.pem.logic.converter.operation.loop.CounterLoopOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
-        <property name="converterFactory" ref="converterFactory"/>
+        <property name="converterFactory" ref="pem.service.ConverterFactory"/>
     </bean>
 
     <bean id="doWhileOperationConverter" class="com.pem.logic.converter.operation.loop.DoWhileOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
-        <property name="converterFactory" ref="converterFactory"/>
+        <property name="converterFactory" ref="pem.service.ConverterFactory"/>
     </bean>
 
     <bean id="whileOperationConverter" class="com.pem.logic.converter.operation.loop.WhileOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>
-        <property name="converterFactory" ref="converterFactory"/>
+        <property name="converterFactory" ref="pem.service.ConverterFactory"/>
     </bean>
 
     <bean id="fromOperationEntityToProcessConverter"

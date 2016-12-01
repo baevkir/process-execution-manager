@@ -1,5 +1,8 @@
 package com.pem.test.converter;
 
+import com.pem.model.operation.common.OperationDTO;
+import com.pem.model.operation.composite.SyncCompositeOperationDTO;
+import com.pem.model.operation.loop.CounterLoopOperationDTO;
 import com.pem.operation.basic.Operation;
 import com.pem.operation.condition.BinaryConditionOperation;
 import com.pem.operation.condition.IntegerConditionOperation;
@@ -7,13 +10,10 @@ import com.pem.operation.loop.condition.DoWhileOperation;
 import com.pem.operation.loop.condition.WhileOperation;
 import com.pem.operation.loop.counter.CounterLoopOperation;
 import com.pem.logic.converter.ConverterFactory;
-import com.pem.persistence.api.model.operation.common.OperationObject;
-import com.pem.persistence.api.model.operation.composite.SyncCompositeOperationObject;
-import com.pem.persistence.api.model.operation.condition.IntegerConditionOperationObject;
-import com.pem.persistence.api.model.operation.loop.CounterLoopOperationObject;
-import com.pem.persistence.api.model.operation.loop.condition.DoWhileLoopOperationObject;
-import com.pem.persistence.api.model.operation.loop.condition.WhileLoopOperationObject;
-import com.pem.persistence.api.model.proccess.ExecutionProcess;
+import com.pem.model.operation.condition.IntegerConditionOperationDTO;
+import com.pem.model.operation.loop.condition.DoWhileLoopOperationDTO;
+import com.pem.model.operation.loop.condition.WhileLoopOperationObject;
+import com.pem.model.proccess.ExecutionProcess;
 import com.pem.test.common.TestEntityCreator;
 import com.pem.test.common.config.TestConfig;
 import org.junit.Assert;
@@ -34,14 +34,14 @@ public class ConverterFactoryTest {
 
     @Test
     public void testConverterExist() {
-        OperationObject operationEntity = creator.createSimpleBeanOperation();
+        OperationDTO operationEntity = creator.createSimpleBeanOperation();
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
         Assert.assertNotNull(operation);
     }
 
     @Test
     public void testConverterConditionOperationOperation() {
-        OperationObject operationEntity = creator.createBinaryConditionOperationEntity();
+        OperationDTO operationEntity = creator.createBinaryConditionOperationEntity();
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
         Assert.assertNotNull(operation);
         Assert.assertTrue(operation instanceof BinaryConditionOperation);
@@ -49,7 +49,7 @@ public class ConverterFactoryTest {
 
     @Test
     public void testConverterSyncCompositeOperation() {
-        SyncCompositeOperationObject operationEntity = creator.createSyncCompositeOperationEntity();
+        SyncCompositeOperationDTO operationEntity = creator.createSyncCompositeOperationEntity();
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
         Assert.assertNotNull(operation);
         Assert.assertTrue(operation instanceof com.pem.operation.composite.SyncCompositeOperation);
@@ -57,7 +57,7 @@ public class ConverterFactoryTest {
 
     @Test
     public void testConverterIntegerConditionOperation() {
-        IntegerConditionOperationObject operationEntity = creator.createIntegerConditionOperationEntity();
+        IntegerConditionOperationDTO operationEntity = creator.createIntegerConditionOperationEntity();
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
         Assert.assertNotNull(operation);
         Assert.assertTrue(operation instanceof IntegerConditionOperation);
@@ -65,7 +65,7 @@ public class ConverterFactoryTest {
 
     @Test
     public void testCounterLoopOperationConverter() {
-        CounterLoopOperationObject operationEntity = new CounterLoopOperationObject();
+        CounterLoopOperationDTO operationEntity = new CounterLoopOperationDTO();
         operationEntity.setCount(100);
         operationEntity.setOperation(creator.createIntegerConditionOperationEntity());
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
@@ -75,7 +75,7 @@ public class ConverterFactoryTest {
 
     @Test
     public void testDoWhileOperationConverter() {
-        DoWhileLoopOperationObject operationEntity = new DoWhileLoopOperationObject();
+        DoWhileLoopOperationDTO operationEntity = new DoWhileLoopOperationDTO();
         operationEntity.setOperation(creator.createSyncCompositeOperationEntity());
         operationEntity.setCalculator(creator.createBinaryCalculator());
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
@@ -95,8 +95,8 @@ public class ConverterFactoryTest {
 
     @Test
     public void testExecutionProcessConverter() {
-        OperationObject operationEntity = creator.createSyncCompositeOperationEntity();
-        ExecutionProcess processEntity = converterFactory.convert(operationEntity, OperationObject.class, ExecutionProcess.class);
+        OperationDTO operationEntity = creator.createSyncCompositeOperationEntity();
+        ExecutionProcess processEntity = converterFactory.convert(operationEntity, OperationDTO.class, ExecutionProcess.class);
         Assert.assertNotNull(processEntity);
         Assert.assertTrue(processEntity instanceof ExecutionProcess);
     }

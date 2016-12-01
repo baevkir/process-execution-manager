@@ -1,6 +1,7 @@
 package com.pem.logic.converter.operation.loop;
 
 import com.pem.conditioncalculator.BinaryConditionCalculator;
+import com.pem.logic.common.Constants;
 import com.pem.operation.basic.Operation;
 import com.pem.operation.loop.condition.WhileOperation;
 import com.pem.logic.converter.ConverterFactory;
@@ -8,7 +9,7 @@ import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
 import com.pem.model.operation.loop.condition.WhileLoopOperationObject;
 
-@RegisterInConverterFactory(factoryName = "converterFactory")
+@RegisterInConverterFactory(factoryName = Constants.CONVERTER_FACTORY_NAME)
 public class WhileOperationConverter extends AbstractOperationConverter<WhileLoopOperationObject> {
 
     private ConverterFactory converterFactory;

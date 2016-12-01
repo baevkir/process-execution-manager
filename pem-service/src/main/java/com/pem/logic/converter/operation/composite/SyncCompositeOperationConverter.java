@@ -1,12 +1,13 @@
 package com.pem.logic.converter.operation.composite;
 
+import com.pem.logic.common.Constants;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.operation.composite.SyncCompositeOperationDTO;
 import com.pem.operation.basic.Operation;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
 
-@RegisterInConverterFactory(factoryName = "converterFactory")
+@RegisterInConverterFactory(factoryName = Constants.CONVERTER_FACTORY_NAME)
 public class SyncCompositeOperationConverter extends AbstractOperationConverter<SyncCompositeOperationDTO> {
 
     private com.pem.logic.converter.ConverterFactory converterFactory;
