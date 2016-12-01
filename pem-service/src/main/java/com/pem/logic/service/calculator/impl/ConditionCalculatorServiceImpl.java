@@ -1,8 +1,8 @@
 package com.pem.logic.service.calculator.impl;
 
 import com.pem.conditioncalculator.ConditionCalculator;
-import com.pem.persistence.model.calculator.common.CalculatorEntity;
-import com.pem.persistence.model.common.bean.BeanEntity;
+import com.pem.persistence.api.model.calculator.common.ConditionCalculatorObject;
+import com.pem.persistence.api.model.common.bean.BeanObject;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import com.pem.logic.service.calculator.ConditionCalculatorService;
 import org.slf4j.Logger;
@@ -20,13 +20,13 @@ public class ConditionCalculatorServiceImpl implements ConditionCalculatorServic
     private CalculatorBeanEntityProvider beanEntityProvider;
 
     @Override
-    public CalculatorEntity createConditionCalculator(CalculatorEntity calculatorEntity) {
+    public ConditionCalculatorObject createConditionCalculator(ConditionCalculatorObject calculatorEntity) {
         LOGGER.debug("Create new ConditionCalculator: {}.", calculatorEntity);
         return persistenceService.createCalculator(calculatorEntity);
     }
 
     @Override
-    public void updateConditionCalculator(CalculatorEntity calculatorEntity) {
+    public void updateConditionCalculator(ConditionCalculatorObject calculatorEntity) {
         LOGGER.debug("Update ConditionCalculator: {}.", calculatorEntity);
         persistenceService.updateCalculator(calculatorEntity);
     }
@@ -38,19 +38,19 @@ public class ConditionCalculatorServiceImpl implements ConditionCalculatorServic
     }
 
     @Override
-    public CalculatorEntity getConditionCalculator(BigInteger id) {
+    public ConditionCalculatorObject getConditionCalculator(BigInteger id) {
         LOGGER.debug("Get ConditionCalculator by id: {}.", id);
         return persistenceService.getCalculator(id);
     }
 
     @Override
-    public List<CalculatorEntity> getAllConditionCalculators() {
+    public List<ConditionCalculatorObject> getAllConditionCalculators() {
         LOGGER.debug("Get All ConditionCalculators.");
         return persistenceService.getAllCalculators();
     }
 
     @Override
-    public <C extends ConditionCalculator> List<BeanEntity> getConditionCalculatorBeanEntitiesForClass(Class<C> tClass) {
+    public <C extends ConditionCalculator> List<BeanObject> getConditionCalculatorBeanEntitiesForClass(Class<C> tClass) {
         return beanEntityProvider.provideCalculatorBeanEntities(tClass);
     }
 

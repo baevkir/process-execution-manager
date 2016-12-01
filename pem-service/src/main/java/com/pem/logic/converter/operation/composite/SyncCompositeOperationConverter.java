@@ -1,14 +1,13 @@
 package com.pem.logic.converter.operation.composite;
 
 import com.pem.operation.basic.Operation;
-import com.pem.operation.composite.SyncCompositeOperation;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
-import com.pem.persistence.model.operation.common.OperationEntity;
-import com.pem.persistence.model.operation.composite.SyncCompositeOperationEntity;
+import com.pem.persistence.api.model.operation.common.OperationObject;
+import com.pem.persistence.api.model.operation.composite.SyncCompositeOperationObject;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")
-public class SyncCompositeOperationConverter extends AbstractOperationConverter<SyncCompositeOperationEntity> {
+public class SyncCompositeOperationConverter extends AbstractOperationConverter<SyncCompositeOperationObject> {
 
     private com.pem.logic.converter.ConverterFactory converterFactory;
 
@@ -17,11 +16,11 @@ public class SyncCompositeOperationConverter extends AbstractOperationConverter<
     }
 
     @Override
-    public Operation convert(SyncCompositeOperationEntity source) {
-        SyncCompositeOperation syncCompositeOperation = getOperationProvider().createCommonOperation(SyncCompositeOperation.class);
+    public Operation convert(SyncCompositeOperationObject source) {
+        com.pem.operation.composite.SyncCompositeOperation syncCompositeOperation = getOperationProvider().createCommonOperation(com.pem.operation.composite.SyncCompositeOperation.class);
         syncCompositeOperation.setOperationId(String.valueOf(source.getId()));
 
-        for (OperationEntity operationEntity: source.getOperationEntities()) {
+        for (OperationObject operationEntity: source.getOperationEntities()) {
             syncCompositeOperation.addOperation(converterFactory.convert(operationEntity, Operation.class));
         }
         return syncCompositeOperation;

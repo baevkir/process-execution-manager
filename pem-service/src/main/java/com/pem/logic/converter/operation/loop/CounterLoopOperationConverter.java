@@ -5,10 +5,10 @@ import com.pem.operation.loop.counter.CounterLoopOperation;
 import com.pem.logic.converter.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
-import com.pem.persistence.model.operation.loop.CounterLoopOperationEntity;
+import com.pem.persistence.api.model.operation.loop.CounterLoopOperationObject;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")
-public class CounterLoopOperationConverter extends AbstractOperationConverter<CounterLoopOperationEntity> {
+public class CounterLoopOperationConverter extends AbstractOperationConverter<CounterLoopOperationObject> {
 
     private ConverterFactory converterFactory;
 
@@ -17,7 +17,7 @@ public class CounterLoopOperationConverter extends AbstractOperationConverter<Co
     }
 
     @Override
-    public Operation convert(CounterLoopOperationEntity source) {
+    public Operation convert(CounterLoopOperationObject source) {
         CounterLoopOperation loopOperation = getOperationProvider().createCommonOperation(CounterLoopOperation.class);
         loopOperation.setOperationId(String.valueOf(source.getId()));
         loopOperation.setCount(source.getCount());

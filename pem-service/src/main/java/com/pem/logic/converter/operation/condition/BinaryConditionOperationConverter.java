@@ -6,11 +6,11 @@ import com.pem.operation.condition.BinaryConditionOperation;
 import com.pem.logic.converter.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
-import com.pem.persistence.model.operation.condition.BinaryConditionOperationEntity;
-import com.pem.persistence.model.operation.condition.state.BooleanState;
+import com.pem.persistence.api.model.operation.condition.BinaryConditionOperationObject;
+import com.pem.persistence.api.model.operation.condition.state.BooleanState;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")
-public class BinaryConditionOperationConverter extends AbstractOperationConverter<BinaryConditionOperationEntity> {
+public class BinaryConditionOperationConverter extends AbstractOperationConverter<BinaryConditionOperationObject> {
 
     private ConverterFactory converterFactory;
 
@@ -19,7 +19,7 @@ public class BinaryConditionOperationConverter extends AbstractOperationConverte
     }
 
     @Override
-    public Operation convert(BinaryConditionOperationEntity source) {
+    public Operation convert(BinaryConditionOperationObject source) {
         BinaryConditionOperation binaryConditionOperation = getOperationProvider().createCommonOperation(BinaryConditionOperation.class);
         binaryConditionOperation.setOperationId(String.valueOf(source.getId()));
 

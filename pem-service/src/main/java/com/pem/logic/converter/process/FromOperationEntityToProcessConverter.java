@@ -4,12 +4,12 @@ import com.pem.logic.common.utils.IdGenerator;
 import com.pem.logic.common.utils.ReflectiveDTOProcessor;
 import com.pem.logic.converter.common.Converter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
-import com.pem.persistence.model.common.IdentifiableEntity;
-import com.pem.persistence.model.operation.common.OperationEntity;
-import com.pem.persistence.model.proccess.ExecutionProcessEntity;
-import com.pem.persistence.model.proccess.record.ExecutionRecordEntity;
-import com.pem.persistence.model.proccess.record.ExecutionRecordPK;
-import com.pem.persistence.model.proccess.record.ExecutionRecordState;
+import com.pem.persistence.api.model.common.IdentifiableObject;
+import com.pem.persistence.api.model.operation.common.OperationObject;
+import com.pem.persistence.api.model.proccess.ExecutionProcess;
+import com.pem.persistence.api.model.proccess.record.ExecutionRecord;
+import com.pem.persistence.api.model.proccess.record.ExecutionRecordPK;
+import com.pem.persistence.api.model.proccess.record.ExecutionRecordState;
 import com.rits.cloning.Cloner;
 
 import java.math.BigInteger;
@@ -18,34 +18,34 @@ import java.util.LinkedList;
 import java.util.List;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")
-public class FromOperationEntityToProcessConverter implements Converter<OperationEntity, ExecutionProcessEntity> {
+public class FromOperationEntityToProcessConverter implements Converter<OperationObject, ExecutionProcess> {
     private Cloner cloner = new Cloner();
-    private ReflectiveDTOProcessor<OperationEntity> reflectiveProcessor = new ReflectiveDTOProcessor<>();
+    private ReflectiveDTOProcessor<OperationObject> reflectiveProcessor = new ReflectiveDTOProcessor<>();
 
     @Override
-    public ExecutionProcessEntity convert(OperationEntity source) {
-        ExecutionProcessEntity processEntity = new ExecutionProcessEntity();
+    public ExecutionProcess convert(OperationObject source) {
+        ExecutionProcess processEntity = new ExecutionProcess();
         processEntity.setId(IdGenerator.generateId());
         processEntity.setName(source.getName());
 
         GenerateIdAction generateIdAction = new GenerateIdAction();
 
-        OperationEntity executionOperation = reflectiveProcessor
+        OperationObject executionOperation = reflectiveProcessor
                 .setSource(cloner.deepClone(source))
                 .setAction(generateIdAction)
                 .process();
 
-        List<ExecutionRecordEntity> executionRecords = createExecutionRecords(generateIdAction.getGeneratedIds(), processEntity.getId());
+        List<ExecutionRecord> executionRecords = createExecutionRecords(generateIdAction.getGeneratedIds(), processEntity.getId());
 
         processEntity.setExecutionRecords(executionRecords);
         processEntity.setExecutionOperation(executionOperation);
         return processEntity;
     }
 
-    private List<ExecutionRecordEntity> createExecutionRecords(List<BigInteger> generatedIds, BigInteger processId) {
-        List<ExecutionRecordEntity> result = new ArrayList<>();
+    private List<ExecutionRecord> createExecutionRecords(List<BigInteger> generatedIds, BigInteger processId) {
+        List<ExecutionRecord> result = new ArrayList<>();
         for (BigInteger id : generatedIds) {
-            ExecutionRecordEntity executionRecord = new ExecutionRecordEntity();
+            ExecutionRecord executionRecord = new ExecutionRecord();
             executionRecord.setId(IdGenerator.generateId());
 
             ExecutionRecordPK pk = new ExecutionRecordPK();
@@ -70,10 +70,10 @@ public class FromOperationEntityToProcessConverter implements Converter<Operatio
 
         @Override
         public void execute(Object object) {
-            if (!(object instanceof IdentifiableEntity)) {
+            if (!(object instanceof IdentifiableObject)) {
                 return;
             }
-            IdentifiableEntity entity = (IdentifiableEntity) object;
+            IdentifiableObject entity = (IdentifiableObject) object;
             BigInteger newId = IdGenerator.generateId();
             generatedIds.add(newId);
 

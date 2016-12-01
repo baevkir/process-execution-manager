@@ -1,10 +1,10 @@
 package com.pem.persistence.api.service.process;
 
-import com.pem.persistence.model.proccess.record.ExecutionRecordEntity;
-import com.pem.persistence.model.proccess.record.ExecutionRecordPK;
+import com.pem.persistence.api.model.proccess.record.ExecutionRecord;
+import com.pem.persistence.api.model.proccess.record.ExecutionRecordPK;
 
 public interface ExecutionRecordPersistenceService {
-    ExecutionRecordEntity createExecutionRecord(ExecutionRecordEntity executionRecord);
-    void updateExecutionRecord(ExecutionRecordEntity executionRecord);
-    ExecutionRecordEntity findExecutionRecordByPk(ExecutionRecordPK pk);
+    ExecutionRecord createExecutionRecord(ExecutionRecord executionRecord);
+    void updateExecutionRecord(ExecutionRecord executionRecord);
+    ExecutionRecord findExecutionRecordByPk(ExecutionRecordPK pk);
 }

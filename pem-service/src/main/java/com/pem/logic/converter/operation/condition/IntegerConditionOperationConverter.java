@@ -6,11 +6,11 @@ import com.pem.operation.condition.IntegerConditionOperation;
 import com.pem.logic.converter.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
-import com.pem.persistence.model.operation.condition.IntegerConditionOperationEntity;
-import com.pem.persistence.model.operation.condition.state.IntegerState;
+import com.pem.persistence.api.model.operation.condition.IntegerConditionOperationObject;
+import com.pem.persistence.api.model.operation.condition.state.IntegerState;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")
-public class IntegerConditionOperationConverter extends AbstractOperationConverter<IntegerConditionOperationEntity> {
+public class IntegerConditionOperationConverter extends AbstractOperationConverter<IntegerConditionOperationObject> {
 
     private ConverterFactory converterFactory;
 
@@ -19,7 +19,7 @@ public class IntegerConditionOperationConverter extends AbstractOperationConvert
     }
 
     @Override
-    public Operation convert(IntegerConditionOperationEntity source) {
+    public Operation convert(IntegerConditionOperationObject source) {
         IntegerConditionOperation conditionOperation = getOperationProvider().createCommonOperation(IntegerConditionOperation.class);
         conditionOperation.setOperationId(String.valueOf(source.getId()));
 

@@ -6,12 +6,12 @@ import com.pem.logic.common.utils.NamingUtils;
 import com.pem.operation.basic.Operation;
 import com.pem.logic.converter.common.Converter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
-import com.pem.persistence.model.common.bean.BeanEntity;
-import com.pem.persistence.model.operation.basic.BeanOperationEntity;
-import com.pem.persistence.model.proccess.ExecutionProcessEntity;
-import com.pem.persistence.model.proccess.record.ExecutionRecordEntity;
-import com.pem.persistence.model.proccess.record.ExecutionRecordPK;
-import com.pem.persistence.model.proccess.record.ExecutionRecordState;
+import com.pem.persistence.api.model.common.bean.BeanObject;
+import com.pem.persistence.api.model.operation.basic.BeanOperationObject;
+import com.pem.persistence.api.model.proccess.ExecutionProcess;
+import com.pem.persistence.api.model.proccess.record.ExecutionRecord;
+import com.pem.persistence.api.model.proccess.record.ExecutionRecordPK;
+import com.pem.persistence.api.model.proccess.record.ExecutionRecordState;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -19,30 +19,30 @@ import org.springframework.context.ApplicationContextAware;
 import java.util.Collections;
 
 @RegisterInConverterFactory(factoryName = "converterFactory")
-public class FromOperationToProcessConverter implements Converter<Operation, ExecutionProcessEntity>, ApplicationContextAware {
+public class FromOperationToProcessConverter implements Converter<Operation, ExecutionProcess>, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
     @Override
-    public ExecutionProcessEntity convert(Operation source) {
+    public ExecutionProcess convert(Operation source) {
         ApplicationContextWrapper contextWrapper = new ApplicationContextWrapper(applicationContext);
         String beanName = contextWrapper.getBeanName(source);
         String name = NamingUtils.getHumanReadableName(beanName);
 
-        ExecutionProcessEntity processEntity = new ExecutionProcessEntity();
+        ExecutionProcess processEntity = new ExecutionProcess();
         processEntity.setId(IdGenerator.generateId());
         processEntity.setName(name);
 
-        BeanEntity beanEntity = new BeanEntity();
+        BeanObject beanEntity = new BeanObject();
         beanEntity.setName(name);
         beanEntity.setBeanName(beanName);
 
-        BeanOperationEntity beanOperationEntity = new BeanOperationEntity();
+        BeanOperationObject beanOperationEntity = new BeanOperationObject();
         beanOperationEntity.setId(IdGenerator.generateId());
         beanOperationEntity.setName(name);
         beanOperationEntity.setBean(beanEntity);
 
-        ExecutionRecordEntity executionRecordEntity = new ExecutionRecordEntity();
+        ExecutionRecord executionRecordEntity = new ExecutionRecord();
         executionRecordEntity.setId(IdGenerator.generateId());
         executionRecordEntity.setState(ExecutionRecordState.CREATED);
 

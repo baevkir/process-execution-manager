@@ -37,14 +37,6 @@ public class ConverterFactoryImpl implements ConverterFactory, ApplicationContex
         return result;
     }
 
-    private <S, T> Converter<S, T> getConverter(Class<S> sClass, Class<T> tClass) {
-        Converter<S, T> converter = (Converter<S, T>) convertersMap.get(sClass, tClass);
-        Assert.notNull(converter, String.format("Can't find Converter from %s to %s.", sClass, tClass));
-
-        LOGGER.debug("Find converter for {} and {}: {}.", sClass, tClass, converter.getClass());
-        return converter;
-    }
-
     @PostConstruct
     public void initConverters() {
         Map<String, Converter> converters = applicationContext.getBeansOfType(Converter.class, true, true);
@@ -64,12 +56,24 @@ public class ConverterFactoryImpl implements ConverterFactory, ApplicationContex
         }
     }
 
-    private <T, S> void setConverter(Converter<S, T> converter) {
+    protected  <S, T> Converter<S, T> getConverter(Class<S> sClass, Class<T> tClass) {
+        Converter<S, T> converter = (Converter<S, T>) convertersMap.get(sClass, tClass);
+        Assert.notNull(converter, String.format("Can't find Converter from %s to %s.", sClass, tClass));
+
+        LOGGER.debug("Find converter for {} and {}: {}.", sClass, tClass, converter.getClass());
+        return converter;
+    }
+
+    protected  <T, S> void setConverter(Converter<S, T> converter) {
         Class converterClass = converter.getClass();
         Class[] generics = GenericTypeResolver.resolveTypeArguments(converterClass, Converter.class);
         Class sClass = generics[0];
         Class tClass = generics[1];
         convertersMap.put(sClass, tClass, converter);
+    }
+
+    protected ApplicationContext getApplicationContext() {
+        return applicationContext;
     }
 
     @Override

@@ -4,7 +4,7 @@ import com.pem.logic.bean.provider.calculator.ConditionCalculatorProvider;
 import com.pem.logic.bean.provider.calculator.impl.RegisterGlobalCalculator;
 import com.pem.logic.common.utils.NamingUtils;
 import com.pem.conditioncalculator.ConditionCalculator;
-import com.pem.persistence.model.common.bean.BeanEntity;
+import com.pem.persistence.api.model.common.bean.BeanObject;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,13 +25,13 @@ public class CalculatorBeanEntityProviderImpl implements CalculatorBeanEntityPro
     }
 
     @Override
-    public <C extends ConditionCalculator> List<BeanEntity> provideCalculatorBeanEntities(Class<C>  calculatorClass) {
+    public <C extends ConditionCalculator> List<BeanObject> provideCalculatorBeanEntities(Class<C>  calculatorClass) {
         LOGGER.debug("Get All ConditionCalculatorBeanEntities for class {}.", calculatorClass);
-        List<BeanEntity> calculators = new ArrayList<>();
+        List<BeanObject> calculators = new ArrayList<>();
 
         Map<String, C> beans = calculatorProvider.getAllGlobalCalculators(calculatorClass);
         for (Map.Entry<String, C> entry : beans.entrySet()) {
-            BeanEntity calculator = new BeanEntity();
+            BeanObject calculator = new BeanObject();
             String beanName = entry.getKey();
             LOGGER.trace("Add bean with name {}", beanName);
             calculator.setBeanName(beanName);

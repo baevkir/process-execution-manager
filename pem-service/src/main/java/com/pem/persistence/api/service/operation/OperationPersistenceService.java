@@ -1,15 +1,15 @@
 package com.pem.persistence.api.service.operation;
 
-import com.pem.persistence.model.operation.common.OperationEntity;
+import com.pem.persistence.api.model.operation.common.OperationObject;
 
 import java.math.BigInteger;
 import java.util.List;
 
 public interface OperationPersistenceService {
-    OperationEntity createOperation(OperationEntity operationEntity);
-    void updateOperation(OperationEntity operationEntity);
-    OperationEntity getOperation(BigInteger id);
-    List<OperationEntity> getAllOperations();
-    <O extends OperationEntity> List<O> getOperationsByType(Class<O> targetClass);
+    OperationObject createOperation(OperationObject operation);
+    void updateOperation(OperationObject operation);
+    OperationObject getOperation(BigInteger id);
+    List<OperationObject> getAllOperations();
+    <O extends OperationObject> List<O> getOperationsByType(Class<O> targetClass);
     void deleteOperation(BigInteger id);
 }

@@ -1,20 +1,19 @@
 package com.pem.test.converter;
 
 import com.pem.operation.basic.Operation;
-import com.pem.operation.composite.SyncCompositeOperation;
 import com.pem.operation.condition.BinaryConditionOperation;
 import com.pem.operation.condition.IntegerConditionOperation;
 import com.pem.operation.loop.condition.DoWhileOperation;
 import com.pem.operation.loop.condition.WhileOperation;
 import com.pem.operation.loop.counter.CounterLoopOperation;
 import com.pem.logic.converter.ConverterFactory;
-import com.pem.persistence.model.operation.common.OperationEntity;
-import com.pem.persistence.model.operation.composite.SyncCompositeOperationEntity;
-import com.pem.persistence.model.operation.condition.IntegerConditionOperationEntity;
-import com.pem.persistence.model.operation.loop.CounterLoopOperationEntity;
-import com.pem.persistence.model.operation.loop.condition.DoWhileLoopOperationEntity;
-import com.pem.persistence.model.operation.loop.condition.WhileLoopOperationEntity;
-import com.pem.persistence.model.proccess.ExecutionProcessEntity;
+import com.pem.persistence.api.model.operation.common.OperationObject;
+import com.pem.persistence.api.model.operation.composite.SyncCompositeOperationObject;
+import com.pem.persistence.api.model.operation.condition.IntegerConditionOperationObject;
+import com.pem.persistence.api.model.operation.loop.CounterLoopOperationObject;
+import com.pem.persistence.api.model.operation.loop.condition.DoWhileLoopOperationObject;
+import com.pem.persistence.api.model.operation.loop.condition.WhileLoopOperationObject;
+import com.pem.persistence.api.model.proccess.ExecutionProcess;
 import com.pem.test.common.TestEntityCreator;
 import com.pem.test.common.config.TestConfig;
 import org.junit.Assert;
@@ -35,14 +34,14 @@ public class ConverterFactoryTest {
 
     @Test
     public void testConverterExist() {
-        OperationEntity operationEntity = creator.createSimpleBeanOperation();
+        OperationObject operationEntity = creator.createSimpleBeanOperation();
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
         Assert.assertNotNull(operation);
     }
 
     @Test
     public void testConverterConditionOperationOperation() {
-        OperationEntity operationEntity = creator.createBinaryConditionOperationEntity();
+        OperationObject operationEntity = creator.createBinaryConditionOperationEntity();
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
         Assert.assertNotNull(operation);
         Assert.assertTrue(operation instanceof BinaryConditionOperation);
@@ -50,15 +49,15 @@ public class ConverterFactoryTest {
 
     @Test
     public void testConverterSyncCompositeOperation() {
-        SyncCompositeOperationEntity operationEntity = creator.createSyncCompositeOperationEntity();
+        SyncCompositeOperationObject operationEntity = creator.createSyncCompositeOperationEntity();
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
         Assert.assertNotNull(operation);
-        Assert.assertTrue(operation instanceof SyncCompositeOperation);
+        Assert.assertTrue(operation instanceof com.pem.operation.composite.SyncCompositeOperation);
     }
 
     @Test
     public void testConverterIntegerConditionOperation() {
-        IntegerConditionOperationEntity operationEntity = creator.createIntegerConditionOperationEntity();
+        IntegerConditionOperationObject operationEntity = creator.createIntegerConditionOperationEntity();
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
         Assert.assertNotNull(operation);
         Assert.assertTrue(operation instanceof IntegerConditionOperation);
@@ -66,7 +65,7 @@ public class ConverterFactoryTest {
 
     @Test
     public void testCounterLoopOperationConverter() {
-        CounterLoopOperationEntity operationEntity = new CounterLoopOperationEntity();
+        CounterLoopOperationObject operationEntity = new CounterLoopOperationObject();
         operationEntity.setCount(100);
         operationEntity.setOperation(creator.createIntegerConditionOperationEntity());
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
@@ -76,7 +75,7 @@ public class ConverterFactoryTest {
 
     @Test
     public void testDoWhileOperationConverter() {
-        DoWhileLoopOperationEntity operationEntity = new DoWhileLoopOperationEntity();
+        DoWhileLoopOperationObject operationEntity = new DoWhileLoopOperationObject();
         operationEntity.setOperation(creator.createSyncCompositeOperationEntity());
         operationEntity.setCalculator(creator.createBinaryCalculator());
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
@@ -86,7 +85,7 @@ public class ConverterFactoryTest {
 
     @Test
     public void testWhileOperationConverter() {
-        WhileLoopOperationEntity operationEntity = new WhileLoopOperationEntity();
+        WhileLoopOperationObject operationEntity = new WhileLoopOperationObject();
         operationEntity.setOperation(creator.createIntegerConditionOperationEntity());
         operationEntity.setCalculator(creator.createBinaryCalculator());
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
@@ -96,9 +95,9 @@ public class ConverterFactoryTest {
 
     @Test
     public void testExecutionProcessConverter() {
-        OperationEntity operationEntity = creator.createSyncCompositeOperationEntity();
-        ExecutionProcessEntity processEntity = converterFactory.convert(operationEntity, OperationEntity.class, ExecutionProcessEntity.class);
+        OperationObject operationEntity = creator.createSyncCompositeOperationEntity();
+        ExecutionProcess processEntity = converterFactory.convert(operationEntity, OperationObject.class, ExecutionProcess.class);
         Assert.assertNotNull(processEntity);
-        Assert.assertTrue(processEntity instanceof ExecutionProcessEntity);
+        Assert.assertTrue(processEntity instanceof ExecutionProcess);
     }
 }

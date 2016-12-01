@@ -4,8 +4,8 @@ import com.pem.logic.bean.provider.operation.OperationProvider;
 import com.pem.logic.bean.provider.operation.impl.RegisterGlobalOperation;
 import com.pem.logic.common.utils.NamingUtils;
 import com.pem.operation.basic.Operation;
+import com.pem.persistence.api.model.common.bean.BeanObject;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;
-import com.pem.persistence.model.common.bean.BeanEntity;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,20 +32,20 @@ public class OperationDatabaseSynchronizer {
 
     @PostConstruct
     public void synchronizeOperationsWithDatabase() {
-//        List<OperationEntity> operationEntities = operationPersistenceService.getOperationsByType(BeanOperationEntity.class);
-        List<BeanEntity> operations = provideOperationBeanEntity();
-        for (BeanEntity operation : operations) {
+//        List<OperationObject> operationEntities = operationPersistenceService.getOperationsByType(BeanOperationObject.class);
+        List<BeanObject> operations = provideOperationBeanEntity();
+        for (BeanObject operation : operations) {
             
         }
     }
 
-    public List<BeanEntity> provideOperationBeanEntity() {
+    public List<BeanObject> provideOperationBeanEntity() {
         LOGGER.debug("Get All OperationBeanEntity .");
-        List<BeanEntity> operations = new ArrayList<>();
+        List<BeanObject> operations = new ArrayList<>();
 
         Map<String, Operation> beans = operationProvider.getAllGlobalOperations();
         for (Map.Entry<String, Operation> entry : beans.entrySet()) {
-            BeanEntity operation = new BeanEntity();
+            BeanObject operation = new BeanObject();
             String beanName = entry.getKey();
             LOGGER.trace("Add bean with name {}", beanName);
             operation.setBeanName(beanName);

@@ -1,15 +1,15 @@
 package com.pem.test.common;
 
-import com.pem.persistence.model.calculator.BinaryCalculator;
-import com.pem.persistence.model.calculator.IntegerCalculator;
-import com.pem.persistence.model.common.bean.BeanEntity;
-import com.pem.persistence.model.operation.basic.BeanOperationEntity;
-import com.pem.persistence.model.operation.common.OperationEntity;
-import com.pem.persistence.model.operation.composite.SyncCompositeOperationEntity;
-import com.pem.persistence.model.operation.condition.BinaryConditionOperationEntity;
-import com.pem.persistence.model.operation.condition.IntegerConditionOperationEntity;
-import com.pem.persistence.model.operation.condition.state.BooleanState;
-import com.pem.persistence.model.operation.condition.state.IntegerState;
+import com.pem.persistence.api.model.calculator.bean.BinaryBeanConditionCalculator;
+import com.pem.persistence.api.model.calculator.bean.IntegerBeanConditionCalculator;
+import com.pem.persistence.api.model.common.bean.BeanObject;
+import com.pem.persistence.api.model.operation.basic.BeanOperationObject;
+import com.pem.persistence.api.model.operation.common.OperationObject;
+import com.pem.persistence.api.model.operation.composite.SyncCompositeOperationObject;
+import com.pem.persistence.api.model.operation.condition.BinaryConditionOperationObject;
+import com.pem.persistence.api.model.operation.condition.IntegerConditionOperationObject;
+import com.pem.persistence.api.model.operation.condition.state.BooleanState;
+import com.pem.persistence.api.model.operation.condition.state.IntegerState;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,30 +20,30 @@ public class TestEntityCreator {
 
     private Random random = new Random();
 
-    public BinaryCalculator createBinaryCalculator() {
+    public BinaryBeanConditionCalculator createBinaryCalculator() {
         return createBinaryCalculator("testBinaryConditionCalculator");
     }
 
-    public BinaryCalculator createRandomBinaryCalculator() {
+    public BinaryBeanConditionCalculator createRandomBinaryCalculator() {
         return createBinaryCalculator(String.valueOf(random.nextInt()));
     }
 
-    public IntegerCalculator createIntegerCalculator() {
+    public IntegerBeanConditionCalculator createIntegerCalculator() {
         return createIntegerCalculator("testIntegerConditionCalculator");
     }
 
-    public IntegerCalculator createRandomIntegerCalculator() {
+    public IntegerBeanConditionCalculator createRandomIntegerCalculator() {
         return createIntegerCalculator(String.valueOf(random.nextInt()));
     }
-    public BeanOperationEntity createSimpleBeanOperation() {
+    public BeanOperationObject createSimpleBeanOperation() {
         return createSimpleBeanOperation("sumOperation");
     }
 
-    public BeanOperationEntity createRandomSimpleBeanOperation() {
+    public BeanOperationObject createRandomSimpleBeanOperation() {
         return createSimpleBeanOperation(String.valueOf(random.nextInt()));
     }
-    public BinaryConditionOperationEntity createBinaryConditionOperationEntity(){
-        BinaryConditionOperationEntity operationEntity = new BinaryConditionOperationEntity();
+    public BinaryConditionOperationObject createBinaryConditionOperationEntity(){
+        BinaryConditionOperationObject operationEntity = new BinaryConditionOperationObject();
         operationEntity.setName("Test operation " + random.nextLong());
         operationEntity.setDescription("Test description " + random.nextLong());
 
@@ -53,8 +53,8 @@ public class TestEntityCreator {
         return operationEntity;
     }
 
-    public IntegerConditionOperationEntity createIntegerConditionOperationEntity(){
-        IntegerConditionOperationEntity operationEntity = new IntegerConditionOperationEntity();
+    public IntegerConditionOperationObject createIntegerConditionOperationEntity(){
+        IntegerConditionOperationObject operationEntity = new IntegerConditionOperationObject();
         operationEntity.setName("Test operation " + random.nextLong());
         operationEntity.setDescription("Test description " + random.nextLong());
 
@@ -64,10 +64,10 @@ public class TestEntityCreator {
         return operationEntity;
     }
 
-    public SyncCompositeOperationEntity createSyncCompositeOperationEntity() {
-        SyncCompositeOperationEntity operationEntity = new SyncCompositeOperationEntity();
+    public SyncCompositeOperationObject createSyncCompositeOperationEntity() {
+        SyncCompositeOperationObject operationEntity = new SyncCompositeOperationObject();
         operationEntity.setName("Test composite operation " + random.nextLong());
-        List<OperationEntity> operationEntities = new ArrayList<>();
+        List<OperationObject> operationEntities = new ArrayList<>();
         operationEntities.add(createSimpleBeanOperation());
         operationEntities.add(createSimpleBeanOperation());
         operationEntities.add(createSimpleBeanOperation());
@@ -93,12 +93,12 @@ public class TestEntityCreator {
         return state;
     }
 
-    private BeanOperationEntity createSimpleBeanOperation(String beanName) {
-        BeanOperationEntity operationEntity = new BeanOperationEntity();
+    private BeanOperationObject createSimpleBeanOperation(String beanName) {
+        BeanOperationObject operationEntity = new BeanOperationObject();
         operationEntity.setName("Test operation " + random.nextLong());
         operationEntity.setDescription("Test description " + random.nextLong());
 
-        BeanEntity bean = new BeanEntity();
+        BeanObject bean = new BeanObject();
         bean.setName("Test Operation");
         bean.setBeanName(beanName);
         operationEntity.setBean(bean);
@@ -106,24 +106,24 @@ public class TestEntityCreator {
         return operationEntity;
     }
 
-    private BinaryCalculator createBinaryCalculator(String beanName) {
-        BinaryCalculator calculatorEntity = new BinaryCalculator();
+    private BinaryBeanConditionCalculator createBinaryCalculator(String beanName) {
+        BinaryBeanConditionCalculator calculatorEntity = new BinaryBeanConditionCalculator();
         calculatorEntity.setName("Test Calculator " + random.nextLong());
         calculatorEntity.setDescription("Test Calculator description " + random.nextLong());
 
-        BeanEntity beanEntity = new BeanEntity();
+        BeanObject beanEntity = new BeanObject();
         beanEntity.setBeanName(beanName);
         calculatorEntity.setBean(beanEntity);
 
         return calculatorEntity;
     }
 
-    private IntegerCalculator createIntegerCalculator(String beanName) {
-        IntegerCalculator calculatorEntity = new IntegerCalculator();
+    private IntegerBeanConditionCalculator createIntegerCalculator(String beanName) {
+        IntegerBeanConditionCalculator calculatorEntity = new IntegerBeanConditionCalculator();
         calculatorEntity.setName("Test Calculator " + random.nextLong());
         calculatorEntity.setDescription("Test Calculator description " + random.nextLong());
 
-        BeanEntity beanEntity = new BeanEntity();
+        BeanObject beanEntity = new BeanObject();
         beanEntity.setBeanName(beanName);
         calculatorEntity.setBean(beanEntity);
 
