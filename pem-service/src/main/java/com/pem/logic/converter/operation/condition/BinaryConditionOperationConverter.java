@@ -12,7 +12,7 @@ import com.pem.operation.condition.BinaryConditionOperation;
 
 import java.util.Map;
 
-@RegisterInConverterFactory(factoryName = Constants.CONVERTER_FACTORY_NAME)
+@RegisterInConverterFactory(factories = Constants.CONVERTER_FACTORY_NAME)
 public class BinaryConditionOperationConverter extends AbstractOperationConverter<BinaryConditionOperationDTO> {
 
     private ConverterFactory converterFactory;

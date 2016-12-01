@@ -8,7 +8,7 @@ import com.pem.logic.converter.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
 
-@RegisterInConverterFactory(factoryName = Constants.CONVERTER_FACTORY_NAME)
+@RegisterInConverterFactory(factories = Constants.CONVERTER_FACTORY_NAME)
 public class CounterLoopOperationConverter extends AbstractOperationConverter<CounterLoopOperationDTO> {
 
     private ConverterFactory converterFactory;

@@ -15,6 +15,8 @@ import org.springframework.core.GenericTypeResolver;
 import org.springframework.util.Assert;
 
 import javax.annotation.PostConstruct;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class ConverterFactoryImpl implements ConverterFactory, ApplicationContextAware {
@@ -48,8 +50,8 @@ public class ConverterFactoryImpl implements ConverterFactory, ApplicationContex
 
             if (clazz.isAnnotationPresent(RegisterInConverterFactory.class)) {
                 RegisterInConverterFactory annotation = clazz.getAnnotation(RegisterInConverterFactory.class);
-                String factoryName = annotation.factoryName();
-                if (currentFactoryName.equals(factoryName)) {
+                List<String> factories = Arrays.asList(annotation.factories());
+                if (factories.contains(currentFactoryName)) {
                     setConverter(value);
                 }
             }

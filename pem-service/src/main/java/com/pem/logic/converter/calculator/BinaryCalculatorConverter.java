@@ -7,7 +7,7 @@ import com.pem.logic.converter.common.RegisterInConverterFactory;
 import com.pem.model.calculator.bean.BinaryBeanConditionCalculatorDTO;
 import com.pem.model.common.bean.BeanObject;
 
-@RegisterInConverterFactory(factoryName = Constants.CONVERTER_FACTORY_NAME)
+@RegisterInConverterFactory(factories = Constants.CONVERTER_FACTORY_NAME)
 public class BinaryCalculatorConverter extends AbstractConditionCalculatorConverter<BinaryBeanConditionCalculatorDTO, BinaryConditionCalculator> {
 
     @Override

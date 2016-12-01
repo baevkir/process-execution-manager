@@ -19,7 +19,7 @@ import org.springframework.context.ApplicationContextAware;
 
 import java.util.Collections;
 
-@RegisterInConverterFactory(factoryName = Constants.CONVERTER_FACTORY_NAME)
+@RegisterInConverterFactory(factories = Constants.CONVERTER_FACTORY_NAME)
 public class FromOperationToProcessConverter implements Converter<Operation, ExecutionProcess>, ApplicationContextAware {
 
     private ApplicationContext applicationContext;

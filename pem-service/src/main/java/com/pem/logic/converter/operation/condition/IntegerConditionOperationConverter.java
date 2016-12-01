@@ -12,7 +12,7 @@ import com.pem.operation.condition.IntegerConditionOperation;
 
 import java.util.Map;
 
-@RegisterInConverterFactory(factoryName = Constants.CONVERTER_FACTORY_NAME)
+@RegisterInConverterFactory(factories = Constants.CONVERTER_FACTORY_NAME)
 public class IntegerConditionOperationConverter extends AbstractOperationConverter<IntegerConditionOperationDTO> {
 
     private ConverterFactory converterFactory;

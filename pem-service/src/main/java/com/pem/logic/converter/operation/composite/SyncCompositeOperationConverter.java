@@ -7,7 +7,7 @@ import com.pem.operation.basic.Operation;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
 
-@RegisterInConverterFactory(factoryName = Constants.CONVERTER_FACTORY_NAME)
+@RegisterInConverterFactory(factories = Constants.CONVERTER_FACTORY_NAME)
 public class SyncCompositeOperationConverter extends AbstractOperationConverter<SyncCompositeOperationDTO> {
 
     private com.pem.logic.converter.ConverterFactory converterFactory;

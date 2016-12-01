@@ -7,7 +7,7 @@ import com.pem.logic.converter.common.RegisterInConverterFactory;
 import com.pem.model.calculator.bean.IntegerBeanConditionCalculatorDTO;
 import com.pem.model.common.bean.BeanObject;
 
-@RegisterInConverterFactory(factoryName = Constants.CONVERTER_FACTORY_NAME)
+@RegisterInConverterFactory(factories = Constants.CONVERTER_FACTORY_NAME)
 public class IntegerCalculatorConverter extends AbstractConditionCalculatorConverter<IntegerBeanConditionCalculatorDTO, IntegerConditionCalculator> {
 
     @Override

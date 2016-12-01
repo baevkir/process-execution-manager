@@ -9,7 +9,7 @@ import com.pem.logic.converter.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
 
-@RegisterInConverterFactory(factoryName = Constants.CONVERTER_FACTORY_NAME)
+@RegisterInConverterFactory(factories = Constants.CONVERTER_FACTORY_NAME)
 public class DoWhileOperationConverter extends AbstractOperationConverter<DoWhileLoopOperationDTO> {
 
     private ConverterFactory converterFactory;

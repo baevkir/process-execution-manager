@@ -7,7 +7,7 @@ import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
 import com.pem.model.common.bean.BeanObject;
 
-@RegisterInConverterFactory(factoryName = Constants.CONVERTER_FACTORY_NAME)
+@RegisterInConverterFactory(factories = Constants.CONVERTER_FACTORY_NAME)
 public class BeanOperationConverter extends AbstractOperationConverter<BeanOperationDTO> {
     @Override
     public Operation convert(BeanOperationDTO source) {
