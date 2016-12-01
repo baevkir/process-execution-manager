@@ -2,27 +2,15 @@ package com.pem.test.common;
 
 import com.github.fakemongo.Fongo;
 import com.mongodb.Mongo;
-import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
-import com.pem.persistence.api.service.operation.OperationPersistenceService;
-import com.pem.persistence.api.service.process.ProcessPersistenceService;
-import com.pem.persistence.service.calculator.MongoCalculatorPersistenceService;
-import com.pem.persistence.service.operation.MongoOperationPersistenceService;
-import com.pem.persistence.service.process.MongoProcessPersistenceService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
-import org.springframework.data.mongodb.config.EnableMongoAuditing;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.context.annotation.ImportResource;
+import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 
 @Configuration
-@EnableMongoRepositories("com.pem.persistence.repository")
-@EnableMongoAuditing
-public class FongoConfig extends AbstractMongoConfiguration {
-
-    @Override
-    protected String getDatabaseName() {
-        return "demo-test";
-    }
+@ImportResource("classpath:config/mongo-database-config.xml")
+public class FongoConfig {
 
     @Bean
     public Mongo mongo() {
@@ -30,23 +18,9 @@ public class FongoConfig extends AbstractMongoConfiguration {
         return queued.getMongo();
     }
 
-    @Override
-    protected String getMappingBasePackage() {
-        return "com.pem.persistence.repository";
+    @Bean
+    public MongoDbFactory mongoDbFactory() {
+        return new SimpleMongoDbFactory(mongo(), "test_db");
     }
 
-    @Bean
-    public OperationPersistenceService operationPersistenceService() {
-        return new MongoOperationPersistenceService();
-    }
-
-    @Bean
-    public CalculatorPersistenceService calculatorPersistenceService() {
-        return new MongoCalculatorPersistenceService();
-    }
-
-    @Bean
-    public ProcessPersistenceService processPersistenceService() {
-        return new MongoProcessPersistenceService();
-    }
 }

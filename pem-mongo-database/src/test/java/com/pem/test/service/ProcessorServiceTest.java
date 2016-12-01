@@ -1,7 +1,7 @@
 package com.pem.test.service;
 
+import com.pem.model.proccess.ExecutionProcess;
 import com.pem.persistence.api.service.process.ProcessPersistenceService;
-import com.pem.persistence.model.proccess.ExecutionProcessEntity;
 import com.pem.test.common.FongoConfig;
 import com.pem.test.common.TestEntityCreator;
 import org.junit.Assert;
@@ -24,14 +24,14 @@ public class ProcessorServiceTest {
 
     @Test
     public void testSaveToDBProcess() {
-        ExecutionProcessEntity processEntity = new ExecutionProcessEntity();
+        ExecutionProcess processEntity = new ExecutionProcess();
         processEntity.setName("Test Process");
         processEntity.setExecutionOperation(creator.createBinaryConditionOperationEntity());
         processEntity.setExecutionRecords(Collections.EMPTY_LIST);
-        ExecutionProcessEntity newProcessEntity = processPersistenceService.createProcess(processEntity);
-        Assert.assertNotNull(newProcessEntity.getExecutionPlan());
+        ExecutionProcess newProcessEntity = processPersistenceService.createProcess(processEntity);
+        Assert.assertNotNull(newProcessEntity.getExecutionOperation());
 
-        ExecutionProcessEntity queryProcess = processPersistenceService.getProcess(newProcessEntity.getId());
+        ExecutionProcess queryProcess = processPersistenceService.getProcess(newProcessEntity.getId());
         Assert.assertNotNull(queryProcess.getExecutionOperation());
     }
 }

@@ -1,14 +1,13 @@
 package com.pem.test.service;
 
+import com.pem.model.calculator.bean.BinaryBeanConditionCalculatorDTO;
+import com.pem.model.operation.basic.BeanOperationDTO;
+import com.pem.model.operation.common.OperationDTO;
+import com.pem.model.operation.composite.CompositeOperationDTO;
+import com.pem.model.operation.composite.SyncCompositeOperationDTO;
+import com.pem.model.operation.condition.BinaryConditionOperationDTO;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;
-import com.pem.persistence.model.calculator.BinaryCalculator;
-import com.pem.persistence.model.operation.basic.BeanOperationEntity;
-import com.pem.persistence.model.operation.common.OperationEntity;
-import com.pem.persistence.model.operation.composite.CompositeOperationEntity;
-import com.pem.persistence.model.operation.composite.SyncCompositeOperationEntity;
-import com.pem.persistence.model.operation.condition.BinaryConditionOperationEntity;
-import com.pem.persistence.model.operation.condition.state.BooleanState;
 import com.pem.test.common.FongoConfig;
 import com.pem.test.common.TestEntityCreator;
 import org.junit.Assert;
@@ -20,8 +19,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = FongoConfig.class)
@@ -36,42 +36,42 @@ public class OperationServiceTest {
 
     @Test
     public void testSaveToDBOperation() {
-        OperationEntity operationEntity = createSimpleBeanOperation();
-        OperationEntity queryOperation = operationPersistenceService.getOperation(operationEntity.getId());
+        OperationDTO operationEntity = createSimpleBeanOperation();
+        OperationDTO queryOperation = operationPersistenceService.getOperation(operationEntity.getId());
         Assert.assertEquals(operationEntity.getClass(), queryOperation.getClass());
     }
 
     @Test
     public void testSaveCompositeToDBOperation() {
-        CompositeOperationEntity compositeOperationEntity = new SyncCompositeOperationEntity();
-        OperationEntity operation = createBinaryConditionOperationEntity();
-        List<OperationEntity> operationEntities = new ArrayList<>();
+        CompositeOperationDTO compositeOperationEntity = new SyncCompositeOperationDTO();
+        OperationDTO operation = createBinaryConditionOperationEntity();
+        List<OperationDTO> operationEntities = new ArrayList<>();
         operationEntities.add(operation);
         operationEntities.add(createSimpleBeanOperation());
         compositeOperationEntity.setOperationEntities(operationEntities);
 
-        OperationEntity newCompositeOperationEntity = operationPersistenceService.createOperation(compositeOperationEntity);
-        OperationEntity queryOperation = operationPersistenceService.getOperation(newCompositeOperationEntity.getId());
+        OperationDTO newCompositeOperationEntity = operationPersistenceService.createOperation(compositeOperationEntity);
+        OperationDTO queryOperation = operationPersistenceService.getOperation(newCompositeOperationEntity.getId());
         Assert.assertEquals(newCompositeOperationEntity.getClass(), queryOperation.getClass());
     }
 
     @Test
     public void testDeleteOperation() {
-        BinaryConditionOperationEntity operation = createBinaryConditionOperationEntity();
+        BinaryConditionOperationDTO operation = createBinaryConditionOperationEntity();
         BigInteger id = operation.getId();
 
         List<BigInteger> innerOperationIds = new ArrayList<>();
-        for (BooleanState state : operation.getStates()) {
-            innerOperationIds.add(state.getOperationEntity().getId());
+        for (Map.Entry<Boolean, OperationDTO> state : operation.getStates().entrySet()) {
+            innerOperationIds.add(state.getValue().getId());
         }
 
         operationPersistenceService.deleteOperation(id);
 
-        OperationEntity testOperation = operationPersistenceService.getOperation(id);
+        OperationDTO testOperation = operationPersistenceService.getOperation(id);
         Assert.assertNull(testOperation);
 
         for (BigInteger innerId : innerOperationIds) {
-            OperationEntity innerOperation = operationPersistenceService.getOperation(innerId);
+            OperationDTO innerOperation = operationPersistenceService.getOperation(innerId);
             Assert.assertNotNull(innerOperation);
 
             operationPersistenceService.deleteOperation(innerOperation.getId());
@@ -85,39 +85,41 @@ public class OperationServiceTest {
         createSimpleBeanOperation();
         createBinaryConditionOperationEntity();
 
-        List<OperationEntity> fullList = operationPersistenceService.getAllOperations();
+        List<OperationDTO> fullList = operationPersistenceService.getAllOperations();
         Assert.assertTrue(fullList.size() == 5);
 
-        List<BeanOperationEntity> beanOperationEntities = operationPersistenceService.getOperationsByType(BeanOperationEntity.class);
+        List<BeanOperationDTO> beanOperationEntities = operationPersistenceService.getOperationsByType(BeanOperationDTO.class);
         Assert.assertTrue(beanOperationEntities.size() == 4);
 
-        List<BinaryConditionOperationEntity> conditionOperationEntities = operationPersistenceService.getOperationsByType(BinaryConditionOperationEntity.class);
+        List<BinaryConditionOperationDTO> conditionOperationEntities = operationPersistenceService.getOperationsByType(BinaryConditionOperationDTO.class);
         Assert.assertTrue(conditionOperationEntities.size() == 1);
     }
 
-    private BinaryConditionOperationEntity createBinaryConditionOperationEntity() {
-        BinaryConditionOperationEntity operationEntity = new BinaryConditionOperationEntity();
+    private BinaryConditionOperationDTO createBinaryConditionOperationEntity() {
+        BinaryConditionOperationDTO operationEntity = new BinaryConditionOperationDTO();
         operationEntity.setName("Test operation.");
         operationEntity.setDescription("Test description.");
 
-        operationEntity.setStates(Arrays.asList(createSimpleBinaryState(true), createSimpleBinaryState(false)));
-        return (BinaryConditionOperationEntity) operationPersistenceService.createOperation(operationEntity);
+        Map<Boolean, OperationDTO> states = new HashMap<>();
+        states.putAll(createSimpleBinaryState(true));
+        states.putAll(createSimpleBinaryState(false));
+        operationEntity.setStates(states);
+
+        return (BinaryConditionOperationDTO) operationPersistenceService.createOperation(operationEntity);
     }
 
-    private BooleanState createSimpleBinaryState(Boolean value) {
-        BooleanState state = new BooleanState();
-        state.setConditionValue(value);
-        state.setOperationEntity(createSimpleBeanOperation());
-
+    private Map<Boolean, OperationDTO> createSimpleBinaryState(Boolean value) {
+        Map<Boolean, OperationDTO> state = new HashMap<>();
+        state.put(value, createSimpleBeanOperation());
         return state;
     }
 
-    private OperationEntity createSimpleBeanOperation() {
+    private OperationDTO createSimpleBeanOperation() {
         return operationPersistenceService.createOperation(creator.createRandomSimpleBeanOperation());
     }
 
-    private BinaryCalculator createBinaryCalculator() {
-        return (BinaryCalculator) calculatorPersistenceService.createCalculator(creator.createRandomBinaryCalculator());
+    private BinaryBeanConditionCalculatorDTO createBinaryCalculator() {
+        return (BinaryBeanConditionCalculatorDTO) calculatorPersistenceService.createCalculator(creator.createRandomBinaryCalculator());
     }
 
 }

@@ -1,7 +1,7 @@
 package com.pem.test.service;
 
+import com.pem.model.calculator.common.ConditionCalculatorDTO;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
-import com.pem.persistence.model.calculator.common.CalculatorEntity;
 import com.pem.test.common.FongoConfig;
 import com.pem.test.common.TestEntityCreator;
 import org.junit.Assert;
@@ -24,23 +24,23 @@ public class CalculatorServiceTest {
 
     @Test
     public void testSaveToDBCalculator() {
-        CalculatorEntity calculatorEntity = createBinaryCalculator();
-        CalculatorEntity queryCalculator = calculatorPersistenceService.getCalculator(calculatorEntity.getId());
+        ConditionCalculatorDTO calculatorEntity = createBinaryCalculator();
+        ConditionCalculatorDTO queryCalculator = calculatorPersistenceService.getCalculator(calculatorEntity.getId());
         Assert.assertEquals(calculatorEntity.getClass(), queryCalculator.getClass());
     }
 
     @Test
     public void testDeleteOperation() {
-        CalculatorEntity calculatorEntity = createBinaryCalculator();
+        ConditionCalculatorDTO calculatorEntity = createBinaryCalculator();
         BigInteger id = calculatorEntity.getId();
 
         calculatorPersistenceService.deleteCalculator(id);
 
-        CalculatorEntity testOperation = calculatorPersistenceService.getCalculator(id);
+        ConditionCalculatorDTO testOperation = calculatorPersistenceService.getCalculator(id);
         Assert.assertNull(testOperation);
     }
 
-    private CalculatorEntity createBinaryCalculator() {
+    private ConditionCalculatorDTO createBinaryCalculator() {
         return calculatorPersistenceService.createCalculator(creator.createRandomBinaryCalculator());
     }
 }

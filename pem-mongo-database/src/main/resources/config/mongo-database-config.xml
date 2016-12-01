@@ -1,0 +1,44 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="http://www.springframework.org/schema/data/mongo
+          http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="classpath:config/converter/mongo-database-converter-config.xml"/>
+
+    <mongo:mapping-converter id="converter" base-package="com.pem.model"/>
+
+    <mongo:auditing mapping-context-ref="mappingContext" set-dates="true" modify-on-creation="true"/>
+    <bean id="mappingContext" factory-bean="converter" factory-method="getMappingContext"/>
+
+    <mongo:repositories base-package="com.pem.persistence.mongo.repository"/>
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+        <constructor-arg name="mongoConverter" ref="converter"/>
+    </bean>
+
+    <bean id="operationPersistenceService"
+          class="com.pem.persistence.mongo.service.operation.MongoOperationPersistenceService">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+
+    <bean id="calculatorPersistenceService"
+          class="com.pem.persistence.mongo.service.calculator.MongoCalculatorPersistenceService">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <bean id="executionRecordPersistenceService"
+          class="com.pem.persistence.mongo.service.process.MongoExecutionRecordPersistenceService">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <bean id="processPersistenceService"
+          class="com.pem.persistence.mongo.service.process.MongoProcessPersistenceService">
+        <property name="executionRecordPersistenceService" ref="executionRecordPersistenceService"/>
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+</beans>
