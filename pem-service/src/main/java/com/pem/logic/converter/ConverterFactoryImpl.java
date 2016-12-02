@@ -78,9 +78,6 @@ public class ConverterFactoryImpl implements ConverterFactory, ApplicationContex
         return applicationContext;
     }
 
-    protected MultiKeyMap getConvertersMap() {
-        return convertersMap;
-    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
