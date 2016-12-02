@@ -1,5 +1,7 @@
 package com.pem.persistence.mongo.model.proccess.record;
 
+import com.pem.model.proccess.record.ExecutionRecordPK;
+import com.pem.model.proccess.record.ExecutionRecordState;
 import com.pem.persistence.mongo.model.common.IdentifiableEntity;
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.CreatedDate;
@@ -12,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ExecutionRecordEntity extends IdentifiableEntity {
 
     @Indexed(unique = true)
-    private ExecutionRecordEntityPK pk;
+    private ExecutionRecordPK pk;
 
     private ExecutionRecordState state;
 
@@ -25,11 +27,11 @@ public class ExecutionRecordEntity extends IdentifiableEntity {
     @LastModifiedDate
     private DateTime modifyWhen;
 
-    public ExecutionRecordEntityPK getPk() {
+    public ExecutionRecordPK getPk() {
         return pk;
     }
 
-    public void setPk(ExecutionRecordEntityPK pk) {
+    public void setPk(ExecutionRecordPK pk) {
         this.pk = pk;
     }
 
