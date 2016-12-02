@@ -57,8 +57,8 @@ public class ConverterFactoryImpl implements ConverterFactory, ApplicationContex
             }
         }
     }
-
-    protected  <S, T> Converter<S, T> getConverter(Class<S> sClass, Class<T> tClass) {
+    @Override
+    public   <S, T> Converter<S, T> getConverter(Class<S> sClass, Class<T> tClass) {
         Converter<S, T> converter = (Converter<S, T>) convertersMap.get(sClass, tClass);
         Assert.notNull(converter, String.format("Can't find Converter from %s to %s.", sClass, tClass));
 
@@ -76,6 +76,10 @@ public class ConverterFactoryImpl implements ConverterFactory, ApplicationContex
 
     protected ApplicationContext getApplicationContext() {
         return applicationContext;
+    }
+
+    protected MultiKeyMap getConvertersMap() {
+        return convertersMap;
     }
 
     @Override
