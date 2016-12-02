@@ -6,7 +6,6 @@ import com.pem.model.common.bean.BeanObject;
 import com.pem.model.operation.basic.BeanOperationDTO;
 import com.pem.persistence.mongo.common.PemMongoConstants;
 import com.pem.persistence.mongo.converter.common.ConverterTemplateMethods;
-import com.pem.persistence.mongo.model.common.bean.BeanEntity;
 import com.pem.persistence.mongo.model.operation.basic.BeanOperationEntity;
 import org.springframework.util.Assert;
 
@@ -18,12 +17,8 @@ public class FromBeanOperationEntityToDTOConverter extends ConverterTemplateMeth
         BeanOperationDTO beanOperationDTO = new BeanOperationDTO();
         fillCommonFields(beanOperationDTO, source);
 
-        BeanEntity beanEntity = source.getBean();
-        Assert.notNull(beanEntity);
-
-        BeanObject beanObject = new BeanObject();
-        beanObject.setName(beanEntity.getName());
-        beanObject.setBeanName(beanEntity.getBeanName());
+        BeanObject beanObject = source.getBean();
+        Assert.notNull(beanObject);
         beanOperationDTO.setBean(beanObject);
 
         return beanOperationDTO;

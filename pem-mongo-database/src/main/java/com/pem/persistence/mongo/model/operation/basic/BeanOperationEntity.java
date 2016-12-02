@@ -1,19 +1,19 @@
 package com.pem.persistence.mongo.model.operation.basic;
 
-import com.pem.persistence.mongo.model.common.bean.BeanEntity;
+import com.pem.model.common.bean.BeanObject;
 import com.pem.persistence.mongo.model.operation.common.OperationEntity;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 public class BeanOperationEntity extends OperationEntity {
 
     @Indexed(unique = true)
-    private BeanEntity bean;
+    private BeanObject bean;
 
-    public BeanEntity getBean() {
+    public BeanObject getBean() {
         return bean;
     }
 
-    public void setBean(BeanEntity bean) {
+    public void setBean(BeanObject bean) {
         this.bean = bean;
     }
 

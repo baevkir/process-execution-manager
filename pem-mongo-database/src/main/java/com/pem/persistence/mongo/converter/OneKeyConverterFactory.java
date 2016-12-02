@@ -14,6 +14,7 @@ public class OneKeyConverterFactory extends ConverterFactoryImpl {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConverterFactoryImpl.class);
 
     private Map<Class, Converter> converterMap = new HashMap<>();
+
     @Override
     public <S, T> Converter<S, T> getConverter(Class<S> sClass, Class<T> tClass) {
         Converter converter = converterMap.get(sClass);
