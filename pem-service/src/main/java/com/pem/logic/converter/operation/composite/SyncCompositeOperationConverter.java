@@ -1,9 +1,10 @@
 package com.pem.logic.converter.operation.composite;
 
+import com.pem.core.operation.composite.SyncCompositeOperation;
 import com.pem.logic.common.Constants;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.operation.composite.SyncCompositeOperationDTO;
-import com.pem.operation.basic.Operation;
+import com.pem.core.operation.basic.Operation;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
 
@@ -18,7 +19,7 @@ public class SyncCompositeOperationConverter extends AbstractOperationConverter<
 
     @Override
     public Operation convert(SyncCompositeOperationDTO source) {
-        com.pem.operation.composite.SyncCompositeOperation syncCompositeOperation = getOperationProvider().createCommonOperation(com.pem.operation.composite.SyncCompositeOperation.class);
+        SyncCompositeOperation syncCompositeOperation = getOperationProvider().createCommonOperation(SyncCompositeOperation.class);
         syncCompositeOperation.setOperationId(String.valueOf(source.getId()));
 
         for (OperationDTO operationEntity: source.getOperationEntities()) {

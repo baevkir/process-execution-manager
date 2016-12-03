@@ -1,9 +1,9 @@
 package com.pem.logic.service.executor.impl;
 
 import com.pem.logic.bean.provider.context.OperationContextProvider;
-import com.pem.context.OperationContext;
+import com.pem.core.context.OperationContext;
 import com.pem.model.operation.common.OperationDTO;
-import com.pem.operation.basic.Operation;
+import com.pem.core.operation.basic.Operation;
 import com.pem.logic.converter.ConverterFactory;
 import com.pem.model.proccess.ExecutionProcess;
 import com.pem.logic.service.executor.OperationExecutor;

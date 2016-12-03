@@ -1,14 +1,15 @@
 package com.pem.test.converter;
 
+import com.pem.core.operation.composite.SyncCompositeOperation;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.operation.composite.SyncCompositeOperationDTO;
 import com.pem.model.operation.loop.CounterLoopOperationDTO;
-import com.pem.operation.basic.Operation;
-import com.pem.operation.condition.BinaryConditionOperation;
-import com.pem.operation.condition.IntegerConditionOperation;
-import com.pem.operation.loop.condition.DoWhileOperation;
-import com.pem.operation.loop.condition.WhileOperation;
-import com.pem.operation.loop.counter.CounterLoopOperation;
+import com.pem.core.operation.basic.Operation;
+import com.pem.core.operation.condition.BinaryConditionOperation;
+import com.pem.core.operation.condition.IntegerConditionOperation;
+import com.pem.core.operation.loop.condition.DoWhileOperation;
+import com.pem.core.operation.loop.condition.WhileOperation;
+import com.pem.core.operation.loop.counter.CounterLoopOperation;
 import com.pem.logic.converter.ConverterFactory;
 import com.pem.model.operation.condition.IntegerConditionOperationDTO;
 import com.pem.model.operation.loop.condition.DoWhileLoopOperationDTO;
@@ -52,7 +53,7 @@ public class ConverterFactoryTest {
         SyncCompositeOperationDTO operationEntity = creator.createSyncCompositeOperationEntity();
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
         Assert.assertNotNull(operation);
-        Assert.assertTrue(operation instanceof com.pem.operation.composite.SyncCompositeOperation);
+        Assert.assertTrue(operation instanceof SyncCompositeOperation);
     }
 
     @Test

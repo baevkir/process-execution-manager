@@ -2,8 +2,8 @@ package com.pem.logic.converter.operation.loop;
 
 import com.pem.logic.common.Constants;
 import com.pem.model.operation.loop.CounterLoopOperationDTO;
-import com.pem.operation.basic.Operation;
-import com.pem.operation.loop.counter.CounterLoopOperation;
+import com.pem.core.operation.basic.Operation;
+import com.pem.core.operation.loop.counter.CounterLoopOperation;
 import com.pem.logic.converter.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;

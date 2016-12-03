@@ -1,6 +1,6 @@
 package com.pem.logic.bean.provider.calculator;
 
-import com.pem.conditioncalculator.ConditionCalculator;
+import com.pem.core.conditioncalculator.ConditionCalculator;
 
 import java.util.Map;
 

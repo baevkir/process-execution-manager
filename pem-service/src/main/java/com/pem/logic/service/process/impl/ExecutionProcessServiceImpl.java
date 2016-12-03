@@ -2,7 +2,7 @@ package com.pem.logic.service.process.impl;
 
 import com.pem.logic.common.utils.ApplicationContextWrapper;
 import com.pem.model.operation.common.OperationDTO;
-import com.pem.operation.basic.Operation;
+import com.pem.core.operation.basic.Operation;
 import com.pem.logic.converter.ConverterFactory;
 import com.pem.model.proccess.ExecutionProcess;
 import com.pem.persistence.api.service.process.ProcessPersistenceService;

@@ -1,9 +1,9 @@
 package com.pem.logic.converter.operation.loop;
 
-import com.pem.conditioncalculator.BinaryConditionCalculator;
+import com.pem.core.conditioncalculator.BinaryConditionCalculator;
 import com.pem.logic.common.Constants;
-import com.pem.operation.basic.Operation;
-import com.pem.operation.loop.condition.WhileOperation;
+import com.pem.core.operation.basic.Operation;
+import com.pem.core.operation.loop.condition.WhileOperation;
 import com.pem.logic.converter.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;

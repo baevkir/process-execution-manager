@@ -1,7 +1,7 @@
 package com.pem.test.provider;
 
 import com.pem.logic.bean.provider.context.OperationContextProvider;
-import com.pem.context.OperationContext;
+import com.pem.core.context.OperationContext;
 import com.pem.test.common.config.TestConfig;
 import org.junit.Assert;
 import org.junit.Test;

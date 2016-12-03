@@ -1,11 +1,11 @@
 package com.pem.test.common.config;
 
 import com.pem.logic.*;
-import com.pem.conditioncalculator.BinaryConditionCalculator;
-import com.pem.conditioncalculator.IntegerConditionCalculator;
-import com.pem.context.OperationContext;
-import com.pem.operation.basic.AbstractOperation;
-import com.pem.operation.basic.Operation;
+import com.pem.core.conditioncalculator.BinaryConditionCalculator;
+import com.pem.core.conditioncalculator.IntegerConditionCalculator;
+import com.pem.core.context.OperationContext;
+import com.pem.core.operation.basic.AbstractOperation;
+import com.pem.core.operation.basic.Operation;
 import com.pem.test.common.GlobalOperation;
 import org.junit.Assert;
 import org.springframework.context.annotation.*;

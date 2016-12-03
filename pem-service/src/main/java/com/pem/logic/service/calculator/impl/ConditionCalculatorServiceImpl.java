@@ -1,6 +1,6 @@
 package com.pem.logic.service.calculator.impl;
 
-import com.pem.conditioncalculator.ConditionCalculator;
+import com.pem.core.conditioncalculator.ConditionCalculator;
 import com.pem.model.calculator.common.ConditionCalculatorDTO;
 import com.pem.model.common.bean.BeanObject;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;

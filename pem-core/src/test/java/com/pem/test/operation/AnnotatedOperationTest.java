@@ -1,12 +1,12 @@
 package com.pem.test.operation;
 
-import com.pem.operation.basic.Operation;
-import com.pem.context.OperationContext;
+import com.pem.core.operation.basic.Operation;
+import com.pem.core.context.OperationContext;
 import com.pem.logic.MathOperationContext;
 import com.pem.config.AppConfig;
-import com.pem.operation.basic.util.AnnotationOperation;
-import com.pem.operation.basic.util.reflection.annotions.OperationMethod;
-import com.pem.operation.basic.util.reflection.annotions.Param;
+import com.pem.core.operation.basic.util.AnnotationOperation;
+import com.pem.core.operation.basic.util.reflection.annotions.OperationMethod;
+import com.pem.core.operation.basic.util.reflection.annotions.Param;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

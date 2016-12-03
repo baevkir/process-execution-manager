@@ -1,6 +1,6 @@
 package com.pem.logic.converter.calculator;
 
-import com.pem.conditioncalculator.BinaryConditionCalculator;
+import com.pem.core.conditioncalculator.BinaryConditionCalculator;
 import com.pem.logic.common.Constants;
 import com.pem.logic.converter.common.AbstractConditionCalculatorConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;

@@ -1,8 +1,8 @@
 package com.pem.logic;
 
-import com.pem.operation.basic.AbstractOperation;
-import com.pem.operation.basic.Operation;
-import com.pem.context.OperationContext;
+import com.pem.core.operation.basic.AbstractOperation;
+import com.pem.core.operation.basic.Operation;
+import com.pem.core.context.OperationContext;
 
 import java.math.BigDecimal;
 

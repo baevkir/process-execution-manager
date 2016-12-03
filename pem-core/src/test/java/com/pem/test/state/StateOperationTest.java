@@ -1,11 +1,11 @@
 package com.pem.test.state;
 
-import com.pem.operation.basic.Operation;
+import com.pem.core.operation.basic.Operation;
 import com.pem.logic.*;
 import com.pem.config.AppConfig;
-import com.pem.operation.composite.SyncCompositeOperationImp;
-import com.pem.operation.condition.ConditionOperation;
-import com.pem.operation.condition.IntegerConditionOperationImpl;
+import com.pem.core.operation.composite.SyncCompositeOperationImp;
+import com.pem.core.operation.condition.ConditionOperation;
+import com.pem.core.operation.condition.IntegerConditionOperationImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

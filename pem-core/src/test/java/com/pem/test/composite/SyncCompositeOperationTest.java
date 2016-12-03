@@ -1,11 +1,11 @@
 package com.pem.test.composite;
 
-import com.pem.operation.composite.CompositeOperation;
-import com.pem.operation.basic.Operation;
+import com.pem.core.operation.composite.CompositeOperation;
+import com.pem.core.operation.basic.Operation;
 import com.pem.logic.*;
 import com.pem.config.AppConfig;
-import com.pem.context.OperationContextImpl;
-import com.pem.operation.composite.SyncCompositeOperationImp;
+import com.pem.core.context.OperationContextImpl;
+import com.pem.core.operation.composite.SyncCompositeOperationImp;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,6 +1,6 @@
 package com.pem.logic.bean.provider.operation;
 
-import com.pem.operation.basic.Operation;
+import com.pem.core.operation.basic.Operation;
 
 import java.util.Map;
 

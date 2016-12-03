@@ -3,7 +3,7 @@ package com.pem.logic.service.calculator.impl;
 import com.pem.logic.bean.provider.calculator.ConditionCalculatorProvider;
 import com.pem.logic.bean.provider.calculator.impl.RegisterGlobalCalculator;
 import com.pem.logic.common.utils.NamingUtils;
-import com.pem.conditioncalculator.ConditionCalculator;
+import com.pem.core.conditioncalculator.ConditionCalculator;
 import com.pem.model.common.bean.BeanObject;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

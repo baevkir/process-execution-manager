@@ -1,6 +1,6 @@
 package com.pem.logic.converter.calculator;
 
-import com.pem.conditioncalculator.IntegerConditionCalculator;
+import com.pem.core.conditioncalculator.IntegerConditionCalculator;
 import com.pem.logic.common.Constants;
 import com.pem.logic.converter.common.AbstractConditionCalculatorConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;

@@ -1,7 +1,7 @@
 package com.pem.logic.bean.provider.context;
 
-import com.pem.context.OperationContext;
-import com.pem.context.OperationContextImpl;
+import com.pem.core.context.OperationContext;
+import com.pem.core.context.OperationContextImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.AbstractFactoryBean;

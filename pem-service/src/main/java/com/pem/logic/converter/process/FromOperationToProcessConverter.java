@@ -4,7 +4,7 @@ import com.pem.logic.common.Constants;
 import com.pem.logic.common.utils.ApplicationContextWrapper;
 import com.pem.logic.common.utils.IdGenerator;
 import com.pem.logic.common.utils.NamingUtils;
-import com.pem.operation.basic.Operation;
+import com.pem.core.operation.basic.Operation;
 import com.pem.logic.converter.common.Converter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
 import com.pem.model.common.bean.BeanObject;

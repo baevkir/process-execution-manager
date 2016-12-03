@@ -5,27 +5,27 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="basic-operation.SyncCompositeOperation"
-          class="com.pem.operation.composite.SyncCompositeOperationImp"
+          class="com.pem.core.operation.composite.SyncCompositeOperationImp"
           scope="prototype"/>
 
     <bean id="basic-operation.BinaryConditionOperation"
-          class="com.pem.operation.condition.BinaryConditionOperationImpl"
+          class="com.pem.core.operation.condition.BinaryConditionOperationImpl"
           scope="prototype"/>
 
     <bean id="basic-operation.IntegerConditionOperation"
-          class="com.pem.operation.condition.IntegerConditionOperationImpl"
+          class="com.pem.core.operation.condition.IntegerConditionOperationImpl"
           scope="prototype"/>
 
     <bean id="basic-operation.CounterLoopOperation"
-          class="com.pem.operation.loop.counter.CounterLoopOperationImpl"
+          class="com.pem.core.operation.loop.counter.CounterLoopOperationImpl"
           scope="prototype"/>
 
     <bean id="basic-operation.DoWhileOperation"
-          class="com.pem.operation.loop.condition.DoWhileOperationImpl"
+          class="com.pem.core.operation.loop.condition.DoWhileOperationImpl"
           scope="prototype"/>
 
     <bean id="basic-operation.WhileOperation"
-          class="com.pem.operation.loop.condition.WhileOperationImpl"
+          class="com.pem.core.operation.loop.condition.WhileOperationImpl"
           scope="prototype"/>
 
     <bean id="operationProvider"

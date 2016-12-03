@@ -2,7 +2,7 @@ package com.pem.test.launcher;
 
 import com.pem.integration.launcher.ProcessExecutionManagerLauncher;
 import com.pem.integration.launcher.ProcessExecutionManagerLauncherImpl;
-import com.pem.operation.basic.Operation;
+import com.pem.core.operation.basic.Operation;
 import com.pem.persistence.api.provider.PersistenceServiceProvider;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;

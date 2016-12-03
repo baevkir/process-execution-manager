@@ -3,7 +3,7 @@ package com.pem.logic.bean.synchronizer;
 import com.pem.logic.bean.provider.operation.OperationProvider;
 import com.pem.logic.bean.provider.operation.impl.RegisterGlobalOperation;
 import com.pem.logic.common.utils.NamingUtils;
-import com.pem.operation.basic.Operation;
+import com.pem.core.operation.basic.Operation;
 import com.pem.model.common.bean.BeanObject;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;
 import org.apache.commons.lang.StringUtils;

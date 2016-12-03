@@ -2,7 +2,7 @@ package com.pem.logic.bean.provider.operation.impl;
 
 import com.pem.logic.bean.provider.operation.OperationProvider;
 import com.pem.logic.common.utils.ApplicationContextWrapper;
-import com.pem.operation.basic.Operation;
+import com.pem.core.operation.basic.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;

@@ -1,8 +1,8 @@
 package com.pem.logic;
 
-import com.pem.operation.basic.util.AnnotationOperation;
-import com.pem.operation.basic.util.reflection.annotions.OperationMethod;
-import com.pem.operation.basic.util.reflection.annotions.Param;
+import com.pem.core.operation.basic.util.AnnotationOperation;
+import com.pem.core.operation.basic.util.reflection.annotions.OperationMethod;
+import com.pem.core.operation.basic.util.reflection.annotions.Param;
 
 import java.math.BigDecimal;
 

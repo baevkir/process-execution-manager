@@ -1,14 +1,14 @@
 package com.pem.logic.converter.operation.condition;
 
-import com.pem.conditioncalculator.BinaryConditionCalculator;
+import com.pem.core.conditioncalculator.BinaryConditionCalculator;
 import com.pem.logic.common.Constants;
 import com.pem.logic.converter.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.logic.converter.common.RegisterInConverterFactory;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.operation.condition.BinaryConditionOperationDTO;
-import com.pem.operation.basic.Operation;
-import com.pem.operation.condition.BinaryConditionOperation;
+import com.pem.core.operation.basic.Operation;
+import com.pem.core.operation.condition.BinaryConditionOperation;
 
 import java.util.Map;
 

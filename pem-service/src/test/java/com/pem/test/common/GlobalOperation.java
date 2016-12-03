@@ -1,9 +1,9 @@
 package com.pem.test.common;
 
 import com.pem.logic.bean.provider.operation.impl.RegisterGlobalOperation;
-import com.pem.context.OperationContext;
-import com.pem.operation.basic.AbstractOperation;
-import com.pem.operation.basic.Operation;
+import com.pem.core.context.OperationContext;
+import com.pem.core.operation.basic.AbstractOperation;
+import com.pem.core.operation.basic.Operation;
 import org.springframework.context.annotation.Scope;
 
 

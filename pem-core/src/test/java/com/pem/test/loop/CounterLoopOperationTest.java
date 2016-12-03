@@ -2,9 +2,9 @@ package com.pem.test.loop;
 
 import com.pem.logic.*;
 import com.pem.config.AppConfig;
-import com.pem.operation.basic.Operation;
-import com.pem.operation.loop.counter.CounterLoopOperation;
-import com.pem.operation.loop.counter.CounterLoopOperationImpl;
+import com.pem.core.operation.basic.Operation;
+import com.pem.core.operation.loop.counter.CounterLoopOperation;
+import com.pem.core.operation.loop.counter.CounterLoopOperationImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

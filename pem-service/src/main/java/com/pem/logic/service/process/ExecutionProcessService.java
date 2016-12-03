@@ -1,7 +1,7 @@
 package com.pem.logic.service.process;
 
 import com.pem.model.operation.common.OperationDTO;
-import com.pem.operation.basic.Operation;
+import com.pem.core.operation.basic.Operation;
 import com.pem.model.proccess.ExecutionProcess;
 
 import java.math.BigInteger;
