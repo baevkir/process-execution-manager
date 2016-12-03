@@ -47,7 +47,7 @@ public class TestEntityCreator {
         states.putAll(createSimpleBinaryState(false));
         operationEntity.setStates(states);
 
-        operationEntity.setCalculatorEntity(createBinaryCalculator());
+        operationEntity.setCalculator(createBinaryCalculator());
         return operationEntity;
     }
 
@@ -61,7 +61,7 @@ public class TestEntityCreator {
         states.putAll(createSimpleIntegerState(1));
         operationEntity.setStates(states);
 
-        operationEntity.setCalculatorEntity(createIntegerCalculator());
+        operationEntity.setCalculator(createIntegerCalculator());
         return operationEntity;
     }
 

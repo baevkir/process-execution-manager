@@ -20,4 +20,14 @@
           class="com.pem.persistence.mongo.converter.operation.composite.FromSyncCompositeEntityToDTOOperationConverter">
         <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
     </bean>
+
+    <bean id="fromBinaryConditionOperationDTOToEntityConverter"
+          class="com.pem.persistence.mongo.converter.operation.condition.FromBinaryConditionOperationDTOToEntityConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <bean id="fromBinaryConditionOperationEntityToDTOConverter"
+          class="com.pem.persistence.mongo.converter.operation.condition.FromBinaryConditionOperationEntityToDTOConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
 </beans>

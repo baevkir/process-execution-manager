@@ -9,7 +9,7 @@ public abstract class ConditionOperationDTO<S> extends OperationDTO {
 
     private Map<S, OperationDTO> states;
 
-    private ConditionCalculatorDTO<S> calculatorEntity;
+    private ConditionCalculatorDTO<S> calculator;
 
     public Map<S, OperationDTO> getStates() {
         return states;
@@ -19,19 +19,19 @@ public abstract class ConditionOperationDTO<S> extends OperationDTO {
         this.states = states;
     }
 
-    public ConditionCalculatorDTO<S> getCalculatorEntity() {
-        return calculatorEntity;
+    public ConditionCalculatorDTO<S> getCalculator() {
+        return calculator;
     }
 
-    public void setCalculatorEntity(ConditionCalculatorDTO<S> calculatorEntity) {
-        this.calculatorEntity = calculatorEntity;
+    public void setCalculator(ConditionCalculatorDTO<S> calculator) {
+        this.calculator = calculator;
     }
 
     @Override
     public String toString() {
         return "ConditionOperationDTO{" +
                 "states=" + states +
-                ", calculatorEntity=" + calculatorEntity +
+                ", calculator=" + calculator +
                 "} " + super.toString();
     }
 }

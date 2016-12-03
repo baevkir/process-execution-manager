@@ -26,7 +26,7 @@ public class BinaryConditionOperationConverter extends AbstractOperationConverte
         BinaryConditionOperation binaryConditionOperation = getOperationProvider().createCommonOperation(BinaryConditionOperation.class);
         binaryConditionOperation.setOperationId(String.valueOf(source.getId()));
 
-        BinaryConditionCalculator calculator = converterFactory.convert(source.getCalculatorEntity(), BinaryConditionCalculator.class);
+        BinaryConditionCalculator calculator = converterFactory.convert(source.getCalculator(), BinaryConditionCalculator.class);
         binaryConditionOperation.setCalculator(calculator);
 
         for (Map.Entry<Boolean, OperationDTO> state : source.getStates().entrySet()) {
