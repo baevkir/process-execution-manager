@@ -6,21 +6,21 @@ import java.util.List;
 
 public abstract class CompositeOperationDTO extends OperationDTO {
 
-    private List<OperationDTO> operationEntities;
+    private List<OperationDTO> operations;
 
-    public List<OperationDTO> getOperationEntities() {
-        return operationEntities;
+    public List<OperationDTO> getOperations() {
+        return operations;
     }
 
-    public void setOperationEntities(List<OperationDTO> operationEntities) {
-        this.operationEntities = operationEntities;
+    public void setOperations(List<OperationDTO> operations) {
+        this.operations = operations;
     }
 
     @Override
     public String toString() {
         return "CompositeOperationDTO{" +
                 super.toString() +
-                "operationEntities=" + operationEntities +
+                "operations=" + operations +
                 '}';
     }
 }

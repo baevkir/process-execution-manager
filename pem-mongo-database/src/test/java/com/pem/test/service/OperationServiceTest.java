@@ -48,7 +48,7 @@ public class OperationServiceTest {
         List<OperationDTO> operationEntities = new ArrayList<>();
         operationEntities.add(operation);
         operationEntities.add(createSimpleBeanOperation());
-        compositeOperationEntity.setOperationEntities(operationEntities);
+        compositeOperationEntity.setOperations(operationEntities);
 
         OperationDTO newCompositeOperationEntity = operationPersistenceService.createOperation(compositeOperationEntity);
         OperationDTO queryOperation = operationPersistenceService.getOperation(newCompositeOperationEntity.getId());

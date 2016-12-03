@@ -74,7 +74,7 @@ public class TestEntityCreator {
         operationEntities.add(createSimpleBeanOperation());
         operationEntities.add(createSimpleBeanOperation());
 
-        operationEntity.setOperationEntities(operationEntities);
+        operationEntity.setOperations(operationEntities);
         return operationEntity;
     }
 

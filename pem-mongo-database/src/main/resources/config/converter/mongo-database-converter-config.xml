@@ -10,4 +10,14 @@
 
     <bean id="fromBeanOperationDTOToEntityConverter"
           class="com.pem.persistence.mongo.converter.operation.bean.FromBeanOperationDTOToEntityConverter"/>
+
+    <bean id="fromSyncCompositeDTOToEntityOperationConverter"
+          class="com.pem.persistence.mongo.converter.operation.composite.FromSyncCompositeDTOToEntityOperationConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <bean id="fromSyncCompositeEntityToDTOOperationConverter"
+          class="com.pem.persistence.mongo.converter.operation.composite.FromSyncCompositeEntityToDTOOperationConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
 </beans>
