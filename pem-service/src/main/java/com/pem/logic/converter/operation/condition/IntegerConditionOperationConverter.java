@@ -1,10 +1,10 @@
 package com.pem.logic.converter.operation.condition;
 
 import com.pem.core.conditioncalculator.IntegerConditionCalculator;
-import com.pem.logic.common.Constants;
-import com.pem.logic.converter.ConverterFactory;
+import com.pem.logic.common.ServiceConstants;
+import com.pem.core.converter.factory.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
-import com.pem.logic.converter.common.RegisterInConverterFactory;
+import com.pem.core.converter.impl.RegisterInConverterFactory;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.operation.condition.IntegerConditionOperationDTO;
 import com.pem.core.operation.basic.Operation;
@@ -12,7 +12,7 @@ import com.pem.core.operation.condition.IntegerConditionOperation;
 
 import java.util.Map;
 
-@RegisterInConverterFactory(factories = Constants.CONVERTER_FACTORY_NAME)
+@RegisterInConverterFactory(factories = ServiceConstants.CONVERTER_FACTORY_NAME)
 public class IntegerConditionOperationConverter extends AbstractOperationConverter<IntegerConditionOperationDTO> {
 
     private ConverterFactory converterFactory;

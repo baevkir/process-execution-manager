@@ -1,7 +1,6 @@
-package com.pem.persistence.mongo.converter;
+package com.pem.core.converter.factory;
 
-import com.pem.logic.converter.ConverterFactoryImpl;
-import com.pem.logic.converter.common.Converter;
+import com.pem.core.converter.impl.Converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.GenericTypeResolver;

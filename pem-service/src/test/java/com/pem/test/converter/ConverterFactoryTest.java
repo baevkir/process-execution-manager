@@ -10,7 +10,7 @@ import com.pem.core.operation.condition.IntegerConditionOperation;
 import com.pem.core.operation.loop.condition.DoWhileOperation;
 import com.pem.core.operation.loop.condition.WhileOperation;
 import com.pem.core.operation.loop.counter.CounterLoopOperation;
-import com.pem.logic.converter.ConverterFactory;
+import com.pem.core.converter.factory.ConverterFactory;
 import com.pem.model.operation.condition.IntegerConditionOperationDTO;
 import com.pem.model.operation.loop.condition.DoWhileLoopOperationDTO;
 import com.pem.model.operation.loop.condition.WhileLoopOperationObject;

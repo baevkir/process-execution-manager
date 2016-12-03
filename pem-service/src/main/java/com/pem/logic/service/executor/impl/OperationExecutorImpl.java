@@ -4,7 +4,7 @@ import com.pem.logic.bean.provider.context.OperationContextProvider;
 import com.pem.core.context.OperationContext;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.core.operation.basic.Operation;
-import com.pem.logic.converter.ConverterFactory;
+import com.pem.core.converter.factory.ConverterFactory;
 import com.pem.model.proccess.ExecutionProcess;
 import com.pem.logic.service.executor.OperationExecutor;
 import com.pem.logic.service.process.ExecutionProcessService;

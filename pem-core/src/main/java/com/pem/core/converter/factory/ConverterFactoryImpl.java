@@ -1,9 +1,9 @@
-package com.pem.logic.converter;
+package com.pem.core.converter.factory;
 
 
-import com.pem.logic.common.utils.ApplicationContextWrapper;
-import com.pem.logic.converter.common.Converter;
-import com.pem.logic.converter.common.RegisterInConverterFactory;
+import com.pem.core.common.ApplicationContextWrapper;
+import com.pem.core.converter.impl.Converter;
+import com.pem.core.converter.impl.RegisterInConverterFactory;
 import org.apache.commons.collections.map.MultiKeyMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,8 +57,9 @@ public class ConverterFactoryImpl implements ConverterFactory, ApplicationContex
             }
         }
     }
+
     @Override
-    public   <S, T> Converter<S, T> getConverter(Class<S> sClass, Class<T> tClass) {
+    public <S, T> Converter<S, T> getConverter(Class<S> sClass, Class<T> tClass) {
         Converter<S, T> converter = (Converter<S, T>) convertersMap.get(sClass, tClass);
         Assert.notNull(converter, String.format("Can't find Converter from %s to %s.", sClass, tClass));
 
@@ -66,7 +67,7 @@ public class ConverterFactoryImpl implements ConverterFactory, ApplicationContex
         return converter;
     }
 
-    protected  <T, S> void setConverter(Converter<S, T> converter) {
+    protected <T, S> void setConverter(Converter<S, T> converter) {
         Class converterClass = converter.getClass();
         Class[] generics = GenericTypeResolver.resolveTypeArguments(converterClass, Converter.class);
         Class sClass = generics[0];

@@ -1,5 +1,5 @@
 package com.pem.logic.common;
 
-public interface Constants {
+public interface ServiceConstants {
     String CONVERTER_FACTORY_NAME = "pem.service.ConverterFactory";
 }

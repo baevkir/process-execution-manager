@@ -1,12 +1,12 @@
 package com.pem.logic.converter.process;
 
-import com.pem.logic.common.Constants;
-import com.pem.logic.common.utils.ApplicationContextWrapper;
+import com.pem.logic.common.ServiceConstants;
+import com.pem.core.common.ApplicationContextWrapper;
 import com.pem.logic.common.utils.IdGenerator;
 import com.pem.logic.common.utils.NamingUtils;
 import com.pem.core.operation.basic.Operation;
-import com.pem.logic.converter.common.Converter;
-import com.pem.logic.converter.common.RegisterInConverterFactory;
+import com.pem.core.converter.impl.Converter;
+import com.pem.core.converter.impl.RegisterInConverterFactory;
 import com.pem.model.common.bean.BeanObject;
 import com.pem.model.operation.basic.BeanOperationDTO;
 import com.pem.model.proccess.ExecutionProcess;
@@ -19,7 +19,7 @@ import org.springframework.context.ApplicationContextAware;
 
 import java.util.Collections;
 
-@RegisterInConverterFactory(factories = Constants.CONVERTER_FACTORY_NAME)
+@RegisterInConverterFactory(factories = ServiceConstants.CONVERTER_FACTORY_NAME)
 public class FromOperationToProcessConverter implements Converter<Operation, ExecutionProcess>, ApplicationContextAware {
 
     private ApplicationContext applicationContext;

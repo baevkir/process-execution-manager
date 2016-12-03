@@ -1,6 +1,7 @@
-package com.pem.logic.converter;
+package com.pem.core.converter.factory;
 
-import com.pem.logic.converter.common.Converter;
+
+import com.pem.core.converter.impl.Converter;
 
 public interface ConverterFactory {
     <S, T> T convert(S source, Class<T> targetClass);

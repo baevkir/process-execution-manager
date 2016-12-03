@@ -1,13 +1,13 @@
 package com.pem.logic.converter.calculator;
 
 import com.pem.core.conditioncalculator.BinaryConditionCalculator;
-import com.pem.logic.common.Constants;
+import com.pem.logic.common.ServiceConstants;
 import com.pem.logic.converter.common.AbstractConditionCalculatorConverter;
-import com.pem.logic.converter.common.RegisterInConverterFactory;
+import com.pem.core.converter.impl.RegisterInConverterFactory;
 import com.pem.model.calculator.bean.BinaryBeanConditionCalculatorDTO;
 import com.pem.model.common.bean.BeanObject;
 
-@RegisterInConverterFactory(factories = Constants.CONVERTER_FACTORY_NAME)
+@RegisterInConverterFactory(factories = ServiceConstants.CONVERTER_FACTORY_NAME)
 public class BinaryCalculatorConverter extends AbstractConditionCalculatorConverter<BinaryBeanConditionCalculatorDTO, BinaryConditionCalculator> {
 
     @Override

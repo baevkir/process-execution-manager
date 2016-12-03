@@ -1,7 +1,7 @@
 package com.pem.logic.bean.provider.calculator.impl;
 
 import com.pem.logic.bean.provider.calculator.ConditionCalculatorProvider;
-import com.pem.logic.common.utils.ApplicationContextWrapper;
+import com.pem.core.common.ApplicationContextWrapper;
 import com.pem.core.conditioncalculator.ConditionCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

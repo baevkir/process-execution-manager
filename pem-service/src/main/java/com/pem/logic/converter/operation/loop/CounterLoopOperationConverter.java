@@ -1,14 +1,14 @@
 package com.pem.logic.converter.operation.loop;
 
-import com.pem.logic.common.Constants;
+import com.pem.logic.common.ServiceConstants;
 import com.pem.model.operation.loop.CounterLoopOperationDTO;
 import com.pem.core.operation.basic.Operation;
 import com.pem.core.operation.loop.counter.CounterLoopOperation;
-import com.pem.logic.converter.ConverterFactory;
+import com.pem.core.converter.factory.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
-import com.pem.logic.converter.common.RegisterInConverterFactory;
+import com.pem.core.converter.impl.RegisterInConverterFactory;
 
-@RegisterInConverterFactory(factories = Constants.CONVERTER_FACTORY_NAME)
+@RegisterInConverterFactory(factories = ServiceConstants.CONVERTER_FACTORY_NAME)
 public class CounterLoopOperationConverter extends AbstractOperationConverter<CounterLoopOperationDTO> {
 
     private ConverterFactory converterFactory;

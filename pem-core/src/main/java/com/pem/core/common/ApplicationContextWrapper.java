@@ -1,4 +1,4 @@
-package com.pem.logic.common.utils;
+package com.pem.core.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="pem.service.ConverterFactory" class="com.pem.logic.converter.ConverterFactoryImpl"/>
+    <bean id="pem.service.ConverterFactory" class="com.pem.core.converter.factory.ConverterFactoryImpl"/>
 
     <bean id="beanOperationConverter" class="com.pem.logic.converter.operation.basic.BeanOperationConverter">
         <property name="operationProvider" ref="operationProvider"/>

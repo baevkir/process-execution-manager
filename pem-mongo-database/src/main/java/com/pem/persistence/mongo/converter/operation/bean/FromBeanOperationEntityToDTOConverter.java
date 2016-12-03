@@ -1,7 +1,7 @@
 package com.pem.persistence.mongo.converter.operation.bean;
 
-import com.pem.logic.converter.common.Converter;
-import com.pem.logic.converter.common.RegisterInConverterFactory;
+import com.pem.core.converter.impl.Converter;
+import com.pem.core.converter.impl.RegisterInConverterFactory;
 import com.pem.model.common.bean.BeanObject;
 import com.pem.model.operation.basic.BeanOperationDTO;
 import com.pem.persistence.mongo.common.PemMongoConstants;
