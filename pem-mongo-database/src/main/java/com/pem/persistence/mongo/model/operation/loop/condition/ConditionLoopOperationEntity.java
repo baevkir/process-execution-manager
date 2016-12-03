@@ -4,7 +4,7 @@ import com.pem.persistence.mongo.model.calculator.BinaryCalculator;
 import com.pem.persistence.mongo.model.operation.loop.LoopOperationEntity;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-public class CondotionLoopOperationEntity extends LoopOperationEntity {
+public class ConditionLoopOperationEntity extends LoopOperationEntity {
 
     @DBRef
     private BinaryCalculator calculator;
@@ -19,7 +19,7 @@ public class CondotionLoopOperationEntity extends LoopOperationEntity {
 
     @Override
     public String toString() {
-        return "CondotionLoopOperationEntity{" +
+        return "ConditionLoopOperationEntity{" +
                 "calculator=" + calculator +
                 "} " + super.toString();
     }
