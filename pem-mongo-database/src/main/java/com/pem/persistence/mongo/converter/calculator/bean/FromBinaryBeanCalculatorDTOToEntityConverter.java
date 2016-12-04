@@ -1,4 +1,4 @@
-package com.pem.persistence.mongo.converter.calculator;
+package com.pem.persistence.mongo.converter.calculator.bean;
 
 import com.pem.core.converter.impl.Converter;
 import com.pem.core.converter.impl.RegisterInConverterFactory;

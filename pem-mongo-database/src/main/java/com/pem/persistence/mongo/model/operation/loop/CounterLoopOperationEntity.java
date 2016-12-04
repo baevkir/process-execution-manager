@@ -14,7 +14,7 @@ public class CounterLoopOperationEntity extends LoopOperationEntity {
     @Override
     public String toString() {
         return "CounterLoopOperationEntity{" +
-                "count=" + count +
+                "counter=" + count +
                 "} " + super.toString();
     }
 }

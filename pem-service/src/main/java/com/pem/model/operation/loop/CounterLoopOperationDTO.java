@@ -14,7 +14,7 @@ public class CounterLoopOperationDTO extends LoopOperationDTO {
     @Override
     public String toString() {
         return "CounterLoopOperationDTO{" +
-                "count=" + count +
+                "counter=" + count +
                 "} " + super.toString();
     }
 }
