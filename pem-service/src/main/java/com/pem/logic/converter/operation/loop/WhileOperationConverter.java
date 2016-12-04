@@ -7,10 +7,10 @@ import com.pem.core.operation.loop.condition.WhileOperation;
 import com.pem.core.converter.factory.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.core.converter.impl.RegisterInConverterFactory;
-import com.pem.model.operation.loop.condition.WhileLoopOperationObject;
+import com.pem.model.operation.loop.condition.WhileLoopOperationDTO;
 
 @RegisterInConverterFactory(factories = ServiceConstants.CONVERTER_FACTORY_NAME)
-public class WhileOperationConverter extends AbstractOperationConverter<WhileLoopOperationObject> {
+public class WhileOperationConverter extends AbstractOperationConverter<WhileLoopOperationDTO> {
 
     private ConverterFactory converterFactory;
 
@@ -20,7 +20,7 @@ public class WhileOperationConverter extends AbstractOperationConverter<WhileLoo
 
 
     @Override
-    public Operation convert(WhileLoopOperationObject source) {
+    public Operation convert(WhileLoopOperationDTO source) {
         WhileOperation loopOperation = getOperationProvider().createCommonOperation(WhileOperation.class);
         loopOperation.setId(source.getId());
         loopOperation.setCalculator(converterFactory.convert(source.getCalculator(), BinaryCalculator.class));

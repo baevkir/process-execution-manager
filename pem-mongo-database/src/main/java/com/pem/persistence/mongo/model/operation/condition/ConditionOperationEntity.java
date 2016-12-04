@@ -7,12 +7,12 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.List;
 
-public abstract class ConditionOperationEntity<S extends AbstractState> extends OperationEntity {
+public abstract class ConditionOperationEntity<E, S extends AbstractState<E>> extends OperationEntity {
 
     private List<S> states;
 
     @DBRef
-    private CalculatorEntity calculatorEntity;
+    private CalculatorEntity<E> calculatorEntity;
 
     public List<S> getStates() {
         return states;
@@ -22,11 +22,11 @@ public abstract class ConditionOperationEntity<S extends AbstractState> extends 
         this.states = states;
     }
 
-    public CalculatorEntity getCalculatorEntity() {
+    public CalculatorEntity<E> getCalculatorEntity() {
         return calculatorEntity;
     }
 
-    public void setCalculatorEntity(CalculatorEntity calculatorEntity) {
+    public void setCalculatorEntity(CalculatorEntity<E> calculatorEntity) {
         this.calculatorEntity = calculatorEntity;
     }
 

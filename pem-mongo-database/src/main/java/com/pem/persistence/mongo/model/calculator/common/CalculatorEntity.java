@@ -4,7 +4,7 @@ import com.pem.persistence.mongo.model.common.BaseEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "pem-calculators")
-public abstract class CalculatorEntity extends BaseEntity {
+public abstract class CalculatorEntity<S> extends BaseEntity {
 
     @Override
     public String toString() {

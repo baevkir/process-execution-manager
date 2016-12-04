@@ -1,19 +1,19 @@
 package com.pem.persistence.mongo.model.operation.loop.condition;
 
-import com.pem.persistence.mongo.model.calculator.bean.BinaryBeanCalculatorEntity;
+import com.pem.persistence.mongo.model.calculator.common.CalculatorEntity;
 import com.pem.persistence.mongo.model.operation.loop.LoopOperationEntity;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 public class ConditionLoopOperationEntity extends LoopOperationEntity {
 
     @DBRef
-    private BinaryBeanCalculatorEntity calculator;
+    private CalculatorEntity<Boolean> calculator;
 
-    public BinaryBeanCalculatorEntity getCalculator() {
+    public CalculatorEntity<Boolean> getCalculator() {
         return calculator;
     }
 
-    public void setCalculator(BinaryBeanCalculatorEntity calculator) {
+    public void setCalculator(CalculatorEntity<Boolean> calculator) {
         this.calculator = calculator;
     }
 

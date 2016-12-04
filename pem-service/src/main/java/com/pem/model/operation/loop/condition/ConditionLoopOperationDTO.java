@@ -1,17 +1,17 @@
 package com.pem.model.operation.loop.condition;
 
-import com.pem.model.calculator.bean.BinaryBeanCalculatorDTO;
+import com.pem.model.calculator.common.CalculatorDTO;
 import com.pem.model.operation.loop.LoopOperationDTO;
 
 public abstract class ConditionLoopOperationDTO extends LoopOperationDTO {
 
-    private BinaryBeanCalculatorDTO calculator;
+    private CalculatorDTO<Boolean> calculator;
 
-    public BinaryBeanCalculatorDTO getCalculator() {
+    public CalculatorDTO<Boolean> getCalculator() {
         return calculator;
     }
 
-    public void setCalculator(BinaryBeanCalculatorDTO calculator) {
+    public void setCalculator(CalculatorDTO<Boolean> calculator) {
         this.calculator = calculator;
     }
 

@@ -13,7 +13,7 @@ import com.pem.core.operation.loop.counter.CounterLoopOperation;
 import com.pem.core.converter.factory.ConverterFactory;
 import com.pem.model.operation.condition.IntegerConditionOperationDTO;
 import com.pem.model.operation.loop.condition.DoWhileLoopOperationDTO;
-import com.pem.model.operation.loop.condition.WhileLoopOperationObject;
+import com.pem.model.operation.loop.condition.WhileLoopOperationDTO;
 import com.pem.model.proccess.ExecutionProcess;
 import com.pem.test.common.TestEntityCreator;
 import com.pem.test.common.config.TestConfig;
@@ -86,7 +86,7 @@ public class ConverterFactoryTest {
 
     @Test
     public void testWhileOperationConverter() {
-        WhileLoopOperationObject operationEntity = new WhileLoopOperationObject();
+        WhileLoopOperationDTO operationEntity = new WhileLoopOperationDTO();
         operationEntity.setOperation(creator.createIntegerConditionOperationEntity());
         operationEntity.setCalculator(creator.createBinaryCalculator());
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
@@ -99,6 +99,5 @@ public class ConverterFactoryTest {
         OperationDTO operationEntity = creator.createSyncCompositeOperationEntity();
         ExecutionProcess processEntity = converterFactory.convert(operationEntity, OperationDTO.class, ExecutionProcess.class);
         Assert.assertNotNull(processEntity);
-        Assert.assertTrue(processEntity instanceof ExecutionProcess);
     }
 }
