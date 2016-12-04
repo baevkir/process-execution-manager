@@ -41,7 +41,7 @@ public class ConverterFactoryImpl implements ConverterFactory, ApplicationContex
 
     @PostConstruct
     public void initConverters() {
-        Map<String, Converter> converters = applicationContext.getBeansOfType(Converter.class, true, true);
+        Map<String, Converter> converters = applicationContext.getBeansOfType(Converter.class, false, true);
         ApplicationContextWrapper contextWrapper = new ApplicationContextWrapper(applicationContext);
         String currentFactoryName = contextWrapper.getBeanName(this);
         for (Map.Entry<String, Converter> converter : converters.entrySet()) {

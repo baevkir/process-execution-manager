@@ -22,12 +22,19 @@
     </bean>
 
     <bean id="fromBinaryConditionOperationDTOToEntityConverter"
-          class="com.pem.persistence.mongo.converter.operation.condition.FromBinaryConditionOperationDTOToEntityConverter">
+          class="com.pem.persistence.mongo.converter.operation.condition.FromBinaryConditionOperationEntityToDTOConverter">
         <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
     </bean>
 
     <bean id="fromBinaryConditionOperationEntityToDTOConverter"
-          class="com.pem.persistence.mongo.converter.operation.condition.FromBinaryConditionOperationEntityToDTOConverter">
+          class="com.pem.persistence.mongo.converter.operation.condition.FromBinaryConditionOperationDTOToEntityConverter">
         <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
     </bean>
+
+    <bean id="fromBinaryCalculatorDTOToEntityConverter"
+          class="com.pem.persistence.mongo.converter.calculator.FromBinaryCalculatorDTOToEntityConverter"/>
+
+    <bean id="fromBinaryCalculatorEntityToDTOConverter"
+          class="com.pem.persistence.mongo.converter.calculator.FromBinaryCalculatorEntityToDTOConverter"/>
+
 </beans>

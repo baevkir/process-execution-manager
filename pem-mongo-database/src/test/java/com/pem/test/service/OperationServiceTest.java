@@ -1,6 +1,7 @@
 package com.pem.test.service;
 
 import com.pem.model.calculator.bean.BinaryBeanConditionCalculatorDTO;
+import com.pem.model.calculator.common.ConditionCalculatorDTO;
 import com.pem.model.operation.basic.BeanOperationDTO;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.operation.composite.CompositeOperationDTO;
@@ -75,6 +76,8 @@ public class OperationServiceTest {
             Assert.assertNotNull(innerOperation);
 
             operationPersistenceService.deleteOperation(innerOperation.getId());
+
+            Assert.assertNull(operationPersistenceService.getOperation(innerId));
         }
 
     }
@@ -86,19 +89,24 @@ public class OperationServiceTest {
         createBinaryConditionOperationEntity();
 
         List<OperationDTO> fullList = operationPersistenceService.getAllOperations();
-        Assert.assertTrue(fullList.size() == 5);
+        Assert.assertTrue(fullList.size() != 0);
 
         List<BeanOperationDTO> beanOperationEntities = operationPersistenceService.getOperationsByType(BeanOperationDTO.class);
-        Assert.assertTrue(beanOperationEntities.size() == 4);
+        Assert.assertTrue(beanOperationEntities.size() != 0);
+        Assert.assertTrue(beanOperationEntities.size() != fullList.size());
 
         List<BinaryConditionOperationDTO> conditionOperationEntities = operationPersistenceService.getOperationsByType(BinaryConditionOperationDTO.class);
-        Assert.assertTrue(conditionOperationEntities.size() == 1);
+        Assert.assertTrue(conditionOperationEntities.size() != 0);
+        Assert.assertTrue(conditionOperationEntities.size() != fullList.size());
     }
 
     private BinaryConditionOperationDTO createBinaryConditionOperationEntity() {
         BinaryConditionOperationDTO operationEntity = new BinaryConditionOperationDTO();
         operationEntity.setName("Test operation.");
         operationEntity.setDescription("Test description.");
+
+        ConditionCalculatorDTO calculator = calculatorPersistenceService.createCalculator(creator.createRandomBinaryCalculator());
+        operationEntity.setCalculator(calculator);
 
         Map<Boolean, OperationDTO> states = new HashMap<>();
         states.putAll(createSimpleBinaryState(true));

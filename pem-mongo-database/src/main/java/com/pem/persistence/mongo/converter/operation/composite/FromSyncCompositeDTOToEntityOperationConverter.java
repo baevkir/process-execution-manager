@@ -1,6 +1,7 @@
 package com.pem.persistence.mongo.converter.operation.composite;
 
 import com.pem.core.converter.factory.ConverterFactory;
+import com.pem.core.converter.impl.Converter;
 import com.pem.core.converter.impl.RegisterInConverterFactory;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.operation.composite.SyncCompositeOperationDTO;
@@ -8,7 +9,6 @@ import com.pem.persistence.mongo.common.PemMongoConstants;
 import com.pem.persistence.mongo.converter.common.ConverterTemplateMethods;
 import com.pem.persistence.mongo.model.operation.common.OperationEntity;
 import com.pem.persistence.mongo.model.operation.composite.SyncCompositeOperationEntity;
-import org.springframework.core.convert.converter.Converter;
 
 import java.util.ArrayList;
 import java.util.List;

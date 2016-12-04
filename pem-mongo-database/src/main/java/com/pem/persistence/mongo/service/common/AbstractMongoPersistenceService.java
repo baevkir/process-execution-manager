@@ -3,6 +3,7 @@ package com.pem.persistence.mongo.service.common;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.pem.core.converter.factory.ConverterFactory;
+import com.pem.core.converter.impl.Converter;
 import com.pem.model.common.IdentifiableDTO;
 import com.pem.persistence.mongo.common.CommonMongoRepository;
 import com.pem.persistence.mongo.model.common.IdentifiableEntity;
@@ -41,14 +42,20 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
     }
 
     protected List<O> saveList(List<O> objects){
-        List<E> entities = getRepository().save(convertAllToEntites(objects));
+        List<E> entities = getRepository().save(convertAllToEntities(objects));
         return convertAllToObjects(entities);
     }
 
     protected O getOne(BigInteger id){
         Assert.notNull(id, "Id is empty, can`t find Entity.");
         LOGGER.debug("Start to find object for {}", id);
-        return convertToObject(getRepository().findOne(id));
+        E entity =getRepository().findOne(id);
+        if (entity == null) {
+            LOGGER.warn("Can't find {} by ID {}.", getObjectClass().getName(), id);
+            return null;
+        }
+
+        return convertToObject(entity);
     }
 
     protected List<O> getAll(){
@@ -58,7 +65,12 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
     protected <T extends O> List<T> getAllByType(final Class<T> targetClass) {
         Assert.notNull(targetClass,"Class is NULL, can`t find Entities." );
 
-        String className = targetClass.getCanonicalName();
+        Converter<T, E> converter = converterFactory.getConverter(targetClass, getEntityClass());
+        Class converterClass = converter.getClass();
+        Class[] generics = GenericTypeResolver.resolveTypeArguments(converterClass, Converter.class);
+        Class<E> targetEntityClass = generics[1];
+
+        String className = targetEntityClass.getCanonicalName();
         List<E> operationEntities = getRepository().findByImplementation(className);
 
         return FluentIterable.from(operationEntities).transform(new Function<E, T>() {
@@ -88,7 +100,7 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
         return converterFactory.convert(entity, getObjectClass());
     }
 
-    protected List<E> convertAllToEntites(List<O> objects) {
+    protected List<E> convertAllToEntities(List<O> objects) {
         final Class<E> entityClass = getEntityClass();
         return FluentIterable.from(objects).transform(new Function<O, E>() {
             @Override
