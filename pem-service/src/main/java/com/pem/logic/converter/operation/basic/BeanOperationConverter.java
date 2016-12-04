@@ -13,7 +13,7 @@ public class BeanOperationConverter extends AbstractOperationConverter<BeanOpera
     public Operation convert(BeanOperationDTO source) {
         BeanObject beanEntity = source.getBean();
         Operation operation = getOperationProvider().createOperation(beanEntity.getBeanName(), Operation.class);
-        operation.setOperationId(String.valueOf(source.getId()));
+        operation.setId(source.getId());
 
         return operation;
     }

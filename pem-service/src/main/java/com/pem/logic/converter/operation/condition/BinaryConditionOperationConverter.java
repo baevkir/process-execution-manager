@@ -1,6 +1,6 @@
 package com.pem.logic.converter.operation.condition;
 
-import com.pem.core.conditioncalculator.BinaryConditionCalculator;
+import com.pem.core.calculator.BinaryCalculator;
 import com.pem.logic.common.ServiceConstants;
 import com.pem.core.converter.factory.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
@@ -24,9 +24,9 @@ public class BinaryConditionOperationConverter extends AbstractOperationConverte
     @Override
     public Operation convert(BinaryConditionOperationDTO source) {
         BinaryConditionOperation binaryConditionOperation = getOperationProvider().createCommonOperation(BinaryConditionOperation.class);
-        binaryConditionOperation.setOperationId(String.valueOf(source.getId()));
+        binaryConditionOperation.setId(source.getId());
 
-        BinaryConditionCalculator calculator = converterFactory.convert(source.getCalculator(), BinaryConditionCalculator.class);
+        BinaryCalculator calculator = converterFactory.convert(source.getCalculator(), BinaryCalculator.class);
         binaryConditionOperation.setCalculator(calculator);
 
         for (Map.Entry<Boolean, OperationDTO> state : source.getStates().entrySet()) {

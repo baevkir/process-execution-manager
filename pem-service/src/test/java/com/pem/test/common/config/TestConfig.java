@@ -1,14 +1,16 @@
 package com.pem.test.common.config;
 
 import com.pem.logic.*;
-import com.pem.core.conditioncalculator.BinaryConditionCalculator;
-import com.pem.core.conditioncalculator.IntegerConditionCalculator;
+import com.pem.core.calculator.BinaryCalculator;
+import com.pem.core.calculator.IntegerCalculator;
 import com.pem.core.context.OperationContext;
 import com.pem.core.operation.basic.AbstractOperation;
 import com.pem.core.operation.basic.Operation;
 import com.pem.test.common.GlobalOperation;
 import org.junit.Assert;
 import org.springframework.context.annotation.*;
+
+import java.math.BigInteger;
 
 
 @Configuration
@@ -54,23 +56,23 @@ public class TestConfig {
 
     @Bean
     @Scope("prototype")
-    public IntegerConditionCalculator compareFirstWithSecondCalculator() {
+    public IntegerCalculator compareFirstWithSecondCalculator() {
         return new CompareFirstWithSecondCalculator();
     }
 
     @Bean("testBinaryConditionCalculator")
     @Scope("prototype")
-    public BinaryConditionCalculator testBinaryConditionCalculator() {
-        return new BinaryConditionCalculator() {
-            private String id;
+    public BinaryCalculator testBinaryConditionCalculator() {
+        return new BinaryCalculator() {
+            private BigInteger id;
 
             @Override
-            public String getConditionCalculatorId() {
+            public BigInteger getId() {
                 return id;
             }
 
             @Override
-            public void setConditionCalculatorId(String id) {
+            public void setId(BigInteger id) {
                 this.id = id;
             }
             @Override
@@ -82,17 +84,17 @@ public class TestConfig {
 
     @Bean("testIntegerConditionCalculator")
     @Scope("prototype")
-    public IntegerConditionCalculator testIntegerConditionCalculator() {
-        return new IntegerConditionCalculator() {
-            private String id;
+    public IntegerCalculator testIntegerConditionCalculator() {
+        return new IntegerCalculator() {
+            private BigInteger id;
 
             @Override
-            public String getConditionCalculatorId() {
+            public BigInteger getId() {
                 return id;
             }
 
             @Override
-            public void setConditionCalculatorId(String id) {
+            public void setId(BigInteger id) {
                 this.id = id;
             }
 

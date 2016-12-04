@@ -1,6 +1,6 @@
 package com.pem.logic.service.calculator.impl;
 
-import com.pem.core.conditioncalculator.ConditionCalculator;
+import com.pem.core.calculator.Calculator;
 import com.pem.model.calculator.common.CalculatorDTO;
 import com.pem.model.common.bean.BeanObject;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
@@ -21,25 +21,25 @@ public class ConditionCalculatorServiceImpl implements ConditionCalculatorServic
 
     @Override
     public CalculatorDTO createConditionCalculator(CalculatorDTO calculatorEntity) {
-        LOGGER.debug("Create new ConditionCalculator: {}.", calculatorEntity);
+        LOGGER.debug("Create new Calculator: {}.", calculatorEntity);
         return persistenceService.createCalculator(calculatorEntity);
     }
 
     @Override
     public void updateConditionCalculator(CalculatorDTO calculatorEntity) {
-        LOGGER.debug("Update ConditionCalculator: {}.", calculatorEntity);
+        LOGGER.debug("Update Calculator: {}.", calculatorEntity);
         persistenceService.updateCalculator(calculatorEntity);
     }
 
     @Override
     public void deleteConditionCalculator(BigInteger id) {
-        LOGGER.debug("Delete ConditionCalculator by id: {}.", id);
+        LOGGER.debug("Delete Calculator by id: {}.", id);
         persistenceService.deleteCalculator(id);
     }
 
     @Override
     public CalculatorDTO getConditionCalculator(BigInteger id) {
-        LOGGER.debug("Get ConditionCalculator by id: {}.", id);
+        LOGGER.debug("Get Calculator by id: {}.", id);
         return persistenceService.getCalculator(id);
     }
 
@@ -50,7 +50,7 @@ public class ConditionCalculatorServiceImpl implements ConditionCalculatorServic
     }
 
     @Override
-    public <C extends ConditionCalculator> List<BeanObject> getConditionCalculatorBeanEntitiesForClass(Class<C> tClass) {
+    public <C extends Calculator> List<BeanObject> getConditionCalculatorBeanEntitiesForClass(Class<C> tClass) {
         return beanEntityProvider.provideCalculatorBeanEntities(tClass);
     }
 

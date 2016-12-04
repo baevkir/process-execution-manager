@@ -1,6 +1,6 @@
 package com.pem.core.operation.condition;
 
-import com.pem.core.conditioncalculator.IntegerConditionCalculator;
+import com.pem.core.calculator.IntegerCalculator;
 
-public interface IntegerConditionOperation extends ConditionOperation<Integer, IntegerConditionCalculator> {
+public interface IntegerConditionOperation extends ConditionOperation<Integer, IntegerCalculator> {
 }

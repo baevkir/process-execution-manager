@@ -1,6 +1,6 @@
 package com.pem.logic.converter.operation.condition;
 
-import com.pem.core.conditioncalculator.IntegerConditionCalculator;
+import com.pem.core.calculator.IntegerCalculator;
 import com.pem.logic.common.ServiceConstants;
 import com.pem.core.converter.factory.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
@@ -24,9 +24,9 @@ public class IntegerConditionOperationConverter extends AbstractOperationConvert
     @Override
     public Operation convert(IntegerConditionOperationDTO source) {
         IntegerConditionOperation conditionOperation = getOperationProvider().createCommonOperation(IntegerConditionOperation.class);
-        conditionOperation.setOperationId(String.valueOf(source.getId()));
+        conditionOperation.setId(source.getId());
 
-        IntegerConditionCalculator calculator = converterFactory.convert(source.getCalculator(), IntegerConditionCalculator.class);
+        IntegerCalculator calculator = converterFactory.convert(source.getCalculator(), IntegerCalculator.class);
         conditionOperation.setCalculator(calculator);
 
         for (Map.Entry<Integer, OperationDTO> state : source.getStates().entrySet()) {

@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,14 +13,15 @@ public class OperationContextImpl implements OperationContext {
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationContextImpl.class);
     private boolean isOpen = false;
     private Map<String, Object> contextParams = new HashMap<>();
-    private String id;
+    private BigInteger id;
+
     @Override
-    public String getContextId() {
+    public BigInteger getId() {
         return id;
     }
 
     @Override
-    public void setContextId(String id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 

@@ -1,6 +1,6 @@
 package com.pem.logic.converter.operation.loop;
 
-import com.pem.core.conditioncalculator.BinaryConditionCalculator;
+import com.pem.core.calculator.BinaryCalculator;
 import com.pem.logic.common.ServiceConstants;
 import com.pem.model.operation.loop.condition.DoWhileLoopOperationDTO;
 import com.pem.core.operation.basic.Operation;
@@ -21,8 +21,8 @@ public class DoWhileOperationConverter extends AbstractOperationConverter<DoWhil
     @Override
     public Operation convert(DoWhileLoopOperationDTO source) {
         DoWhileOperation loopOperation = getOperationProvider().createCommonOperation(DoWhileOperation.class);
-        loopOperation.setOperationId(String.valueOf(source.getId()));
-        loopOperation.setCalculator(converterFactory.convert(source.getCalculator(), BinaryConditionCalculator.class));
+        loopOperation.setId(source.getId());
+        loopOperation.setCalculator(converterFactory.convert(source.getCalculator(), BinaryCalculator.class));
         loopOperation.setOperation(converterFactory.convert(source.getOperation(), Operation.class));
 
         return loopOperation;

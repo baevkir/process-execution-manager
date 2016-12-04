@@ -1,8 +1,9 @@
 package com.pem.core.context;
 
-public interface OperationContext {
-    String getContextId();
-    void setContextId(String id);
+
+import com.pem.core.common.Identifiable;
+
+public interface OperationContext extends Identifiable {
     <S> void setContextParam(String key, S value);
     <S> S getContextParam(String key, Class<S> clazz);
     boolean isOpen();

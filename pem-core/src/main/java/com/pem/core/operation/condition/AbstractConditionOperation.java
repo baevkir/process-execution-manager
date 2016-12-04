@@ -1,9 +1,9 @@
 package com.pem.core.operation.condition;
 
+import com.pem.core.calculator.Calculator;
 import com.pem.core.context.OperationContext;
 import com.pem.core.operation.basic.AbstractOperation;
 import com.pem.core.operation.basic.Operation;
-import com.pem.core.conditioncalculator.ConditionCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
@@ -11,12 +11,12 @@ import org.springframework.util.Assert;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractConditionOperation<S, C extends ConditionCalculator<S>> extends AbstractOperation implements ConditionOperation<S, C> {
+public abstract class AbstractConditionOperation<S, C extends Calculator<S>> extends AbstractOperation implements ConditionOperation<S, C> {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractConditionOperation.class);
 
     private final Map<S, Operation> conditions = new HashMap<>();
 
-    private ConditionCalculator<S> calculator;
+    private Calculator<S> calculator;
 
     @Override
     public void execute(OperationContext context) {

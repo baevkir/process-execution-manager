@@ -1,19 +1,21 @@
 package com.pem.logic;
 
-import com.pem.core.conditioncalculator.IntegerConditionCalculator;
+import com.pem.core.calculator.IntegerCalculator;
 import com.pem.core.context.OperationContext;
 
-public class CompareFirstWithSecondCalculator implements IntegerConditionCalculator {
+import java.math.BigInteger;
 
-    private String id;
+public class CompareFirstWithSecondCalculator implements IntegerCalculator {
+
+    private BigInteger id;
 
     @Override
-    public String getConditionCalculatorId() {
+    public BigInteger getId() {
         return id;
     }
 
     @Override
-    public void setConditionCalculatorId(String id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 

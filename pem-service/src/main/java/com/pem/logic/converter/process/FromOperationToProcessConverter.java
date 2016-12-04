@@ -1,7 +1,7 @@
 package com.pem.logic.converter.process;
 
 import com.pem.logic.common.ServiceConstants;
-import com.pem.core.common.ApplicationContextWrapper;
+import com.pem.core.common.utils.ApplicationContextWrapper;
 import com.pem.logic.common.utils.IdGenerator;
 import com.pem.logic.common.utils.NamingUtils;
 import com.pem.core.operation.basic.Operation;

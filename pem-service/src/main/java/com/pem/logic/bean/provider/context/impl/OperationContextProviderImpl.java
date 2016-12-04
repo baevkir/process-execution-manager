@@ -1,7 +1,7 @@
 package com.pem.logic.bean.provider.context.impl;
 
 import com.pem.logic.bean.provider.context.OperationContextProvider;
-import com.pem.core.common.ApplicationContextWrapper;
+import com.pem.core.common.utils.ApplicationContextWrapper;
 import com.pem.core.context.OperationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

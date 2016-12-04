@@ -1,5 +1,7 @@
 package com.pem.core.context;
 
+import java.math.BigInteger;
+
 public abstract class AbstractOperationContextWrapper implements OperationContext {
     private OperationContext context;
 
@@ -8,13 +10,13 @@ public abstract class AbstractOperationContextWrapper implements OperationContex
     }
 
     @Override
-    public String getContextId() {
-        return context.getContextId();
+    public BigInteger getId() {
+        return context.getId();
     }
 
     @Override
-    public void setContextId(String id) {
-        context.setContextId(id);
+    public void setId(BigInteger id) {
+        context.setId(id);
     }
 
     @Override

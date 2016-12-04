@@ -1,16 +1,18 @@
 package com.pem.core.operation.basic;
 
+import java.math.BigInteger;
+
 public abstract class AbstractOperation implements Operation {
 
-    private String id;
+    private BigInteger id;
 
     @Override
-    public String getOperationId() {
+    public BigInteger getId() {
         return id;
     }
 
     @Override
-    public void setOperationId(String id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 

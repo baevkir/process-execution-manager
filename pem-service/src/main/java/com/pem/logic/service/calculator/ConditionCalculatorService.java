@@ -1,6 +1,6 @@
 package com.pem.logic.service.calculator;
 
-import com.pem.core.conditioncalculator.ConditionCalculator;
+import com.pem.core.calculator.Calculator;
 import com.pem.model.calculator.common.CalculatorDTO;
 import com.pem.model.common.bean.BeanObject;
 
@@ -13,5 +13,5 @@ public interface ConditionCalculatorService {
     void deleteConditionCalculator(BigInteger id);
     CalculatorDTO getConditionCalculator(BigInteger id);
     List<CalculatorDTO> getAllConditionCalculators();
-    <C extends ConditionCalculator> List<BeanObject> getConditionCalculatorBeanEntitiesForClass(Class<C> tClass);
+    <C extends Calculator> List<BeanObject> getConditionCalculatorBeanEntitiesForClass(Class<C> tClass);
 }

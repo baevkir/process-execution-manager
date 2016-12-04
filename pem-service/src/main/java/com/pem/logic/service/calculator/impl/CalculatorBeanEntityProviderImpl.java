@@ -3,7 +3,7 @@ package com.pem.logic.service.calculator.impl;
 import com.pem.logic.bean.provider.calculator.ConditionCalculatorProvider;
 import com.pem.logic.bean.provider.calculator.impl.RegisterGlobalCalculator;
 import com.pem.logic.common.utils.NamingUtils;
-import com.pem.core.conditioncalculator.ConditionCalculator;
+import com.pem.core.calculator.Calculator;
 import com.pem.model.common.bean.BeanObject;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ public class CalculatorBeanEntityProviderImpl implements CalculatorBeanEntityPro
     }
 
     @Override
-    public <C extends ConditionCalculator> List<BeanObject> provideCalculatorBeanEntities(Class<C>  calculatorClass) {
+    public <C extends Calculator> List<BeanObject> provideCalculatorBeanEntities(Class<C>  calculatorClass) {
         LOGGER.debug("Get All ConditionCalculatorBeanEntities for class {}.", calculatorClass);
         List<BeanObject> calculators = new ArrayList<>();
 

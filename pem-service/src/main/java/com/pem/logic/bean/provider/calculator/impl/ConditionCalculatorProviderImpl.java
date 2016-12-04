@@ -1,8 +1,8 @@
 package com.pem.logic.bean.provider.calculator.impl;
 
 import com.pem.logic.bean.provider.calculator.ConditionCalculatorProvider;
-import com.pem.core.common.ApplicationContextWrapper;
-import com.pem.core.conditioncalculator.ConditionCalculator;
+import com.pem.core.common.utils.ApplicationContextWrapper;
+import com.pem.core.calculator.Calculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -18,14 +18,14 @@ public class ConditionCalculatorProviderImpl implements ConditionCalculatorProvi
     private ApplicationContext applicationContext;
 
     @Override
-    public <C extends ConditionCalculator> C createCalculator(String beanName, Class<C> conditionCalculatorClass) {
+    public <C extends Calculator> C createCalculator(String beanName, Class<C> conditionCalculatorClass) {
         ApplicationContextWrapper wrapper = new ApplicationContextWrapper(applicationContext);
         return wrapper.getPrototypeBeanByType(beanName, conditionCalculatorClass);
     }
 
 
     @Override
-    public <C extends ConditionCalculator> Map<String, C> getAllGlobalCalculators(Class<C> conditionCalculatorClass) {
+    public <C extends Calculator> Map<String, C> getAllGlobalCalculators(Class<C> conditionCalculatorClass) {
         ApplicationContextWrapper wrapper = new ApplicationContextWrapper(applicationContext);
         return wrapper.findBeanByAnnotation(RegisterGlobalCalculator.class, conditionCalculatorClass);
     }

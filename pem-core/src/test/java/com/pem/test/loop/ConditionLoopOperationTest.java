@@ -5,7 +5,7 @@ import com.pem.logic.MultiplyOperation;
 import com.pem.config.AppConfig;
 import com.pem.core.context.OperationContext;
 import com.pem.core.operation.basic.Operation;
-import com.pem.core.conditioncalculator.BinaryConditionCalculator;
+import com.pem.core.calculator.BinaryCalculator;
 import com.pem.core.operation.loop.condition.ConditionLoopOperation;
 import com.pem.core.operation.loop.condition.DoWhileOperationImpl;
 import com.pem.core.operation.loop.condition.WhileOperationImpl;
@@ -18,31 +18,32 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AppConfig.class, loader = AnnotationConfigContextLoader.class)
 public class ConditionLoopOperationTest {
 
     private Operation multiplyOperation;
-    private BinaryConditionCalculator calculator;
-    private BinaryConditionCalculator calculatorFalse;
+    private BinaryCalculator calculator;
+    private BinaryCalculator calculatorFalse;
 
     @Before
     public void setUp() {
 
         multiplyOperation = new MultiplyOperation();
 
-        calculator = new BinaryConditionCalculator () {
+        calculator = new BinaryCalculator() {
 
-            private String id;
+            private BigInteger id;
 
             @Override
-            public String getConditionCalculatorId() {
+            public BigInteger getId() {
                 return id;
             }
 
             @Override
-            public void setConditionCalculatorId(String id) {
+            public void setId(BigInteger id) {
                 this.id = id;
             }
 
@@ -53,16 +54,16 @@ public class ConditionLoopOperationTest {
             }
         };
 
-        calculatorFalse = new BinaryConditionCalculator() {
-            private String id;
+        calculatorFalse = new BinaryCalculator() {
+            private BigInteger id;
 
             @Override
-            public String getConditionCalculatorId() {
+            public BigInteger getId() {
                 return id;
             }
 
             @Override
-            public void setConditionCalculatorId(String id) {
+            public void setId(BigInteger id) {
                 this.id = id;
             }
 

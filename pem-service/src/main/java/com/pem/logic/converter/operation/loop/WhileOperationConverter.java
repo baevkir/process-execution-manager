@@ -1,6 +1,6 @@
 package com.pem.logic.converter.operation.loop;
 
-import com.pem.core.conditioncalculator.BinaryConditionCalculator;
+import com.pem.core.calculator.BinaryCalculator;
 import com.pem.logic.common.ServiceConstants;
 import com.pem.core.operation.basic.Operation;
 import com.pem.core.operation.loop.condition.WhileOperation;
@@ -22,8 +22,8 @@ public class WhileOperationConverter extends AbstractOperationConverter<WhileLoo
     @Override
     public Operation convert(WhileLoopOperationObject source) {
         WhileOperation loopOperation = getOperationProvider().createCommonOperation(WhileOperation.class);
-        loopOperation.setOperationId(String.valueOf(source.getId()));
-        loopOperation.setCalculator(converterFactory.convert(source.getCalculator(), BinaryConditionCalculator.class));
+        loopOperation.setId(source.getId());
+        loopOperation.setCalculator(converterFactory.convert(source.getCalculator(), BinaryCalculator.class));
         loopOperation.setOperation(converterFactory.convert(source.getOperation(), Operation.class));
 
         return loopOperation;

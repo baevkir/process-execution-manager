@@ -1,6 +1,6 @@
 package com.pem.logic.service.process.impl;
 
-import com.pem.core.common.ApplicationContextWrapper;
+import com.pem.core.common.utils.ApplicationContextWrapper;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.core.operation.basic.Operation;
 import com.pem.core.converter.factory.ConverterFactory;

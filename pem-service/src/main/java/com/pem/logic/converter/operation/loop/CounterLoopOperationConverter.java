@@ -20,7 +20,7 @@ public class CounterLoopOperationConverter extends AbstractOperationConverter<Co
     @Override
     public Operation convert(CounterLoopOperationDTO source) {
         CounterLoopOperation loopOperation = getOperationProvider().createCommonOperation(CounterLoopOperation.class);
-        loopOperation.setOperationId(String.valueOf(source.getId()));
+        loopOperation.setId(source.getId());
         loopOperation.setCount(source.getCount());
 
         loopOperation.setOperation(converterFactory.convert(source.getOperation(), Operation.class));
