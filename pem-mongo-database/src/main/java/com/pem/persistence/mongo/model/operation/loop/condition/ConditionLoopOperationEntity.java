@@ -1,6 +1,6 @@
 package com.pem.persistence.mongo.model.operation.loop.condition;
 
-import com.pem.persistence.mongo.model.calculator.BinaryBeanCalculatorEntity;
+import com.pem.persistence.mongo.model.calculator.bean.BinaryBeanCalculatorEntity;
 import com.pem.persistence.mongo.model.operation.loop.LoopOperationEntity;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 

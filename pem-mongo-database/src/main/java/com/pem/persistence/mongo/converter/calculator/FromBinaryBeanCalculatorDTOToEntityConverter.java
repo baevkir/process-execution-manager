@@ -5,7 +5,7 @@ import com.pem.core.converter.impl.RegisterInConverterFactory;
 import com.pem.model.calculator.bean.BinaryBeanCalculatorDTO;
 import com.pem.persistence.mongo.common.PemMongoConstants;
 import com.pem.persistence.mongo.converter.common.ConverterTemplateMethods;
-import com.pem.persistence.mongo.model.calculator.BinaryBeanCalculatorEntity;
+import com.pem.persistence.mongo.model.calculator.bean.BinaryBeanCalculatorEntity;
 
 @RegisterInConverterFactory(factories = PemMongoConstants.CONVERTER_FACTORY_NAME)
 public class FromBinaryBeanCalculatorDTOToEntityConverter extends ConverterTemplateMethods implements Converter<BinaryBeanCalculatorDTO, BinaryBeanCalculatorEntity> {

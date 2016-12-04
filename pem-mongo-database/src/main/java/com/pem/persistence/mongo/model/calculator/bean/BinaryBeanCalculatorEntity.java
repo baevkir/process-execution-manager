@@ -1,6 +1,4 @@
-package com.pem.persistence.mongo.model.calculator;
-
-import com.pem.persistence.mongo.model.calculator.common.BeanCalculatorEntity;
+package com.pem.persistence.mongo.model.calculator.bean;
 
 public class BinaryBeanCalculatorEntity extends BeanCalculatorEntity {
     @Override
