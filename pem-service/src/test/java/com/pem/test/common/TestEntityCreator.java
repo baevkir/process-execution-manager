@@ -1,7 +1,7 @@
 package com.pem.test.common;
 
-import com.pem.model.calculator.bean.BinaryBeanConditionCalculatorDTO;
-import com.pem.model.calculator.bean.IntegerBeanConditionCalculatorDTO;
+import com.pem.model.calculator.bean.BinaryBeanCalculatorDTO;
+import com.pem.model.calculator.bean.IntegerBeanCalculatorDTO;
 import com.pem.model.common.bean.BeanObject;
 import com.pem.model.operation.basic.BeanOperationDTO;
 import com.pem.model.operation.common.OperationDTO;
@@ -15,19 +15,19 @@ public class TestEntityCreator {
 
     private Random random = new Random();
 
-    public BinaryBeanConditionCalculatorDTO createBinaryCalculator() {
+    public BinaryBeanCalculatorDTO createBinaryCalculator() {
         return createBinaryCalculator("testBinaryConditionCalculator");
     }
 
-    public BinaryBeanConditionCalculatorDTO createRandomBinaryCalculator() {
+    public BinaryBeanCalculatorDTO createRandomBinaryCalculator() {
         return createBinaryCalculator(String.valueOf(random.nextInt()));
     }
 
-    public IntegerBeanConditionCalculatorDTO createIntegerCalculator() {
+    public IntegerBeanCalculatorDTO createIntegerCalculator() {
         return createIntegerCalculator("testIntegerConditionCalculator");
     }
 
-    public IntegerBeanConditionCalculatorDTO createRandomIntegerCalculator() {
+    public IntegerBeanCalculatorDTO createRandomIntegerCalculator() {
         return createIntegerCalculator(String.valueOf(random.nextInt()));
     }
     public BeanOperationDTO createSimpleBeanOperation() {
@@ -103,8 +103,8 @@ public class TestEntityCreator {
         return operationEntity;
     }
 
-    private BinaryBeanConditionCalculatorDTO createBinaryCalculator(String beanName) {
-        BinaryBeanConditionCalculatorDTO calculatorEntity = new BinaryBeanConditionCalculatorDTO();
+    private BinaryBeanCalculatorDTO createBinaryCalculator(String beanName) {
+        BinaryBeanCalculatorDTO calculatorEntity = new BinaryBeanCalculatorDTO();
         calculatorEntity.setName("Test Calculator " + random.nextLong());
         calculatorEntity.setDescription("Test Calculator description " + random.nextLong());
 
@@ -115,8 +115,8 @@ public class TestEntityCreator {
         return calculatorEntity;
     }
 
-    private IntegerBeanConditionCalculatorDTO createIntegerCalculator(String beanName) {
-        IntegerBeanConditionCalculatorDTO calculatorEntity = new IntegerBeanConditionCalculatorDTO();
+    private IntegerBeanCalculatorDTO createIntegerCalculator(String beanName) {
+        IntegerBeanCalculatorDTO calculatorEntity = new IntegerBeanCalculatorDTO();
         calculatorEntity.setName("Test Calculator " + random.nextLong());
         calculatorEntity.setDescription("Test Calculator description " + random.nextLong());
 

@@ -2,17 +2,17 @@ package com.pem.persistence.mongo.converter.calculator;
 
 import com.pem.core.converter.impl.Converter;
 import com.pem.core.converter.impl.RegisterInConverterFactory;
-import com.pem.model.calculator.bean.BinaryBeanConditionCalculatorDTO;
+import com.pem.model.calculator.bean.BinaryBeanCalculatorDTO;
 import com.pem.persistence.mongo.common.PemMongoConstants;
 import com.pem.persistence.mongo.converter.common.ConverterTemplateMethods;
-import com.pem.persistence.mongo.model.calculator.BinaryCalculator;
+import com.pem.persistence.mongo.model.calculator.BinaryBeanCalculatorEntity;
 
 @RegisterInConverterFactory(factories = PemMongoConstants.CONVERTER_FACTORY_NAME)
-public class FromBinaryCalculatorEntityToDTOConverter extends ConverterTemplateMethods implements Converter<BinaryCalculator, BinaryBeanConditionCalculatorDTO> {
+public class FromBinaryBeanCalculatorEntityToDTOConverter extends ConverterTemplateMethods implements Converter<BinaryBeanCalculatorEntity, BinaryBeanCalculatorDTO> {
 
     @Override
-    public BinaryBeanConditionCalculatorDTO convert(BinaryCalculator source) {
-        BinaryBeanConditionCalculatorDTO conditionCalculatorDTO = new BinaryBeanConditionCalculatorDTO();
+    public BinaryBeanCalculatorDTO convert(BinaryBeanCalculatorEntity source) {
+        BinaryBeanCalculatorDTO conditionCalculatorDTO = new BinaryBeanCalculatorDTO();
         fillCommonFields(conditionCalculatorDTO, source);
 
         conditionCalculatorDTO.setBean(source.getBean());

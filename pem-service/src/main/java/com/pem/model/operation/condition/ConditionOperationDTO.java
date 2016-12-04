@@ -1,6 +1,6 @@
 package com.pem.model.operation.condition;
 
-import com.pem.model.calculator.common.ConditionCalculatorDTO;
+import com.pem.model.calculator.common.CalculatorDTO;
 import com.pem.model.operation.common.OperationDTO;
 
 import java.util.Map;
@@ -9,7 +9,7 @@ public abstract class ConditionOperationDTO<S> extends OperationDTO {
 
     private Map<S, OperationDTO> states;
 
-    private ConditionCalculatorDTO<S> calculator;
+    private CalculatorDTO<S> calculator;
 
     public Map<S, OperationDTO> getStates() {
         return states;
@@ -19,11 +19,11 @@ public abstract class ConditionOperationDTO<S> extends OperationDTO {
         this.states = states;
     }
 
-    public ConditionCalculatorDTO<S> getCalculator() {
+    public CalculatorDTO<S> getCalculator() {
         return calculator;
     }
 
-    public void setCalculator(ConditionCalculatorDTO<S> calculator) {
+    public void setCalculator(CalculatorDTO<S> calculator) {
         this.calculator = calculator;
     }
 

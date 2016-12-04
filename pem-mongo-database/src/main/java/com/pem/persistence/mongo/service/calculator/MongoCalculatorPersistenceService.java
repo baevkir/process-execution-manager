@@ -1,6 +1,6 @@
 package com.pem.persistence.mongo.service.calculator;
 
-import com.pem.model.calculator.common.ConditionCalculatorDTO;
+import com.pem.model.calculator.common.CalculatorDTO;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import com.pem.persistence.mongo.model.calculator.common.CalculatorEntity;
 import com.pem.persistence.mongo.repository.calculator.CalculatorRepository;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.math.BigInteger;
 import java.util.List;
 
-public class MongoCalculatorPersistenceService extends AbstractMongoPersistenceService<ConditionCalculatorDTO, CalculatorEntity> implements CalculatorPersistenceService {
+public class MongoCalculatorPersistenceService extends AbstractMongoPersistenceService<CalculatorDTO, CalculatorEntity> implements CalculatorPersistenceService {
 
     @Autowired
     private CalculatorRepository repository;
@@ -21,27 +21,27 @@ public class MongoCalculatorPersistenceService extends AbstractMongoPersistenceS
     }
 
     @Override
-    public ConditionCalculatorDTO createCalculator(ConditionCalculatorDTO operation) {
+    public CalculatorDTO createCalculator(CalculatorDTO operation) {
         return create(operation);
     }
 
     @Override
-    public void updateCalculator(ConditionCalculatorDTO operation) {
+    public void updateCalculator(CalculatorDTO operation) {
         update(operation);
     }
 
     @Override
-    public ConditionCalculatorDTO getCalculator(BigInteger id) {
+    public CalculatorDTO getCalculator(BigInteger id) {
         return getOne(id);
     }
 
     @Override
-    public List<ConditionCalculatorDTO> getAllCalculators() {
+    public List<CalculatorDTO> getAllCalculators() {
         return getAll();
     }
 
     @Override
-    public <C extends ConditionCalculatorDTO> List<C> getCalculatorsByType(final Class<C> targetClass) {
+    public <C extends CalculatorDTO> List<C> getCalculatorsByType(final Class<C> targetClass) {
         return getAllByType(targetClass);
     }
 

@@ -32,9 +32,24 @@
     </bean>
 
     <bean id="fromBinaryCalculatorDTOToEntityConverter"
-          class="com.pem.persistence.mongo.converter.calculator.FromBinaryCalculatorDTOToEntityConverter"/>
+          class="com.pem.persistence.mongo.converter.calculator.FromBinaryBeanCalculatorDTOToEntityConverter"/>
 
     <bean id="fromBinaryCalculatorEntityToDTOConverter"
-          class="com.pem.persistence.mongo.converter.calculator.FromBinaryCalculatorEntityToDTOConverter"/>
+          class="com.pem.persistence.mongo.converter.calculator.FromBinaryBeanCalculatorEntityToDTOConverter"/>
 
+    <bean id="fromIntegerConditionOperationDTOToEntityConverter"
+          class="com.pem.persistence.mongo.converter.operation.condition.FromIntegerConditionOperationDTOToEntityConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <bean id="fromIntegerConditionOperationEntityToDTOConverter"
+          class="com.pem.persistence.mongo.converter.operation.condition.FromIntegerConditionOperationEntityToDTOConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <bean id="fromIntegerCalculatorDTOToEntityConverter"
+          class="com.pem.persistence.mongo.converter.calculator.FromIntegerBeanCalculatorDTOToEntityConverter"/>
+
+    <bean id="fromIntegerCalculatorEntityToDTOConverter"
+          class="com.pem.persistence.mongo.converter.calculator.FromIntegerBeanCalculatorEntityToDTOConverter"/>
 </beans>

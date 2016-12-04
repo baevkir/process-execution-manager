@@ -1,7 +1,7 @@
 package com.pem.test.service;
 
-import com.pem.model.calculator.bean.BinaryBeanConditionCalculatorDTO;
-import com.pem.model.calculator.common.ConditionCalculatorDTO;
+import com.pem.model.calculator.bean.BinaryBeanCalculatorDTO;
+import com.pem.model.calculator.common.CalculatorDTO;
 import com.pem.model.operation.basic.BeanOperationDTO;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.operation.composite.CompositeOperationDTO;
@@ -105,7 +105,7 @@ public class OperationServiceTest {
         operationEntity.setName("Test operation.");
         operationEntity.setDescription("Test description.");
 
-        ConditionCalculatorDTO calculator = calculatorPersistenceService.createCalculator(creator.createRandomBinaryCalculator());
+        CalculatorDTO calculator = calculatorPersistenceService.createCalculator(creator.createRandomBinaryCalculator());
         operationEntity.setCalculator(calculator);
 
         Map<Boolean, OperationDTO> states = new HashMap<>();
@@ -126,8 +126,8 @@ public class OperationServiceTest {
         return operationPersistenceService.createOperation(creator.createRandomSimpleBeanOperation());
     }
 
-    private BinaryBeanConditionCalculatorDTO createBinaryCalculator() {
-        return (BinaryBeanConditionCalculatorDTO) calculatorPersistenceService.createCalculator(creator.createRandomBinaryCalculator());
+    private BinaryBeanCalculatorDTO createBinaryCalculator() {
+        return (BinaryBeanCalculatorDTO) calculatorPersistenceService.createCalculator(creator.createRandomBinaryCalculator());
     }
 
 }

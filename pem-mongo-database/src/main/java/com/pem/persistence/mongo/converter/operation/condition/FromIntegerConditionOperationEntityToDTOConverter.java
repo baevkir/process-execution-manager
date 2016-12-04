@@ -5,29 +5,29 @@ import com.pem.core.converter.impl.Converter;
 import com.pem.core.converter.impl.RegisterInConverterFactory;
 import com.pem.model.calculator.common.CalculatorDTO;
 import com.pem.model.operation.common.OperationDTO;
-import com.pem.model.operation.condition.BinaryConditionOperationDTO;
+import com.pem.model.operation.condition.IntegerConditionOperationDTO;
 import com.pem.persistence.mongo.common.PemMongoConstants;
 import com.pem.persistence.mongo.converter.common.ConverterTemplateMethods;
-import com.pem.persistence.mongo.model.operation.condition.BinaryConditionOperationEntity;
-import com.pem.persistence.mongo.model.operation.condition.state.BooleanState;
+import com.pem.persistence.mongo.model.operation.condition.IntegerConditionOperationEntity;
+import com.pem.persistence.mongo.model.operation.condition.state.IntegerState;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RegisterInConverterFactory(factories = PemMongoConstants.CONVERTER_FACTORY_NAME)
-public class FromBinaryConditionOperationEntityToDTOConverter extends ConverterTemplateMethods implements Converter<BinaryConditionOperationEntity, BinaryConditionOperationDTO> {
+public class FromIntegerConditionOperationEntityToDTOConverter extends ConverterTemplateMethods implements Converter<IntegerConditionOperationEntity, IntegerConditionOperationDTO> {
 
     private ConverterFactory converterFactory;
 
     @Override
-    public BinaryConditionOperationDTO convert(BinaryConditionOperationEntity source) {
-        BinaryConditionOperationDTO conditionOperationDTO = new BinaryConditionOperationDTO();
+    public IntegerConditionOperationDTO convert(IntegerConditionOperationEntity source) {
+        IntegerConditionOperationDTO conditionOperationDTO = new IntegerConditionOperationDTO();
         fillCommonFields(conditionOperationDTO, source);
 
         conditionOperationDTO.setCalculator(converterFactory.convert(source.getCalculatorEntity(), CalculatorDTO.class));
 
-        Map<Boolean, OperationDTO> states = new HashMap<>();
-        for (BooleanState sourceStates : source.getStates()) {
+        Map<Integer, OperationDTO> states = new HashMap<>();
+        for (IntegerState sourceStates : source.getStates()) {
             OperationDTO operationDTO = converterFactory.convert(sourceStates.getOperationEntity(), OperationDTO.class);
             states.put(sourceStates.getConditionValue(), operationDTO);
         }
