@@ -5,7 +5,7 @@ import com.pem.core.context.OperationContext;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.core.operation.basic.Operation;
 import com.pem.core.converter.factory.ConverterFactory;
-import com.pem.model.proccess.ExecutionProcess;
+import com.pem.model.proccess.ExecutionProcessDTO;
 import com.pem.logic.service.executor.OperationExecutor;
 import com.pem.logic.service.process.ExecutionProcessService;
 import org.slf4j.Logger;
@@ -22,18 +22,18 @@ public class OperationExecutorImpl implements OperationExecutor {
 
     @Override
     public void execute(OperationDTO operationEntity) {
-        ExecutionProcess executionProcess = processService.createExecutionProcess(operationEntity);
+        ExecutionProcessDTO executionProcess = processService.createExecutionProcess(operationEntity);
         execute(executionProcess);
     }
 
     @Override
     public void execute(Operation operation) {
-        ExecutionProcess executionProcess = processService.createExecutionProcess(operation);
+        ExecutionProcessDTO executionProcess = processService.createExecutionProcess(operation);
         execute(executionProcess);
     }
 
     @Override
-    public void execute(ExecutionProcess executionProcess) {
+    public void execute(ExecutionProcessDTO executionProcess) {
         OperationContext context = contextProvider.createContext();
         Operation operation = converterFactory.convert(executionProcess.getExecutionOperation(), Operation.class);
         operation.execute(context);

@@ -9,8 +9,8 @@ import com.pem.core.converter.impl.Converter;
 import com.pem.core.converter.impl.RegisterInConverterFactory;
 import com.pem.model.common.bean.BeanObject;
 import com.pem.model.operation.basic.BeanOperationDTO;
-import com.pem.model.proccess.ExecutionProcess;
-import com.pem.model.proccess.record.ExecutionRecord;
+import com.pem.model.proccess.ExecutionProcessDTO;
+import com.pem.model.proccess.record.ExecutionRecordDTO;
 import com.pem.model.proccess.record.ExecutionRecordPK;
 import com.pem.model.proccess.record.ExecutionRecordState;
 import org.springframework.beans.BeansException;
@@ -20,17 +20,17 @@ import org.springframework.context.ApplicationContextAware;
 import java.util.Collections;
 
 @RegisterInConverterFactory(factories = ServiceConstants.CONVERTER_FACTORY_NAME)
-public class FromOperationToProcessConverter implements Converter<Operation, ExecutionProcess>, ApplicationContextAware {
+public class FromOperationToProcessConverter implements Converter<Operation, ExecutionProcessDTO>, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
     @Override
-    public ExecutionProcess convert(Operation source) {
+    public ExecutionProcessDTO convert(Operation source) {
         ApplicationContextWrapper contextWrapper = new ApplicationContextWrapper(applicationContext);
         String beanName = contextWrapper.getBeanName(source);
         String name = NamingUtils.getHumanReadableName(beanName);
 
-        ExecutionProcess processEntity = new ExecutionProcess();
+        ExecutionProcessDTO processEntity = new ExecutionProcessDTO();
         processEntity.setId(IdGenerator.generateId());
         processEntity.setName(name);
 
@@ -43,7 +43,7 @@ public class FromOperationToProcessConverter implements Converter<Operation, Exe
         beanOperationEntity.setName(name);
         beanOperationEntity.setBean(beanEntity);
 
-        ExecutionRecord executionRecordEntity = new ExecutionRecord();
+        ExecutionRecordDTO executionRecordEntity = new ExecutionRecordDTO();
         executionRecordEntity.setId(IdGenerator.generateId());
         executionRecordEntity.setState(ExecutionRecordState.CREATED);
 

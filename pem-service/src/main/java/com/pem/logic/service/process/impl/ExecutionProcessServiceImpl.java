@@ -4,7 +4,7 @@ import com.pem.core.common.utils.ApplicationContextWrapper;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.core.operation.basic.Operation;
 import com.pem.core.converter.factory.ConverterFactory;
-import com.pem.model.proccess.ExecutionProcess;
+import com.pem.model.proccess.ExecutionProcessDTO;
 import com.pem.persistence.api.service.process.ProcessPersistenceService;
 import com.pem.logic.service.process.ExecutionProcessService;
 import org.slf4j.Logger;
@@ -25,35 +25,35 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService, App
     private ConverterFactory converterFactory;
 
     @Override
-    public ExecutionProcess createExecutionProcess(OperationDTO operationEntity) {
-        LOGGER.debug("Create new ExecutionProcess for: {}.", operationEntity);
-        ExecutionProcess processEntity = converterFactory.convert(operationEntity, ExecutionProcess.class);
+    public ExecutionProcessDTO createExecutionProcess(OperationDTO operationEntity) {
+        LOGGER.debug("Create new ExecutionProcessDTO for: {}.", operationEntity);
+        ExecutionProcessDTO processEntity = converterFactory.convert(operationEntity, ExecutionProcessDTO.class);
         return persistenceService.createProcess(processEntity);
     }
 
     @Override
-    public ExecutionProcess createExecutionProcess(Operation operation) {
-        LOGGER.debug("Create new ExecutionProcess for: {}.", operation);
+    public ExecutionProcessDTO createExecutionProcess(Operation operation) {
+        LOGGER.debug("Create new ExecutionProcessDTO for: {}.", operation);
         ApplicationContextWrapper contextWrapper = new ApplicationContextWrapper(applicationContext);
-        ExecutionProcess processEntity = new ExecutionProcess();
+        ExecutionProcessDTO processEntity = new ExecutionProcessDTO();
         processEntity.setName(contextWrapper.getBeanName(operation));
         return persistenceService.createProcess(processEntity);
     }
 
     @Override
-    public void updateExecutionProcess(ExecutionProcess processEntity) {
-        LOGGER.debug("Update ExecutionProcess: {}.", processEntity);
+    public void updateExecutionProcess(ExecutionProcessDTO processEntity) {
+        LOGGER.debug("Update ExecutionProcessDTO: {}.", processEntity);
         persistenceService.updateProcess(processEntity);
     }
 
     @Override
-    public ExecutionProcess getExecutionProcess(BigInteger id) {
-        LOGGER.debug("Get ExecutionProcess: {}.", id);
+    public ExecutionProcessDTO getExecutionProcess(BigInteger id) {
+        LOGGER.debug("Get ExecutionProcessDTO: {}.", id);
         return persistenceService.getProcess(id);
     }
 
     @Override
-    public List<ExecutionProcess> getAllExecutionProcesses() {
+    public List<ExecutionProcessDTO> getAllExecutionProcesses() {
         LOGGER.debug("Get All ExecutionProcesses.");
         return persistenceService.getAllProcesses();
     }

@@ -3,7 +3,7 @@ package com.pem.persistence.mongo.service.process;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pem.model.operation.common.OperationDTO;
-import com.pem.model.proccess.ExecutionProcess;
+import com.pem.model.proccess.ExecutionProcessDTO;
 import com.pem.persistence.api.service.process.ExecutionRecordPersistenceService;
 import com.pem.persistence.api.service.process.ProcessPersistenceService;
 import com.pem.persistence.mongo.model.proccess.ExecutionProcessEntity;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 
-public class MongoProcessPersistenceService extends AbstractMongoPersistenceService<ExecutionProcess, ExecutionProcessEntity> implements ProcessPersistenceService {
+public class MongoProcessPersistenceService extends AbstractMongoPersistenceService<ExecutionProcessDTO, ExecutionProcessEntity> implements ProcessPersistenceService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractMongoPersistenceService.class);
 
@@ -32,22 +32,22 @@ public class MongoProcessPersistenceService extends AbstractMongoPersistenceServ
     }
 
     @Override
-    public ExecutionProcess createProcess(ExecutionProcess processEntity) {
+    public ExecutionProcessDTO createProcess(ExecutionProcessDTO processEntity) {
         return create(processEntity);
     }
 
     @Override
-    public void updateProcess(ExecutionProcess processEntity) {
+    public void updateProcess(ExecutionProcessDTO processEntity) {
         update(processEntity);
     }
 
     @Override
-    public ExecutionProcess getProcess(BigInteger id) {
+    public ExecutionProcessDTO getProcess(BigInteger id) {
         return getOne(id);
     }
 
     @Override
-    public List<ExecutionProcess> getAllProcesses() {
+    public List<ExecutionProcessDTO> getAllProcesses() {
         return getAll();
     }
 

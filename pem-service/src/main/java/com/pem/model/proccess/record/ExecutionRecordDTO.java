@@ -3,7 +3,7 @@ package com.pem.model.proccess.record;
 import com.pem.model.common.IdentifiableDTO;
 import org.joda.time.DateTime;
 
-public class ExecutionRecord extends IdentifiableDTO {
+public class ExecutionRecordDTO extends IdentifiableDTO {
 
     private ExecutionRecordPK pk;
 
@@ -47,7 +47,7 @@ public class ExecutionRecord extends IdentifiableDTO {
 
     @Override
     public String toString() {
-        return "ExecutionRecord{" +
+        return "ExecutionRecordDTO{" +
                 "pk=" + pk +
                 ", state=" + state +
                 ", createdWhen=" + createdWhen +

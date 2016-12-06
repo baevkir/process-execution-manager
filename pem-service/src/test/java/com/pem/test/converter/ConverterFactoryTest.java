@@ -14,7 +14,7 @@ import com.pem.core.converter.factory.ConverterFactory;
 import com.pem.model.operation.condition.IntegerConditionOperationDTO;
 import com.pem.model.operation.loop.condition.DoWhileLoopOperationDTO;
 import com.pem.model.operation.loop.condition.WhileLoopOperationDTO;
-import com.pem.model.proccess.ExecutionProcess;
+import com.pem.model.proccess.ExecutionProcessDTO;
 import com.pem.test.common.TestEntityCreator;
 import com.pem.test.common.config.TestConfig;
 import org.junit.Assert;
@@ -97,7 +97,7 @@ public class ConverterFactoryTest {
     @Test
     public void testExecutionProcessConverter() {
         OperationDTO operationEntity = creator.createSyncCompositeOperationEntity();
-        ExecutionProcess processEntity = converterFactory.convert(operationEntity, OperationDTO.class, ExecutionProcess.class);
+        ExecutionProcessDTO processEntity = converterFactory.convert(operationEntity, OperationDTO.class, ExecutionProcessDTO.class);
         Assert.assertNotNull(processEntity);
     }
 }

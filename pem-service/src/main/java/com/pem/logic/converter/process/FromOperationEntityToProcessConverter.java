@@ -7,8 +7,8 @@ import com.pem.core.converter.impl.Converter;
 import com.pem.core.converter.impl.RegisterInConverterFactory;
 import com.pem.model.common.IdentifiableDTO;
 import com.pem.model.operation.common.OperationDTO;
-import com.pem.model.proccess.ExecutionProcess;
-import com.pem.model.proccess.record.ExecutionRecord;
+import com.pem.model.proccess.ExecutionProcessDTO;
+import com.pem.model.proccess.record.ExecutionRecordDTO;
 import com.pem.model.proccess.record.ExecutionRecordPK;
 import com.pem.model.proccess.record.ExecutionRecordState;
 import com.rits.cloning.Cloner;
@@ -19,13 +19,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 @RegisterInConverterFactory(factories = ServiceConstants.CONVERTER_FACTORY_NAME)
-public class FromOperationEntityToProcessConverter implements Converter<OperationDTO, ExecutionProcess> {
+public class FromOperationEntityToProcessConverter implements Converter<OperationDTO, ExecutionProcessDTO> {
     private Cloner cloner = new Cloner();
     private ReflectiveDTOProcessor<OperationDTO> reflectiveProcessor = new ReflectiveDTOProcessor<>();
 
     @Override
-    public ExecutionProcess convert(OperationDTO source) {
-        ExecutionProcess processEntity = new ExecutionProcess();
+    public ExecutionProcessDTO convert(OperationDTO source) {
+        ExecutionProcessDTO processEntity = new ExecutionProcessDTO();
         processEntity.setId(IdGenerator.generateId());
         processEntity.setName(source.getName());
 
@@ -36,17 +36,17 @@ public class FromOperationEntityToProcessConverter implements Converter<Operatio
                 .setAction(generateIdAction)
                 .process();
 
-        List<ExecutionRecord> executionRecords = createExecutionRecords(generateIdAction.getGeneratedIds(), processEntity.getId());
+        List<ExecutionRecordDTO> executionRecords = createExecutionRecords(generateIdAction.getGeneratedIds(), processEntity.getId());
 
         processEntity.setExecutionRecords(executionRecords);
         processEntity.setExecutionOperation(executionOperation);
         return processEntity;
     }
 
-    private List<ExecutionRecord> createExecutionRecords(List<BigInteger> generatedIds, BigInteger processId) {
-        List<ExecutionRecord> result = new ArrayList<>();
+    private List<ExecutionRecordDTO> createExecutionRecords(List<BigInteger> generatedIds, BigInteger processId) {
+        List<ExecutionRecordDTO> result = new ArrayList<>();
         for (BigInteger id : generatedIds) {
-            ExecutionRecord executionRecord = new ExecutionRecord();
+            ExecutionRecordDTO executionRecord = new ExecutionRecordDTO();
             executionRecord.setId(IdGenerator.generateId());
 
             ExecutionRecordPK pk = new ExecutionRecordPK();
