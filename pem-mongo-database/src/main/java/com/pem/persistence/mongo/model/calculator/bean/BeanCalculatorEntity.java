@@ -9,6 +9,16 @@ public abstract class BeanCalculatorEntity extends CalculatorEntity {
     @Indexed(unique = true)
     private BeanObject bean;
 
+    private boolean active;
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public BeanObject getBean() {
         return bean;
     }

@@ -13,7 +13,7 @@ public class FromIntegerBeanCalculatorDTOToEntityConverter extends ConverterTemp
     public IntegerBeanCalculatorEntity convert(IntegerBeanCalculatorDTO source) {
         IntegerBeanCalculatorEntity binaryCalculator = new IntegerBeanCalculatorEntity();
         fillCommonFields(binaryCalculator, source);
-
+        binaryCalculator.setActive(source.isActive());
         binaryCalculator.setBean(source.getBean());
 
         return binaryCalculator;

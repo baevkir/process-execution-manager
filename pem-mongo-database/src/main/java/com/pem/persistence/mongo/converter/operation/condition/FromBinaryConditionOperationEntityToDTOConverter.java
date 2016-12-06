@@ -25,10 +25,12 @@ public class FromBinaryConditionOperationEntityToDTOConverter extends ConverterT
         fillCommonFields(conditionOperationDTO, source);
 
         conditionOperationDTO.setCalculator(converterFactory.convert(source.getCalculatorEntity(), CalculatorDTO.class));
+        checkActive(conditionOperationDTO, conditionOperationDTO.getCalculator());
 
         Map<Boolean, OperationDTO> states = new HashMap<>();
         for (BooleanState sourceStates : source.getStates()) {
             OperationDTO operationDTO = converterFactory.convert(sourceStates.getOperationEntity(), OperationDTO.class);
+            checkActive(conditionOperationDTO, operationDTO);
             states.put(sourceStates.getConditionValue(), operationDTO);
         }
 

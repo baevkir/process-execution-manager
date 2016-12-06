@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class OperationProviderImpl implements OperationProvider, ApplicationContextAware {
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationProviderImpl.class);
-    private static final String OPERATION_BEAN_PREF = "basic-operation.";
+    private static final String OPERATION_BEAN_PREF = "bean-operation.";
 
     private ApplicationContext applicationContext;
 

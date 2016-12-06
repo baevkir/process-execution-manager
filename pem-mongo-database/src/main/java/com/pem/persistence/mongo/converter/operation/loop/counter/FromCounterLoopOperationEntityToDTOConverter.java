@@ -22,6 +22,7 @@ public class FromCounterLoopOperationEntityToDTOConverter extends ConverterTempl
         loopOperationDTO.setCount(source.getCount());
 
         loopOperationDTO.setOperation(converterFactory.convert(source.getOperation(), OperationDTO.class));
+        checkActive(loopOperationDTO, loopOperationDTO.getOperation());
 
         return loopOperationDTO;
     }

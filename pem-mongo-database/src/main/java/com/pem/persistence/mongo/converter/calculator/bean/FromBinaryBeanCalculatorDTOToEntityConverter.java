@@ -13,9 +13,11 @@ public class FromBinaryBeanCalculatorDTOToEntityConverter extends ConverterTempl
     public BinaryBeanCalculatorEntity convert(BinaryBeanCalculatorDTO source) {
         BinaryBeanCalculatorEntity binaryCalculator = new BinaryBeanCalculatorEntity();
         fillCommonFields(binaryCalculator, source);
-
+        binaryCalculator.setActive(source.isActive());
         binaryCalculator.setBean(source.getBean());
 
         return binaryCalculator;
     }
+
+
 }

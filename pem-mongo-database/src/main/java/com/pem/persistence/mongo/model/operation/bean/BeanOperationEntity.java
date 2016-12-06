@@ -1,4 +1,4 @@
-package com.pem.persistence.mongo.model.operation.basic;
+package com.pem.persistence.mongo.model.operation.bean;
 
 import com.pem.model.common.bean.BeanObject;
 import com.pem.persistence.mongo.model.operation.common.OperationEntity;
@@ -8,6 +8,16 @@ public class BeanOperationEntity extends OperationEntity {
 
     @Indexed(unique = true)
     private BeanObject bean;
+
+    private boolean active;
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     public BeanObject getBean() {
         return bean;

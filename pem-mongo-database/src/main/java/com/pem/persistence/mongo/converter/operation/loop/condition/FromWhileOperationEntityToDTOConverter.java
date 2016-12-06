@@ -21,8 +21,10 @@ public class FromWhileOperationEntityToDTOConverter extends ConverterTemplateMet
         fillCommonFields(loopOperationDTO, source);
 
         loopOperationDTO.setCalculator(converterFactory.convert(source.getCalculator(), CalculatorDTO.class));
+        checkActive(loopOperationDTO, loopOperationDTO.getCalculator());
 
         loopOperationDTO.setOperation(converterFactory.convert(source.getOperation(), OperationDTO.class));
+        checkActive(loopOperationDTO, loopOperationDTO.getOperation());
 
         return loopOperationDTO;
     }

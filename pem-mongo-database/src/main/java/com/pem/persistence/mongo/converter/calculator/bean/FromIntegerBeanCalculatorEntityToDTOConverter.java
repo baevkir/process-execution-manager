@@ -14,7 +14,7 @@ public class FromIntegerBeanCalculatorEntityToDTOConverter extends ConverterTemp
     public IntegerBeanCalculatorDTO convert(IntegerBeanCalculatorEntity source) {
         IntegerBeanCalculatorDTO conditionCalculatorDTO = new IntegerBeanCalculatorDTO();
         fillCommonFields(conditionCalculatorDTO, source);
-
+        conditionCalculatorDTO.setActive(source.isActive());
         conditionCalculatorDTO.setBean(source.getBean());
 
         return conditionCalculatorDTO;

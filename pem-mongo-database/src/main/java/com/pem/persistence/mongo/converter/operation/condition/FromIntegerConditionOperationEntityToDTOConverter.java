@@ -25,10 +25,11 @@ public class FromIntegerConditionOperationEntityToDTOConverter extends Converter
         fillCommonFields(conditionOperationDTO, source);
 
         conditionOperationDTO.setCalculator(converterFactory.convert(source.getCalculatorEntity(), CalculatorDTO.class));
-
+        checkActive(conditionOperationDTO, conditionOperationDTO.getCalculator());
         Map<Integer, OperationDTO> states = new HashMap<>();
         for (IntegerState sourceStates : source.getStates()) {
             OperationDTO operationDTO = converterFactory.convert(sourceStates.getOperationEntity(), OperationDTO.class);
+            checkActive(conditionOperationDTO, operationDTO);
             states.put(sourceStates.getConditionValue(), operationDTO);
         }
 

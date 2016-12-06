@@ -20,17 +20,19 @@ public class FromSyncCompositeEntityToDTOOperationConverter extends ConverterTem
 
     @Override
     public SyncCompositeOperationDTO convert(SyncCompositeOperationEntity source) {
-        SyncCompositeOperationDTO operationDTO = new SyncCompositeOperationDTO();
-        fillCommonFields(operationDTO, source);
+        SyncCompositeOperationDTO syncCompositeOperationDTO = new SyncCompositeOperationDTO();
+        fillCommonFields(syncCompositeOperationDTO, source);
 
         List<OperationDTO> operationDTOs = new ArrayList<>();
         for (OperationEntity operationEntity : source.getOperationEntities()) {
-            operationDTOs.add(converterFactory.convert(operationEntity, OperationDTO.class));
+            OperationDTO operationDTO = converterFactory.convert(operationEntity, OperationDTO.class);
+            checkActive(syncCompositeOperationDTO, operationDTO);
+            operationDTOs.add(operationDTO);
         }
 
-        operationDTO.setOperations(operationDTOs);
+        syncCompositeOperationDTO.setOperations(operationDTOs);
 
-        return operationDTO;
+        return syncCompositeOperationDTO;
     }
 
     public void setConverterFactory(ConverterFactory converterFactory) {

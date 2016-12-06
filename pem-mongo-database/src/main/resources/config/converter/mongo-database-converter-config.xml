@@ -82,4 +82,20 @@
           class="com.pem.persistence.mongo.converter.operation.loop.condition.FromWhileOperationEntityToDTOConverter">
         <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
     </bean>
+
+    <bean id="fromProcessDTOToEntityConverter"
+          class="com.pem.persistence.mongo.converter.process.FromProcessDTOToEntityConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <bean id="fromProcessEntityToDTOConverter"
+          class="com.pem.persistence.mongo.converter.process.FromProcessEntityToDTOConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <bean id="fromRecordDTOToEntityConverter"
+          class="com.pem.persistence.mongo.converter.process.record.FromRecordDTOToEntityConverter"/>
+
+    <bean id="fromRecordEntityToDTOConverter"
+          class="com.pem.persistence.mongo.converter.process.record.FromRecordEntityToDTOConverter"/>
 </beans>
