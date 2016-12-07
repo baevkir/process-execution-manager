@@ -1,8 +1,6 @@
 package com.pem.test.provider;
 
 
-import com.pem.logic.bean.provider.operation.OperationProvider;
-import com.pem.test.common.config.TestConfig;
 import com.pem.core.operation.basic.Operation;
 import com.pem.core.operation.composite.SyncCompositeOperation;
 import com.pem.core.operation.condition.BinaryConditionOperation;
@@ -10,6 +8,9 @@ import com.pem.core.operation.condition.IntegerConditionOperation;
 import com.pem.core.operation.loop.condition.DoWhileOperation;
 import com.pem.core.operation.loop.condition.WhileOperation;
 import com.pem.core.operation.loop.counter.CounterLoopOperation;
+import com.pem.logic.bean.provider.operation.OperationProvider;
+import com.pem.model.common.bean.BeanObject;
+import com.pem.test.common.config.TestConfig;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
@@ -67,7 +68,7 @@ public class OperationProviderTest {
 
     @Test
     public void testFindGlobalOperations() {
-        Map<String, Operation> operations = operationProvider.getAllGlobalOperations();
+        Set<BeanObject> operations = operationProvider.getAllOperationBeanObjects();
         Assert.assertTrue(!operations.isEmpty());
     }
 

@@ -37,4 +37,11 @@
     <bean id="operationContext" class="com.pem.logic.bean.provider.context.DefaultContextFactory"/>
 
     <bean id="operationContextProvider" class="com.pem.logic.bean.provider.context.impl.OperationContextProviderImpl"/>
+
+    <bean id="com.pem.operationDatabaseSynchronizer"
+          class="com.pem.logic.bean.synchronizer.OperationDatabaseSynchronizer">
+        <property name="operationPersistenceService" ref="operationPersistenceService"/>
+        <property name="operationProvider" ref="operationProvider"/>
+    </bean>
+
 </beans>

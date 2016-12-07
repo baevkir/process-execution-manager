@@ -1,20 +1,15 @@
 package com.pem.logic.bean.synchronizer;
 
 import com.pem.logic.bean.provider.operation.OperationProvider;
-import com.pem.logic.bean.provider.operation.impl.RegisterGlobalOperation;
-import com.pem.logic.common.utils.NamingUtils;
-import com.pem.core.operation.basic.Operation;
 import com.pem.model.common.bean.BeanObject;
+import com.pem.model.operation.basic.BeanOperationDTO;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.aop.framework.AopProxyUtils;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 public class OperationDatabaseSynchronizer {
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationDatabaseSynchronizer.class);
@@ -32,36 +27,37 @@ public class OperationDatabaseSynchronizer {
 
     @PostConstruct
     public void synchronizeOperationsWithDatabase() {
-//        List<OperationDTO> operationEntities = operationPersistenceService.getOperationsByType(BeanOperationDTO.class);
-        List<BeanObject> operations = provideOperationBeanEntity();
-        for (BeanObject operation : operations) {
-            
+        List<BeanOperationDTO> operations = operationPersistenceService.getOperationsByType(BeanOperationDTO.class);
+
+        Set<BeanObject> beanObjects = operationProvider.getAllOperationBeanObjects();
+
+        for (BeanOperationDTO operation : operations) {
+            if(!beanObjects.contains(operation.getBean())) {
+                deactivateOperation(operation);
+                continue;
+            }
+
+            beanObjects.remove(operation.getBean());
+        }
+
+        for (BeanObject beanObject : beanObjects) {
+            createOperation(beanObject);
         }
     }
 
-    public List<BeanObject> provideOperationBeanEntity() {
-        LOGGER.debug("Get All OperationBeanEntity .");
-        List<BeanObject> operations = new ArrayList<>();
+    private void deactivateOperation(BeanOperationDTO operation){
+        LOGGER.debug("Deactivate operation: {}.", operation);
+        operation.setActive(false);
+        operationPersistenceService.updateOperation(operation);
+    }
 
-        Map<String, Operation> beans = operationProvider.getAllGlobalOperations();
-        for (Map.Entry<String, Operation> entry : beans.entrySet()) {
-            BeanObject operation = new BeanObject();
-            String beanName = entry.getKey();
-            LOGGER.trace("Add bean with name {}", beanName);
-            operation.setBeanName(beanName);
+    private void createOperation(BeanObject beanObject){
+        LOGGER.debug("Create new operation for {}.", beanObject);
+        BeanOperationDTO operation = new BeanOperationDTO();
+        operation.setActive(true);
+        operation.setName(beanObject.getName());
+        operation.setBean(beanObject);
 
-            Class clazz = AopProxyUtils.ultimateTargetClass(entry.getValue());
-            RegisterGlobalOperation annotation = (RegisterGlobalOperation) clazz.getAnnotation(RegisterGlobalOperation.class);
-            String name = annotation.value();
-            if (StringUtils.isEmpty(name)) {
-                name = NamingUtils.getHumanReadableName(beanName);
-            }
-            LOGGER.trace("Presentation name for bean {}", name);
-            operation.setName(name);
-
-            operations.add(operation);
-        }
-
-        return operations;
+        operationPersistenceService.createOperation(operation);
     }
 }
