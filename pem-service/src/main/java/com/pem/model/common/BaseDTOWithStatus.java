@@ -1,7 +1,7 @@
 package com.pem.model.common;
 
 public abstract class BaseDTOWithStatus extends BaseDTO {
-    private boolean active;
+    private boolean active = true;
 
     public boolean isActive() {
         return active;
