@@ -3,6 +3,7 @@ package com.pem.logic.bean.provider.operation.impl;
 import com.pem.core.common.utils.ApplicationContextWrapper;
 import com.pem.core.operation.basic.Operation;
 import com.pem.logic.bean.provider.operation.OperationProvider;
+import com.pem.logic.common.ServiceConstants;
 import com.pem.logic.common.utils.NamingUtils;
 import com.pem.model.common.bean.BeanObject;
 import org.apache.commons.lang.StringUtils;
@@ -17,7 +18,7 @@ import java.util.*;
 
 public class OperationProviderImpl implements OperationProvider, ApplicationContextAware {
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationProviderImpl.class);
-    private static final String OPERATION_BEAN_PREF = "bean-operation.";
+    private static final String OPERATION_BEAN_PREF = ServiceConstants.CUSTOM_OPERATION_BEAN_PREF;
 
     private ApplicationContext applicationContext;
 
@@ -41,6 +42,7 @@ public class OperationProviderImpl implements OperationProvider, ApplicationCont
         LOGGER.debug("Get All OperationBeanObjects .");
         ApplicationContextWrapper wrapper = new ApplicationContextWrapper(applicationContext);
         Map<String, Operation> beans = wrapper.findBeanByAnnotation(RegisterGlobalOperation.class, Operation.class);
+
         Set<BeanObject> operations = new HashSet<>();
         for (Map.Entry<String, Operation> entry : beans.entrySet()) {
             BeanObject operation = new BeanObject();

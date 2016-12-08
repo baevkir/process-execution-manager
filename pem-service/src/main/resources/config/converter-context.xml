@@ -11,11 +11,11 @@
     </bean>
 
     <bean id="binaryCalculatorConverter" class="com.pem.logic.converter.calculator.BinaryCalculatorConverter">
-        <property name="calculatorProvider" ref="conditionCalculatorProvider"/>
+        <property name="calculatorProvider" ref="calculatorProvider"/>
     </bean>
 
     <bean id="integerCalculatorConverter" class="com.pem.logic.converter.calculator.IntegerCalculatorConverter">
-        <property name="calculatorProvider" ref="conditionCalculatorProvider"/>
+        <property name="calculatorProvider" ref="calculatorProvider"/>
     </bean>
 
     <bean id="syncCompositeOperationConverter"

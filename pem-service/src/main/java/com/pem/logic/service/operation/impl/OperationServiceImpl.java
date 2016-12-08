@@ -43,11 +43,6 @@ public class OperationServiceImpl implements OperationService {
         return persistenceService.getAllOperations();
     }
 
-    @Override
-    public void runOperation(BigInteger id) {
-
-    }
-
     public void setPersistenceService(OperationPersistenceService persistenceService) {
         this.persistenceService = persistenceService;
     }

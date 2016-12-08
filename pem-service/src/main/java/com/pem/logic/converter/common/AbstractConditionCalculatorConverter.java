@@ -1,18 +1,18 @@
 package com.pem.logic.converter.common;
 
 import com.pem.core.converter.impl.Converter;
-import com.pem.logic.bean.provider.calculator.ConditionCalculatorProvider;
+import com.pem.logic.bean.provider.calculator.CalculatorProvider;
 import com.pem.core.calculator.Calculator;
 
 public abstract class AbstractConditionCalculatorConverter<S, T extends Calculator> implements Converter<S, T> {
 
-    private ConditionCalculatorProvider calculatorProvider;
+    private CalculatorProvider calculatorProvider;
 
-    public void setCalculatorProvider(ConditionCalculatorProvider calculatorProvider) {
+    public void setCalculatorProvider(CalculatorProvider calculatorProvider) {
         this.calculatorProvider = calculatorProvider;
     }
 
-    protected ConditionCalculatorProvider getCalculatorProvider() {
+    protected CalculatorProvider getCalculatorProvider() {
         return calculatorProvider;
     }
 }

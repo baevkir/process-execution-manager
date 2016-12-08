@@ -4,44 +4,38 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="basic-operation.SyncCompositeOperation"
+    <bean id="pem.custom-operation.SyncCompositeOperation"
           class="com.pem.core.operation.composite.SyncCompositeOperationImp"
           scope="prototype"/>
 
-    <bean id="basic-operation.BinaryConditionOperation"
+    <bean id="pem.custom-operation.BinaryConditionOperation"
           class="com.pem.core.operation.condition.BinaryConditionOperationImpl"
           scope="prototype"/>
 
-    <bean id="basic-operation.IntegerConditionOperation"
+    <bean id="pem.custom-operation.IntegerConditionOperation"
           class="com.pem.core.operation.condition.IntegerConditionOperationImpl"
           scope="prototype"/>
 
-    <bean id="basic-operation.CounterLoopOperation"
+    <bean id="pem.custom-operation.CounterLoopOperation"
           class="com.pem.core.operation.loop.counter.CounterLoopOperationImpl"
           scope="prototype"/>
 
-    <bean id="basic-operation.DoWhileOperation"
+    <bean id="pem.custom-operation.DoWhileOperation"
           class="com.pem.core.operation.loop.condition.DoWhileOperationImpl"
           scope="prototype"/>
 
-    <bean id="basic-operation.WhileOperation"
+    <bean id="pem.custom-operation.WhileOperation"
           class="com.pem.core.operation.loop.condition.WhileOperationImpl"
           scope="prototype"/>
 
     <bean id="operationProvider"
           class="com.pem.logic.bean.provider.operation.impl.OperationProviderImpl"/>
 
-    <bean id="conditionCalculatorProvider"
-          class="com.pem.logic.bean.provider.calculator.impl.ConditionCalculatorProviderImpl"/>
+    <bean id="calculatorProvider"
+          class="com.pem.logic.bean.provider.calculator.impl.CalculatorProviderImpl"/>
 
     <bean id="operationContext" class="com.pem.logic.bean.provider.context.DefaultContextFactory"/>
 
     <bean id="operationContextProvider" class="com.pem.logic.bean.provider.context.impl.OperationContextProviderImpl"/>
-
-    <bean id="com.pem.operationDatabaseSynchronizer"
-          class="com.pem.logic.bean.synchronizer.OperationDatabaseSynchronizer">
-        <property name="operationPersistenceService" ref="operationPersistenceService"/>
-        <property name="operationProvider" ref="operationProvider"/>
-    </bean>
 
 </beans>

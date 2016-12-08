@@ -4,12 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="calculatorBeanEntityProvider" class="com.pem.logic.service.calculator.impl.CalculatorBeanEntityProviderImpl">
-        <property name="calculatorProvider" ref="conditionCalculatorProvider"/>
-    </bean>
 
     <bean id="conditionCalculatorService" class="com.pem.logic.service.calculator.impl.ConditionCalculatorServiceImpl">
-        <property name="beanEntityProvider" ref="calculatorBeanEntityProvider"/>
         <property name="persistenceService" ref="calculatorPersistenceService"/>
     </bean>
 

@@ -11,5 +11,4 @@ public interface OperationService {
     void deleteOperation(BigInteger id);
     OperationDTO getOperation(BigInteger id);
     List<OperationDTO> getAllOperations();
-    void runOperation(BigInteger id);
 }

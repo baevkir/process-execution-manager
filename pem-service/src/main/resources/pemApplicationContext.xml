@@ -11,6 +11,7 @@
     <import resource="classpath:/config/converter-context.xml"/>
     <import resource="classpath:/config/execution-config.xml"/>
     <import resource="classpath:/config/operation-config.xml"/>
+    <import resource="classpath:/config/database-syncronization-context.xml"/>
     <import resource="classpath:/config/service-config.xml"/>
 
     <bean id="operationContextProxy" class="com.pem.logic.common.proxy.OperationContextProxy"/>

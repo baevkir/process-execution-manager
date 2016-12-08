@@ -1,17 +1,14 @@
 package com.pem.logic.service.calculator;
 
-import com.pem.core.calculator.Calculator;
 import com.pem.model.calculator.common.CalculatorDTO;
-import com.pem.model.common.bean.BeanObject;
 
 import java.math.BigInteger;
 import java.util.List;
 
 public interface ConditionCalculatorService {
-    CalculatorDTO createConditionCalculator(CalculatorDTO calculatorEntity);
-    void updateConditionCalculator(CalculatorDTO calculatorEntity);
-    void deleteConditionCalculator(BigInteger id);
-    CalculatorDTO getConditionCalculator(BigInteger id);
-    List<CalculatorDTO> getAllConditionCalculators();
-    <C extends Calculator> List<BeanObject> getConditionCalculatorBeanEntitiesForClass(Class<C> tClass);
+    CalculatorDTO createCalculator(CalculatorDTO calculatorDTO);
+    void updateCalculator(CalculatorDTO calculatorDTO);
+    void deleteCalculator(BigInteger id);
+    CalculatorDTO getCalculator(BigInteger id);
+    List<CalculatorDTO> getAllCalculators();
 }
