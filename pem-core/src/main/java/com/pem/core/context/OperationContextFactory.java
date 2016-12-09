@@ -3,23 +3,27 @@ package com.pem.core.context;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OperationContextBuilder {
-    private Class<? extends OperationContext> contextClass;
+public class OperationContextFactory {
+    private Class<? extends OperationContext> contextClass = OperationContextImpl.class;
     private Map<String, Object> contextParams = new HashMap<>();
+    private BigInteger id;
 
-    private OperationContextBuilder() {
+    private OperationContextFactory() {
     }
 
-    public static OperationContextBuilder newInstance() {
-        return new OperationContextBuilder();
+    public static OperationContextFactory newInstance() {
+        return new OperationContextFactory();
     }
 
-    public OperationContext build() {
+    public OperationContext createContext() {
         Assert.notNull(contextClass, "Context class indefined.");
+        Assert.notNull(id, "Can't create context without ID.");
         OperationContext context = createInstance();
+        context.setId(id);
         for (Map.Entry<String, Object> paramEntry : contextParams.entrySet()) {
             context.setContextParam(paramEntry.getKey(), paramEntry.getValue());
         }
@@ -27,13 +31,18 @@ public class OperationContextBuilder {
         return context;
     }
 
-    public OperationContextBuilder setContextParam(String key, Object value) {
+    public OperationContextFactory setId(BigInteger id) {
+        this.id = id;
+        return this;
+    }
+
+    public OperationContextFactory setContextParam(String key, Object value) {
         Assert.hasText(key, "Can't set empty key.");
         contextParams.put(key, value);
         return this;
     }
 
-    public OperationContextBuilder setContextClass(Class<? extends OperationContext> contextClass) {
+    public OperationContextFactory setContextClass(Class<? extends OperationContext> contextClass) {
         Assert.notNull(contextClass, "Can't set empty contextClass.");
         Assert.isTrue(ClassUtils.hasConstructor(contextClass), String.format("Class %s does not have default constructor.", contextClass));
         this.contextClass = contextClass;
