@@ -8,7 +8,7 @@ import com.pem.logic.common.ServiceConstants;
 import com.pem.logic.common.utils.IdGenerator;
 import com.pem.model.common.bean.BeanObject;
 import com.pem.model.common.bean.BeanObjectBuilder;
-import com.pem.model.operation.basic.BeanOperationDTO;
+import com.pem.model.operation.bean.BeanOperationDTO;
 import com.pem.model.proccess.ExecutionProcessDTO;
 import com.pem.model.proccess.record.ExecutionRecordDTO;
 import com.pem.model.proccess.record.ExecutionRecordPK;

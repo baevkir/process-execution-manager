@@ -1,7 +1,7 @@
 package com.pem.logic.converter.operation.basic;
 
 import com.pem.logic.common.ServiceConstants;
-import com.pem.model.operation.basic.BeanOperationDTO;
+import com.pem.model.operation.bean.BeanOperationDTO;
 import com.pem.core.operation.basic.Operation;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.core.common.converter.impl.RegisterInConverterFactory;

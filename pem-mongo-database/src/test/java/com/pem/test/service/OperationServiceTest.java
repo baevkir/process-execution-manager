@@ -2,7 +2,7 @@ package com.pem.test.service;
 
 import com.pem.model.calculator.bean.BinaryBeanCalculatorDTO;
 import com.pem.model.calculator.common.CalculatorDTO;
-import com.pem.model.operation.basic.BeanOperationDTO;
+import com.pem.model.operation.bean.BeanOperationDTO;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.operation.composite.CompositeOperationDTO;
 import com.pem.model.operation.composite.SyncCompositeOperationDTO;

@@ -1,4 +1,4 @@
-package com.pem.model.operation.basic;
+package com.pem.model.operation.bean;
 
 import com.pem.model.common.bean.BeanObject;
 import com.pem.model.operation.common.OperationDTO;

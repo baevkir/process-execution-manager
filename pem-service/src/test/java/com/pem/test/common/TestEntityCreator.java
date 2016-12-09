@@ -4,7 +4,7 @@ import com.pem.model.calculator.bean.BinaryBeanCalculatorDTO;
 import com.pem.model.calculator.bean.IntegerBeanCalculatorDTO;
 import com.pem.model.common.bean.BeanObject;
 import com.pem.model.common.bean.BeanObjectBuilder;
-import com.pem.model.operation.basic.BeanOperationDTO;
+import com.pem.model.operation.bean.BeanOperationDTO;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.operation.composite.SyncCompositeOperationDTO;
 import com.pem.model.operation.condition.BinaryConditionOperationDTO;
