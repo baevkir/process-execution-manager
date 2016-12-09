@@ -4,9 +4,9 @@ import com.pem.core.calculator.BinaryCalculator;
 import com.pem.logic.common.ServiceConstants;
 import com.pem.core.operation.basic.Operation;
 import com.pem.core.operation.loop.condition.WhileOperation;
-import com.pem.core.converter.factory.ConverterFactory;
+import com.pem.core.common.converter.factory.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
-import com.pem.core.converter.impl.RegisterInConverterFactory;
+import com.pem.core.common.converter.impl.RegisterInConverterFactory;
 import com.pem.model.operation.loop.condition.WhileLoopOperationDTO;
 
 @RegisterInConverterFactory(factories = ServiceConstants.CONVERTER_FACTORY_NAME)

@@ -1,6 +1,6 @@
 package com.pem.logic.converter.common;
 
-import com.pem.core.converter.impl.Converter;
+import com.pem.core.common.converter.impl.Converter;
 import com.pem.logic.bean.provider.calculator.CalculatorProvider;
 import com.pem.core.calculator.Calculator;
 

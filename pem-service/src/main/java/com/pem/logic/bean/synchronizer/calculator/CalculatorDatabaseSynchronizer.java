@@ -1,7 +1,7 @@
 package com.pem.logic.bean.synchronizer.calculator;
 
 import com.pem.logic.bean.provider.calculator.CalculatorProvider;
-import com.pem.logic.bean.synchronizer.DatabaseSynchronizer;
+import com.pem.core.common.event.LaunchEventHandler;
 import com.pem.logic.bean.synchronizer.operation.BeanOperationDatabaseSynchronizer;
 import com.pem.model.calculator.bean.BeanCalculatorDTO;
 import com.pem.model.common.bean.BeanObject;
@@ -9,7 +9,7 @@ import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class CalculatorDatabaseSynchronizer implements DatabaseSynchronizer {
+public abstract class CalculatorDatabaseSynchronizer implements LaunchEventHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BeanOperationDatabaseSynchronizer.class);
 

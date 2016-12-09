@@ -3,7 +3,7 @@ package com.pem.logic.converter.calculator;
 import com.pem.core.calculator.IntegerCalculator;
 import com.pem.logic.common.ServiceConstants;
 import com.pem.logic.converter.common.AbstractConditionCalculatorConverter;
-import com.pem.core.converter.impl.RegisterInConverterFactory;
+import com.pem.core.common.converter.impl.RegisterInConverterFactory;
 import com.pem.model.calculator.bean.IntegerBeanCalculatorDTO;
 import com.pem.model.common.bean.BeanObject;
 

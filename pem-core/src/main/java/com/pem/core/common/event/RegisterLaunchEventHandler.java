@@ -1,4 +1,4 @@
-package com.pem.logic.bean.synchronizer;
+package com.pem.core.common.event;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RegisterDatabaseSynchronizer {
-    String[] facades();
+public @interface RegisterLaunchEventHandler {
+    String facade();
 }

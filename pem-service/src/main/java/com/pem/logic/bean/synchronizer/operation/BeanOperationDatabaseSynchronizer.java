@@ -1,8 +1,8 @@
 package com.pem.logic.bean.synchronizer.operation;
 
 import com.pem.logic.bean.provider.operation.OperationProvider;
-import com.pem.logic.bean.synchronizer.DatabaseSynchronizer;
-import com.pem.logic.bean.synchronizer.RegisterDatabaseSynchronizer;
+import com.pem.core.common.event.LaunchEventHandler;
+import com.pem.core.common.event.RegisterLaunchEventHandler;
 import com.pem.logic.common.ServiceConstants;
 import com.pem.model.common.bean.BeanObject;
 import com.pem.model.operation.basic.BeanOperationDTO;
@@ -13,15 +13,15 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Set;
 
-@RegisterDatabaseSynchronizer(facades = ServiceConstants.DATABASE_SYNCHRONIZER_FACADE_NAME)
-public class BeanOperationDatabaseSynchronizer implements DatabaseSynchronizer {
+@RegisterLaunchEventHandler(facade = ServiceConstants.DATABASE_SYNCHRONIZER_FACADE_NAME)
+public class BeanOperationDatabaseSynchronizer implements LaunchEventHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(BeanOperationDatabaseSynchronizer.class);
 
     private OperationProvider operationProvider;
     private OperationPersistenceService operationPersistenceService;
 
     @Override
-    public void synchronize() {
+    public void handle() {
         List<BeanOperationDTO> operations = operationPersistenceService.getOperationsByType(BeanOperationDTO.class);
 
         Set<BeanObject> beanObjects = operationProvider.getAllOperationBeanObjects();

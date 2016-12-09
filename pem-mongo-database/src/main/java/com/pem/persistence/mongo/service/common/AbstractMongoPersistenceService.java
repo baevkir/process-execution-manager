@@ -2,8 +2,8 @@ package com.pem.persistence.mongo.service.common;
 
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
-import com.pem.core.converter.factory.ConverterFactory;
-import com.pem.core.converter.impl.Converter;
+import com.pem.core.common.converter.factory.ConverterFactory;
+import com.pem.core.common.converter.impl.Converter;
 import com.pem.model.common.IdentifiableDTO;
 import com.pem.persistence.mongo.common.CommonMongoRepository;
 import com.pem.persistence.mongo.model.common.IdentifiableEntity;

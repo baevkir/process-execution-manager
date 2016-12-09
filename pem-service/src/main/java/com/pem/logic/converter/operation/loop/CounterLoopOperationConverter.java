@@ -4,9 +4,9 @@ import com.pem.logic.common.ServiceConstants;
 import com.pem.model.operation.loop.CounterLoopOperationDTO;
 import com.pem.core.operation.basic.Operation;
 import com.pem.core.operation.loop.counter.CounterLoopOperation;
-import com.pem.core.converter.factory.ConverterFactory;
+import com.pem.core.common.converter.factory.ConverterFactory;
 import com.pem.logic.converter.common.AbstractOperationConverter;
-import com.pem.core.converter.impl.RegisterInConverterFactory;
+import com.pem.core.common.converter.impl.RegisterInConverterFactory;
 
 @RegisterInConverterFactory(factories = ServiceConstants.CONVERTER_FACTORY_NAME)
 public class CounterLoopOperationConverter extends AbstractOperationConverter<CounterLoopOperationDTO> {

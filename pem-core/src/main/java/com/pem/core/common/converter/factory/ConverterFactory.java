@@ -1,7 +1,7 @@
-package com.pem.core.converter.factory;
+package com.pem.core.common.converter.factory;
 
 
-import com.pem.core.converter.impl.Converter;
+import com.pem.core.common.converter.impl.Converter;
 
 public interface ConverterFactory {
     <S, T> T convert(S source, Class<T> targetClass);

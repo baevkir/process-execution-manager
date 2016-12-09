@@ -1,6 +1,6 @@
-package com.pem.core.converter.factory;
+package com.pem.core.common.converter.factory;
 
-import com.pem.core.converter.impl.Converter;
+import com.pem.core.common.converter.impl.Converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.GenericTypeResolver;

@@ -3,7 +3,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="pem.mongodb.ConverterFactory" class="com.pem.core.converter.factory.OneKeyConverterFactory"/>
+    <bean id="pem.mongodb.ConverterFactory" class="com.pem.core.common.converter.factory.OneKeyConverterFactory"/>
 
     <bean id="fromBeanOperationEntityToDTOConverter"
           class="com.pem.persistence.mongo.converter.operation.bean.FromBeanOperationEntityToDTOConverter"/>

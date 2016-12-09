@@ -2,9 +2,9 @@ package com.pem.persistence.mongo.converter.process;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pem.core.converter.factory.ConverterFactory;
-import com.pem.core.converter.impl.Converter;
-import com.pem.core.converter.impl.RegisterInConverterFactory;
+import com.pem.core.common.converter.factory.ConverterFactory;
+import com.pem.core.common.converter.impl.Converter;
+import com.pem.core.common.converter.impl.RegisterInConverterFactory;
 import com.pem.model.proccess.ExecutionProcessDTO;
 import com.pem.model.proccess.record.ExecutionRecordDTO;
 import com.pem.persistence.mongo.common.PemMongoConstants;

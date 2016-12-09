@@ -1,8 +1,8 @@
 package com.pem.persistence.mongo.converter.operation.composite;
 
-import com.pem.core.converter.factory.ConverterFactory;
-import com.pem.core.converter.impl.Converter;
-import com.pem.core.converter.impl.RegisterInConverterFactory;
+import com.pem.core.common.converter.factory.ConverterFactory;
+import com.pem.core.common.converter.impl.Converter;
+import com.pem.core.common.converter.impl.RegisterInConverterFactory;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.operation.composite.SyncCompositeOperationDTO;
 import com.pem.persistence.mongo.common.PemMongoConstants;
