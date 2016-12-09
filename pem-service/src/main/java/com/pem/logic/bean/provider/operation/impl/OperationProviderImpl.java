@@ -4,9 +4,8 @@ import com.pem.core.common.utils.ApplicationContextWrapper;
 import com.pem.core.operation.basic.Operation;
 import com.pem.logic.bean.provider.operation.OperationProvider;
 import com.pem.logic.common.ServiceConstants;
-import com.pem.logic.common.utils.NamingUtils;
 import com.pem.model.common.bean.BeanObject;
-import org.apache.commons.lang.StringUtils;
+import com.pem.model.common.bean.BeanObjectBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -14,7 +13,9 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class OperationProviderImpl implements OperationProvider, ApplicationContextAware {
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationProviderImpl.class);
@@ -45,21 +46,17 @@ public class OperationProviderImpl implements OperationProvider, ApplicationCont
 
         Set<BeanObject> operations = new HashSet<>();
         for (Map.Entry<String, Operation> entry : beans.entrySet()) {
-            BeanObject operation = new BeanObject();
             String beanName = entry.getKey();
             LOGGER.trace("Add bean with name {}", beanName);
-            operation.setBeanName(beanName);
+            BeanObjectBuilder beanObjectBuilder = BeanObjectBuilder.newInstance().setBeanName(beanName);
 
             Class clazz = AopProxyUtils.ultimateTargetClass(entry.getValue());
             RegisterGlobalOperation annotation = (RegisterGlobalOperation) clazz.getAnnotation(RegisterGlobalOperation.class);
             String name = annotation.value();
-            if (StringUtils.isEmpty(name)) {
-                name = NamingUtils.getHumanReadableName(beanName);
-            }
             LOGGER.trace("Presentation name for bean {}", name);
-            operation.setName(name);
+            beanObjectBuilder.setName(name);
 
-            operations.add(operation);
+            operations.add(beanObjectBuilder.build());
         }
 
         return operations;

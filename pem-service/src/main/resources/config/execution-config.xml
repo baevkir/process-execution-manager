@@ -6,8 +6,6 @@
 
 
     <bean id="operationExecutor" class="com.pem.logic.service.executor.impl.OperationExecutorImpl">
-        <property name="contextProvider" ref="operationContextProvider"/>
         <property name="converterFactory" ref="pem.service.ConverterFactory"/>
-        <property name="processService" ref="executionProcessService"/>
     </bean>
 </beans>

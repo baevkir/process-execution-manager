@@ -19,7 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @RegisterInConverterFactory(factories = ServiceConstants.CONVERTER_FACTORY_NAME)
-public class FromOperationEntityToProcessConverter implements Converter<OperationDTO, ExecutionProcessDTO> {
+public class FromOperationDTOToProcessConverter implements Converter<OperationDTO, ExecutionProcessDTO> {
     private Cloner cloner = new Cloner();
     private ReflectiveDTOProcessor<OperationDTO> reflectiveProcessor = new ReflectiveDTOProcessor<>();
 

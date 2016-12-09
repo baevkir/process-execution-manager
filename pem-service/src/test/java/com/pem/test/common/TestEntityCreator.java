@@ -3,6 +3,7 @@ package com.pem.test.common;
 import com.pem.model.calculator.bean.BinaryBeanCalculatorDTO;
 import com.pem.model.calculator.bean.IntegerBeanCalculatorDTO;
 import com.pem.model.common.bean.BeanObject;
+import com.pem.model.common.bean.BeanObjectBuilder;
 import com.pem.model.operation.basic.BeanOperationDTO;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.operation.composite.SyncCompositeOperationDTO;
@@ -95,9 +96,11 @@ public class TestEntityCreator {
         operationEntity.setName("Test operation " + random.nextLong());
         operationEntity.setDescription("Test description " + random.nextLong());
 
-        BeanObject bean = new BeanObject();
-        bean.setName("Test Operation");
-        bean.setBeanName(beanName);
+        BeanObject bean = BeanObjectBuilder.newInstance()
+                .setBeanName(beanName)
+                .setName("Test Operation")
+                .build();
+
         operationEntity.setBean(bean);
 
         return operationEntity;
@@ -108,9 +111,11 @@ public class TestEntityCreator {
         calculatorEntity.setName("Test Calculator " + random.nextLong());
         calculatorEntity.setDescription("Test Calculator description " + random.nextLong());
 
-        BeanObject beanEntity = new BeanObject();
-        beanEntity.setBeanName(beanName);
-        calculatorEntity.setBean(beanEntity);
+        BeanObject bean = BeanObjectBuilder.newInstance()
+                .setBeanName(beanName)
+                .setName("Test Operation")
+                .build();
+        calculatorEntity.setBean(bean);
 
         return calculatorEntity;
     }
@@ -120,9 +125,11 @@ public class TestEntityCreator {
         calculatorEntity.setName("Test Calculator " + random.nextLong());
         calculatorEntity.setDescription("Test Calculator description " + random.nextLong());
 
-        BeanObject beanEntity = new BeanObject();
-        beanEntity.setBeanName(beanName);
-        calculatorEntity.setBean(beanEntity);
+        BeanObject bean = BeanObjectBuilder.newInstance()
+                .setBeanName(beanName)
+                .setName("Test Operation")
+                .build();
+        calculatorEntity.setBean(bean);
 
         return calculatorEntity;
     }

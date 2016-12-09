@@ -53,7 +53,7 @@
     </bean>
 
     <bean id="fromOperationEntityToProcessConverter"
-          class="com.pem.logic.converter.process.FromOperationEntityToProcessConverter"/>
+          class="com.pem.logic.converter.process.FromOperationDTOToProcessConverter"/>
 
     <bean id="fromOperationToProcessConverter"
           class="com.pem.logic.converter.process.FromOperationToProcessConverter"/>

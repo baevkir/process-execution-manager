@@ -1,13 +1,13 @@
 package com.pem.logic.converter.process;
 
-import com.pem.logic.common.ServiceConstants;
-import com.pem.core.common.utils.ApplicationContextWrapper;
-import com.pem.logic.common.utils.IdGenerator;
-import com.pem.logic.common.utils.NamingUtils;
-import com.pem.core.operation.basic.Operation;
 import com.pem.core.common.converter.impl.Converter;
 import com.pem.core.common.converter.impl.RegisterInConverterFactory;
+import com.pem.core.common.utils.ApplicationContextWrapper;
+import com.pem.core.operation.basic.Operation;
+import com.pem.logic.common.ServiceConstants;
+import com.pem.logic.common.utils.IdGenerator;
 import com.pem.model.common.bean.BeanObject;
+import com.pem.model.common.bean.BeanObjectBuilder;
 import com.pem.model.operation.basic.BeanOperationDTO;
 import com.pem.model.proccess.ExecutionProcessDTO;
 import com.pem.model.proccess.record.ExecutionRecordDTO;
@@ -28,20 +28,20 @@ public class FromOperationToProcessConverter implements Converter<Operation, Exe
     public ExecutionProcessDTO convert(Operation source) {
         ApplicationContextWrapper contextWrapper = new ApplicationContextWrapper(applicationContext);
         String beanName = contextWrapper.getBeanName(source);
-        String name = NamingUtils.getHumanReadableName(beanName);
+        BeanObject bean = BeanObjectBuilder.newInstance()
+                .setBeanName(beanName)
+                .setName("Test Operation")
+                .build();
 
         ExecutionProcessDTO processEntity = new ExecutionProcessDTO();
         processEntity.setId(IdGenerator.generateId());
-        processEntity.setName(name);
+        processEntity.setName(bean.getName());
 
-        BeanObject beanEntity = new BeanObject();
-        beanEntity.setName(name);
-        beanEntity.setBeanName(beanName);
 
         BeanOperationDTO beanOperationEntity = new BeanOperationDTO();
         beanOperationEntity.setId(IdGenerator.generateId());
-        beanOperationEntity.setName(name);
-        beanOperationEntity.setBean(beanEntity);
+        beanOperationEntity.setName(bean.getName());
+        beanOperationEntity.setBean(bean);
 
         ExecutionRecordDTO executionRecordEntity = new ExecutionRecordDTO();
         executionRecordEntity.setId(IdGenerator.generateId());

@@ -3,9 +3,8 @@ package com.pem.logic.bean.provider.calculator.impl;
 import com.pem.core.calculator.Calculator;
 import com.pem.core.common.utils.ApplicationContextWrapper;
 import com.pem.logic.bean.provider.calculator.CalculatorProvider;
-import com.pem.logic.common.utils.NamingUtils;
 import com.pem.model.common.bean.BeanObject;
-import org.apache.commons.lang.StringUtils;
+import com.pem.model.common.bean.BeanObjectBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -37,21 +36,18 @@ public class CalculatorProviderImpl implements CalculatorProvider, ApplicationCo
 
         Set<BeanObject> calculators = new HashSet<>();
         for (Map.Entry<String, C> entry : beans.entrySet()) {
-            BeanObject calculator = new BeanObject();
             String beanName = entry.getKey();
             LOGGER.trace("Add calculator with name {}", beanName);
-            calculator.setBeanName(beanName);
+            BeanObjectBuilder beanObjectBuilder = BeanObjectBuilder.newInstance().setBeanName(beanName);
 
             Class clazz = AopProxyUtils.ultimateTargetClass(entry.getValue());
             RegisterGlobalCalculator annotation = (RegisterGlobalCalculator) clazz.getAnnotation(RegisterGlobalCalculator.class);
             String name = annotation.value();
-            if (StringUtils.isEmpty(name)) {
-                name = NamingUtils.getHumanReadableName(beanName);
-            }
-            LOGGER.trace("Presentation name for calculator {}", name);
-            calculator.setName(name);
 
-            calculators.add(calculator);
+            beanObjectBuilder.setName(name);
+            LOGGER.trace("Presentation name for calculator {}", name);
+
+            calculators.add(beanObjectBuilder.build());
         }
 
         return calculators;
