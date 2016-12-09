@@ -1,12 +1,10 @@
 package com.pem.logic.service.process.impl;
 
-import com.pem.core.common.utils.ApplicationContextWrapper;
-import com.pem.model.operation.common.OperationDTO;
-import com.pem.core.operation.basic.Operation;
 import com.pem.core.common.converter.factory.ConverterFactory;
+import com.pem.logic.service.process.ExecutionProcessService;
+import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.proccess.ExecutionProcessDTO;
 import com.pem.persistence.api.service.process.ProcessPersistenceService;
-import com.pem.logic.service.process.ExecutionProcessService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -28,15 +26,6 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService, App
     public ExecutionProcessDTO createExecutionProcess(OperationDTO operationEntity) {
         LOGGER.debug("Create new ExecutionProcessDTO for: {}.", operationEntity);
         ExecutionProcessDTO processEntity = converterFactory.convert(operationEntity, ExecutionProcessDTO.class);
-        return persistenceService.createProcess(processEntity);
-    }
-
-    @Override
-    public ExecutionProcessDTO createExecutionProcess(Operation operation) {
-        LOGGER.debug("Create new ExecutionProcessDTO for: {}.", operation);
-        ApplicationContextWrapper contextWrapper = new ApplicationContextWrapper(applicationContext);
-        ExecutionProcessDTO processEntity = new ExecutionProcessDTO();
-        processEntity.setName(contextWrapper.getBeanName(operation));
         return persistenceService.createProcess(processEntity);
     }
 
