@@ -49,9 +49,9 @@ public class OperationContextFactory {
         return this;
     }
 
-    public void setContextClass(String contextClassName) {
+    public OperationContextFactory setContextClass(String contextClassName) {
         Assert.hasText(contextClassName, "Can't set empty contextClass.");
-        setContextClass(getContextClassByName(contextClassName));
+        return setContextClass(getContextClassByName(contextClassName));
     }
 
     private Class<? extends OperationContext> getContextClassByName(String contextClassName) {

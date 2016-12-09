@@ -20,8 +20,10 @@ public class OperationExecutorImpl implements OperationExecutor {
         LOGGER.trace("Start to execute operation {}.", executionOperation);
         Operation operation = converterFactory.convert(executionOperation, Operation.class);
 
-        contextFactory.setId(executionOperation.getId());
+        contextFactory.setId(executionProcess.getId());
+        LOGGER.debug("Start execute operation in context {}.", executionProcess.getId());
         operation.execute(contextFactory.createContext());
+        LOGGER.debug("Finish execute operation in context {}.", executionProcess.getId());
     }
 
     public void setConverterFactory(ConverterFactory converterFactory) {

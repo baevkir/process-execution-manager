@@ -34,8 +34,4 @@
     <bean id="calculatorProvider"
           class="com.pem.logic.bean.provider.calculator.impl.CalculatorProviderImpl"/>
 
-    <bean id="operationContext" class="com.pem.logic.bean.provider.context.DefaultContextFactory"/>
-
-    <bean id="operationContextProvider" class="com.pem.logic.bean.provider.context.impl.OperationContextProviderImpl"/>
-
 </beans>
