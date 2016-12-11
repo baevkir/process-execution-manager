@@ -18,7 +18,7 @@ public class FongoConfig {
         return queued.getMongo();
     }
 
-    @Bean
+    @Bean("pem.mongoDbFactory")
     public MongoDbFactory mongoDbFactory() {
         return new SimpleMongoDbFactory(mongo(), "test_db");
     }

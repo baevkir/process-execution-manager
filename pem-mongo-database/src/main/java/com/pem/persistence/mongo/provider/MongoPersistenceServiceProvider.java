@@ -19,7 +19,7 @@ import javax.annotation.PostConstruct;
 public class MongoPersistenceServiceProvider implements PersistenceServiceProvider, ApplicationContextAware {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MongoPersistenceServiceProvider.class);
-    private static final String MONGO_DB_FACTORY_NAME = "mongoDbFactory";
+    private static final String MONGO_DB_FACTORY_NAME = "pem.mongoDbFactory";
     private ApplicationContext parentContext;
     private ApplicationContext applicationContext;
     private MongoDbFactory mongoDbFactory;

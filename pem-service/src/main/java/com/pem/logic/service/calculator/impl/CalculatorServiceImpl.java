@@ -1,6 +1,6 @@
 package com.pem.logic.service.calculator.impl;
 
-import com.pem.logic.service.calculator.ConditionCalculatorService;
+import com.pem.logic.service.calculator.CalculatorService;
 import com.pem.model.calculator.common.CalculatorDTO;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import org.slf4j.Logger;
@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
 import java.math.BigInteger;
 import java.util.List;
 
-public class ConditionCalculatorServiceImpl implements ConditionCalculatorService {
+public class CalculatorServiceImpl implements CalculatorService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConditionCalculatorServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CalculatorServiceImpl.class);
 
     private CalculatorPersistenceService persistenceService;
 

@@ -2,7 +2,7 @@ package com.pem.integration.launcher;
 
 import com.pem.logic.common.applicationcontext.ChildApplicationContextBuilder;
 import com.pem.persistence.api.provider.PersistenceServiceProvider;
-import com.pem.logic.service.calculator.ConditionCalculatorService;
+import com.pem.logic.service.calculator.CalculatorService;
 import com.pem.logic.service.executor.OperationExecutor;
 import com.pem.logic.service.operation.OperationService;
 import com.pem.logic.service.process.ExecutionProcessService;
@@ -46,8 +46,8 @@ public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionMana
     }
 
     @Override
-    public ConditionCalculatorService getConditionCalculatorService() {
-        return applicationContext.getBean(ConditionCalculatorService.class);
+    public CalculatorService getConditionCalculatorService() {
+        return applicationContext.getBean(CalculatorService.class);
     }
 
     @Override

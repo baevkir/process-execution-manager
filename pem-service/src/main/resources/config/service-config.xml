@@ -5,7 +5,7 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-    <bean id="conditionCalculatorService" class="com.pem.logic.service.calculator.impl.ConditionCalculatorServiceImpl">
+    <bean id="calculatorService" class="com.pem.logic.service.calculator.impl.CalculatorServiceImpl">
         <property name="persistenceService" ref="calculatorPersistenceService"/>
     </bean>
 

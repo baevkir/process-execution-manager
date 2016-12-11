@@ -5,7 +5,7 @@ import com.pem.model.calculator.common.CalculatorDTO;
 import java.math.BigInteger;
 import java.util.List;
 
-public interface ConditionCalculatorService {
+public interface CalculatorService {
     CalculatorDTO createCalculator(CalculatorDTO calculatorDTO);
     void updateCalculator(CalculatorDTO calculatorDTO);
     void deleteCalculator(BigInteger id);

@@ -18,15 +18,15 @@ public class MongoPersistenceServiceProviderConfig {
         return queued.getMongo();
     }
 
-    @Bean
-    public MongoDbFactory mongoDbFactory() {
+    @Bean("testMongoFactory")
+    public MongoDbFactory testMongoFactory() {
         return new SimpleMongoDbFactory(mongo(), "demo-test");
     }
 
     @Bean
     public PersistenceServiceProvider persistenceServiceProvider(){
         MongoPersistenceServiceProvider persistenceServiceProvider = new MongoPersistenceServiceProvider();
-        persistenceServiceProvider.setMongoDbFactory(mongoDbFactory());
+        persistenceServiceProvider.setMongoDbFactory(testMongoFactory());
         return persistenceServiceProvider;
     }
 }
