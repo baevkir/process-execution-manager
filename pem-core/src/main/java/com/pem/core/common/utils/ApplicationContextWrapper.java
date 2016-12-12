@@ -26,6 +26,10 @@ public class ApplicationContextWrapper {
     }
 
     public <T, A extends Annotation> Map<String, T> findBeanByAnnotation(final Class<A> annotation, Class<T> targetClass) {
+       return findBeanByAnnotation(annotation, targetClass, null);
+    }
+
+    public <T, A extends Annotation> Map<String, T> findBeanByAnnotation(final Class<A> annotation, Class<T> targetClass, final Predicate<T> predicate) {
         Assert.notNull(annotation);
         Assert.notNull(targetClass);
         Map<String, T> beans = applicationContext.getBeansOfType(targetClass, true, true);
@@ -36,7 +40,14 @@ public class ApplicationContextWrapper {
             public boolean apply(Map.Entry<String, T> input) {
                 T value = input.getValue();
                 Class clazz = AopProxyUtils.ultimateTargetClass(value);
-                return clazz.isAnnotationPresent(annotation);
+                if (!clazz.isAnnotationPresent(annotation)) {
+                    return false;
+                }
+                if (predicate == null) {
+                    return true;
+                }
+
+                return predicate.apply(input.getValue());
             }
         });
     }

@@ -2,7 +2,7 @@ package com.pem.logic.bean.provider.operation.impl;
 
 import com.google.common.base.Function;
 import com.pem.core.common.bean.BeanObject;
-import com.pem.core.common.bean.BeanObjectIterator;
+import com.pem.core.common.bean.iterable.BeansIterable;
 import com.pem.core.common.utils.ApplicationContextWrapper;
 import com.pem.core.operation.basic.Operation;
 import com.pem.logic.bean.provider.operation.OperationProvider;
@@ -44,7 +44,7 @@ public class OperationProviderImpl implements OperationProvider, ApplicationCont
         ApplicationContextWrapper wrapper = new ApplicationContextWrapper(applicationContext);
         Map<String, Operation> beans = wrapper.findBeanByAnnotation(RegisterGlobalOperation.class, Operation.class);
 
-        return BeanObjectIterator.fromBeans(beans).transform(new Function<Operation, String>() {
+        return BeansIterable.fromBeans(beans).transformToBeanObjects(new Function<Operation, String>() {
             @Override
             public String apply(Operation input) {
                 Class clazz = AopProxyUtils.ultimateTargetClass(input);

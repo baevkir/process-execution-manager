@@ -8,7 +8,7 @@
         <artifactId>process-execution-manager</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-
+    <groupId>com.pem</groupId>
     <artifactId>pem-mongo-database</artifactId>
     <name>pem-mongo-database</name>
 

@@ -1,4 +1,4 @@
-package com.pem.core.common.converter.factory;
+package com.pem.core.common.converter.factory.impl;
 
 import com.pem.core.common.converter.impl.Converter;
 import org.slf4j.Logger;
@@ -9,8 +9,8 @@ import org.springframework.util.Assert;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OneKeyConverterFactory extends ConverterFactoryImpl {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConverterFactoryImpl.class);
+public class OneKeyConverterFactory extends AutoInitConverterFactory {
+    private static final Logger LOGGER = LoggerFactory.getLogger(OneKeyConverterFactory.class);
 
     private Map<Class, Converter> converterMap = new HashMap<>();
 

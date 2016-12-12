@@ -3,7 +3,7 @@ package com.pem.logic.bean.provider.calculator.impl;
 import com.google.common.base.Function;
 import com.pem.core.calculator.Calculator;
 import com.pem.core.common.bean.BeanObject;
-import com.pem.core.common.bean.BeanObjectIterator;
+import com.pem.core.common.bean.iterable.BeansIterable;
 import com.pem.core.common.utils.ApplicationContextWrapper;
 import com.pem.logic.bean.provider.calculator.CalculatorProvider;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class CalculatorProviderImpl implements CalculatorProvider, ApplicationCo
         ApplicationContextWrapper wrapper = new ApplicationContextWrapper(applicationContext);
         Map<String, C> beans = wrapper.findBeanByAnnotation(RegisterGlobalCalculator.class, conditionCalculatorClass);
 
-        return BeanObjectIterator.fromBeans(beans).transform(new Function<C, String>() {
+        return BeansIterable.fromBeans(beans).transformToBeanObjects(new Function<C, String>() {
             @Override
             public String apply(C input) {
                 Class clazz = AopProxyUtils.ultimateTargetClass(input);
