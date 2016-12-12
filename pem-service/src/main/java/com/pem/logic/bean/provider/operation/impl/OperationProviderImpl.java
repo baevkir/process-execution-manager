@@ -1,11 +1,12 @@
 package com.pem.logic.bean.provider.operation.impl;
 
+import com.google.common.base.Function;
+import com.pem.core.common.bean.BeanObject;
+import com.pem.core.common.bean.BeanObjectIterator;
 import com.pem.core.common.utils.ApplicationContextWrapper;
 import com.pem.core.operation.basic.Operation;
 import com.pem.logic.bean.provider.operation.OperationProvider;
 import com.pem.logic.common.ServiceConstants;
-import com.pem.core.common.bean.BeanObject;
-import com.pem.core.common.bean.BeanObjectBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -13,7 +14,6 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,22 +44,16 @@ public class OperationProviderImpl implements OperationProvider, ApplicationCont
         ApplicationContextWrapper wrapper = new ApplicationContextWrapper(applicationContext);
         Map<String, Operation> beans = wrapper.findBeanByAnnotation(RegisterGlobalOperation.class, Operation.class);
 
-        Set<BeanObject> operations = new HashSet<>();
-        for (Map.Entry<String, Operation> entry : beans.entrySet()) {
-            String beanName = entry.getKey();
-            LOGGER.trace("Add bean with name {}", beanName);
-            BeanObjectBuilder beanObjectBuilder = BeanObjectBuilder.newInstance().setBeanName(beanName);
-
-            Class clazz = AopProxyUtils.ultimateTargetClass(entry.getValue());
-            RegisterGlobalOperation annotation = (RegisterGlobalOperation) clazz.getAnnotation(RegisterGlobalOperation.class);
-            String name = annotation.value();
-            LOGGER.trace("Presentation name for bean {}", name);
-            beanObjectBuilder.setName(name);
-
-            operations.add(beanObjectBuilder.build());
-        }
-
-        return operations;
+        return BeanObjectIterator.fromBeans(beans).transform(new Function<Operation, String>() {
+            @Override
+            public String apply(Operation input) {
+                Class clazz = AopProxyUtils.ultimateTargetClass(input);
+                RegisterGlobalOperation annotation = (RegisterGlobalOperation) clazz.getAnnotation(RegisterGlobalOperation.class);
+                String name = annotation.value();
+                LOGGER.trace("Presentation name for bean {}", name);
+                return name;
+            }
+        });
     }
 
     private <O extends Operation> String getCommonOperationName(Class<O> operationClass) {

@@ -1,7 +1,6 @@
 package com.pem.core.common.bean;
 
-import com.pem.core.common.event.LaunchEventBus;
-import com.pem.core.common.utils.NamingUtils ;
+import com.pem.core.common.utils.NamingUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +8,7 @@ import org.springframework.util.Assert;
 
 public class BeanObjectBuilder {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LaunchEventBus.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BeanObjectBuilder.class);
 
     private String name;
     private String beanName;
