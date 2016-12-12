@@ -60,7 +60,7 @@ public class MongoPersistenceServiceProvider implements PersistenceServiceProvid
 
         ChildApplicationContextBuilder contextBuilder = new  ChildApplicationContextBuilder()
                 .setParentContext(parentContext)
-                .addXMLConfiguration("classpath:config/mongo-database-config.xml")
+                .addXMLConfiguration("config/mongo-database-config.xml")
                 .addSingletonBean(MONGO_DB_FACTORY_NAME, mongoDbFactory);
 
         applicationContext = contextBuilder.build();

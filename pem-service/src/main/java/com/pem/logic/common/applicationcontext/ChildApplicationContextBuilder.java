@@ -5,8 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.GenericApplicationContext;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
@@ -50,20 +53,24 @@ public class ChildApplicationContextBuilder {
     public ApplicationContext build() {
         Assert.notNull(parentContext, "Can't create Child Application Context. Parent Context is NULL.");
 
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(parentContext);
-        context.refresh();
-        context.setConfigLocations(getConfigLocations());
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        registerSingletonBeans(beanFactory);
+        registerParentContextBeans(beanFactory);
 
-        registerSingletonBeans(context.getBeanFactory());
-        context.refresh();
+        GenericApplicationContext context = new AnnotationConfigApplicationContext(beanFactory);
+        context.setParent(parentContext);
 
-        registerParentContextBeans(context.getBeanFactory());
+        registerXMLConfigurations(context);
+        context.refresh();
 
         return context;
     }
 
-    private String[] getConfigLocations() {
-        return xmlConfigurations.toArray(new String[xmlConfigurations.size()]);
+    private void registerXMLConfigurations(GenericApplicationContext context) {
+        XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(context);
+        for (String xmlConfiguration : xmlConfigurations) {
+            xmlReader.loadBeanDefinitions(new ClassPathResource(xmlConfiguration));
+        }
     }
 
     private void registerSingletonBeans(ConfigurableListableBeanFactory beanFactory) {

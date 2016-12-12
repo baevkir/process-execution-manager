@@ -68,7 +68,7 @@ public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionMana
         LOGGER.trace("Start to load ProcessExecutionManagerContext.");
         ChildApplicationContextBuilder contextBuilder = new  ChildApplicationContextBuilder()
                 .setParentContext(parentContext)
-                .addXMLConfiguration("classpath:pemApplicationContext.xml")
+                .addXMLConfiguration("pemApplicationContext.xml")
                 .addSingletonBean(PERSISTENCE_SERVICE_PROVIDER_BEAN, persistenceServiceProvider)
                 .addSingletonBean(CALCULATOR_PERSISTENCE_SERVICE_BEAN, persistenceServiceProvider.getCalculatorPersistenceService())
                 .addSingletonBean(OPERATION_PERSISTENCE_SERVICE_BEAN, persistenceServiceProvider.getOperationPersistenceService())
