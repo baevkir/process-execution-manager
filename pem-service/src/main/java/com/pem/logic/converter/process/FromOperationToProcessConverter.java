@@ -30,7 +30,6 @@ public class FromOperationToProcessConverter implements Converter<Operation, Exe
         String beanName = contextWrapper.getBeanName(source);
         BeanObject bean = BeanObjectBuilder.newInstance()
                 .setBeanName(beanName)
-                .setName("Test Operation")
                 .build();
 
         ExecutionProcessDTO processEntity = new ExecutionProcessDTO();
