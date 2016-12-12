@@ -1,5 +1,7 @@
 package com.pem.core.common.utils;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -7,7 +9,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.util.Assert;
 
 import java.lang.annotation.Annotation;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ApplicationContextWrapper {
@@ -24,21 +25,20 @@ public class ApplicationContextWrapper {
         return applicationContext;
     }
 
-    public <T> Map<String, T> findBeanByAnnotation(Class<? extends Annotation> annotation, Class<T> targetClass) {
-        Map<String, T> result = new HashMap<>();
+    public <T, A extends Annotation> Map<String, T> findBeanByAnnotation(final Class<A> annotation, Class<T> targetClass) {
+        Assert.notNull(annotation);
+        Assert.notNull(targetClass);
         Map<String, T> beans = applicationContext.getBeansOfType(targetClass, true, true);
         LOGGER.trace("Try to Find beans {} with annotation {}.", targetClass, annotation);
 
-        for (Map.Entry<String, T> entry : beans.entrySet()) {
-            String key = entry.getKey();
-            T value = entry.getValue();
-
-            Class clazz = AopProxyUtils.ultimateTargetClass(value);
-            if (clazz.isAnnotationPresent(annotation)) {
-                result.put(key, value);
+        return Maps.filterEntries(beans, new Predicate<Map.Entry<String, T>>() {
+            @Override
+            public boolean apply(Map.Entry<String, T> input) {
+                T value = input.getValue();
+                Class clazz = AopProxyUtils.ultimateTargetClass(value);
+                return clazz.isAnnotationPresent(annotation);
             }
-        }
-        return result;
+        });
     }
 
     public <T> T getPrototypeBeanByType(String beanName, Class<T> type) {
