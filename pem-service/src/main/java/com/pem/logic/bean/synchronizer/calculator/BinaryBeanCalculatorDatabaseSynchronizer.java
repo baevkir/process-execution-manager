@@ -5,7 +5,7 @@ import com.pem.core.common.event.RegisterLaunchEventHandler;
 import com.pem.logic.common.ServiceConstants;
 import com.pem.model.calculator.bean.BeanCalculatorDTO;
 import com.pem.model.calculator.bean.BinaryBeanCalculatorDTO;
-import com.pem.model.common.bean.BeanObject;
+import com.pem.core.common.bean.BeanObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

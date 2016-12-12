@@ -1,6 +1,6 @@
 package com.pem.persistence.mongo.model.operation.bean;
 
-import com.pem.model.common.bean.BeanObject;
+import com.pem.core.common.bean.BeanObject;
 import com.pem.persistence.mongo.model.operation.common.OperationEntity;
 import org.springframework.data.mongodb.core.index.Indexed;
 

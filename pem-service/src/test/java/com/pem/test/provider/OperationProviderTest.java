@@ -9,7 +9,7 @@ import com.pem.core.operation.loop.condition.DoWhileOperation;
 import com.pem.core.operation.loop.condition.WhileOperation;
 import com.pem.core.operation.loop.counter.CounterLoopOperation;
 import com.pem.logic.bean.provider.operation.OperationProvider;
-import com.pem.model.common.bean.BeanObject;
+import com.pem.core.common.bean.BeanObject;
 import com.pem.test.common.config.TestConfig;
 import org.junit.Assert;
 import org.junit.Before;

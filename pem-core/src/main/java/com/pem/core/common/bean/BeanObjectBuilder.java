@@ -1,7 +1,7 @@
-package com.pem.model.common.bean;
+package com.pem.core.common.bean;
 
 import com.pem.core.common.event.LaunchEventBus;
-import com.pem.logic.common.utils.NamingUtils;
+import com.pem.core.common.utils.NamingUtils ;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

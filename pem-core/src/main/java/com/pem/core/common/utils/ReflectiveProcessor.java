@@ -1,4 +1,4 @@
-package com.pem.logic.common.utils;
+package com.pem.core.common.utils;
 
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -16,8 +16,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
 
-public class ReflectiveDTOProcessor<S> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReflectiveDTOProcessor.class);
+public class ReflectiveProcessor<S> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReflectiveProcessor.class);
     private static final List<Class> UNPROCESSED_CLASSES = new ArrayList<>();
     private S source;
     private HandleAction action;
@@ -38,12 +38,12 @@ public class ReflectiveDTOProcessor<S> {
         return source;
     }
 
-    public ReflectiveDTOProcessor<S> setSource(S source) {
+    public ReflectiveProcessor<S> setSource(S source) {
         this.source = source;
         return this;
     }
 
-    public ReflectiveDTOProcessor<S> setAction(HandleAction action) {
+    public ReflectiveProcessor<S> setAction(HandleAction action) {
         this.action = action;
         return this;
     }

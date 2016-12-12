@@ -1,4 +1,4 @@
-package com.pem.logic.common.utils;
+package com.pem.core.common.utils;
 
 import com.google.common.base.CaseFormat;
 import org.apache.commons.lang.StringUtils;

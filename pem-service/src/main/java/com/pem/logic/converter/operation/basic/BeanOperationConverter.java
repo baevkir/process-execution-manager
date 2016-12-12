@@ -5,7 +5,7 @@ import com.pem.model.operation.bean.BeanOperationDTO;
 import com.pem.core.operation.basic.Operation;
 import com.pem.logic.converter.common.AbstractOperationConverter;
 import com.pem.core.common.converter.impl.RegisterInConverterFactory;
-import com.pem.model.common.bean.BeanObject;
+import com.pem.core.common.bean.BeanObject;
 
 @RegisterInConverterFactory(factories = ServiceConstants.CONVERTER_FACTORY_NAME)
 public class BeanOperationConverter extends AbstractOperationConverter<BeanOperationDTO> {

@@ -2,7 +2,7 @@ package com.pem.logic.converter.process;
 
 import com.pem.logic.common.ServiceConstants;
 import com.pem.logic.common.utils.IdGenerator;
-import com.pem.logic.common.utils.ReflectiveDTOProcessor;
+import com.pem.core.common.utils.ReflectiveProcessor;
 import com.pem.core.common.converter.impl.Converter;
 import com.pem.core.common.converter.impl.RegisterInConverterFactory;
 import com.pem.model.common.IdentifiableDTO;
@@ -21,7 +21,7 @@ import java.util.List;
 @RegisterInConverterFactory(factories = ServiceConstants.CONVERTER_FACTORY_NAME)
 public class FromOperationDTOToProcessConverter implements Converter<OperationDTO, ExecutionProcessDTO> {
     private Cloner cloner = new Cloner();
-    private ReflectiveDTOProcessor<OperationDTO> reflectiveProcessor = new ReflectiveDTOProcessor<>();
+    private ReflectiveProcessor<OperationDTO> reflectiveProcessor = new ReflectiveProcessor<>();
 
     @Override
     public ExecutionProcessDTO convert(OperationDTO source) {
@@ -61,7 +61,7 @@ public class FromOperationDTOToProcessConverter implements Converter<OperationDT
         return result;
     }
 
-    private class GenerateIdAction implements ReflectiveDTOProcessor.HandleAction {
+    private class GenerateIdAction implements ReflectiveProcessor.HandleAction {
 
         private List<BigInteger> generatedIds = new LinkedList<>();
 

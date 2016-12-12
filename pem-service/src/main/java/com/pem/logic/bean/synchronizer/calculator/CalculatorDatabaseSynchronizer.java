@@ -4,7 +4,7 @@ import com.pem.logic.bean.provider.calculator.CalculatorProvider;
 import com.pem.core.common.event.LaunchEventHandler;
 import com.pem.logic.bean.synchronizer.operation.BeanOperationDatabaseSynchronizer;
 import com.pem.model.calculator.bean.BeanCalculatorDTO;
-import com.pem.model.common.bean.BeanObject;
+import com.pem.core.common.bean.BeanObject;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

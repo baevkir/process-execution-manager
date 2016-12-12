@@ -84,6 +84,12 @@
             <artifactId>commons-collections</artifactId>
         </dependency>
 
+        <!-- joda-time -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+
         <!-- tests -->
         <dependency>
             <groupId>junit</groupId>

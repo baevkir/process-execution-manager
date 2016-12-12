@@ -1,7 +1,7 @@
 package com.pem.logic.bean.provider.calculator;
 
 import com.pem.core.calculator.Calculator;
-import com.pem.model.common.bean.BeanObject;
+import com.pem.core.common.bean.BeanObject;
 
 import java.util.Set;
 

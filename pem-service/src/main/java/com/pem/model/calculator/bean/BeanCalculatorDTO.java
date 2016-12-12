@@ -1,7 +1,7 @@
 package com.pem.model.calculator.bean;
 
 import com.pem.model.calculator.common.CalculatorDTO;
-import com.pem.model.common.bean.BeanObject;
+import com.pem.core.common.bean.BeanObject;
 
 public abstract class BeanCalculatorDTO extends CalculatorDTO {
 

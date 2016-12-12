@@ -4,7 +4,7 @@ import com.pem.logic.bean.provider.operation.OperationProvider;
 import com.pem.core.common.event.LaunchEventHandler;
 import com.pem.core.common.event.RegisterLaunchEventHandler;
 import com.pem.logic.common.ServiceConstants;
-import com.pem.model.common.bean.BeanObject;
+import com.pem.core.common.bean.BeanObject;
 import com.pem.model.operation.bean.BeanOperationDTO;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;
 import org.slf4j.Logger;

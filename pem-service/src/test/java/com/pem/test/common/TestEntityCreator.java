@@ -2,8 +2,8 @@ package com.pem.test.common;
 
 import com.pem.model.calculator.bean.BinaryBeanCalculatorDTO;
 import com.pem.model.calculator.bean.IntegerBeanCalculatorDTO;
-import com.pem.model.common.bean.BeanObject;
-import com.pem.model.common.bean.BeanObjectBuilder;
+import com.pem.core.common.bean.BeanObject;
+import com.pem.core.common.bean.BeanObjectBuilder;
 import com.pem.model.operation.bean.BeanOperationDTO;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.operation.composite.SyncCompositeOperationDTO;
