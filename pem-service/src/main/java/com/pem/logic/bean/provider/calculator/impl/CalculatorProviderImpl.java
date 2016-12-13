@@ -1,6 +1,7 @@
 package com.pem.logic.bean.provider.calculator.impl;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 import com.pem.core.calculator.Calculator;
 import com.pem.core.common.bean.BeanObject;
 import com.pem.core.common.bean.iterable.BeansIterable;
@@ -13,6 +14,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,17 +31,31 @@ public class CalculatorProviderImpl implements CalculatorProvider, ApplicationCo
         return wrapper.getPrototypeBeanByType(beanName, calculatorClass);
     }
 
-
     @Override
     public <C extends Calculator> Set<BeanObject> getAllCalculatorBeanObjects(Class<C> conditionCalculatorClass) {
         ApplicationContextWrapper wrapper = new ApplicationContextWrapper(applicationContext);
         Map<String, C> beans = wrapper.findBeanByAnnotation(RegisterGlobalCalculator.class, conditionCalculatorClass);
+        final String applicationId = applicationContext.getId();
 
-        return BeansIterable.fromBeans(beans).transformToBeanObjects(new Function<C, String>() {
+        BeansIterable iterable = BeansIterable.fromBeans(beans).filter(new Predicate<C>() {
+            @Override
+            public boolean apply(C input) {
+                Class<C> clazz = (Class<C>) AopProxyUtils.ultimateTargetClass(input);
+                RegisterGlobalCalculator annotation = clazz.getAnnotation(RegisterGlobalCalculator.class);
+
+                if (annotation.all()) {
+                    return true;
+                }
+                List<String> executors = Arrays.asList(annotation.executors());
+                return executors.contains(applicationId);
+            }
+        });
+
+        return iterable.transformToBeanObjects(new Function<C, String>() {
             @Override
             public String apply(C input) {
-                Class clazz = AopProxyUtils.ultimateTargetClass(input);
-                RegisterGlobalCalculator annotation = (RegisterGlobalCalculator) clazz.getAnnotation(RegisterGlobalCalculator.class);
+                Class<C> clazz = (Class<C>) AopProxyUtils.ultimateTargetClass(input);
+                RegisterGlobalCalculator annotation =  clazz.getAnnotation(RegisterGlobalCalculator.class);
                 String name = annotation.value();
                 LOGGER.trace("Presentation name for calculator {}", name);
                 return name;

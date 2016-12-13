@@ -1,5 +1,6 @@
 package com.pem.logic.common.applicationcontext;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -20,6 +21,7 @@ import java.util.Map;
 public class ChildApplicationContextBuilder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ChildApplicationContextBuilder.class);
+    private String contextId;
     private ApplicationContext parentContext;
     private List<String> xmlConfigurations = new ArrayList<>();
     private final Map<String, String> parentBeans = new HashMap<>();
@@ -50,6 +52,11 @@ public class ChildApplicationContextBuilder {
         return this;
     }
 
+    public ChildApplicationContextBuilder setContextId(String contextId) {
+        this.contextId = contextId;
+        return this;
+    }
+
     public ApplicationContext build() {
         Assert.notNull(parentContext, "Can't create Child Application Context. Parent Context is NULL.");
 
@@ -58,6 +65,11 @@ public class ChildApplicationContextBuilder {
         registerParentContextBeans(beanFactory);
 
         GenericApplicationContext context = new AnnotationConfigApplicationContext(beanFactory);
+
+        if (StringUtils.isNotEmpty(contextId)) {
+            context.setId(contextId);
+        }
+
         context.setParent(parentContext);
 
         registerXMLConfigurations(context);

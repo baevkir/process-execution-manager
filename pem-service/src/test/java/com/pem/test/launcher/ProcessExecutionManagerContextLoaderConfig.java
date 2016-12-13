@@ -14,9 +14,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Configuration
 public class ProcessExecutionManagerContextLoaderConfig {
 
@@ -49,9 +46,6 @@ public class ProcessExecutionManagerContextLoaderConfig {
     public ProcessExecutionManagerLauncher processExecutionManagerContextLoader() {
         ProcessExecutionManagerLauncherImpl executionManagerProvider = new ProcessExecutionManagerLauncherImpl();
         executionManagerProvider.setPersistenceServiceProvider(persistenceServiceProvider());
-        Map<String, String> beans = new HashMap<>();
-        beans.put("testOperation", "globalOperation");
-        executionManagerProvider.setParentBeans(beans);
 
         return executionManagerProvider;
     }

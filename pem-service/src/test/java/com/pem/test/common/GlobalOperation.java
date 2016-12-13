@@ -7,7 +7,7 @@ import com.pem.core.operation.basic.Operation;
 import org.springframework.context.annotation.Scope;
 
 
-@RegisterGlobalOperation("Test global operation.")
+@RegisterGlobalOperation(value = "Test global operation.", all = true)
 @Scope(scopeName = "prototype")
 public class GlobalOperation extends AbstractOperation implements Operation {
 

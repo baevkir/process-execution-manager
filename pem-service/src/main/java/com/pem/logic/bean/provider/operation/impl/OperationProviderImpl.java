@@ -1,6 +1,7 @@
 package com.pem.logic.bean.provider.operation.impl;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 import com.pem.core.common.bean.BeanObject;
 import com.pem.core.common.bean.iterable.BeansIterable;
 import com.pem.core.common.utils.ApplicationContextWrapper;
@@ -14,8 +15,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class OperationProviderImpl implements OperationProvider, ApplicationContextAware {
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationProviderImpl.class);
@@ -41,10 +41,28 @@ public class OperationProviderImpl implements OperationProvider, ApplicationCont
     @Override
     public Set<BeanObject> getAllOperationBeanObjects() {
         LOGGER.debug("Get All OperationBeanObjects .");
-        ApplicationContextWrapper wrapper = new ApplicationContextWrapper(applicationContext);
-        Map<String, Operation> beans = wrapper.findBeanByAnnotation(RegisterGlobalOperation.class, Operation.class);
+        final String applicationId = applicationContext.getId();
+        Map<String, Operation> beans = new HashMap<>();
+        if (applicationContext.getParent() != null) {
+            beans.putAll(findGlobalOperationsInContext(applicationContext.getParent()));
+        }
+        beans.putAll(findGlobalOperationsInContext(applicationContext));
 
-        return BeansIterable.fromBeans(beans).transformToBeanObjects(new Function<Operation, String>() {
+        BeansIterable iterable = BeansIterable.fromBeans(beans).filter(new Predicate<Operation>() {
+            @Override
+            public boolean apply(Operation input) {
+                Class<Operation> clazz = (Class<Operation>) AopProxyUtils.ultimateTargetClass(input);
+                RegisterGlobalOperation annotation = clazz.getAnnotation(RegisterGlobalOperation.class);
+
+                if (annotation.all()) {
+                    return true;
+                }
+                List<String> executors = Arrays.asList(annotation.executors());
+                return executors.contains(applicationId);
+            }
+        });
+
+        return iterable.transformToBeanObjects(new Function<Operation, String>() {
             @Override
             public String apply(Operation input) {
                 Class clazz = AopProxyUtils.ultimateTargetClass(input);
@@ -60,6 +78,11 @@ public class OperationProviderImpl implements OperationProvider, ApplicationCont
         String className = operationClass.getSimpleName();
         LOGGER.trace("Get class name {}.", className);
         return OPERATION_BEAN_PREF + className;
+    }
+
+    private Map<String, Operation> findGlobalOperationsInContext(ApplicationContext context) {
+        ApplicationContextWrapper wrapper = new ApplicationContextWrapper(context);
+        return wrapper.findBeanByAnnotation(RegisterGlobalOperation.class, Operation.class);
     }
 
     @Override

@@ -1,22 +1,23 @@
 package com.pem.integration.launcher;
 
 import com.pem.logic.common.applicationcontext.ChildApplicationContextBuilder;
-import com.pem.persistence.api.provider.PersistenceServiceProvider;
 import com.pem.logic.service.calculator.CalculatorService;
 import com.pem.logic.service.executor.OperationExecutor;
 import com.pem.logic.service.operation.OperationService;
 import com.pem.logic.service.process.ExecutionProcessService;
+import com.pem.persistence.api.provider.PersistenceServiceProvider;
 import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
 
-public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionManagerLauncher, ApplicationContextAware {
+public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionManagerLauncher, ApplicationContextAware, BeanNameAware {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProcessExecutionManagerLauncherImpl.class);
     private static final String PERSISTENCE_SERVICE_PROVIDER_BEAN = "persistenceServiceProvider";
     private static final String CALCULATOR_PERSISTENCE_SERVICE_BEAN = "calculatorPersistenceService";
@@ -26,7 +27,7 @@ public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionMana
 
     private ApplicationContext parentContext;
     private ApplicationContext applicationContext;
-
+    private String applicationName;
     private PersistenceServiceProvider persistenceServiceProvider;
     private Map<String, String> parentBeans;
 
@@ -67,6 +68,7 @@ public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionMana
     public void initApplicationContext() {
         LOGGER.trace("Start to load ProcessExecutionManagerContext.");
         ChildApplicationContextBuilder contextBuilder = new  ChildApplicationContextBuilder()
+                .setContextId(applicationName)
                 .setParentContext(parentContext)
                 .addXMLConfiguration("pemApplicationContext.xml")
                 .addSingletonBean(PERSISTENCE_SERVICE_PROVIDER_BEAN, persistenceServiceProvider)
@@ -84,5 +86,10 @@ public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionMana
 
     protected ApplicationContext getApplicationContext() {
         return applicationContext;
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        applicationName = name;
     }
 }

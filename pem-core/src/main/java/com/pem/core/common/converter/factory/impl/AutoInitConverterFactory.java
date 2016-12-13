@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -18,10 +19,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AutoInitConverterFactory implements ConverterFactory, ApplicationContextAware {
+public abstract class AutoInitConverterFactory implements ConverterFactory, ApplicationContextAware, BeanNameAware {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AutoInitConverterFactory.class);
-
+    private String converterFactoryName;
     private ApplicationContext applicationContext;
 
     @Override
@@ -40,7 +41,6 @@ public abstract class AutoInitConverterFactory implements ConverterFactory, Appl
     @PostConstruct
     public void initConverters() {
         ApplicationContextWrapper contextWrapper = new ApplicationContextWrapper(applicationContext);
-        final String currentFactoryName = contextWrapper.getBeanName(this);
         Map<String, Converter> converters = contextWrapper.findBeanByAnnotation(RegisterInConverterFactory.class, Converter.class);
 
         BeansIterable.fromBeans(converters).forEach(new Consumer<Converter>() {
@@ -49,7 +49,7 @@ public abstract class AutoInitConverterFactory implements ConverterFactory, Appl
                 Class<? extends Converter> clazz = (Class<? extends Converter>) AopProxyUtils.ultimateTargetClass(input);
                 RegisterInConverterFactory annotation = clazz.getAnnotation(RegisterInConverterFactory.class);
                 List<String> factories = Arrays.asList(annotation.factories());
-                if (factories.contains(currentFactoryName)) {
+                if (factories.contains(converterFactoryName)) {
                     setConverter(input);
                 }
             }
@@ -65,5 +65,10 @@ public abstract class AutoInitConverterFactory implements ConverterFactory, Appl
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        converterFactoryName = name;
     }
 }
