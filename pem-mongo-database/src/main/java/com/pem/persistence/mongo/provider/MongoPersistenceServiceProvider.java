@@ -1,7 +1,7 @@
 package com.pem.persistence.mongo.provider;
 
 import com.pem.core.common.applicationcontext.builder.ApplicationContextBuilder;
-import com.pem.persistence.api.provider.PersistenceServiceProvider;
+import com.pem.persistence.api.provider.PemPersistenceServiceProvider;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;
 import com.pem.persistence.api.service.process.ExecutionRecordPersistenceService;
@@ -16,7 +16,7 @@ import org.springframework.util.Assert;
 
 import javax.annotation.PostConstruct;
 
-public class MongoPersistenceServiceProvider implements PersistenceServiceProvider, ApplicationContextAware {
+public class MongoPersistenceServiceProvider implements PemPersistenceServiceProvider, ApplicationContextAware {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MongoPersistenceServiceProvider.class);
     private static final String MONGO_DB_FACTORY_NAME = "pem.mongoDbFactory";

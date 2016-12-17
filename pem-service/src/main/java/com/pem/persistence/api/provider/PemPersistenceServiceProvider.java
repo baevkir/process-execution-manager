@@ -5,7 +5,7 @@ import com.pem.persistence.api.service.operation.OperationPersistenceService;
 import com.pem.persistence.api.service.process.ExecutionRecordPersistenceService;
 import com.pem.persistence.api.service.process.ProcessPersistenceService;
 
-public interface PersistenceServiceProvider {
+public interface PemPersistenceServiceProvider {
     CalculatorPersistenceService getCalculatorPersistenceService();
 
     OperationPersistenceService getOperationPersistenceService();

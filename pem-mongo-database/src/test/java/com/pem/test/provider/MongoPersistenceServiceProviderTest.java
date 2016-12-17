@@ -1,7 +1,7 @@
 package com.pem.test.provider;
 
 import com.pem.model.operation.common.OperationDTO;
-import com.pem.persistence.api.provider.PersistenceServiceProvider;
+import com.pem.persistence.api.provider.PemPersistenceServiceProvider;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +16,7 @@ import java.util.List;
 public class MongoPersistenceServiceProviderTest {
 
     @Autowired
-    private PersistenceServiceProvider persistenceServiceProvider;
+    private PemPersistenceServiceProvider persistenceServiceProvider;
 
     @Test
     public void testPersistenceServiceProvider () {

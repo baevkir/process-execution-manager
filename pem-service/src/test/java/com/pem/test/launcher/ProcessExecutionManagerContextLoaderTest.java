@@ -1,6 +1,6 @@
 package com.pem.test.launcher;
 
-import com.pem.integration.launcher.ProcessExecutionManagerLauncher;
+import com.pem.integration.launcher.PemServiceProvider;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class ProcessExecutionManagerContextLoaderTest {
 
     @Autowired
-    public ProcessExecutionManagerLauncher contextLoader;
+    public PemServiceProvider contextLoader;
 
     @Test
     public void processExecutionManagerContextLoaderTest() {

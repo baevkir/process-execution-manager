@@ -1,9 +1,9 @@
 package com.pem.test.launcher;
 
 import com.pem.core.operation.basic.Operation;
-import com.pem.integration.launcher.ProcessExecutionManagerLauncher;
-import com.pem.integration.launcher.ProcessExecutionManagerLauncherImpl;
-import com.pem.persistence.api.provider.PersistenceServiceProvider;
+import com.pem.integration.launcher.PemServiceProvider;
+import com.pem.integration.launcher.PemServiceProviderImpl;
+import com.pem.persistence.api.provider.PemPersistenceServiceProvider;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;
 import com.pem.persistence.api.service.process.ExecutionRecordPersistenceService;
@@ -24,8 +24,8 @@ public class ProcessExecutionManagerContextLoaderConfig {
     }
 
     @Bean
-    public PersistenceServiceProvider persistenceServiceProvider(){
-        PersistenceServiceProvider persistenceServiceProvider = Mockito.mock(PersistenceServiceProvider.class);
+    public PemPersistenceServiceProvider persistenceServiceProvider(){
+        PemPersistenceServiceProvider persistenceServiceProvider = Mockito.mock(PemPersistenceServiceProvider.class);
 
         CalculatorPersistenceService calculatorPersistenceService = Mockito.mock(CalculatorPersistenceService.class);
         Mockito.when(persistenceServiceProvider.getCalculatorPersistenceService()).thenReturn(calculatorPersistenceService);
@@ -43,8 +43,8 @@ public class ProcessExecutionManagerContextLoaderConfig {
     }
 
     @Bean
-    public ProcessExecutionManagerLauncher processExecutionManagerContextLoader() {
-        ProcessExecutionManagerLauncherImpl executionManagerProvider = new ProcessExecutionManagerLauncherImpl();
+    public PemServiceProvider processExecutionManagerContextLoader() {
+        PemServiceProviderImpl executionManagerProvider = new PemServiceProviderImpl();
         executionManagerProvider.setPersistenceServiceProvider(persistenceServiceProvider());
 
         return executionManagerProvider;

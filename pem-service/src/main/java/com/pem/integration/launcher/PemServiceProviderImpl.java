@@ -5,7 +5,7 @@ import com.pem.logic.service.calculator.CalculatorService;
 import com.pem.logic.service.executor.OperationExecutor;
 import com.pem.logic.service.operation.OperationService;
 import com.pem.logic.service.process.ExecutionProcessService;
-import com.pem.persistence.api.provider.PersistenceServiceProvider;
+import com.pem.persistence.api.provider.PemPersistenceServiceProvider;
 import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +17,8 @@ import org.springframework.context.ApplicationContextAware;
 import javax.annotation.PostConstruct;
 import java.util.Map;
 
-public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionManagerLauncher, ApplicationContextAware, BeanNameAware {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProcessExecutionManagerLauncherImpl.class);
+public class PemServiceProviderImpl implements PemServiceProvider, ApplicationContextAware, BeanNameAware {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PemServiceProviderImpl.class);
     private static final String PERSISTENCE_SERVICE_PROVIDER_BEAN = "persistenceServiceProvider";
     private static final String CALCULATOR_PERSISTENCE_SERVICE_BEAN = "calculatorPersistenceService";
     private static final String OPERATION_PERSISTENCE_SERVICE_BEAN = "operationPersistenceService";
@@ -28,7 +28,7 @@ public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionMana
     private ApplicationContext parentContext;
     private ApplicationContext applicationContext;
     private String applicationName;
-    private PersistenceServiceProvider persistenceServiceProvider;
+    private PemPersistenceServiceProvider persistenceServiceProvider;
     private Map<String, String> parentBeans;
 
     @Override
@@ -60,7 +60,7 @@ public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionMana
         this.parentBeans = beans;
     }
 
-    public void setPersistenceServiceProvider(PersistenceServiceProvider persistenceServiceProvider) {
+    public void setPersistenceServiceProvider(PemPersistenceServiceProvider persistenceServiceProvider) {
         this.persistenceServiceProvider = persistenceServiceProvider;
     }
 
