@@ -1,8 +1,8 @@
 package com.pem.test.launcher;
 
 import com.pem.core.operation.basic.Operation;
-import com.pem.integration.launcher.PemServiceProvider;
-import com.pem.integration.launcher.PemServiceProviderImpl;
+import com.pem.integration.provider.PemServiceProvider;
+import com.pem.integration.provider.PemServiceProviderImpl;
 import com.pem.persistence.api.provider.PemPersistenceServiceProvider;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;

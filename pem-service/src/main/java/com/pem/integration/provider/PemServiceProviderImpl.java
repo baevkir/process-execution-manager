@@ -1,4 +1,4 @@
-package com.pem.integration.launcher;
+package com.pem.integration.provider;
 
 import com.pem.core.common.applicationcontext.builder.ApplicationContextBuilder;
 import com.pem.logic.service.calculator.CalculatorService;

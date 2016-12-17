@@ -1,6 +1,6 @@
 package com.pem.test.launcher;
 
-import com.pem.integration.launcher.PemServiceProvider;
+import com.pem.integration.provider.PemServiceProvider;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

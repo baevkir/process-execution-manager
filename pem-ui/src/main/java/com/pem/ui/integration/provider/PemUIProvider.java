@@ -1,8 +1,8 @@
 package com.pem.ui.integration.provider;
 
 import com.pem.core.common.applicationcontext.builder.ApplicationContextBuilder;
-import com.pem.integration.launcher.PemServiceProvider;
-import com.pem.integration.launcher.PemServiceProviderImpl;
+import com.pem.integration.provider.PemServiceProvider;
+import com.pem.integration.provider.PemServiceProviderImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
