@@ -1,6 +1,6 @@
 package com.pem.persistence.mongo.provider;
 
-import com.pem.logic.common.applicationcontext.ChildApplicationContextBuilder;
+import com.pem.core.common.applicationcontext.builder.ApplicationContextBuilder;
 import com.pem.persistence.api.provider.PersistenceServiceProvider;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;
@@ -58,7 +58,7 @@ public class MongoPersistenceServiceProvider implements PersistenceServiceProvid
         Assert.notNull(parentContext, "Can't create PersistenceApplicationContext without parent context.");
         Assert.notNull(mongoDbFactory, "Can't create PersistenceApplicationContext without mongoDbFactory.");
 
-        ChildApplicationContextBuilder contextBuilder = new  ChildApplicationContextBuilder()
+        ApplicationContextBuilder contextBuilder = new ApplicationContextBuilder()
                 .setParentContext(parentContext)
                 .addXMLConfiguration("config/mongo-database-config.xml")
                 .addSingletonBean(MONGO_DB_FACTORY_NAME, mongoDbFactory);

@@ -1,6 +1,6 @@
 package com.pem.integration.launcher;
 
-import com.pem.logic.common.applicationcontext.ChildApplicationContextBuilder;
+import com.pem.core.common.applicationcontext.builder.ApplicationContextBuilder;
 import com.pem.logic.service.calculator.CalculatorService;
 import com.pem.logic.service.executor.OperationExecutor;
 import com.pem.logic.service.operation.OperationService;
@@ -67,7 +67,7 @@ public class ProcessExecutionManagerLauncherImpl implements ProcessExecutionMana
     @PostConstruct
     public void initApplicationContext() {
         LOGGER.trace("Start to load ProcessExecutionManagerContext.");
-        ChildApplicationContextBuilder contextBuilder = new  ChildApplicationContextBuilder()
+        ApplicationContextBuilder contextBuilder = new ApplicationContextBuilder()
                 .setContextId(applicationName)
                 .setParentContext(parentContext)
                 .addXMLConfiguration("pemApplicationContext.xml")

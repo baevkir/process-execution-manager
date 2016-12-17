@@ -14,10 +14,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class CalculatorProviderImpl implements CalculatorProvider, ApplicationContextAware {
 
@@ -32,10 +29,14 @@ public class CalculatorProviderImpl implements CalculatorProvider, ApplicationCo
     }
 
     @Override
-    public <C extends Calculator> Set<BeanObject> getAllCalculatorBeanObjects(Class<C> conditionCalculatorClass) {
-        ApplicationContextWrapper wrapper = new ApplicationContextWrapper(applicationContext);
-        Map<String, C> beans = wrapper.findBeanByAnnotation(RegisterGlobalCalculator.class, conditionCalculatorClass);
+    public <C extends Calculator> Set<BeanObject> getAllCalculatorBeanObjects(Class<C> calculatorClass) {
         final String applicationId = applicationContext.getId();
+        Map<String, C> beans = new HashMap<>();
+        if (applicationContext.getParent() != null) {
+            beans.putAll(findGlobalCalculatorsInContext(applicationContext.getParent(), calculatorClass));
+        }
+        beans.putAll(findGlobalCalculatorsInContext(applicationContext, calculatorClass));
+
 
         BeansIterable iterable = BeansIterable.fromBeans(beans).filter(new Predicate<C>() {
             @Override
@@ -61,6 +62,11 @@ public class CalculatorProviderImpl implements CalculatorProvider, ApplicationCo
                 return name;
             }
         });
+    }
+
+    private <C extends Calculator> Map<String, C> findGlobalCalculatorsInContext(ApplicationContext context, Class<C> calculatorClass) {
+        ApplicationContextWrapper wrapper = new ApplicationContextWrapper(context);
+        return wrapper.findBeanByAnnotation(RegisterGlobalCalculator.class, calculatorClass);
     }
 
     @Override

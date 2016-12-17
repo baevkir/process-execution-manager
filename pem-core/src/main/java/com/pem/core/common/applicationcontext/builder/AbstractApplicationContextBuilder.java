@@ -1,5 +1,6 @@
-package com.pem.logic.common.applicationcontext;
+package com.pem.core.common.applicationcontext.builder;
 
+import com.pem.core.common.applicationcontext.ParentContextFactoryBean;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.Assert;
@@ -18,53 +18,53 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ChildApplicationContextBuilder {
+public abstract class AbstractApplicationContextBuilder<C extends GenericApplicationContext> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ChildApplicationContextBuilder.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractApplicationContextBuilder.class);
     private String contextId;
     private ApplicationContext parentContext;
     private List<String> xmlConfigurations = new ArrayList<>();
     private final Map<String, String> parentBeans = new HashMap<>();
     private final Map<String, Object> singletonBeans = new HashMap<>();
 
-    public ChildApplicationContextBuilder setParentContext(ApplicationContext parentContext) {
+    public <B extends AbstractApplicationContextBuilder<C>> B setParentContext(ApplicationContext parentContext) {
         this.parentContext = parentContext;
-        return this;
+        return (B) this;
     }
 
-    public ChildApplicationContextBuilder addParentBean(String name, String nameInParentContext) {
+    public <B extends AbstractApplicationContextBuilder<C>> B addParentBean(String name, String nameInParentContext) {
         parentBeans.put(name, nameInParentContext);
-        return this;
+        return (B) this;
     }
 
-    public ChildApplicationContextBuilder addParentBeans(Map<String, String> beansToAdd) {
+    public <B extends AbstractApplicationContextBuilder<C>> B addParentBeans(Map<String, String> beansToAdd) {
         parentBeans.putAll(beansToAdd);
-        return this;
+        return (B) this;
     }
 
-    public ChildApplicationContextBuilder addSingletonBean(String name, Object bean) {
+    public <B extends AbstractApplicationContextBuilder<C>> B addSingletonBean(String name, Object bean) {
         singletonBeans.put(name, bean);
-        return this;
+        return (B) this;
     }
 
-    public ChildApplicationContextBuilder addXMLConfiguration(String path) {
+    public <B extends AbstractApplicationContextBuilder<C>> B addXMLConfiguration(String path) {
         xmlConfigurations.add(path);
-        return this;
+        return (B) this;
     }
 
-    public ChildApplicationContextBuilder setContextId(String contextId) {
+    public <B extends AbstractApplicationContextBuilder<C>> B setContextId(String contextId) {
         this.contextId = contextId;
-        return this;
+        return (B) this;
     }
 
-    public ApplicationContext build() {
+    public C build() {
         Assert.notNull(parentContext, "Can't create Child Application Context. Parent Context is NULL.");
 
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
         registerSingletonBeans(beanFactory);
         registerParentContextBeans(beanFactory);
 
-        GenericApplicationContext context = new AnnotationConfigApplicationContext(beanFactory);
+        GenericApplicationContext context = createInstance(beanFactory);
 
         if (StringUtils.isNotEmpty(contextId)) {
             context.setId(contextId);
@@ -75,8 +75,10 @@ public class ChildApplicationContextBuilder {
         registerXMLConfigurations(context);
         context.refresh();
 
-        return context;
+        return (C) context;
     }
+
+    protected abstract C createInstance(DefaultListableBeanFactory beanFactory);
 
     private void registerXMLConfigurations(GenericApplicationContext context) {
         XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(context);
