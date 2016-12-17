@@ -5,7 +5,7 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-    <bean id="operationExecutor" class="com.pem.logic.service.executor.impl.OperationExecutorImpl">
+    <bean id="operationExecutor" class="com.pem.logic.service.process.executor.impl.ProcessExecutorImpl">
         <property name="converterFactory" ref="pem.service.ConverterFactory"/>
     </bean>
 </beans>

@@ -1,6 +1,8 @@
 package com.pem.logic.service.process.impl;
 
 import com.pem.core.common.converter.factory.ConverterFactory;
+import com.pem.core.context.OperationContextFactory;
+import com.pem.logic.service.process.executor.ProcessExecutor;
 import com.pem.logic.service.process.ExecutionProcessService;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.proccess.ExecutionProcessDTO;
@@ -21,6 +23,7 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService, App
 
     private ProcessPersistenceService persistenceService;
     private ConverterFactory converterFactory;
+    private ProcessExecutor operationExecutor;
 
     @Override
     public ExecutionProcessDTO createExecutionProcess(OperationDTO operationEntity) {
@@ -33,6 +36,11 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService, App
     public void updateExecutionProcess(ExecutionProcessDTO processEntity) {
         LOGGER.debug("Update ExecutionProcessDTO: {}.", processEntity);
         persistenceService.updateProcess(processEntity);
+    }
+
+    @Override
+    public void executeProcess(ExecutionProcessDTO executionProcess, OperationContextFactory contextFactory) {
+        operationExecutor.execute(executionProcess, contextFactory);
     }
 
     @Override
@@ -51,9 +59,14 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService, App
         this.persistenceService = persistenceService;
     }
 
+    public void setOperationExecutor(ProcessExecutor operationExecutor) {
+        this.operationExecutor = operationExecutor;
+    }
+
     public void setConverterFactory(ConverterFactory converterFactory) {
         this.converterFactory = converterFactory;
     }
+
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

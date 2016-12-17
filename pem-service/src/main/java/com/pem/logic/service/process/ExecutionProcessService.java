@@ -1,5 +1,6 @@
 package com.pem.logic.service.process;
 
+import com.pem.core.context.OperationContextFactory;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.proccess.ExecutionProcessDTO;
 
@@ -10,6 +11,8 @@ public interface ExecutionProcessService {
     ExecutionProcessDTO createExecutionProcess(OperationDTO operationEntity);
 
     void updateExecutionProcess(ExecutionProcessDTO processEntity);
+
+    void executeProcess(ExecutionProcessDTO executionProcess, OperationContextFactory contextFactory);
 
     ExecutionProcessDTO getExecutionProcess(BigInteger id);
 

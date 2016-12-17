@@ -2,11 +2,10 @@ package com.pem.integration.provider;
 
 import com.pem.core.common.applicationcontext.builder.ApplicationContextBuilder;
 import com.pem.logic.service.calculator.CalculatorService;
-import com.pem.logic.service.executor.OperationExecutor;
+import com.pem.logic.service.process.executor.ProcessExecutor;
 import com.pem.logic.service.operation.OperationService;
 import com.pem.logic.service.process.ExecutionProcessService;
 import com.pem.persistence.api.provider.PemPersistenceServiceProvider;
-import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -42,12 +41,12 @@ public class PemServiceProviderImpl implements PemServiceProvider, ApplicationCo
     }
 
     @Override
-    public OperationExecutor getOperationExecutor() {
-        return applicationContext.getBean(OperationExecutor.class);
+    public ProcessExecutor getOperationExecutor() {
+        return applicationContext.getBean(ProcessExecutor.class);
     }
 
     @Override
-    public CalculatorService getConditionCalculatorService() {
+    public CalculatorService getCalculatorService() {
         return applicationContext.getBean(CalculatorService.class);
     }
 
@@ -71,15 +70,12 @@ public class PemServiceProviderImpl implements PemServiceProvider, ApplicationCo
                 .setContextId(applicationName)
                 .setParentContext(parentContext)
                 .addXMLConfiguration("pemApplicationContext.xml")
+                .addParentBeans(parentBeans)
                 .addSingletonBean(PERSISTENCE_SERVICE_PROVIDER_BEAN, persistenceServiceProvider)
                 .addSingletonBean(CALCULATOR_PERSISTENCE_SERVICE_BEAN, persistenceServiceProvider.getCalculatorPersistenceService())
                 .addSingletonBean(OPERATION_PERSISTENCE_SERVICE_BEAN, persistenceServiceProvider.getOperationPersistenceService())
                 .addSingletonBean(EXECUTION_RECORD_PERSISTENCE_SERVICE_BEAN, persistenceServiceProvider.getExecutionRecordPersistenceService())
                 .addSingletonBean(PROCESS_PERSISTENCE_SERVICE_BEAN, persistenceServiceProvider.getProcessPersistenceService());
-
-        if (MapUtils.isNotEmpty(parentBeans)) {
-            contextBuilder.addParentBeans(parentBeans);
-        }
 
         applicationContext = contextBuilder.build();
     }

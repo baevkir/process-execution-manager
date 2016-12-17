@@ -1,6 +1,7 @@
 package com.pem.core.common.applicationcontext.builder;
 
 import com.pem.core.common.applicationcontext.ParentContextFactoryBean;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +40,9 @@ public class ApplicationContextBuilder {
     }
 
     public ApplicationContextBuilder addParentBeans(Map<String, String> beansToAdd) {
-        parentBeans.putAll(beansToAdd);
+        if (MapUtils.isNotEmpty(beansToAdd)) {
+            parentBeans.putAll(beansToAdd);
+        }
         return this;
     }
 
