@@ -100,6 +100,24 @@ public class OperationServiceTest {
         Assert.assertTrue(conditionOperationEntities.size() != fullList.size());
     }
 
+    @Test
+    public void updateOperationTest() {
+        BeanOperationDTO beanOperationDTO = createSimpleBeanOperation();
+        boolean oldStatus = beanOperationDTO.isActive();
+        String oldName = beanOperationDTO.getName();
+        String oldDescription = beanOperationDTO.getDescription();
+
+        beanOperationDTO.setActive(!oldStatus);
+        beanOperationDTO.setName(oldName + " new");
+        beanOperationDTO.setDescription(oldDescription + " new");
+        operationPersistenceService.updateOperation(beanOperationDTO);
+        BeanOperationDTO queryBeanOperation = (BeanOperationDTO) operationPersistenceService.getOperation(beanOperationDTO.getId());
+
+        Assert.assertNotEquals(oldName, queryBeanOperation.getName());
+        Assert.assertNotEquals(oldDescription, queryBeanOperation.getDescription());
+        Assert.assertNotEquals(oldStatus, queryBeanOperation.isActive());
+    }
+
     private BinaryConditionOperationDTO createBinaryConditionOperationEntity() {
         BinaryConditionOperationDTO operationEntity = new BinaryConditionOperationDTO();
         operationEntity.setName("Test operation.");
@@ -122,8 +140,8 @@ public class OperationServiceTest {
         return state;
     }
 
-    private OperationDTO createSimpleBeanOperation() {
-        return operationPersistenceService.createOperation(creator.createRandomSimpleBeanOperation());
+    private BeanOperationDTO createSimpleBeanOperation() {
+        return (BeanOperationDTO) operationPersistenceService.createOperation(creator.createRandomSimpleBeanOperation());
     }
 
     private BinaryBeanCalculatorDTO createBinaryCalculator() {

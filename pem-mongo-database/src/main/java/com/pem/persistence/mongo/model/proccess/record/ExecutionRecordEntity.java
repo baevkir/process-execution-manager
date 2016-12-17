@@ -10,7 +10,7 @@ import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "pem-execution-records")
+@Document(collection = "pem_execution_records")
 public class ExecutionRecordEntity extends IdentifiableEntity {
 
     @Indexed(unique = true)

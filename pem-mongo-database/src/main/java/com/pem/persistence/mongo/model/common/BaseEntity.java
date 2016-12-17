@@ -3,7 +3,6 @@ package com.pem.persistence.mongo.model.common;
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 public abstract class BaseEntity extends IdentifiableEntity {
@@ -12,9 +11,6 @@ public abstract class BaseEntity extends IdentifiableEntity {
     private String name;
 
     private String description;
-
-    @Version
-    private Long version;
 
     @CreatedDate
     private DateTime createdWhen;
@@ -36,14 +32,6 @@ public abstract class BaseEntity extends IdentifiableEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
     }
 
     public DateTime getCreatedWhen() {
@@ -68,7 +56,6 @@ public abstract class BaseEntity extends IdentifiableEntity {
                 "BaseEntity{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", version=" + version +
                 ", createdWhen=" + createdWhen +
                 ", modifyWhen=" + modifyWhen +
                 "} ";

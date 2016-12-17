@@ -31,14 +31,15 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
         Assert.notNull(object, "Entity equals NULL.");
         object.setId(null);
         E entity = convertToEntity(object);
-        return convertToObject(getRepository().save(entity));
+        return convertToObject(getRepository().insert(entity));
     }
 
     protected void update(O object){
         Assert.notNull(object, "Entity equals NULL.");
         Assert.notNull(object.getId(), "Id is empty, can`t create Entity.");
         E entity = convertToEntity(object);
-        getRepository().save(entity);
+        E updated = getRepository().save(entity);
+        LOGGER.trace("Updated {}.", updated);
     }
 
     protected List<O> saveList(List<O> objects){

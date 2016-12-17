@@ -25,9 +25,12 @@ public abstract class CalculatorDatabaseSynchronizer implements LaunchEventHandl
         getCalculatorPersistenceService().createCalculator(calculator);
     }
 
-    protected void deactivateCalculator(BeanCalculatorDTO calculator){
-        LOGGER.debug("Deactivate calculator: {}.", calculator);
-        calculator.setActive(false);
+    protected void updateStatus(BeanCalculatorDTO calculator, boolean active){
+        LOGGER.debug("Update status for calculator: {}.", calculator);
+        if (active = calculator.isActive()) {
+            return;
+        }
+        calculator.setActive(active);
         calculatorPersistenceService.updateCalculator(calculator);
     }
 

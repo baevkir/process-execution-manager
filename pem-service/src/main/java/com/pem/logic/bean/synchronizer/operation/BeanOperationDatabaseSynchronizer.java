@@ -1,15 +1,16 @@
 package com.pem.logic.bean.synchronizer.operation;
 
-import com.pem.logic.bean.provider.operation.OperationProvider;
+import com.pem.core.common.bean.BeanObject;
 import com.pem.core.common.event.LaunchEventHandler;
 import com.pem.core.common.event.RegisterLaunchEventHandler;
+import com.pem.logic.bean.provider.operation.OperationProvider;
 import com.pem.logic.common.ServiceConstants;
-import com.pem.core.common.bean.BeanObject;
 import com.pem.model.operation.bean.BeanOperationDTO;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -24,14 +25,15 @@ public class BeanOperationDatabaseSynchronizer implements LaunchEventHandler {
     public void handle() {
         List<BeanOperationDTO> operations = operationPersistenceService.getOperationsByType(BeanOperationDTO.class);
 
-        Set<BeanObject> beanObjects = operationProvider.getAllOperationBeanObjects();
+        Set<BeanObject> beanObjects = new HashSet<>(operationProvider.getAllOperationBeanObjects());
 
         for (BeanOperationDTO operation : operations) {
             if(!beanObjects.contains(operation.getBean())) {
-                deactivateOperation(operation);
+                updateStatus(operation, false);
                 continue;
             }
 
+            updateStatus(operation, true);
             beanObjects.remove(operation.getBean());
         }
 
@@ -40,9 +42,12 @@ public class BeanOperationDatabaseSynchronizer implements LaunchEventHandler {
         }
     }
 
-    private void deactivateOperation(BeanOperationDTO operation){
-        LOGGER.debug("Deactivate operation: {}.", operation);
-        operation.setActive(false);
+    private void updateStatus(BeanOperationDTO operation, boolean active){
+        LOGGER.debug("Update Status for operation: {}.", operation);
+        if (active == operation.isActive()) {
+            return;
+        }
+        operation.setActive(active);
         operationPersistenceService.updateOperation(operation);
     }
 

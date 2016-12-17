@@ -9,6 +9,7 @@ import com.pem.core.common.bean.BeanObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -21,14 +22,15 @@ public class BinaryBeanCalculatorDatabaseSynchronizer extends CalculatorDatabase
     public void handle() {
         List<BinaryBeanCalculatorDTO> calculators = getCalculatorPersistenceService().getCalculatorsByType(BinaryBeanCalculatorDTO.class);
 
-        Set<BeanObject> beanObjects = getCalculatorProvider().getAllCalculatorBeanObjects(BinaryCalculator.class);
+        Set<BeanObject> beanObjects = new HashSet<>(getCalculatorProvider().getAllCalculatorBeanObjects(BinaryCalculator.class));
 
         for (BeanCalculatorDTO calculator : calculators) {
             if(!beanObjects.contains(calculator.getBean())) {
-                deactivateCalculator(calculator);
+                updateStatus(calculator, false);
                 continue;
             }
 
+            updateStatus(calculator, true);
             beanObjects.remove(calculator.getBean());
         }
 

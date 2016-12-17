@@ -3,7 +3,7 @@ package com.pem.persistence.mongo.model.operation.common;
 import com.pem.persistence.mongo.model.common.BaseEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "pem-operations")
+@Document(collection = "pem_operations")
 public abstract class OperationEntity extends BaseEntity {
 
     @Override

@@ -101,6 +101,7 @@ public class TestEntityCreator {
                 .setName("Test Operation")
                 .build();
 
+        operationEntity.setActive(true);
         operationEntity.setBean(bean);
 
         return operationEntity;

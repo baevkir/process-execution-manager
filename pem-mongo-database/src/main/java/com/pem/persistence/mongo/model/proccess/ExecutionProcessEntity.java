@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collection = "pem-execution-processes")
+@Document(collection = "pem_execution_processes")
 public class ExecutionProcessEntity extends BaseEntity {
 
     private String executionPlan;
