@@ -1,33 +1,27 @@
-package com.pem.ui.page;
+package com.pem.ui.presentation.page;
 
 import com.pem.logic.service.operation.OperationService;
-import com.pem.model.operation.common.OperationDTO;
+import com.pem.ui.presentation.grid.OperationGrid;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-
-@Theme("valo")
+@Theme("pem")
 @SpringUI
 public class MainPage extends UI {
 
     private OperationService operationService;
+    private OperationGrid operationsTable = new OperationGrid();
 
     protected void init(VaadinRequest vaadinRequest) {
         VerticalLayout layout = new VerticalLayout();
+        layout.addComponent(operationsTable);
         setContent(layout);
 
-        layout.addComponent(new Label("Hello! Current Operations list:"));
-
-        List<OperationDTO> operations = operationService.getAllOperations();
-        for (OperationDTO operation : operations) {
-            layout.addComponent(new Label(operation.getName() + ". Active: " + operation.isActive()));
-        }
+        operationsTable.load(operationService.getAllOperations());
     }
 
     @Autowired

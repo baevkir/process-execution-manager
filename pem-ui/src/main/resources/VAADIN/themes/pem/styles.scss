@@ -1,0 +1,7 @@
+@import "pem.scss";
+@import "addons.scss";
+
+.pem {
+  @include addons;
+  @include pem;
+}
