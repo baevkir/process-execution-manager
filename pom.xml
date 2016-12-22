@@ -33,6 +33,7 @@
         <!-- vaadin -->
         <vaadin.version>7.7.6</vaadin.version>
         <spring-vaadin.version>1.1.0</spring-vaadin.version>
+        <vaadin-sliderpanel.version>1.4.2</vaadin-sliderpanel.version>
         <!-- guava -->
         <guava.version>20.0-rc1</guava.version>
         <!-- junit -->
@@ -59,6 +60,13 @@
         <!-- mockito -->
         <mockito.version>2.0.2-beta</mockito.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>vaadin-addons</id>
+            <url>http://maven.vaadin.com/vaadin-addons</url>
+        </repository>
+    </repositories>
 
     <dependencyManagement>
         <dependencies>
@@ -188,6 +196,11 @@
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-spring</artifactId>
                 <version>${spring-vaadin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.vaadin.addons</groupId>
+                <artifactId>vaadin-sliderpanel</artifactId>
+                <version>${vaadin-sliderpanel.version}</version>
             </dependency>
 
             <!-- tests -->
