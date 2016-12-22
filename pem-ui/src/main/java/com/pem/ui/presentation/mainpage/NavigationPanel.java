@@ -1,6 +1,5 @@
 package com.pem.ui.presentation.mainpage;
 
-import com.pem.ui.common.StyleConstants;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
@@ -23,7 +22,6 @@ public class NavigationPanel extends HorizontalLayout {
         });
 
         addComponent(button);
-        setComponentAlignment(button, Alignment.MIDDLE_LEFT);
     }
 
     private void doNavigate(String viewName) {
@@ -31,12 +29,11 @@ public class NavigationPanel extends HorizontalLayout {
     }
 
     @PostConstruct
-    public void init() {
+    void init() {
         setHeight("50px");
         setWidth("100%");
         setSpacing(true);
-
-        addStyleName(StyleConstants.NAVIGATION_PANEL_STYLE);
+        setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
     }
 
 }

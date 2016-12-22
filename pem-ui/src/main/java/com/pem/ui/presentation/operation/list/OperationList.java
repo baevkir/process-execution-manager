@@ -35,7 +35,7 @@ public class OperationList extends HorizontalLayout {
     }
 
     @PostConstruct
-    public void init() {
+    void init() {
         dataLoaded = false;
         addComponent(operationTable);
 

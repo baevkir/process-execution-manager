@@ -27,12 +27,12 @@ public abstract class AbstractPresenter<V extends View> {
     }
 
     @PostConstruct
-    public void init() {
+    void init() {
         eventBus.register(this);
     }
 
     @PreDestroy
-    public void destroy() {
+    void destroy() {
         eventBus.unregister(this);
     }
 }

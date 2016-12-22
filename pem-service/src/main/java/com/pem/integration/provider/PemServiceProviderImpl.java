@@ -64,7 +64,7 @@ public class PemServiceProviderImpl implements PemServiceProvider, ApplicationCo
     }
 
     @PostConstruct
-    public void initApplicationContext() {
+    void initApplicationContext() {
         LOGGER.trace("Start to load ProcessExecutionManagerContext.");
         ApplicationContextBuilder contextBuilder = new ApplicationContextBuilder()
                 .setContextId(applicationName)

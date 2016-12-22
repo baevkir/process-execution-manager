@@ -54,7 +54,7 @@ public class MongoPersistenceServiceProvider implements PemPersistenceServicePro
     }
 
     @PostConstruct
-    public void initPersistenceApplicationContext() {
+    void initPersistenceApplicationContext() {
         Assert.notNull(parentContext, "Can't create PersistenceApplicationContext without parent context.");
         Assert.notNull(mongoDbFactory, "Can't create PersistenceApplicationContext without mongoDbFactory.");
 

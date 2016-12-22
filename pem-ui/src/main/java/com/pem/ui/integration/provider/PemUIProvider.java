@@ -40,7 +40,7 @@ public class PemUIProvider extends AbstractSpringUIProvider implements Applicati
     }
 
     @PostConstruct
-    public void initUIProvider() {
+    void initUIProvider() {
         Assert.notNull(serviceProvider, "PemServiceProvider undefined.");
         LOGGER.trace("Start to load PemUIProvider.");
         ApplicationContextBuilder contextBuilder = new ApplicationContextBuilder()
