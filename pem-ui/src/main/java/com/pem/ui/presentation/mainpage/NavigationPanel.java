@@ -1,18 +1,17 @@
 package com.pem.ui.presentation.mainpage;
 
 import com.pem.ui.common.StyleConstants;
+import com.vaadin.spring.annotation.SpringComponent;
+import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 
-public class NavigationPanel extends HorizontalLayout {
+import javax.annotation.PostConstruct;
 
-    public NavigationPanel() {
-        setHeight("50px");
-        setWidth("100%");
-        setMargin(true);
-        addStyleName(StyleConstants.NAVIGATION_PANEL_STYLE);
-    }
+@UIScope
+@SpringComponent
+public class NavigationPanel extends HorizontalLayout {
 
     public void addNavigationButton(String caption, final String viewName) {
         Button button = new Button(caption);
@@ -31,4 +30,13 @@ public class NavigationPanel extends HorizontalLayout {
     private void doNavigate(String viewName) {
         getUI().getNavigator().navigateTo(viewName);
     }
+
+    @PostConstruct
+    public void init() {
+        setHeight("50px");
+        setWidth("100%");
+        setMargin(true);
+        addStyleName(StyleConstants.NAVIGATION_PANEL_STYLE);
+    }
+
 }

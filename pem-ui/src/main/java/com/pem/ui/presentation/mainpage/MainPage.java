@@ -21,7 +21,9 @@ public class MainPage extends UI {
     @Autowired
     private SpringViewProvider viewProvider;
 
-    private final NavigationPanel navigationPanel = new NavigationPanel();
+    @Autowired
+    private NavigationPanel navigationPanel;
+
     private final Panel contentPanel = new Panel();
 
     protected void init(VaadinRequest vaadinRequest) {
