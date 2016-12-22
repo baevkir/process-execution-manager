@@ -1,4 +1,4 @@
-package com.pem.ui.presentation.common;
+package com.pem.ui.presentation.common.presenter;
 
 import com.google.common.eventbus.EventBus;
 import com.vaadin.navigator.View;
