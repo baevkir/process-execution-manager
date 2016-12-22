@@ -1,5 +1,7 @@
 package com.pem.ui.presentation.operation.event;
 
 
-public class ShowOperationsListEvent {
+import com.pem.ui.presentation.common.event.AbstracEvent;
+
+public class ShowOperationsListEvent extends AbstracEvent {
 }

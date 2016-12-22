@@ -1,12 +1,16 @@
-package com.pem.ui.presentation.common.page;
+package com.pem.ui.presentation.mainpage;
 
 import com.pem.ui.common.StyleConstants;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 
 public class NavigationPanel extends HorizontalLayout {
 
     public NavigationPanel() {
+        setHeight("50px");
+        setWidth("100%");
+        setMargin(true);
         addStyleName(StyleConstants.NAVIGATION_PANEL_STYLE);
     }
 
@@ -21,6 +25,7 @@ public class NavigationPanel extends HorizontalLayout {
         });
 
         addComponent(button);
+        setComponentAlignment(button, Alignment.MIDDLE_LEFT);
     }
 
     private void doNavigate(String viewName) {

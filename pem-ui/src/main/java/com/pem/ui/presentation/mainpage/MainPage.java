@@ -1,6 +1,6 @@
-package com.pem.ui.presentation.common.page;
+package com.pem.ui.presentation.mainpage;
 
-import com.pem.ui.presentation.operation.list.OperationListView;
+import com.pem.ui.presentation.operation.list.OperationListViewImpl;
 import com.pem.ui.presentation.process.ProcessMainView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -29,24 +29,23 @@ public class MainPage extends UI {
 
         Navigator navigator = new Navigator(this, contentPanel);
         navigator.addProvider(viewProvider);
+        setNavigator(navigator);
 
-        final VerticalLayout root = new VerticalLayout();
+        VerticalLayout root = new VerticalLayout();
         root.setSizeFull();
         setContent(root);
 
-//        SliderPanel sliderPanel = new SliderPanelBuilder(navigationPanel)
-//                .mode(SliderMode.TOP)
-//                .tabPosition(SliderTabPosition.MIDDLE)
-//                .build();
-
         root.addComponent(navigationPanel);
-        navigationPanel.addNavigationButton("Operations", OperationListView.VIEW_NAME);
+        navigationPanel.addNavigationButton("Operations", OperationListViewImpl.VIEW_NAME);
         navigationPanel.addNavigationButton("Processes", ProcessMainView.VIEW_NAME);
 
+        contentPanel.setSizeFull();
         root.addComponent(contentPanel);
 
+        root.setExpandRatio(contentPanel, 1.0f);
+
         if (navigator.getState().isEmpty()) {
-            navigator.navigateTo(OperationListView.VIEW_NAME);
+            navigator.navigateTo(OperationListViewImpl.VIEW_NAME);
         } else {
             navigator.navigateTo(navigator.getState());
         }
