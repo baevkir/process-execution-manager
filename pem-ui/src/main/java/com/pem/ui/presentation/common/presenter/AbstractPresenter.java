@@ -18,6 +18,10 @@ public abstract class AbstractPresenter<V extends View> {
         this.view = view;
     }
 
+    protected EventBus getEventBus() {
+        return eventBus;
+    }
+
     protected V getView() {
         return view;
     }

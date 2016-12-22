@@ -15,7 +15,6 @@ public class NavigationPanel extends HorizontalLayout {
 
     public void addNavigationButton(String caption, final String viewName) {
         Button button = new Button(caption);
-        button.addStyleName(StyleConstants.NAVIGATION_PANEL_BUTTON_STYLE);
         button.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
@@ -35,7 +34,8 @@ public class NavigationPanel extends HorizontalLayout {
     public void init() {
         setHeight("50px");
         setWidth("100%");
-        setMargin(true);
+        setSpacing(true);
+
         addStyleName(StyleConstants.NAVIGATION_PANEL_STYLE);
     }
 

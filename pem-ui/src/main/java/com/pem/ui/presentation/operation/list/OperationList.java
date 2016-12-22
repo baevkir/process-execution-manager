@@ -3,10 +3,12 @@ package com.pem.ui.presentation.operation.list;
 import com.google.common.eventbus.EventBus;
 import com.pem.model.operation.common.OperationDTO;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.ItemClickEvent;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.UI;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -46,5 +48,17 @@ public class OperationList extends HorizontalLayout {
 
         operationTable.setColumnHeader("name", "Name");
         operationTable.setColumnHeader("active", "Active");
+
+        addSelectionListener();
+    }
+
+    private void addSelectionListener() {
+        operationTable.addListener(new ItemClickEvent.ItemClickListener() {
+            @Override
+            public void itemClick(ItemClickEvent event) {
+                OperationDTO operation = (OperationDTO) event.getItemId();
+                UI.getCurrent().getNavigator().navigateTo(OperationListView.VIEW_NAME + "/" + operation.getId());
+            }
+        });
     }
 }

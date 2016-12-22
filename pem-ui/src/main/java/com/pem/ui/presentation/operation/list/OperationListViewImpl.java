@@ -2,21 +2,24 @@ package com.pem.ui.presentation.operation.list;
 
 import com.google.common.eventbus.EventBus;
 import com.pem.model.operation.common.OperationDTO;
+import com.pem.ui.presentation.operation.event.OpenOperationEvent;
 import com.pem.ui.presentation.operation.event.ShowOperationsListEvent;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
+import java.math.BigInteger;
 import java.util.List;
 
 @UIScope
-@SpringView(name = OperationListViewImpl.VIEW_NAME)
+@SpringView(name = OperationListView.VIEW_NAME)
 public class OperationListViewImpl extends HorizontalLayout implements OperationListView {
-    public static final String VIEW_NAME = "operations";
 
     @Autowired
     private EventBus eventBus;
@@ -34,6 +37,13 @@ public class OperationListViewImpl extends HorizontalLayout implements Operation
         if (!operationList.isDataLoaded()) {
             eventBus.post(new ShowOperationsListEvent());
         }
+
+        String parameters = event.getParameters();
+        if (StringUtils.isEmpty(parameters) || !StringUtils.isNumeric(parameters)) {
+            return;
+        }
+        BigInteger operationId = new BigInteger(parameters);
+        eventBus.post(new OpenOperationEvent(operationId));
     }
 
     @Override
@@ -41,11 +51,16 @@ public class OperationListViewImpl extends HorizontalLayout implements Operation
         operationList.load(operations);
     }
 
+    @Override
+    public void openOperation(AbstractComponent operationView) {
+        contentPanel.setContent(operationView);
+    }
+
+
     @PostConstruct
     public void init() {
         operationListPresenter.bind(this);
         setSizeFull();
-        setMargin(true);
 
         addComponent(operationList);
         addComponent(contentPanel);

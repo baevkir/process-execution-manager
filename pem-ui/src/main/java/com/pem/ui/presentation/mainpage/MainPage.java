@@ -1,6 +1,6 @@
 package com.pem.ui.presentation.mainpage;
 
-import com.pem.ui.presentation.operation.list.OperationListViewImpl;
+import com.pem.ui.presentation.operation.list.OperationListView;
 import com.pem.ui.presentation.process.ProcessMainView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -38,7 +38,7 @@ public class MainPage extends UI {
         setContent(root);
 
         root.addComponent(navigationPanel);
-        navigationPanel.addNavigationButton("Operations", OperationListViewImpl.VIEW_NAME);
+        navigationPanel.addNavigationButton("Operations", OperationListView.VIEW_NAME);
         navigationPanel.addNavigationButton("Processes", ProcessMainView.VIEW_NAME);
 
         contentPanel.setSizeFull();
@@ -47,7 +47,7 @@ public class MainPage extends UI {
         root.setExpandRatio(contentPanel, 1.0f);
 
         if (navigator.getState().isEmpty()) {
-            navigator.navigateTo(OperationListViewImpl.VIEW_NAME);
+            navigator.navigateTo(OperationListView.VIEW_NAME);
         } else {
             navigator.navigateTo(navigator.getState());
         }
