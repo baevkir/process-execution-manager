@@ -20,7 +20,12 @@ public class BeanOperationView extends BeanFormPanel<BeanOperationDTO> implement
     void init() {
         addComponent(getNameField());
         addComponent(getDescriptionField());
+        getDescriptionField().setNullRepresentation("");
+
         addComponent(getCreatedWhenField());
+        getCreatedWhenField().setReadOnly(true);
+
         addComponent(getModifyWhenField());
+        getModifyWhenField().setReadOnly(true);
     }
 }

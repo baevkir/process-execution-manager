@@ -1,5 +1,6 @@
 package com.pem.ui.integration;
 
+import com.pem.ui.integration.provider.PemUIProvider;
 import com.vaadin.server.*;
 import com.vaadin.spring.server.SpringVaadinServlet;
 import com.vaadin.spring.server.SpringVaadinServletService;
@@ -27,19 +28,19 @@ public class PemUIServlet extends SpringVaadinServlet {
                     throws ServiceException {
 
                 VaadinSession session = sessionInitEvent.getSession();
-                List<UIProvider> uiProviders = new ArrayList<>(
-                        session.getUIProviders());
+                List<UIProvider> uiProviders = new ArrayList<>(session.getUIProviders());
                 for (UIProvider provider : uiProviders) {
-                    if (DefaultUIProvider.class.getCanonicalName().equals(
-                            provider.getClass().getCanonicalName())) {
+                    if (DefaultUIProvider.class.getCanonicalName().equals(provider.getClass().getCanonicalName())) {
                         session.removeUIProvider(provider);
                     }
                 }
 
                 WebApplicationContext context = getWebApplicationContext(session);
-                UIProvider provider = context.getBean(uiProviderBeanName, UIProvider.class);
+                PemUIProvider provider = context.getBean(uiProviderBeanName, PemUIProvider.class);
                 Assert.notNull(provider, "Can't find UIProvider.");
                 session.addUIProvider(provider);
+                session.setConverterFactory(provider.getDataConverterFactory());
+
             }
         });
     }
@@ -51,7 +52,7 @@ public class PemUIServlet extends SpringVaadinServlet {
         Assert.hasText(uiProviderBeanName, "Parameter " + UI_PROVIDER_BEAN_PARAMETER + " undefined.");
     }
 
-    protected WebApplicationContext getWebApplicationContext(VaadinSession session) {
+    private WebApplicationContext getWebApplicationContext(VaadinSession session) {
         return ((SpringVaadinServletService) session.getService()).getWebApplicationContext();
     }
 }
