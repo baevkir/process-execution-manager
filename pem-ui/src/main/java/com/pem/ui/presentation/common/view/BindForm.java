@@ -27,14 +27,17 @@ public abstract class BindForm<B> extends CustomComponent {
         binder.setBuffered(true);
         binder.bindMemberFields(this);
         addChangeHandler();
+        initFormElements();
+    }
+
+    protected abstract void initFormElements();
+
+    public void addFormModifiedListener(FormModifiedListener listener) {
+        addListener(FormModifiedEvent.class, listener, FORM_MODIFIED_METHOD);
     }
 
     public boolean isModified() {
         return modified;
-    }
-
-    public void addFormModifiedListener(FormModifiedListener listener) {
-        addListener(FormModifiedEvent.class, listener, FORM_MODIFIED_METHOD);
     }
 
     protected void setModified(boolean modified) {
@@ -67,7 +70,6 @@ public abstract class BindForm<B> extends CustomComponent {
         binder.discard();
         setModified(false);
     }
-
 
     private void addChangeHandler() {
        for (final Field<?> field : binder.getFields()) {

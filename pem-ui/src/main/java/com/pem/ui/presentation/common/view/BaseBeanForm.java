@@ -7,16 +7,16 @@ import com.vaadin.ui.*;
 public abstract class BaseBeanForm<B extends BaseDTO> extends AbstractBeanForm<B> {
 
     @PropertyId("name")
-    private TextField nameField = new TextField();
+    private TextField nameField = new TextField("Name");
 
     @PropertyId("description")
-    private TextArea descriptionField = new TextArea();
+    private TextArea descriptionField = new TextArea("Description");
 
     @PropertyId("createdWhen")
-    private DateField createdWhenField = new DateField();
+    private DateField createdWhenField = new DateField("Created");
 
     @PropertyId("modifyWhen")
-    private DateField modifyWhenField = new DateField();
+    private DateField modifyWhenField = new DateField("Modify");
 
 
     protected TextField getNameField() {
@@ -37,18 +37,10 @@ public abstract class BaseBeanForm<B extends BaseDTO> extends AbstractBeanForm<B
 
     @Override
     protected void initFormElements() {
-        super.initFormElements();
         nameField.setRequired(true);
-        nameField.setCaption("Name");
-
         descriptionField.setNullRepresentation("");
-        descriptionField.setCaption("Description");
-
-        createdWhenField.setEnabled(false);
-        createdWhenField.setCaption("Created");
-
-        modifyWhenField.setEnabled(false);
-        modifyWhenField.setCaption("Modify");
+        createdWhenField.setReadOnly(true);
+        modifyWhenField.setReadOnly(true);
     }
 
 }

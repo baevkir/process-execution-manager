@@ -41,8 +41,7 @@ public class OperationList extends HorizontalLayout {
         addComponent(operationTable);
 
         operationTable.setSelectable(true);
-        operationTable.setHeight("100%");
-        operationTable.setHeight("20%");
+        operationTable.setWidth("100%");
 
         operationTable.setContainerDataSource(operationContainer);
         operationTable.setVisibleColumns("name", "active");

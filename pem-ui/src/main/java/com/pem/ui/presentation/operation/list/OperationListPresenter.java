@@ -53,12 +53,14 @@ public class OperationListPresenter extends AbstractPresenter<OperationListView>
     public void saveOperation(SaveOperationEvent event) {
         OperationDTO operation = event.getOperation();
 
-        if (operation.getId() == null) {
-            operationService.createOperation(operation);
+        BigInteger operationId = operation.getId();
+        if (operationId == null) {
+            operationId = operationService.createOperation(operation).getId();
         } else {
             operationService.updateOperation(operation);
         }
 
         getEventBus().post(new ShowOperationsListEvent());
+        getEventBus().post(new OpenOperationEvent(operationId));
     }
 }

@@ -17,8 +17,6 @@ public abstract class AbstractBeanForm<B> extends BindForm<B> {
 
     @PostConstruct
     void init() {
-        initFormElements();
-
         VerticalLayout mainLayout = new VerticalLayout();
 
         mainLayout.addComponent(createTopToolbar());
@@ -48,7 +46,17 @@ public abstract class AbstractBeanForm<B> extends BindForm<B> {
 
     protected abstract Layout createFormComponent();
 
-    protected void initFormElements() {
+    protected Layout createBottomToolbar() {
+        HorizontalLayout bottomToolbar = new HorizontalLayout();
+        bottomToolbar.setVisible(false);
+
+        bottomToolbar.addComponent(submitButton);
+        bottomToolbar.addComponent(cancelButton);
+        initBottomButtons();
+        return bottomToolbar;
+    }
+
+    private void initBottomButtons() {
         submitButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
@@ -65,14 +73,4 @@ public abstract class AbstractBeanForm<B> extends BindForm<B> {
             }
         });
     }
-
-    protected Layout createBottomToolbar() {
-        HorizontalLayout bottomToolbar = new HorizontalLayout();
-        bottomToolbar.setVisible(false);
-
-        bottomToolbar.addComponent(submitButton);
-        bottomToolbar.addComponent(cancelButton);
-        return bottomToolbar;
-    }
-
 }
