@@ -1,31 +1,33 @@
 package com.pem.ui.presentation.operation.view;
 
 import com.pem.model.operation.bean.BeanOperationDTO;
-import com.pem.ui.presentation.common.view.BeanFormPanel;
 import com.pem.ui.presentation.common.view.BeanFormView;
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
-
-import javax.annotation.PostConstruct;
+import com.vaadin.data.fieldgroup.Caption;
+import com.vaadin.data.fieldgroup.PropertyId;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.Layout;
 
 @BeanFormView(BeanOperationDTO.class)
-public class BeanOperationView extends BeanFormPanel<BeanOperationDTO> implements View {
+public class BeanOperationView extends AbstractOperationView<BeanOperationDTO> {
+
+    @PropertyId("bean")
+    @Caption("Bean")
+    private ComboBox beanField = new ComboBox();
 
     @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
+    protected Layout createFormComponent() {
+        FormLayout formLayout = new FormLayout();
+        formLayout.addComponent(getNameField());
 
-    }
+        beanField.setReadOnly(true);
+        beanField.setRequired(true);
+        formLayout.addComponent(beanField);
 
-    @PostConstruct
-    void init() {
-        addComponent(getNameField());
-        addComponent(getDescriptionField());
-        getDescriptionField().setNullRepresentation("");
+        formLayout.addComponent(getDescriptionField());
+        formLayout.addComponent(getCreatedWhenField());
+        formLayout.addComponent(getModifyWhenField());
 
-        addComponent(getCreatedWhenField());
-        getCreatedWhenField().setReadOnly(true);
-
-        addComponent(getModifyWhenField());
-        getModifyWhenField().setReadOnly(true);
+        return formLayout;
     }
 }

@@ -26,6 +26,7 @@ public class OperationList extends HorizontalLayout {
     private final BeanItemContainer<OperationDTO> operationContainer = new BeanItemContainer<>(OperationDTO.class);
 
     public void load(List<OperationDTO> operations) {
+        operationContainer.removeAllItems();
         operationContainer.addAll(operations);
         dataLoaded = true;
     }

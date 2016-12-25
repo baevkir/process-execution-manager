@@ -2,7 +2,7 @@ package com.pem.ui.presentation.operation.list;
 
 import com.google.common.eventbus.EventBus;
 import com.pem.model.operation.common.OperationDTO;
-import com.pem.ui.presentation.common.view.BeanFormPanel;
+import com.pem.ui.presentation.common.view.BindForm;
 import com.pem.ui.presentation.operation.event.OpenOperationEvent;
 import com.pem.ui.presentation.operation.event.ShowOperationsListEvent;
 import com.vaadin.navigator.ViewChangeListener;
@@ -53,7 +53,7 @@ public class OperationListViewImpl extends HorizontalLayout implements Operation
     }
 
     @Override
-    public void openOperation(BeanFormPanel operationView) {
+    public void openOperation(BindForm operationView) {
         contentPanel.setContent(operationView);
     }
 
