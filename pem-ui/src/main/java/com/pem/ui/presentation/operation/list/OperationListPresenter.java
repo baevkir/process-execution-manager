@@ -6,12 +6,14 @@ import com.pem.model.operation.common.OperationDTO;
 import com.pem.ui.presentation.common.presenter.AbstractPresenter;
 import com.pem.ui.presentation.common.view.BindForm;
 import com.pem.ui.presentation.common.view.provider.PemViewProvider;
+import com.pem.ui.presentation.operation.event.ChooseNewOperationTypeEvent;
 import com.pem.ui.presentation.operation.event.OpenOperationEvent;
 import com.pem.ui.presentation.operation.event.SaveOperationEvent;
 import com.pem.ui.presentation.operation.event.ShowOperationsListEvent;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.ui.UI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
@@ -27,18 +29,31 @@ public class OperationListPresenter extends AbstractPresenter<OperationListView>
     @Autowired
     private PemViewProvider viewProvider;
 
+    @Autowired
+    private ChooseOperationTypeWindow chooseOperationTypeWindow;
+
     @Subscribe
     public void loadAllOeartions(ShowOperationsListEvent event) {
-        getView().loadOperations(operationService.getAllOperations());
+        event.getOperationsLoader().load(operationService.getAllOperations());
     }
 
     @Subscribe
     public void openOperationForm(OpenOperationEvent event) {
         BigInteger operationId = event.getOperationId();
-        Assert.notNull(operationId, "operationId is NULL. Can't open operation form");
-        OperationDTO operation = operationService.getOperation(operationId);
+        OperationDTO operation;
+        if (operationId != null) {
+            operation = operationService.getOperation(operationId);
+        }else {
+            Class<? extends OperationDTO> operationType = event.getOperationType();
+            Assert.notNull(operationType);
+            try {
+                operation = operationType.newInstance();
+            } catch (Exception exception) {
+                throw new RuntimeException(exception);
+            }
+        }
 
-        View operationView = viewProvider.getView(operation);
+        View operationView = viewProvider.getView(operation.getClass());
 
         Assert.notNull(operationView);
         Assert.isInstanceOf(BindForm.class, operationView);
@@ -60,7 +75,12 @@ public class OperationListPresenter extends AbstractPresenter<OperationListView>
             operationService.updateOperation(operation);
         }
 
-        getEventBus().post(new ShowOperationsListEvent());
-        getEventBus().post(new OpenOperationEvent(operationId));
+        getEventBus().post(new ShowOperationsListEvent(getView()));
+        UI.getCurrent().getNavigator().navigateTo(OperationListView.VIEW_NAME + "/" + operationId);
+    }
+
+    @Subscribe
+    public void chooseOperationType(ChooseNewOperationTypeEvent event) {
+        UI.getCurrent().addWindow(chooseOperationTypeWindow);
     }
 }

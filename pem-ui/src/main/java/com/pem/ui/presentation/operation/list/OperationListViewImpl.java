@@ -35,7 +35,7 @@ public class OperationListViewImpl extends HorizontalLayout implements Operation
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         if (!operationList.isDataLoaded()) {
-            eventBus.post(new ShowOperationsListEvent());
+            eventBus.post(new ShowOperationsListEvent(this));
         }
 
         String parameters = event.getParameters();
@@ -48,7 +48,7 @@ public class OperationListViewImpl extends HorizontalLayout implements Operation
     }
 
     @Override
-    public void loadOperations(List<OperationDTO> operations) {
+    public void load(List<OperationDTO> operations) {
         operationList.load(operations);
     }
 

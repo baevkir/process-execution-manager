@@ -2,13 +2,12 @@ package com.pem.ui.presentation.operation.list;
 
 import com.google.common.eventbus.EventBus;
 import com.pem.model.operation.common.OperationDTO;
+import com.pem.ui.presentation.operation.event.ChooseNewOperationTypeEvent;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.UI;
+import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -38,10 +37,15 @@ public class OperationList extends HorizontalLayout {
     @PostConstruct
     void init() {
         dataLoaded = false;
-        addComponent(operationTable);
+        VerticalLayout mainLayout = new VerticalLayout();
+        addComponent(mainLayout);
+
+        mainLayout.addComponent(createTopToolbar());
+        mainLayout.addComponent(operationTable);
+        mainLayout.setExpandRatio(operationTable, 1.0f);
 
         operationTable.setSelectable(true);
-        operationTable.setWidth("100%");
+        operationTable.setHeight("100%");
 
         operationTable.setContainerDataSource(operationContainer);
         operationTable.setVisibleColumns("name", "active");
@@ -60,5 +64,24 @@ public class OperationList extends HorizontalLayout {
                 UI.getCurrent().getNavigator().navigateTo(OperationListView.VIEW_NAME + "/" + operation.getId());
             }
         });
+    }
+
+    private Layout createTopToolbar() {
+        HorizontalLayout toolbar = new HorizontalLayout();
+        toolbar.addComponent(createNewOperationButton());
+
+        return toolbar;
+    }
+
+    private Button createNewOperationButton() {
+        Button newOperation = new Button("New operation");
+        newOperation.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                eventBus.post(new ChooseNewOperationTypeEvent());
+            }
+        });
+
+        return newOperation;
     }
 }
