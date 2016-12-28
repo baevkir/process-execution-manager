@@ -1,17 +1,13 @@
 package com.pem.ui.presentation.process;
 
+import com.pem.model.proccess.ExecutionProcessDTO;
 import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.HorizontalLayout;
 
-@SpringView(name = ProcessMainView.VIEW_NAME)
-public class ProcessMainView extends HorizontalLayout implements View {
+import java.util.List;
 
-    public static final String VIEW_NAME = "process-view";
+public interface ProcessMainView extends View {
 
-    @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
+    String VIEW_NAME = "process-view";
 
-    }
+    void load(List<ExecutionProcessDTO> process);
 }
