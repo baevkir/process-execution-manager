@@ -21,6 +21,7 @@
         <bean class="com.vaadin.data.util.converter.DateToLongConverter"/>
         <bean class="com.vaadin.data.util.converter.DateToSqlDateConverter"/>
         <bean class="com.pem.ui.integration.converter.DateToDateTimeConverter"/>
+        <bean class="com.pem.ui.integration.converter.SetToListConverter"/>
     </util:set>
 
     <bean id="converterFactory" class="com.pem.ui.integration.converter.PemConverterFactory">

@@ -7,11 +7,9 @@ import com.pem.ui.presentation.common.view.BeanFormView;
 import com.pem.ui.presentation.common.view.OperationView;
 import com.pem.ui.presentation.operation.event.ShowOperationsListEvent;
 import com.pem.ui.presentation.operation.list.OperationsLoader;
+import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Layout;
-import com.vaadin.ui.TwinColSelect;
+import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -24,38 +22,55 @@ public class CompositeOperationView extends AbstractOperationView<SyncCompositeO
     private EventBus eventBus;
 
     private TwinColSelect operationsSelect = new TwinColSelect("Operations");
-    private final BeanItemContainer<OperationDTO> operationContainer = new BeanItemContainer<>(OperationDTO.class);
+
 
     @Override
     public void bind(SyncCompositeOperationDTO bean) {
-        eventBus.post(new ShowOperationsListEvent(this));
         super.bind(bean);
+        eventBus.post(new ShowOperationsListEvent(this));
+    }
+
+    @Override
+    protected void initFormElements() {
+        super.initFormElements();
+        operationsSelect.setRequired(true);
+        operationsSelect.setLeftColumnCaption("Available");
+        operationsSelect.setRightColumnCaption("Selected");
     }
 
     @Override
     protected Layout createFormComponent() {
         HorizontalLayout mainLayout = new HorizontalLayout();
-        FormLayout formLayout = new FormLayout();
-        formLayout.addComponent(getNameField());
 
-        formLayout.addComponent(getDescriptionField());
-        formLayout.addComponent(getCreatedWhenField());
-        formLayout.addComponent(getModifyWhenField());
+        FormLayout leftFormLayout = new FormLayout();
+        leftFormLayout.addComponent(getNameField());
 
-        mainLayout.addComponent(formLayout);
+        leftFormLayout.addComponent(getDescriptionField());
+        leftFormLayout.addComponent(getCreatedWhenField());
+        leftFormLayout.addComponent(getModifyWhenField());
 
-        operationsSelect.setNullSelectionAllowed(false);
-        operationsSelect.setContainerDataSource(operationContainer);
-        operationsSelect.setItemCaptionPropertyId("Name");
+        mainLayout.addComponent(leftFormLayout);
+        mainLayout.addComponent(new VerticalSplitPanel());
+
+        FormLayout rightFormLayout = new FormLayout();
+        mainLayout.addComponent(rightFormLayout);
+        rightFormLayout.addComponent(operationsSelect);
         operationsSelect.setMultiSelect(true);
 
-        mainLayout.addComponent(operationsSelect);
         return mainLayout;
     }
 
     @Override
     public void load(List<OperationDTO> operations) {
-        operationContainer.removeAllItems();
-        operationContainer.addAll(operations);
+        operationsSelect.setContainerDataSource(new BeanItemContainer<>(OperationDTO.class, operations));
+        operationsSelect.setItemCaptionPropertyId("name");
+        getBinder().bind(operationsSelect, "operations");
+
+        operationsSelect.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent event) {
+                setModified(true);
+            }
+        });
     }
 }
