@@ -74,7 +74,7 @@
             <artifactId>guava</artifactId>
         </dependency>
 
-        <!-- appache -->
+        <!-- apache -->
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
@@ -82,6 +82,12 @@
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
+        </dependency>
+
+        <!-- rxjava -->
+        <dependency>
+            <groupId>io.reactivex</groupId>
+            <artifactId>rxjava</artifactId>
         </dependency>
 
         <!-- joda-time -->
