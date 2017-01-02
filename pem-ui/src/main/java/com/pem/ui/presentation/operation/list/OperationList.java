@@ -17,6 +17,8 @@ import java.util.List;
 @SpringComponent
 public class OperationList extends HorizontalLayout {
 
+    private static final String COLUMN_NAME = "name";
+    private static final String COLUMN_STATUS = "active";
     @Autowired
     private EventBus eventBus;
 
@@ -46,12 +48,13 @@ public class OperationList extends HorizontalLayout {
 
         operationTable.setSelectable(true);
         operationTable.setHeight("100%");
+        operationTable.setHeight("250px");
 
         operationTable.setContainerDataSource(operationContainer);
-        operationTable.setVisibleColumns("name", "active");
+        operationTable.setVisibleColumns(COLUMN_NAME, COLUMN_STATUS);
 
-        operationTable.setColumnHeader("name", "Name");
-        operationTable.setColumnHeader("active", "Active");
+        operationTable.setColumnHeader(COLUMN_NAME, "Name");
+        operationTable.setColumnHeader(COLUMN_STATUS, "Active");
 
         addSelectionListener();
     }

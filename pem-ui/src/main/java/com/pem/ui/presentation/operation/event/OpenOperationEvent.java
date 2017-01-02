@@ -1,11 +1,11 @@
 package com.pem.ui.presentation.operation.event;
 
 import com.pem.model.operation.common.OperationDTO;
-import com.pem.ui.presentation.common.event.AbstracEvent;
+import com.pem.core.rx.event.BaseEvent;
 
 import java.math.BigInteger;
 
-public class OpenOperationEvent extends AbstracEvent {
+public class OpenOperationEvent extends BaseEvent {
 
     private BigInteger operationId;
 

@@ -1,6 +1,6 @@
 package com.pem.ui.presentation.operation.event;
 
-import com.pem.ui.presentation.common.event.AbstracEvent;
+import com.pem.core.rx.event.BaseEvent;
 
-public class ChooseNewOperationTypeEvent extends AbstracEvent {
+public class ChooseNewOperationTypeEvent extends BaseEvent {
 }

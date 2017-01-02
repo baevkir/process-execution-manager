@@ -1,10 +1,10 @@
 package com.pem.ui.presentation.operation.event;
 
 
-import com.pem.ui.presentation.common.event.AbstracEvent;
+import com.pem.core.rx.event.BaseEvent;
 import com.pem.ui.presentation.operation.list.OperationsLoader;
 
-public class ShowOperationsListEvent extends AbstracEvent {
+public class ShowOperationsListEvent extends BaseEvent {
     private OperationsLoader operationsLoader;
 
     public ShowOperationsListEvent(OperationsLoader operationsLoader) {

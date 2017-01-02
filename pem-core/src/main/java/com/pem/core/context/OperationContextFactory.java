@@ -20,7 +20,7 @@ public class OperationContextFactory {
     }
 
     public OperationContext createContext() {
-        Assert.notNull(contextClass, "Context class indefined.");
+        Assert.notNull(contextClass, "Context class undefined.");
         Assert.notNull(id, "Can't create context without ID.");
         OperationContext context = createInstance();
         context.setId(id);

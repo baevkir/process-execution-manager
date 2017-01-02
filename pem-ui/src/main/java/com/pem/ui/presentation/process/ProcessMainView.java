@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ProcessMainView extends View {
 
-    String VIEW_NAME = "process-view";
+    String VIEW_NAME = "processes";
 
     void load(List<ExecutionProcessDTO> process);
 }
