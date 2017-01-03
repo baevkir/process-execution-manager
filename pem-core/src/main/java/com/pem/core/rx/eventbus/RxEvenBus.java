@@ -8,10 +8,10 @@ import rx.functions.Func1;
 import rx.subjects.PublishSubject;
 import rx.subjects.Subject;
 
-public class RxEvenBus implements EventBus<BaseEvent> {
+public class RxEvenBus<E extends BaseEvent> implements EventBus<E> {
     private static final Logger LOGGER = LoggerFactory.getLogger(RxEvenBus.class);
 
-    private final Subject<BaseEvent, BaseEvent> eventBusSubject;
+    private final Subject<E, E> eventBusSubject;
 
     public RxEvenBus() {
         PublishSubject publishSubject = PublishSubject.create();
@@ -19,13 +19,13 @@ public class RxEvenBus implements EventBus<BaseEvent> {
     }
 
     @Override
-    public Observable<BaseEvent> getObservable() {
+    public Observable<E> getObservable() {
         LOGGER.trace("Get common Observable");
         return eventBusSubject;
     }
 
     @Override
-    public <T extends BaseEvent> Observable<T> getObservable(final Class<T> eventType) {
+    public <T extends E> Observable<T> getObservable(final Class<T> eventType) {
         LOGGER.trace("Get Observable for {}.", eventType);
         return eventBusSubject.filter(new Func1<BaseEvent, Boolean>() {
 
@@ -42,7 +42,7 @@ public class RxEvenBus implements EventBus<BaseEvent> {
     }
 
     @Override
-    public <T extends BaseEvent> void post(T event) {
+    public <T extends E> void post(T event) {
         LOGGER.trace("Post: {}.", event);
         eventBusSubject.onNext(event);
     }
