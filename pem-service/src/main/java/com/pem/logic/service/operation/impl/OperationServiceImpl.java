@@ -5,9 +5,9 @@ import com.pem.model.operation.common.OperationDTO;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import rx.Observable;
 
 import java.math.BigInteger;
-import java.util.List;
 
 public class OperationServiceImpl implements OperationService {
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationServiceImpl.class);
@@ -15,32 +15,34 @@ public class OperationServiceImpl implements OperationService {
     private OperationPersistenceService persistenceService;
 
     @Override
-    public OperationDTO createOperation(OperationDTO operationEntity) {
-        LOGGER.debug("Create new Operation: {}.", operationEntity);
-        return persistenceService.createOperation(operationEntity);
+    public Observable<OperationDTO> createOperation(final OperationDTO operation) {
+        LOGGER.debug("Create new Operation: {}.", operation);
+        return Observable.just(persistenceService.createOperation(operation));
     }
 
     @Override
-    public void updateOperation(OperationDTO operationEntity) {
+    public Observable<OperationDTO> updateOperation(OperationDTO operationEntity) {
         LOGGER.debug("Update Operation: {}.", operationEntity);
         persistenceService.updateOperation(operationEntity);
+        return Observable.empty();
     }
 
     @Override
-    public void deleteOperation(BigInteger id) {
+    public Observable<OperationDTO> deleteOperation(BigInteger id) {
         LOGGER.debug("Delete Operation by id: {}.", id);
         persistenceService.deleteOperation(id);
+        return Observable.empty();
     }
 
     @Override
-    public OperationDTO getOperation(BigInteger id) {
+    public Observable<OperationDTO> getOperation(final BigInteger id) {
         LOGGER.debug("Get Operation by id: {}.", id);
-        return persistenceService.getOperation(id);
+        return Observable.just(persistenceService.getOperation(id));
     }
 
     @Override
-    public List<OperationDTO> getAllOperations() {
-        return persistenceService.getAllOperations();
+    public Observable<OperationDTO> getAllOperations() {
+        return Observable.from(persistenceService.getAllOperations());
     }
 
     public void setPersistenceService(OperationPersistenceService persistenceService) {
