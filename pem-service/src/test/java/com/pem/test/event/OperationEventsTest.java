@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import rx.observers.TestSubscriber;
 
 import java.math.BigInteger;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
@@ -73,8 +74,8 @@ public class OperationEventsTest {
 
     @Test
     public void testGetAllOperation() {
-        TestSubscriber<OperationDTO> testSubscriber = new TestSubscriber<>();
-        GetAllOperationsEvent event = new GetAllOperationsEvent();
+        TestSubscriber<List<OperationDTO>> testSubscriber = new TestSubscriber<>();
+        GetOperationListEvent event = new GetOperationListEvent();
         event.setObserver(testSubscriber);
         eventBus.post(event);
 

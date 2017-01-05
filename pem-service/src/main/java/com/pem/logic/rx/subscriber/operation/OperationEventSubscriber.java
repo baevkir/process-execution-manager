@@ -70,11 +70,11 @@ public class OperationEventSubscriber {
     }
 
     private void initGetAllOperationsSubscriber() {
-        Observable<GetAllOperationsEvent> observable = eventBus.getObservable(GetAllOperationsEvent.class);
-        observable.subscribe(new Action1<GetAllOperationsEvent>() {
+        Observable<GetOperationListEvent> observable = eventBus.getObservable(GetOperationListEvent.class);
+        observable.subscribe(new Action1<GetOperationListEvent>() {
             @Override
-            public void call(GetAllOperationsEvent event) {
-                operationService.getAllOperations()
+            public void call(GetOperationListEvent event) {
+                operationService.getAllOperations().toList()
                         .subscribe(event.getObserver());
             }
         });
