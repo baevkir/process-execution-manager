@@ -1,31 +1,31 @@
 package com.pem.ui.presentation.operation.list;
 
-import com.google.common.eventbus.EventBus;
 import com.pem.model.operation.common.OperationDTO;
-import com.pem.ui.presentation.operation.event.ChooseNewOperationTypeEvent;
+import com.pem.ui.presentation.common.rx.RxVaadin;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import rx.Observable;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 
 @UIScope
 @SpringComponent
-public class OperationList extends HorizontalLayout {
+public class OperationList extends HorizontalLayout implements OperationsLoader {
 
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_STATUS = "active";
-    @Autowired
-    private EventBus eventBus;
 
     private boolean dataLoaded;
+    private Observable<ItemClickEvent> selectObservable;
+    private Observable<Button.ClickEvent> createButtonObservable;
     private final Table operationTable = new Table();
     private final BeanItemContainer<OperationDTO> operationContainer = new BeanItemContainer<>(OperationDTO.class);
 
+    @Override
     public void load(List<OperationDTO> operations) {
         operationContainer.removeAllItems();
         operationContainer.addAll(operations);
@@ -34,6 +34,14 @@ public class OperationList extends HorizontalLayout {
 
     public boolean isDataLoaded() {
         return dataLoaded;
+    }
+
+    public Observable<ItemClickEvent> getSelectObservable() {
+        return selectObservable;
+    }
+
+    public Observable<Button.ClickEvent> getCreateButtonObservable() {
+        return createButtonObservable;
     }
 
     @PostConstruct
@@ -56,17 +64,11 @@ public class OperationList extends HorizontalLayout {
         operationTable.setColumnHeader(COLUMN_NAME, "Name");
         operationTable.setColumnHeader(COLUMN_STATUS, "Active");
 
-        addSelectionListener();
+        initSelectionObserver();
     }
 
-    private void addSelectionListener() {
-        operationTable.addListener(new ItemClickEvent.ItemClickListener() {
-            @Override
-            public void itemClick(ItemClickEvent event) {
-                OperationDTO operation = (OperationDTO) event.getItemId();
-                UI.getCurrent().getNavigator().navigateTo(OperationListView.VIEW_NAME + "/" + operation.getId());
-            }
-        });
+    private void initSelectionObserver() {
+        selectObservable = RxVaadin.tableClickObservable(operationTable);
     }
 
     private Layout createTopToolbar() {
@@ -78,13 +80,7 @@ public class OperationList extends HorizontalLayout {
 
     private Button createNewOperationButton() {
         Button newOperation = new Button("New operation");
-        newOperation.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                eventBus.post(new ChooseNewOperationTypeEvent());
-            }
-        });
-
+        createButtonObservable = RxVaadin.buttonClickObservable(newOperation);
         return newOperation;
     }
 }

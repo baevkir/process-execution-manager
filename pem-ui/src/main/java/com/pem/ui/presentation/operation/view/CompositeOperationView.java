@@ -1,13 +1,11 @@
 package com.pem.ui.presentation.operation.view;
 
-import com.google.common.eventbus.EventBus;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.operation.composite.SyncCompositeOperationDTO;
 import com.pem.ui.presentation.common.view.BeanFormView;
 import com.pem.ui.presentation.common.view.OperationView;
-import com.pem.ui.presentation.operation.event.ShowOperationsListEvent;
+import com.pem.ui.presentation.operation.list.OperationListPresenter;
 import com.pem.ui.presentation.operation.list.OperationsLoader;
-import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +17,14 @@ import java.util.List;
 public class CompositeOperationView extends AbstractOperationView<SyncCompositeOperationDTO> implements OperationsLoader {
 
     @Autowired
-    private EventBus eventBus;
+    private OperationListPresenter presenter;
 
     private TwinColSelect operationsSelect = new TwinColSelect("Operations");
-
 
     @Override
     public void bind(SyncCompositeOperationDTO bean) {
         super.bind(bean);
-        eventBus.post(new ShowOperationsListEvent(this));
+        presenter.loadAllOperations(this);
     }
 
     @Override
@@ -66,11 +63,6 @@ public class CompositeOperationView extends AbstractOperationView<SyncCompositeO
         operationsSelect.setItemCaptionPropertyId("name");
         getBinder().bind(operationsSelect, "operations");
 
-        operationsSelect.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(Property.ValueChangeEvent event) {
-                setModified(true);
-            }
-        });
+        operationsSelect.addValueChangeListener(event -> setModified(true));
     }
 }

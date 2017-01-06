@@ -1,9 +1,8 @@
 package com.pem.ui.presentation.operation.list;
 
-import com.google.common.eventbus.EventBus;
+import com.pem.ui.presentation.common.rx.RxVaadin;
 import com.pem.ui.presentation.common.view.provider.OperationViewObject;
 import com.pem.ui.presentation.common.view.provider.PemViewProvider;
-import com.pem.ui.presentation.operation.event.OpenOperationEvent;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
@@ -12,6 +11,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.Window;
 import org.springframework.beans.factory.annotation.Autowired;
+import rx.Observable;
 
 import javax.annotation.PostConstruct;
 
@@ -20,12 +20,22 @@ import javax.annotation.PostConstruct;
 public class ChooseOperationTypeWindow extends Window {
 
     @Autowired
-    private EventBus eventBus;
-
-    @Autowired
     private PemViewProvider viewProvider;
 
+    private Observable<Button.ClickEvent> okButtonObservable;
+
     private ListSelect operationTypes = new ListSelect();
+
+    public Observable<Button.ClickEvent> getOkButtonObservable() {
+        return okButtonObservable;
+    }
+
+    public OperationViewObject getValue() {
+        if (operationTypes.getValue() == null) {
+            return null;
+        }
+        return  (OperationViewObject) operationTypes.getValue();
+    }
 
     @PostConstruct
     void init() {
@@ -51,22 +61,7 @@ public class ChooseOperationTypeWindow extends Window {
 
     private Button createOKButton() {
         Button okButton = new Button("OK");
-        okButton.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                startCreateOperation();
-                close();
-            }
-        });
-
+        okButtonObservable = RxVaadin.buttonClickObservable(okButton);
         return okButton;
-    }
-
-    private void startCreateOperation() {
-        if (operationTypes.getValue() == null) {
-            return;
-        }
-        OperationViewObject operationViewObject = (OperationViewObject) operationTypes.getValue();
-        eventBus.post(new OpenOperationEvent(operationViewObject.getOperationType()));
     }
 }

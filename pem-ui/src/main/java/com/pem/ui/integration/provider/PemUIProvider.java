@@ -19,8 +19,8 @@ public class PemUIProvider extends AbstractSpringUIProvider implements Applicati
     private static final Logger LOGGER = LoggerFactory.getLogger(PemServiceProviderImpl.class);
     private static final String SERVICE_PROVIDER_BEAN = "serviceProvider";
     private static final String CALCULATOR_SERVICE_BEAN = "calculatorService";
-    private static final String OPERATION_SERVICE_BEAN = "operationService";
     private static final String PROCESS_SERVICE_BEAN = "processService";
+    private static final String SERVICE_EVENT_BUS = "serviceEventBus";
 
     private ApplicationContext parentContext;
     private ApplicationContext applicationContext;
@@ -54,7 +54,7 @@ public class PemUIProvider extends AbstractSpringUIProvider implements Applicati
                 .addXMLConfiguration("config/pem-vaadin-ui-config.xml")
                 .addSingletonBean(SERVICE_PROVIDER_BEAN, serviceProvider)
                 .addSingletonBean(CALCULATOR_SERVICE_BEAN, serviceProvider.getCalculatorService())
-                .addSingletonBean(OPERATION_SERVICE_BEAN, serviceProvider.getOperationService())
+                .addSingletonBean(SERVICE_EVENT_BUS, serviceProvider.getServiceEventBus())
                 .addSingletonBean(PROCESS_SERVICE_BEAN, serviceProvider.getExecutionProcessService());
 
         applicationContext = contextBuilder.build();

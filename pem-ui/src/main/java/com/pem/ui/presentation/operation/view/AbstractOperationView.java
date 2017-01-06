@@ -1,20 +1,14 @@
 package com.pem.ui.presentation.operation.view;
 
-import com.google.common.eventbus.EventBus;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.ui.presentation.common.view.BaseBeanForm;
-import com.pem.ui.presentation.operation.event.SaveOperationEvent;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class AbstractOperationView<O extends OperationDTO> extends BaseBeanForm<O> implements View {
-
-    @Autowired
-    private EventBus eventBus;
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
@@ -40,8 +34,7 @@ public abstract class AbstractOperationView<O extends OperationDTO> extends Base
 
             @Override
             public void postCommit(FieldGroup.CommitEvent commitEvent) throws FieldGroup.CommitException {
-                eventBus.post(new SaveOperationEvent(getBean()));
-            }
+                           }
         });
     }
 

@@ -1,8 +1,6 @@
 package com.pem.ui.presentation.process;
 
-import com.google.common.eventbus.EventBus;
 import com.pem.model.proccess.ExecutionProcessDTO;
-import com.pem.ui.presentation.process.event.LoadProcessesEvent;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.HorizontalLayout;
@@ -15,9 +13,6 @@ import java.util.List;
 public class ProcessMainViewImpl extends HorizontalLayout implements ProcessMainView {
 
     @Autowired
-    private EventBus eventBus;
-
-    @Autowired
     private ProcessMainPresenter presenter;
 
     @Autowired
@@ -25,9 +20,9 @@ public class ProcessMainViewImpl extends HorizontalLayout implements ProcessMain
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        if (!processesList.isDataLoaded()) {
-            eventBus.post(new LoadProcessesEvent());
-        }
+//        if (!processesList.isDataLoaded()) {
+//            eventBus.post(new LoadProcessesEvent());
+//        }
     }
 
     @Override

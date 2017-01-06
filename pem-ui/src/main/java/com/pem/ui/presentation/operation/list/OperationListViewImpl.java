@@ -1,28 +1,19 @@
 package com.pem.ui.presentation.operation.list;
 
-import com.google.common.eventbus.EventBus;
-import com.pem.model.operation.common.OperationDTO;
 import com.pem.ui.presentation.common.view.BindForm;
-import com.pem.ui.presentation.operation.event.OpenOperationEvent;
-import com.pem.ui.presentation.operation.event.ShowOperationsListEvent;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import rx.subjects.PublishSubject;
 
 import javax.annotation.PostConstruct;
-import java.math.BigInteger;
-import java.util.List;
 
 @UIScope
 @SpringView(name = OperationListView.VIEW_NAME)
 public class OperationListViewImpl extends HorizontalLayout implements OperationListView {
-
-    @Autowired
-    private EventBus eventBus;
 
     @Autowired
     private OperationList operationList;
@@ -32,24 +23,16 @@ public class OperationListViewImpl extends HorizontalLayout implements Operation
 
     private final Panel contentPanel = new Panel();
 
+    private PublishSubject<ViewChangeListener.ViewChangeEvent>  viewSubject;
+
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        if (!operationList.isDataLoaded()) {
-            eventBus.post(new ShowOperationsListEvent(this));
-        }
-
-        String parameters = event.getParameters();
-        if (StringUtils.isEmpty(parameters) || !StringUtils.isNumeric(parameters)) {
-            contentPanel.setContent(null);
-            return;
-        }
-        BigInteger operationId = new BigInteger(parameters);
-        eventBus.post(new OpenOperationEvent(operationId));
+        viewSubject.onNext(event);
     }
 
     @Override
-    public void load(List<OperationDTO> operations) {
-        operationList.load(operations);
+    public PublishSubject<ViewChangeListener.ViewChangeEvent> getViewSubject() {
+        return viewSubject;
     }
 
     @Override
@@ -57,14 +40,18 @@ public class OperationListViewImpl extends HorizontalLayout implements Operation
         contentPanel.setContent(operationView);
     }
 
+    public OperationList getOperationList() {
+        return operationList;
+    }
 
     @PostConstruct
     void init() {
-        operationListPresenter.bind(this);
+        viewSubject = PublishSubject.create();
         setSizeFull();
 
         addComponent(operationList);
         addComponent(contentPanel);
         setExpandRatio(contentPanel, 1.0f);
+        operationListPresenter.bind(this);
     }
 }

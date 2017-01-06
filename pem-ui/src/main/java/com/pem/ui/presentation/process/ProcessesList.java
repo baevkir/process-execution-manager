@@ -1,6 +1,5 @@
 package com.pem.ui.presentation.process;
 
-import com.google.common.eventbus.EventBus;
 import com.pem.model.proccess.ExecutionProcessDTO;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
@@ -10,7 +9,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -20,16 +18,14 @@ import java.util.List;
 public class ProcessesList extends HorizontalLayout {
 
     private static final String COLUMN_NAME = "name";
-    @Autowired
-    private EventBus eventBus;
 
     private boolean dataLoaded;
     private final Table processesTable = new Table();
     private final BeanItemContainer<ExecutionProcessDTO> processesContainer = new BeanItemContainer<>(ExecutionProcessDTO.class);
 
-    public void load(List<ExecutionProcessDTO> processs) {
+    public void load(List<ExecutionProcessDTO> process) {
         processesContainer.removeAllItems();
-        processesContainer.addAll(processs);
+        processesContainer.addAll(process);
         dataLoaded = true;
     }
 

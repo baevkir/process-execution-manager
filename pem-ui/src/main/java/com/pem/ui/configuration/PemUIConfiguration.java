@@ -1,6 +1,5 @@
 package com.pem.ui.configuration;
 
-import com.google.common.eventbus.EventBus;
 import com.pem.ui.presentation.common.view.provider.PemSpringViewProvider;
 import com.pem.ui.presentation.common.view.provider.PemViewProvider;
 import com.vaadin.spring.annotation.EnableVaadin;
@@ -20,13 +19,6 @@ public class PemUIConfiguration implements ApplicationContextAware, BeanDefiniti
 
     private ApplicationContext applicationContext;
     private BeanDefinitionRegistry beanDefinitionRegistry;
-
-    @Bean
-    @UIScope
-    EventBus eventBus() {
-        EventBus eventBus = new EventBus();
-        return eventBus;
-    }
 
     @Bean
     @UIScope
