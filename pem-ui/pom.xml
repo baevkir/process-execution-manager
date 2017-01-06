@@ -71,6 +71,12 @@
             <groupId>org.vaadin</groupId>
             <artifactId>viritin</artifactId>
         </dependency>
+
+        <!-- rxjava -->
+        <dependency>
+            <groupId>io.reactivex</groupId>
+            <artifactId>rxjava</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
