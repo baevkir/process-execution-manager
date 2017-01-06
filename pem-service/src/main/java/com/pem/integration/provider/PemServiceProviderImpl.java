@@ -1,10 +1,10 @@
 package com.pem.integration.provider;
 
 import com.pem.core.common.applicationcontext.builder.ApplicationContextBuilder;
+import com.pem.logic.rx.eventbus.ServiceEventBus;
 import com.pem.logic.service.calculator.CalculatorService;
-import com.pem.logic.service.process.executor.ProcessExecutor;
-import com.pem.logic.service.operation.OperationService;
 import com.pem.logic.service.process.ExecutionProcessService;
+import com.pem.logic.service.process.executor.ProcessExecutor;
 import com.pem.persistence.api.provider.PemPersistenceServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,11 +36,6 @@ public class PemServiceProviderImpl implements PemServiceProvider, ApplicationCo
     }
 
     @Override
-    public OperationService getOperationService() {
-        return applicationContext.getBean(OperationService.class);
-    }
-
-    @Override
     public ProcessExecutor getOperationExecutor() {
         return applicationContext.getBean(ProcessExecutor.class);
     }
@@ -48,6 +43,11 @@ public class PemServiceProviderImpl implements PemServiceProvider, ApplicationCo
     @Override
     public CalculatorService getCalculatorService() {
         return applicationContext.getBean(CalculatorService.class);
+    }
+
+    @Override
+    public ServiceEventBus getServiceEventBus() {
+        return applicationContext.getBean(ServiceEventBus.class);
     }
 
     @Override

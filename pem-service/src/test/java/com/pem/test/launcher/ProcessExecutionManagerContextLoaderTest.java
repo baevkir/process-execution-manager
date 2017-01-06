@@ -20,6 +20,6 @@ public class ProcessExecutionManagerContextLoaderTest {
         Assert.assertNotNull(contextLoader.getCalculatorService());
         Assert.assertNotNull(contextLoader.getExecutionProcessService());
         Assert.assertNotNull(contextLoader.getOperationExecutor());
-        Assert.assertNotNull(contextLoader.getOperationService());
+        Assert.assertNotNull(contextLoader.getServiceEventBus());
     }
 }
