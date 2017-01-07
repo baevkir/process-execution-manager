@@ -15,7 +15,7 @@ public abstract class BaseBeanPresenter<B, V extends BeanView<B>> extends BasePr
 
     private BeanFieldGroup<B> binder;
     private Observable<Property.ValueChangeEvent> editBinderObservable;
-    private  Observable<FieldGroup.CommitEvent> binderPostCommitObservable;
+    private Observable<FieldGroup.CommitEvent> binderPostCommitObservable;
 
     @Override
     protected final void initViewHandlers() {

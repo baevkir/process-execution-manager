@@ -9,12 +9,13 @@ import rx.observers.Observers;
 public abstract class ObservableEvent<S> extends BaseEvent {
     private Observer<S> observer;
 
-    public void setObserver(Observer<S> observer) {
+    public ObservableEvent<S> setObserver(Observer<S> observer) {
         this.observer = observer;
+        return this;
     }
 
-    public void setNotificationObserver(Action1<Notification<S>> onNotification) {
-        this.observer = new ActionNotificationObserver(onNotification);
+    public ObservableEvent<S> setNotificationObserver(Action1<Notification<S>> onNotification) {
+        return setObserver(new ActionNotificationObserver(onNotification));
     }
 
     public Observer<S> getObserver() {

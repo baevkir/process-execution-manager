@@ -14,7 +14,7 @@ import java.util.List;
 
 @UIScope
 @SpringComponent
-public class OperationList extends HorizontalLayout implements OperationsLoader {
+public class OperationList extends HorizontalLayout{
 
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_STATUS = "active";
@@ -25,7 +25,6 @@ public class OperationList extends HorizontalLayout implements OperationsLoader 
     private final Table operationTable = new Table();
     private final BeanItemContainer<OperationDTO> operationContainer = new BeanItemContainer<>(OperationDTO.class);
 
-    @Override
     public void load(List<OperationDTO> operations) {
         operationContainer.removeAllItems();
         operationContainer.addAll(operations);

@@ -59,7 +59,7 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
 
     }
 
-    public void loadAllOperations(OperationsLoader loader) {
+    private void loadAllOperations(OperationList loader) {
         GetOperationListEvent event = new GetOperationListEvent();
         event.setNotificationObserver(notification -> {
             if (notification.hasThrowable()) {
@@ -117,21 +117,4 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
     private void navigateToOperation(BigInteger operationId) {
         UI.getCurrent().getNavigator().navigateTo(OperationListView.VIEW_NAME + "/" + operationId);
     }
-
-//    @Subscribe
-//    public void saveOperation(SaveOperationEvent event) {
-//        OperationDTO operation = event.getOperation();
-//
-//        BigInteger operationId = operation.getId();
-//        if (operationId == null) {
-//            operationId = operationService.createOperation(operation).getId();
-//        } else {
-//            operationService.updateOperation(operation);
-//        }
-//
-//        getUIEventBus().post(new ShowOperationsListEvent(getView()));
-//        UI.getCurrent().getNavigator().navigateTo(OperationListView.VIEW_NAME + "/" + operationId);
-//    }
-//
-
 }
