@@ -1,4 +1,4 @@
-package com.pem.ui.presentation.common.view;
+package com.pem.ui.presentation.common.view.provider;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

@@ -1,6 +1,6 @@
 package com.pem.ui.presentation.operation.list;
 
-import com.pem.ui.presentation.common.view.BindForm;
+import com.pem.ui.presentation.operation.view.BaseOperationView;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
@@ -27,7 +27,7 @@ public class OperationListViewImpl extends HorizontalLayout implements Operation
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        viewSubject.onNext(event);
+         viewSubject.onNext(event);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class OperationListViewImpl extends HorizontalLayout implements Operation
     }
 
     @Override
-    public void openOperation(BindForm operationView) {
+    public void openOperation(BaseOperationView operationView) {
         contentPanel.setContent(operationView);
     }
 

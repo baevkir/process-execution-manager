@@ -11,7 +11,7 @@ public abstract class BasePresenter<V extends View> {
 
     private V view;
 
-    public void bind(V view) {
+    public final void bind(V view) {
         Assert.notNull(view, "Can't bind NULL view.");
         LOGGER.debug("Bind view {} to presenter {}.", view.getClass(), getClass());
         this.view = view;

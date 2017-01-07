@@ -35,7 +35,6 @@ public abstract class BaseBeanForm<B extends BaseDTO> extends AbstractBeanForm<B
         return modifyWhenField;
     }
 
-    @Override
     protected void initFormElements() {
         nameField.setRequired(true);
         nameField.setNullRepresentation("");
@@ -43,5 +42,4 @@ public abstract class BaseBeanForm<B extends BaseDTO> extends AbstractBeanForm<B
         createdWhenField.setReadOnly(true);
         modifyWhenField.setReadOnly(true);
     }
-
 }

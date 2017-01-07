@@ -2,8 +2,6 @@ package com.pem.ui.presentation.common.view.provider;
 
 import com.pem.model.common.BaseDTO;
 import com.pem.model.operation.common.OperationDTO;
-import com.pem.ui.presentation.common.view.BeanFormView;
-import com.pem.ui.presentation.common.view.OperationView;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.navigator.SpringViewProvider;
@@ -54,18 +52,18 @@ public class PemSpringViewProvider extends SpringViewProvider implements PemView
         }
 
         if (!View.class.isAssignableFrom(beanClass)) {
-            LOGGER.warn("beanClass {} has OperationView annotation but is not Assignable from View class!", beanClass);
+            LOGGER.warn("beanClass {} has BaseOperationView annotation but is not Assignable from View class!", beanClass);
             return;
         }
 
         if (beanFormViewAnnotation == null) {
-            LOGGER.warn("beanClass {} has OperationView annotation but don't have BeanFormView annotation!", beanClass);
+            LOGGER.warn("beanClass {} has BaseOperationView annotation but don't have BeanView annotation!", beanClass);
             return;
         }
 
         Class<?> operationClass = beanFormViewAnnotation.value();
         if (!OperationDTO.class.isAssignableFrom(operationClass)) {
-            LOGGER.warn("beanClass {} has OperationView annotation but BeanFormView annotation value is not Assignable from OperationDTO class!", beanClass);
+            LOGGER.warn("beanClass {} has BaseOperationView annotation but BeanView annotation value is not Assignable from OperationDTO class!", beanClass);
             return;
         }
 

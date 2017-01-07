@@ -5,8 +5,8 @@ import com.pem.logic.rx.subscriber.operation.event.GetOperationEvent;
 import com.pem.logic.rx.subscriber.operation.event.GetOperationListEvent;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.ui.presentation.common.presenter.BasePresenter;
-import com.pem.ui.presentation.common.view.BindForm;
 import com.pem.ui.presentation.common.view.provider.PemViewProvider;
+import com.pem.ui.presentation.operation.view.BaseOperationView;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
@@ -102,9 +102,9 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
         View operationView = viewProvider.getView(operation.getClass());
 
         Assert.notNull(operationView);
-        Assert.isInstanceOf(BindForm.class, operationView);
+        Assert.isInstanceOf(BaseOperationView.class, operationView);
 
-        BindForm operationForm = (BindForm) operationView;
+        BaseOperationView operationForm = (BaseOperationView) operationView;
         operationForm.bind(operation);
 
         getView().openOperation(operationForm);

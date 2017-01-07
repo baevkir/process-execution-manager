@@ -1,30 +1,23 @@
-package com.pem.ui.presentation.operation.view;
+package com.pem.ui.presentation.operation.view.composite;
 
-import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.operation.composite.SyncCompositeOperationDTO;
-import com.pem.ui.presentation.common.view.BeanFormView;
-import com.pem.ui.presentation.common.view.OperationView;
-import com.pem.ui.presentation.operation.list.OperationListPresenter;
-import com.pem.ui.presentation.operation.list.OperationsLoader;
-import com.vaadin.data.util.BeanItemContainer;
+import com.pem.ui.presentation.common.view.provider.BeanFormView;
+import com.pem.ui.presentation.operation.view.BaseOperationView;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-
 @BeanFormView(SyncCompositeOperationDTO.class)
-@OperationView("Consistent composite operation")
-public class CompositeOperationView extends AbstractOperationView<SyncCompositeOperationDTO> implements OperationsLoader {
+@com.pem.ui.presentation.common.view.provider.OperationView("Consistent composite operation")
+public class CompositeOperationView extends BaseOperationView<SyncCompositeOperationDTO> {
 
     @Autowired
-    private OperationListPresenter presenter;
+    private CompositeOperationPresenter presenter;
 
     private TwinColSelect operationsSelect = new TwinColSelect("Operations");
 
     @Override
-    public void bind(SyncCompositeOperationDTO bean) {
-        super.bind(bean);
-        presenter.loadAllOperations(this);
+    protected CompositeOperationPresenter getPresenter() {
+        return presenter;
     }
 
     @Override
@@ -37,6 +30,7 @@ public class CompositeOperationView extends AbstractOperationView<SyncCompositeO
 
     @Override
     protected Layout createFormComponent() {
+        initFormElements();
         HorizontalLayout mainLayout = new HorizontalLayout();
 
         FormLayout leftFormLayout = new FormLayout();
@@ -55,14 +49,5 @@ public class CompositeOperationView extends AbstractOperationView<SyncCompositeO
         operationsSelect.setMultiSelect(true);
 
         return mainLayout;
-    }
-
-    @Override
-    public void load(List<OperationDTO> operations) {
-        operationsSelect.setContainerDataSource(new BeanItemContainer<>(OperationDTO.class, operations));
-        operationsSelect.setItemCaptionPropertyId("name");
-        getBinder().bind(operationsSelect, "operations");
-
-        operationsSelect.addValueChangeListener(event -> setModified(true));
     }
 }

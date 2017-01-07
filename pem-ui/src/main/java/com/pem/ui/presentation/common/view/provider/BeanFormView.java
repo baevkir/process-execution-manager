@@ -1,4 +1,4 @@
-package com.pem.ui.presentation.common.view;
+package com.pem.ui.presentation.common.view.provider;
 
 import com.pem.model.common.BaseDTO;
 import com.vaadin.spring.annotation.SpringView;
