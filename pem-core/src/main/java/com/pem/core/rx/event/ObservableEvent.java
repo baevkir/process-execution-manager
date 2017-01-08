@@ -6,19 +6,23 @@ import rx.functions.Action1;
 import rx.internal.util.ActionNotificationObserver;
 import rx.observers.Observers;
 
-public abstract class ObservableEvent<S> extends BaseEvent {
-    private Observer<S> observer;
+public abstract class ObservableEvent<S, T> extends BaseEvent<S> {
+    private Observer<T> observer;
 
-    public ObservableEvent<S> setObserver(Observer<S> observer) {
+    public ObservableEvent(S source) {
+        super(source);
+    }
+
+    public ObservableEvent<S, T> setObserver(Observer<T> observer) {
         this.observer = observer;
         return this;
     }
 
-    public ObservableEvent<S> setNotificationObserver(Action1<Notification<S>> onNotification) {
+    public ObservableEvent<S, T> setNotificationObserver(Action1<Notification<T>> onNotification) {
         return setObserver(new ActionNotificationObserver(onNotification));
     }
 
-    public Observer<S> getObserver() {
+    public Observer<T> getObserver() {
         if (observer == null) {
             synchronized (ObservableEvent.class) {
                 if (observer == null) {

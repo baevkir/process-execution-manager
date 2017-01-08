@@ -10,4 +10,9 @@
         <property name="eventBus" ref="serviceEventBus"/>
         <property name="operationService" ref="operationService"/>
     </bean>
+
+    <bean id="processEventSubscriber" class="com.pem.logic.rx.subscriber.process.ProcessEventSubscriber">
+        <property name="eventBus" ref="serviceEventBus"/>
+        <property name="processService" ref="executionProcessService"/>
+    </bean>
 </beans>

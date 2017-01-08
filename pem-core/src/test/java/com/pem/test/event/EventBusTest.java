@@ -6,7 +6,6 @@ import com.pem.core.rx.eventbus.RxEvenBus;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import rx.functions.Action1;
 
 public class EventBusTest {
 
@@ -15,13 +14,7 @@ public class EventBusTest {
     @Before
     public void init() {
         eventBus = new RxEvenBus<>();
-
-        eventBus.getObservable(TestEvent.class).subscribe(new Action1<TestEvent>() {
-            @Override
-            public void call(TestEvent testEvent) {
-                testEvent.setEventHandled(true);
-            }
-        });
+        eventBus.getObservable(TestEvent.class).subscribe(testEvent -> testEvent.setEventHandled(true));
     }
 
     @Test
@@ -36,8 +29,12 @@ public class EventBusTest {
         Assert.assertFalse(unhandledEvent.isEventHandled());
     }
 
-    private class UnhandledEvent extends BaseEvent {
+    private class UnhandledEvent extends BaseEvent<Void> {
         boolean eventHandled = false;
+
+        public UnhandledEvent() {
+            super(null);
+        }
 
         public boolean isEventHandled() {
             return eventHandled;

@@ -10,9 +10,9 @@ import java.math.BigInteger;
 public interface ExecutionProcessService {
     Observable<ExecutionProcessDTO> createExecutionProcess(OperationDTO operationEntity);
 
-    Observable<ExecutionProcessDTO> updateExecutionProcess(ExecutionProcessDTO processEntity);
+    Observable<Void> updateExecutionProcess(ExecutionProcessDTO processEntity);
 
-    Observable<ExecutionProcessDTO> executeProcess(ExecutionProcessDTO executionProcess, OperationContextFactory contextFactory);
+    Observable<Void> executeProcess(ExecutionProcessDTO executionProcess, OperationContextFactory contextFactory);
 
     Observable<ExecutionProcessDTO> getExecutionProcess(BigInteger id);
 

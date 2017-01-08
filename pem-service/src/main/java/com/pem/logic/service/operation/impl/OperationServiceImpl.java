@@ -21,14 +21,14 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public Observable<OperationDTO> updateOperation(OperationDTO operationEntity) {
+    public Observable<Void> updateOperation(OperationDTO operationEntity) {
         LOGGER.debug("Update Operation: {}.", operationEntity);
         persistenceService.updateOperation(operationEntity);
         return Observable.empty();
     }
 
     @Override
-    public Observable<OperationDTO> deleteOperation(BigInteger id) {
+    public Observable<Void> deleteOperation(BigInteger id) {
         LOGGER.debug("Delete Operation by id: {}.", id);
         persistenceService.deleteOperation(id);
         return Observable.empty();

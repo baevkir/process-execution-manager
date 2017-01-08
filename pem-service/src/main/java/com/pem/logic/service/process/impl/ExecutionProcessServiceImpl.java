@@ -28,19 +28,19 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService, App
     @Override
     public Observable<ExecutionProcessDTO> createExecutionProcess(OperationDTO operationEntity) {
         LOGGER.debug("Create new ExecutionProcessDTO for: {}.", operationEntity);
-        ExecutionProcessDTO processEntity = converterFactory.convert(operationEntity, ExecutionProcessDTO.class);
+        ExecutionProcessDTO processEntity = converterFactory.convert(operationEntity, OperationDTO.class, ExecutionProcessDTO.class);
         return Observable.just(persistenceService.createProcess(processEntity));
     }
 
     @Override
-    public Observable<ExecutionProcessDTO> updateExecutionProcess(ExecutionProcessDTO processEntity) {
+    public Observable<Void> updateExecutionProcess(ExecutionProcessDTO processEntity) {
         LOGGER.debug("Update ExecutionProcessDTO: {}.", processEntity);
         persistenceService.updateProcess(processEntity);
         return Observable.empty();
     }
 
     @Override
-    public Observable<ExecutionProcessDTO> executeProcess(ExecutionProcessDTO executionProcess, OperationContextFactory contextFactory) {
+    public Observable<Void> executeProcess(ExecutionProcessDTO executionProcess, OperationContextFactory contextFactory) {
         operationExecutor.execute(executionProcess, contextFactory);
         return Observable.empty();
     }

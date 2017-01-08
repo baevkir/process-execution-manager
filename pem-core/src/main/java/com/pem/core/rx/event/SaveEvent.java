@@ -1,16 +1,9 @@
 package com.pem.core.rx.event;
 
-import org.springframework.util.Assert;
+import com.google.common.base.Preconditions;
 
-public abstract class SaveEvent<S> extends ObservableEvent<S> {
-    S source;
-
+public abstract class SaveEvent<S, T> extends ObservableEvent<S, T> {
     public SaveEvent(S source) {
-        Assert.notNull(source, String.format("Can't save %s. Source equals NULL.", this.getClass()));
-        this.source = source;
-    }
-
-    public S getSource() {
-        return source;
+        super(Preconditions.checkNotNull(source, "Can't save. Source equals NULL."));
     }
 }
