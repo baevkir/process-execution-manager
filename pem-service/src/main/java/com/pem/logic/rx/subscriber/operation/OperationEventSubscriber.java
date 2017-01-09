@@ -3,8 +3,8 @@ package com.pem.logic.rx.subscriber.operation;
 import com.pem.logic.rx.eventbus.ServiceEventBus;
 import com.pem.logic.rx.subscriber.operation.event.*;
 import com.pem.logic.service.operation.OperationService;
+import io.reactivex.Observable;
 import org.springframework.util.Assert;
-import rx.Observable;
 
 import javax.annotation.PostConstruct;
 
@@ -27,7 +27,7 @@ public class OperationEventSubscriber {
         Observable<CreateOperationEvent> observable = eventBus.getObservable(CreateOperationEvent.class);
         observable.subscribe(event -> {
             Assert.notNull(event.getSource());
-            operationService.createOperation(event.getSource()).subscribe(event.getObserver());
+            event.observe(operationService.createOperation(event.getSource()));
         });
     }
 
@@ -35,29 +35,29 @@ public class OperationEventSubscriber {
         Observable<UpdateOperationEvent> observable = eventBus.getObservable(UpdateOperationEvent.class);
         observable.subscribe(event -> {
             Assert.notNull(event.getSource());
-            operationService.updateOperation(event.getSource()).subscribe(event.getObserver());
+            event.observe(operationService.updateOperation(event.getSource()));
         });
     }
 
     private void initDeleteSubscriber() {
         Observable<DeleteOperationEvent> observable = eventBus.getObservable(DeleteOperationEvent.class);
         observable.subscribe(event -> {
-            Assert.notNull(event.getSource());
-            operationService.deleteOperation(event.getSource()).subscribe(event.getObserver());
+            Assert.notNull(event.getSourceId());
+            event.observe(operationService.deleteOperation(event.getSourceId()));
         });
     }
 
     private void initGetOneSubscriber() {
         Observable<GetOperationEvent> observable = eventBus.getObservable(GetOperationEvent.class);
         observable.subscribe(event -> {
-            Assert.notNull(event.getSource());
-            operationService.getOperation(event.getSource()).subscribe(event.getObserver());
+            Assert.notNull(event.getSourceId());
+            event.observe(operationService.getOperation(event.getSourceId()));
         });
     }
 
     private void initGetListSubscriber() {
         Observable<GetOperationListEvent> observable = eventBus.getObservable(GetOperationListEvent.class);
-        observable.subscribe(event -> operationService.getAllOperations().toList().subscribe(event.getObserver()));
+        observable.subscribe(event -> event.observe(operationService.getAllOperations()));
     }
 
     public void setEventBus(ServiceEventBus eventBus) {

@@ -29,11 +29,10 @@ public class EventBusTest {
         Assert.assertFalse(unhandledEvent.isEventHandled());
     }
 
-    private class UnhandledEvent extends BaseEvent<Void> {
+    private class UnhandledEvent extends BaseEvent {
         boolean eventHandled = false;
 
         public UnhandledEvent() {
-            super(null);
         }
 
         public boolean isEventHandled() {

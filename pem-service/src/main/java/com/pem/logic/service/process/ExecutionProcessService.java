@@ -3,18 +3,20 @@ package com.pem.logic.service.process;
 import com.pem.core.context.OperationContextFactory;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.proccess.ExecutionProcessDTO;
-import rx.Observable;
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 import java.math.BigInteger;
 
 public interface ExecutionProcessService {
-    Observable<ExecutionProcessDTO> createExecutionProcess(OperationDTO operationEntity);
+    Single<ExecutionProcessDTO> createExecutionProcess(OperationDTO operationEntity);
 
-    Observable<Void> updateExecutionProcess(ExecutionProcessDTO processEntity);
+    Completable updateExecutionProcess(ExecutionProcessDTO processEntity);
 
-    Observable<Void> executeProcess(ExecutionProcessDTO executionProcess, OperationContextFactory contextFactory);
+    Completable executeProcess(ExecutionProcessDTO executionProcess, OperationContextFactory contextFactory);
 
-    Observable<ExecutionProcessDTO> getExecutionProcess(BigInteger id);
+    Single<ExecutionProcessDTO> getExecutionProcess(BigInteger id);
 
     Observable<ExecutionProcessDTO> getAllExecutionProcesses();
 }

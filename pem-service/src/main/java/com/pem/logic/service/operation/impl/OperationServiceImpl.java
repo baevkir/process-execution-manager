@@ -3,9 +3,11 @@ package com.pem.logic.service.operation.impl;
 import com.pem.logic.service.operation.OperationService;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import rx.Observable;
 
 import java.math.BigInteger;
 
@@ -15,34 +17,32 @@ public class OperationServiceImpl implements OperationService {
     private OperationPersistenceService persistenceService;
 
     @Override
-    public Observable<OperationDTO> createOperation(final OperationDTO operation) {
+    public Single<OperationDTO> createOperation(final OperationDTO operation) {
         LOGGER.debug("Create new Operation: {}.", operation);
-        return Observable.just(persistenceService.createOperation(operation));
+        return Single.fromCallable(() -> persistenceService.createOperation(operation));
     }
 
     @Override
-    public Observable<Void> updateOperation(OperationDTO operationEntity) {
+    public Completable updateOperation(OperationDTO operationEntity) {
         LOGGER.debug("Update Operation: {}.", operationEntity);
-        persistenceService.updateOperation(operationEntity);
-        return Observable.empty();
+        return Completable.fromAction(() -> persistenceService.updateOperation(operationEntity));
     }
 
     @Override
-    public Observable<Void> deleteOperation(BigInteger id) {
+    public Completable deleteOperation(BigInteger id) {
         LOGGER.debug("Delete Operation by id: {}.", id);
-        persistenceService.deleteOperation(id);
-        return Observable.empty();
+        return Completable.fromAction(() ->  persistenceService.deleteOperation(id));
     }
 
     @Override
-    public Observable<OperationDTO> getOperation(final BigInteger id) {
+    public Single<OperationDTO> getOperation(final BigInteger id) {
         LOGGER.debug("Get Operation by id: {}.", id);
-        return Observable.just(persistenceService.getOperation(id));
+        return Single.fromCallable(() -> persistenceService.getOperation(id));
     }
 
     @Override
     public Observable<OperationDTO> getAllOperations() {
-        return Observable.from(persistenceService.getAllOperations());
+        return Observable.fromIterable(persistenceService.getAllOperations());
     }
 
     public void setPersistenceService(OperationPersistenceService persistenceService) {

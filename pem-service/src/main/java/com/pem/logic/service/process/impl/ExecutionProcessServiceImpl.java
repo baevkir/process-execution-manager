@@ -7,12 +7,14 @@ import com.pem.logic.service.process.executor.ProcessExecutor;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.proccess.ExecutionProcessDTO;
 import com.pem.persistence.api.service.process.ProcessPersistenceService;
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import rx.Observable;
 
 import java.math.BigInteger;
 
@@ -26,35 +28,33 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService, App
     private ProcessExecutor operationExecutor;
 
     @Override
-    public Observable<ExecutionProcessDTO> createExecutionProcess(OperationDTO operationEntity) {
+    public Single<ExecutionProcessDTO> createExecutionProcess(OperationDTO operationEntity) {
         LOGGER.debug("Create new ExecutionProcessDTO for: {}.", operationEntity);
         ExecutionProcessDTO processEntity = converterFactory.convert(operationEntity, OperationDTO.class, ExecutionProcessDTO.class);
-        return Observable.just(persistenceService.createProcess(processEntity));
+        return Single.just(persistenceService.createProcess(processEntity));
     }
 
     @Override
-    public Observable<Void> updateExecutionProcess(ExecutionProcessDTO processEntity) {
+    public Completable updateExecutionProcess(ExecutionProcessDTO processEntity) {
         LOGGER.debug("Update ExecutionProcessDTO: {}.", processEntity);
-        persistenceService.updateProcess(processEntity);
-        return Observable.empty();
+         return Completable.fromAction(() -> persistenceService.updateProcess(processEntity));
     }
 
     @Override
-    public Observable<Void> executeProcess(ExecutionProcessDTO executionProcess, OperationContextFactory contextFactory) {
-        operationExecutor.execute(executionProcess, contextFactory);
-        return Observable.empty();
+    public Completable executeProcess(ExecutionProcessDTO executionProcess, OperationContextFactory contextFactory) {
+       return Completable.fromAction(() -> operationExecutor.execute(executionProcess, contextFactory));
     }
 
     @Override
-    public Observable<ExecutionProcessDTO> getExecutionProcess(BigInteger id) {
+    public Single<ExecutionProcessDTO> getExecutionProcess(BigInteger id) {
         LOGGER.debug("Get ExecutionProcessDTO: {}.", id);
-        return Observable.just(persistenceService.getProcess(id));
+        return Single.just(persistenceService.getProcess(id));
     }
 
     @Override
     public Observable<ExecutionProcessDTO> getAllExecutionProcesses() {
         LOGGER.debug("Get All ExecutionProcesses.");
-        return Observable.from(persistenceService.getAllProcesses());
+        return Observable.fromIterable(persistenceService.getAllProcesses());
     }
 
     public void setPersistenceService(ProcessPersistenceService persistenceService) {
@@ -68,7 +68,6 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService, App
     public void setConverterFactory(ConverterFactory converterFactory) {
         this.converterFactory = converterFactory;
     }
-
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

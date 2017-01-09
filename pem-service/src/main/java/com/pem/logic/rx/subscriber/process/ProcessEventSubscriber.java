@@ -3,13 +3,12 @@ package com.pem.logic.rx.subscriber.process;
 import com.pem.logic.rx.eventbus.ServiceEventBus;
 import com.pem.logic.rx.subscriber.process.event.*;
 import com.pem.logic.service.process.ExecutionProcessService;
+import io.reactivex.Observable;
 import org.springframework.util.Assert;
-import rx.Observable;
 
 import javax.annotation.PostConstruct;
 
 public class ProcessEventSubscriber {
-
 
     private ServiceEventBus eventBus;
 
@@ -28,7 +27,7 @@ public class ProcessEventSubscriber {
         Observable<CreateProcessEvent> observable = eventBus.getObservable(CreateProcessEvent.class);
         observable.subscribe(event -> {
             Assert.notNull(event.getSource());
-            processService.createExecutionProcess(event.getSource()).subscribe(event.getObserver());
+            event.observe(processService.createExecutionProcess(event.getSource()));
         });
     }
 
@@ -36,14 +35,14 @@ public class ProcessEventSubscriber {
         Observable<UpdateProcessEvent> observable = eventBus.getObservable(UpdateProcessEvent.class);
         observable.subscribe(event -> {
             Assert.notNull(event.getSource());
-            processService.updateExecutionProcess(event.getSource()).subscribe(event.getObserver());
+            event.observe(processService.updateExecutionProcess(event.getSource()));
         });
     }
 
     private void initExecuteSubscriber() {
         Observable<ExecuteProcessEvent> observable = eventBus.getObservable(ExecuteProcessEvent.class);
         observable.subscribe(event -> {
-            Assert.notNull(event.getSource());
+            Assert.notNull(event.getProcess());
 //            processService.executeProcess(event.getSource()).subscribe(event.getObserver());
         });
     }
@@ -51,14 +50,14 @@ public class ProcessEventSubscriber {
     private void initGetOneSubscriber() {
         Observable<GetOneProcessEvent> observable = eventBus.getObservable(GetOneProcessEvent.class);
         observable.subscribe(event -> {
-            Assert.notNull(event.getSource());
-            processService.getExecutionProcess(event.getSource()).subscribe(event.getObserver());
+            Assert.notNull(event.getSourceId());
+            event.observe(processService.getExecutionProcess(event.getSourceId()));
         });
     }
 
     private void initGetListSubscriber() {
         Observable<GetProcessListEvent> observable = eventBus.getObservable(GetProcessListEvent.class);
-        observable.subscribe(event -> processService.getAllExecutionProcesses().toList().subscribe(event.getObserver()));
+        observable.subscribe(event -> event.observe(processService.getAllExecutionProcesses()));
     }
 
     public void setEventBus(ServiceEventBus eventBus) {

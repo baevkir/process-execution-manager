@@ -1,7 +1,8 @@
 package com.pem.core.rx.eventbus;
 
 import com.pem.core.rx.event.BaseEvent;
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 public interface EventBus<E extends BaseEvent> {
     Observable<E> getObservable();

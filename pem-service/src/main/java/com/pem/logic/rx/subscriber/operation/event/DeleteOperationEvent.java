@@ -4,8 +4,7 @@ import com.pem.core.rx.event.DeleteEvent;
 
 import java.math.BigInteger;
 
-public class DeleteOperationEvent extends DeleteEvent<Void> {
-
+public class DeleteOperationEvent extends DeleteEvent {
     public DeleteOperationEvent(BigInteger sourceId) {
         super(sourceId);
     }

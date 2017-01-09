@@ -2,8 +2,15 @@ package com.pem.core.rx.event;
 
 import java.math.BigInteger;
 
-public abstract class DeleteEvent<T> extends ObservableEvent<BigInteger, T> {
-    public DeleteEvent(BigInteger source) {
-        super(source);
+public abstract class DeleteEvent extends CompletableEvent {
+
+    private BigInteger sourceId;
+
+    public DeleteEvent(BigInteger sourceId) {
+        this.sourceId = sourceId;
+    }
+
+    public BigInteger getSourceId() {
+        return sourceId;
     }
 }
