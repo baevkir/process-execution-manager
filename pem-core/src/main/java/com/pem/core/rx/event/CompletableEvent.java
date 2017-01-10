@@ -4,8 +4,8 @@ import io.reactivex.Completable;
 
 public abstract class CompletableEvent extends ReactiveEvent<Void> {
 
-    public void observe(Completable single) {
-        observeObservable(single.toObservable());
+    public void observe(Completable completable) {
+        observeObservable(completable.toObservable());
     }
 
     public Completable getCompletable() {

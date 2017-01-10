@@ -13,15 +13,13 @@ public class CompositeOperationPresenter extends BaseOperationPresenter<SyncComp
     @Override
     protected void bindBean(SyncCompositeOperationDTO bean) {
         GetOperationListEvent event = new GetOperationListEvent();
-        event.setNotificationObserver(notification -> {
-            if (notification.hasThrowable()) {
-                throw new RuntimeException(notification.getThrowable());
-            }
-            if (notification.isOnNext()) {
-                getView().load(notification.getValue());
-                super.bindBean(bean);
-            }
-        });
+        event.getObservable()
+                .filter(operation -> bean.getId() == null || !operation.getId().equals(bean.getId()))
+                .toList()
+                .subscribe(operations -> {
+                    getView().load(operations);
+                    super.bindBean(bean);
+                });
         getServiceEventBus().post(event);
     }
 }

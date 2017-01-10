@@ -1,13 +1,12 @@
 package com.pem.ui.presentation.process;
 
-import com.pem.model.proccess.ExecutionProcessDTO;
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
+import io.reactivex.Observable;
 
-import java.util.List;
 
 public interface ProcessMainView extends View {
-
     String VIEW_NAME = "processes";
-
-    void load(List<ExecutionProcessDTO> process);
+    Observable<ViewChangeListener.ViewChangeEvent> getMainViewObservable();
+    ProcessesList getProcessesList();
 }

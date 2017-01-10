@@ -6,8 +6,10 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import rx.subjects.PublishSubject;
 
 import javax.annotation.PostConstruct;
 
@@ -23,7 +25,7 @@ public class OperationListViewImpl extends HorizontalLayout implements Operation
 
     private final Panel contentPanel = new Panel();
 
-    private PublishSubject<ViewChangeListener.ViewChangeEvent>  viewSubject;
+    private Subject<ViewChangeListener.ViewChangeEvent> viewSubject;
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
@@ -31,7 +33,7 @@ public class OperationListViewImpl extends HorizontalLayout implements Operation
     }
 
     @Override
-    public PublishSubject<ViewChangeListener.ViewChangeEvent> getViewSubject() {
+    public Observable<ViewChangeListener.ViewChangeEvent> getViewObservable() {
         return viewSubject;
     }
 
@@ -46,7 +48,7 @@ public class OperationListViewImpl extends HorizontalLayout implements Operation
 
     @PostConstruct
     void init() {
-        viewSubject = PublishSubject.create();
+        viewSubject = PublishSubject.<ViewChangeListener.ViewChangeEvent>create().toSerialized();
         setSizeFull();
 
         addComponent(operationList);

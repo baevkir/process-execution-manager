@@ -1,11 +1,12 @@
 package com.pem.ui.presentation.operation.view;
 
-import com.pem.core.rx.event.SaveEvent;
+import com.pem.core.rx.event.BaseEvent;
 import com.pem.logic.rx.eventbus.ServiceEventBus;
 import com.pem.logic.rx.subscriber.operation.event.CreateOperationEvent;
 import com.pem.logic.rx.subscriber.operation.event.UpdateOperationEvent;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.ui.presentation.common.presenter.BaseBeanPresenter;
+import com.pem.ui.presentation.operation.list.OperationListPresenter;
 import com.pem.ui.presentation.operation.list.OperationListView;
 import com.vaadin.ui.UI;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class BaseOperationPresenter<O extends OperationDTO, V extends BaseOperat
 
     @Autowired
     private ServiceEventBus serviceEventBus;
+
+    @Autowired
+    private OperationListPresenter listPresenter;
 
     @Override
     protected void bindBean(O bean) {
@@ -32,23 +36,26 @@ public class BaseOperationPresenter<O extends OperationDTO, V extends BaseOperat
     }
 
     private void saveOperation() {
-        SaveEvent<OperationDTO> saveEvent = getSaveEvent();
-        serviceEventBus.post(saveEvent.setNotificationObserver(notification -> {
-            if (notification.hasThrowable()) {
-                throw new RuntimeException(notification.getThrowable());
-            }
-            if (notification.isOnNext()) {
-                navigateToOperation(notification.getValue().getId());
-            }
-        }));
+        serviceEventBus.post(getSaveEvent());
     }
 
-    private SaveEvent<OperationDTO> getSaveEvent() {
+    private BaseEvent getSaveEvent() {
         OperationDTO operation = getBean();
         if (operation.getId() == null) {
-            return new CreateOperationEvent(operation);
+            CreateOperationEvent event = new CreateOperationEvent(operation);
+            event.getSingle().subscribe(createdOperation -> {
+                navigateToOperation(createdOperation.getId());
+                listPresenter.loadAllOperations();
+            });
+
+            return event;
         }
 
-        return new UpdateOperationEvent(operation);
+        UpdateOperationEvent updateEvent = new UpdateOperationEvent(operation);
+        updateEvent.getCompletable().subscribe(() -> {
+            navigateToOperation(operation.getId());
+            listPresenter.loadAllOperations();
+        });
+        return updateEvent;
     }
 }

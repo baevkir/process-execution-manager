@@ -5,9 +5,9 @@ import com.pem.ui.presentation.common.view.BeanView;
 import com.vaadin.data.Property;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup;
+import io.reactivex.Observable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import rx.Observable;
 
 public abstract class BaseBeanPresenter<B, V extends BeanView<B>> extends BasePresenter<V> {
 
@@ -27,7 +27,6 @@ public abstract class BaseBeanPresenter<B, V extends BeanView<B>> extends BasePr
         binder.setItemDataSource(bean);
         binder.setBuffered(true);
         binder.bindMemberFields(getView());
-
         getView().redrawForm();
 
         getView().getSubmitObservable()

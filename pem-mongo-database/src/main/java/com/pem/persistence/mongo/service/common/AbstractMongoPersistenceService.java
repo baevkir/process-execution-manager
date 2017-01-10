@@ -31,7 +31,7 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
         Assert.notNull(object, "Entity equals NULL.");
         object.setId(null);
         E entity = convertToEntity(object);
-        return convertToObject(getRepository().insert(entity));
+        return convertToObject(getRepository().save(entity));
     }
 
     protected void update(O object){

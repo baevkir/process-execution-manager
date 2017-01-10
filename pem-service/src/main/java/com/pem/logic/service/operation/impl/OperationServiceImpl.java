@@ -17,9 +17,9 @@ public class OperationServiceImpl implements OperationService {
     private OperationPersistenceService persistenceService;
 
     @Override
-    public Single<OperationDTO> createOperation(final OperationDTO operation) {
+    public Single<OperationDTO> createOperation(OperationDTO operation) {
         LOGGER.debug("Create new Operation: {}.", operation);
-        return Single.fromCallable(() -> persistenceService.createOperation(operation));
+        return Single.just(persistenceService.createOperation(operation));
     }
 
     @Override
@@ -35,9 +35,9 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public Single<OperationDTO> getOperation(final BigInteger id) {
+    public Single<OperationDTO> getOperation(BigInteger id) {
         LOGGER.debug("Get Operation by id: {}.", id);
-        return Single.fromCallable(() -> persistenceService.getOperation(id));
+        return Single.just(persistenceService.getOperation(id));
     }
 
     @Override

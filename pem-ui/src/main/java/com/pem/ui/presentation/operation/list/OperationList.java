@@ -7,7 +7,7 @@ import com.vaadin.event.ItemClickEvent;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
-import rx.Observable;
+import io.reactivex.Observable;
 
 import javax.annotation.PostConstruct;
 import java.util.List;

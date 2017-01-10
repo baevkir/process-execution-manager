@@ -57,7 +57,7 @@ public class CompositeOperationView extends BaseOperationView<SyncCompositeOpera
         return mainLayout;
     }
 
-    public void load(List<OperationDTO> operations) {
+    public void  load(List<OperationDTO> operations) {
         operationsSelect.setContainerDataSource(new BeanItemContainer<>(OperationDTO.class, operations));
         operationsSelect.setItemCaptionPropertyId("name");
     }

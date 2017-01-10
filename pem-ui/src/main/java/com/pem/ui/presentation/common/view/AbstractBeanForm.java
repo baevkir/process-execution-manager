@@ -4,8 +4,9 @@ import com.pem.ui.presentation.common.presenter.BaseBeanPresenter;
 import com.pem.ui.presentation.common.rx.RxVaadin;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
-import rx.Observable;
-import rx.subjects.PublishSubject;
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 import javax.annotation.PostConstruct;
 
@@ -17,7 +18,7 @@ public abstract class AbstractBeanForm<B> extends CustomComponent implements Bea
 
     private Observable<Button.ClickEvent> submitObservable;
     private Observable<Button.ClickEvent> cancelObservable;
-    private PublishSubject<B> beanSubject = PublishSubject.create();
+    private Subject<B> beanSubject = PublishSubject.create();
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
@@ -34,7 +35,7 @@ public abstract class AbstractBeanForm<B> extends CustomComponent implements Bea
     }
 
     @Override
-    public PublishSubject<B> getBeanSubject() {
+    public Subject<B> getBeanSubject() {
         return beanSubject;
     }
 

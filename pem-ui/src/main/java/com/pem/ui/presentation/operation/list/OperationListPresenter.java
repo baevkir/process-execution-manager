@@ -33,11 +33,11 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
     @Override
     protected void initViewHandlers() {
         OperationList operationList = getView().getOperationList();
-        getView().getViewSubject()
+        getView().getViewObservable()
                 .filter(event -> !operationList.isDataLoaded())
-                .subscribe(event -> loadAllOperations(operationList));
+                .subscribe(event -> loadAllOperations());
 
-        getView().getViewSubject()
+        getView().getViewObservable()
                 .map(event -> event.getParameters())
                 .filter(parameters -> StringUtils.isNotEmpty(parameters) && StringUtils.isNumeric(parameters))
                 .map(parameters -> new BigInteger(parameters))
@@ -55,36 +55,23 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
         chooseOperationTypeWindow.getOkButtonObservable()
                 .filter(clickEvent -> chooseOperationTypeWindow.getValue() != null)
                 .map(clickEvent -> chooseOperationTypeWindow.getValue().getOperationType())
-                .subscribe(operationType -> openOperationForm(operationType));
+                .subscribe(operationType -> {
+                    openOperationForm(operationType);
+                    chooseOperationTypeWindow.close();
+                });
 
     }
 
-    private void loadAllOperations(OperationList loader) {
+    public void loadAllOperations() {
+        OperationList operationList = getView().getOperationList();
         GetOperationListEvent event = new GetOperationListEvent();
-        event.setNotificationObserver(notification -> {
-            if (notification.hasThrowable()) {
-                throw new RuntimeException(notification.getThrowable());
-            }
-            if (notification.isOnNext()) {
-                loader.load(notification.getValue());
-            }
-        });
+        event.getObservable().toList().subscribe(operations -> operationList.load(operations));
         serviceEventBus.post(event);
     }
 
     private void openOperationForm(BigInteger operationId) {
         GetOperationEvent event = new GetOperationEvent(operationId);
-        event.setNotificationObserver(notification -> {
-                    if (notification.hasThrowable()) {
-                        throw new RuntimeException(notification.getThrowable());
-                    }
-
-                    if (notification.isOnNext()) {
-                        OperationDTO operation = notification.getValue();
-                        openOperationForm(operation);
-                    }
-                }
-        );
+        event.getSingle().subscribe(operation -> openOperationForm(operation));
         serviceEventBus.post(event);
     }
 

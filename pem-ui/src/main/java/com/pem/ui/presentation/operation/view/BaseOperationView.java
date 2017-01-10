@@ -6,11 +6,8 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 
 public abstract class BaseOperationView<O extends OperationDTO> extends BaseBeanForm<O> {
-
-    @Override
+      @Override
     protected Layout createTopToolbar() {
         return new HorizontalLayout();
     }
-
-
 }

@@ -10,8 +10,8 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.Window;
+import io.reactivex.Observable;
 import org.springframework.beans.factory.annotation.Autowired;
-import rx.Observable;
 
 import javax.annotation.PostConstruct;
 
