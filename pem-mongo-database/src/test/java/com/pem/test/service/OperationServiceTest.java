@@ -37,9 +37,19 @@ public class OperationServiceTest {
 
     @Test
     public void testSaveToDBOperation() {
-        OperationDTO operationEntity = createSimpleBeanOperation();
-        OperationDTO queryOperation = operationPersistenceService.getOperation(operationEntity.getId());
-        Assert.assertEquals(operationEntity.getClass(), queryOperation.getClass());
+        int operationsSize = operationPersistenceService.getAllOperations().size();
+        OperationDTO operationEntity1 = createSimpleBeanOperation();
+        OperationDTO queryOperation1 = operationPersistenceService.getOperation(operationEntity1.getId());
+        Assert.assertEquals(operationEntity1.getClass(), queryOperation1.getClass());
+
+        OperationDTO operationEntity2 = createSimpleBeanOperation();
+        OperationDTO queryOperation2 = operationPersistenceService.getOperation(operationEntity2.getId());
+        Assert.assertEquals(operationEntity2.getClass(), queryOperation2.getClass());
+
+        int operationsSizeAfter = operationPersistenceService.getAllOperations().size();
+
+        Assert.assertNotEquals(operationEntity1.getId(), operationEntity2.getId());
+        Assert.assertEquals(operationsSizeAfter - operationsSize, 2);
     }
 
     @Test
