@@ -9,6 +9,6 @@ public abstract class SingleEvent<T> extends ReactiveEvent<T> {
     }
 
     public Single<T> getSingle() {
-        return getEventSubject().singleOrError();
+        return getLogedObservable().singleOrError();
     }
 }

@@ -6,5 +6,5 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ServiceEventBusImpl extends RxEvenBus<BaseEvent> implements ServiceEventBus {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RxEvenBus.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServiceEventBusImpl.class);
 }

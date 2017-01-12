@@ -50,11 +50,8 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
     protected O getOne(BigInteger id){
         Assert.notNull(id, "Id is empty, can`t find Entity.");
         LOGGER.debug("Start to find object for {}", id);
-        E entity =getRepository().findOne(id);
-        if (entity == null) {
-            LOGGER.warn("Can't find {} by ID {}.", getObjectClass().getName(), id);
-            return null;
-        }
+        E entity = getRepository().findOne(id);
+        Assert.notNull(entity, String.format("Can't find %s by ID s.", getObjectClass().getName(), id));
 
         return convertToObject(entity);
     }
@@ -103,22 +100,12 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
 
     protected List<E> convertAllToEntities(List<O> objects) {
         final Class<E> entityClass = getEntityClass();
-        return FluentIterable.from(objects).transform(new Function<O, E>() {
-            @Override
-            public E apply(O input) {
-                return converterFactory.convert(input, entityClass);
-            }
-        }).toList();
+        return FluentIterable.from(objects).transform(input -> converterFactory.convert(input, entityClass)).toList();
     }
 
     protected List<O> convertAllToObjects(List<E> entities) {
         final Class<O> objectClass = getObjectClass();
-        return FluentIterable.from(entities).transform(new Function<E, O>() {
-            @Override
-            public O apply(E input) {
-                return converterFactory.convert(input, objectClass);
-            }
-        }).toList();
+        return FluentIterable.from(entities).transform(input -> converterFactory.convert(input, objectClass)).toList();
     }
 
     private Class<E> getEntityClass() {

@@ -48,8 +48,7 @@ public class OperationEventSubscriber {
     }
 
     private void initGetOneSubscriber() {
-        Observable<GetOperationEvent> observable = eventBus.getObservable(GetOperationEvent.class);
-        observable.subscribe(event -> {
+        eventBus.getObservable(GetOperationEvent.class).subscribe(event -> {
             Assert.notNull(event.getSourceId());
             event.observe(operationService.getOperation(event.getSourceId()));
         });

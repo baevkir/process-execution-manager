@@ -9,6 +9,6 @@ public abstract class CompletableEvent extends ReactiveEvent<Void> {
     }
 
     public Completable getCompletable() {
-        return getEventSubject().ignoreElements();
+        return getLogedObservable().ignoreElements();
     }
 }

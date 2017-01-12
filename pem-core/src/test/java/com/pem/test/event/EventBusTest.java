@@ -1,9 +1,10 @@
 package com.pem.test.event;
 
 import com.pem.core.rx.event.BaseEvent;
+import com.pem.core.rx.event.ThrowableEvent;
 import com.pem.core.rx.eventbus.EventBus;
 import com.pem.core.rx.eventbus.RxEvenBus;
-import org.junit.Assert;
+import io.reactivex.observers.TestObserver;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,33 +15,52 @@ public class EventBusTest {
     @Before
     public void init() {
         eventBus = new RxEvenBus<>();
-        eventBus.getObservable(TestEvent.class).subscribe(testEvent -> testEvent.setEventHandled(true));
     }
 
     @Test
     public void testFirstGreaterOperations() {
+        TestObserver<TestEvent> testEventObserver = eventBus.getObservable(TestEvent.class).test();
         TestEvent testEvent = new TestEvent();
         eventBus.post(testEvent);
 
-        UnhandledEvent unhandledEvent = new UnhandledEvent();
-        eventBus.post(unhandledEvent);
-
-        Assert.assertTrue(testEvent.isEventHandled());
-        Assert.assertFalse(unhandledEvent.isEventHandled());
+        testEventObserver.assertNoErrors().assertValueCount(1).assertValue(testEvent);
     }
 
-    private class UnhandledEvent extends BaseEvent {
-        boolean eventHandled = false;
+    @Test
+    public void testErrorEvent() {
+        RuntimeException testException = new RuntimeException("Test exception");
 
-        public UnhandledEvent() {
-        }
+        TestObserver<Object> throwableObserver = eventBus.getObservable().map(baseEvent -> {
+            throw testException;
+        }).onErrorReturn(exception -> new ThrowableEvent(exception)).test();
 
-        public boolean isEventHandled() {
-            return eventHandled;
-        }
+        eventBus.getObservable(TestEvent.class).subscribe(testEvent -> {
+            throw testException;
+        });
+        eventBus.post(new TestEvent());
 
-        public void setEventHandled(boolean eventHandled) {
-            this.eventHandled = eventHandled;
-        }
+        throwableObserver.assertNoErrors().assertValueCount(1).assertValue(object -> {
+            if (!(object instanceof ThrowableEvent)) {
+                return false;
+            }
+
+            ThrowableEvent event = (ThrowableEvent) object;
+
+            return testException.equals(event.getThrowable());
+        });
+
+        TestObserver<TestEvent1> testEvent1Observer = eventBus.getObservable(TestEvent1.class).test();
+        TestEvent1 testEvent1 = new TestEvent1();
+
+        eventBus.post(testEvent1);
+
+        testEvent1Observer.assertNoErrors().assertValueCount(1).assertValue(testEvent1);
     }
+
+    private class TestEvent extends BaseEvent {
+    }
+
+    private class TestEvent1 extends BaseEvent {
+    }
+
 }

@@ -4,9 +4,12 @@ import io.reactivex.Observable;
 import io.reactivex.observers.DefaultObserver;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 public abstract class ReactiveEvent<T> extends BaseEvent {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReactiveEvent.class);
 
     private Subject<T> eventSubject;
 
@@ -36,5 +39,12 @@ public abstract class ReactiveEvent<T> extends BaseEvent {
 
     protected  Subject<T> getEventSubject() {
         return eventSubject;
+    }
+
+    protected Observable<T> getLogedObservable() {
+        return getEventSubject()
+                .doOnError(exception -> LOGGER.error("Can't observe event.", exception))
+                .doOnNext(bean -> LOGGER.debug("Handle bean: {} in event {}.", bean, getClass()))
+                .doOnComplete(() -> LOGGER.warn("Event {} completed.", getClass()));
     }
 }

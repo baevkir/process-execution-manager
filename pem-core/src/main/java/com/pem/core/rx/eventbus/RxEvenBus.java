@@ -11,25 +11,38 @@ import org.slf4j.LoggerFactory;
 public class RxEvenBus<E extends BaseEvent> implements EventBus<E> {
     private static final Logger LOGGER = LoggerFactory.getLogger(RxEvenBus.class);
 
-    private final Subject<E> eventBusSubject = PublishSubject.<E>create().toSerialized();
+    private Subject<E> eventBus;
+
+    public RxEvenBus() {
+        eventBus = createSubject();
+    }
 
     @Override
     public Observable<E> getObservable() {
         LOGGER.trace("Get common Observable");
-        return eventBusSubject;
+        return getEventBus()
+                .doOnError(exception -> LOGGER.warn("Can't observe event.", exception))
+                .doOnNext(event -> LOGGER.debug("Handle event: {}.", event))
+                .doOnComplete(() -> LOGGER.warn("Event Bus completed."));
     }
 
     @Override
     public <T extends E> Observable<T> getObservable(final Class<T> eventType) {
         LOGGER.trace("Get Observable for {}.", eventType);
-        return eventBusSubject
-                .filter(event -> eventType.isInstance(event))
-                .map(event -> (T) event);
+        return getObservable().ofType(eventType);
     }
 
     @Override
     public <T extends E> void post(T event) {
         LOGGER.trace("Post: {}.", event);
-        eventBusSubject.onNext(event);
+        eventBus.onNext(event);
+    }
+
+    protected Subject<E> createSubject() {
+        return PublishSubject.<E>create().toSerialized();
+    }
+
+    protected Subject<E> getEventBus() {
+        return eventBus;
     }
 }

@@ -10,6 +10,6 @@ public abstract class ObservableEvent<T> extends ReactiveEvent<T> {
     }
 
     public Observable<T> getObservable() {
-        return getEventSubject();
+        return getLogedObservable();
     }
 }
