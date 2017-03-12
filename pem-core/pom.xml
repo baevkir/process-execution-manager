@@ -84,12 +84,6 @@
             <artifactId>commons-collections</artifactId>
         </dependency>
 
-        <!-- rxjava -->
-        <dependency>
-            <groupId>io.reactivex.rxjava2</groupId>
-            <artifactId>rxjava</artifactId>
-        </dependency>
-
         <!-- joda-time -->
         <dependency>
             <groupId>joda-time</groupId>

@@ -1,7 +1,6 @@
 package com.pem.core.common.converter.factory.impl;
 
 import com.pem.core.common.bean.iterable.BeansIterable;
-import com.pem.core.common.bean.iterable.Consumer;
 import com.pem.core.common.converter.factory.ConverterFactory;
 import com.pem.core.common.converter.impl.Converter;
 import com.pem.core.common.converter.impl.RegisterInConverterFactory;
@@ -43,20 +42,17 @@ public abstract class AutoInitConverterFactory implements ConverterFactory, Appl
         ApplicationContextWrapper contextWrapper = new ApplicationContextWrapper(applicationContext);
         Map<String, Converter> converters = contextWrapper.findBeanByAnnotation(RegisterInConverterFactory.class, Converter.class);
 
-        BeansIterable.fromBeans(converters).forEach(new Consumer<Converter>() {
-            @Override
-            public void accept(Converter input) {
-                Class<? extends Converter> clazz = (Class<? extends Converter>) AopProxyUtils.ultimateTargetClass(input);
-                RegisterInConverterFactory annotation = clazz.getAnnotation(RegisterInConverterFactory.class);
-                List<String> factories = Arrays.asList(annotation.factories());
-                if (factories.contains(converterFactoryName)) {
-                    setConverter(input);
-                }
+        BeansIterable.fromBeans(converters).forEach(converter -> {
+            Class<? extends Converter> clazz = (Class<? extends Converter>) AopProxyUtils.ultimateTargetClass(converter);
+            RegisterInConverterFactory annotation = clazz.getAnnotation(RegisterInConverterFactory.class);
+            List<String> factories = Arrays.asList(annotation.factories());
+            if (factories.contains(converterFactoryName)) {
+                setConverter(converter);
             }
         });
     }
 
-    protected abstract  <T, S> void setConverter(Converter<S, T> converter);
+    protected abstract <T, S> void setConverter(Converter<S, T> converter);
 
     protected ApplicationContext getApplicationContext() {
         return applicationContext;
