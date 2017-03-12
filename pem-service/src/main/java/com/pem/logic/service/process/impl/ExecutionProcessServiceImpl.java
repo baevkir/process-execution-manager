@@ -7,14 +7,13 @@ import com.pem.logic.service.process.executor.ProcessExecutor;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.proccess.ExecutionProcessDTO;
 import com.pem.persistence.api.service.process.ProcessPersistenceService;
-import io.reactivex.Completable;
-import io.reactivex.Observable;
-import io.reactivex.Single;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
 
@@ -28,33 +27,33 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService, App
     private ProcessExecutor operationExecutor;
 
     @Override
-    public Single<ExecutionProcessDTO> createExecutionProcess(OperationDTO operationEntity) {
+    public Mono<ExecutionProcessDTO> createExecutionProcess(OperationDTO operationEntity) {
         LOGGER.debug("Create new ExecutionProcessDTO for: {}.", operationEntity);
         ExecutionProcessDTO processEntity = converterFactory.convert(operationEntity, OperationDTO.class, ExecutionProcessDTO.class);
-        return Single.just(persistenceService.createProcess(processEntity));
+        return Mono.fromCallable(() -> persistenceService.createProcess(processEntity));
     }
 
     @Override
-    public Completable updateExecutionProcess(ExecutionProcessDTO processEntity) {
+    public Mono<Void> updateExecutionProcess(ExecutionProcessDTO processEntity) {
         LOGGER.debug("Update ExecutionProcessDTO: {}.", processEntity);
-         return Completable.fromAction(() -> persistenceService.updateProcess(processEntity));
+         return Mono.fromRunnable(() -> persistenceService.updateProcess(processEntity));
     }
 
     @Override
-    public Completable executeProcess(ExecutionProcessDTO executionProcess, OperationContextFactory contextFactory) {
-       return Completable.fromAction(() -> operationExecutor.execute(executionProcess, contextFactory));
+    public Mono<Void> executeProcess(ExecutionProcessDTO executionProcess, OperationContextFactory contextFactory) {
+       return Mono.fromRunnable(() -> operationExecutor.execute(executionProcess, contextFactory));
     }
 
     @Override
-    public Single<ExecutionProcessDTO> getExecutionProcess(BigInteger id) {
+    public Mono<ExecutionProcessDTO> getExecutionProcess(BigInteger id) {
         LOGGER.debug("Get ExecutionProcessDTO: {}.", id);
-        return Single.just(persistenceService.getProcess(id));
+        return Mono.fromCallable(() -> persistenceService.getProcess(id));
     }
 
     @Override
-    public Observable<ExecutionProcessDTO> getAllExecutionProcesses() {
+    public Flux<ExecutionProcessDTO> getAllExecutionProcesses() {
         LOGGER.debug("Get All ExecutionProcesses.");
-        return Observable.fromIterable(persistenceService.getAllProcesses());
+        return Flux.fromIterable(persistenceService.getAllProcesses());
     }
 
     public void setPersistenceService(ProcessPersistenceService persistenceService) {

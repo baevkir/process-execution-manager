@@ -3,11 +3,10 @@ package com.pem.logic.service.operation.impl;
 import com.pem.logic.service.operation.OperationService;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;
-import io.reactivex.Completable;
-import io.reactivex.Observable;
-import io.reactivex.Single;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
 
@@ -17,32 +16,32 @@ public class OperationServiceImpl implements OperationService {
     private OperationPersistenceService persistenceService;
 
     @Override
-    public Single<OperationDTO> createOperation(OperationDTO operation) {
+    public Mono<OperationDTO> createOperation(OperationDTO operation) {
         LOGGER.debug("Create new Operation: {}.", operation);
-        return Single.just(persistenceService.createOperation(operation));
+        return Mono.fromCallable(() -> persistenceService.createOperation(operation));
     }
 
     @Override
-    public Completable updateOperation(OperationDTO operationEntity) {
-        LOGGER.debug("Update Operation: {}.", operationEntity);
-        return Completable.fromAction(() -> persistenceService.updateOperation(operationEntity));
+    public Mono<Void> updateOperation(OperationDTO operation) {
+        LOGGER.debug("Update Operation: {}.", operation);
+        return Mono.fromRunnable(() -> persistenceService.updateOperation(operation));
     }
 
     @Override
-    public Completable deleteOperation(BigInteger id) {
+    public Mono<Void> deleteOperation(BigInteger id) {
         LOGGER.debug("Delete Operation by id: {}.", id);
-        return Completable.fromAction(() ->  persistenceService.deleteOperation(id));
+        return Mono.fromRunnable(() ->  persistenceService.deleteOperation(id));
     }
 
     @Override
-    public Single<OperationDTO> getOperation(BigInteger id) {
+    public Mono<OperationDTO> getOperation(BigInteger id) {
         LOGGER.debug("Get Operation by id: {}.", id);
-        return Single.just(persistenceService.getOperation(id));
+        return Mono.fromCallable(() -> persistenceService.getOperation(id));
     }
 
     @Override
-    public Observable<OperationDTO> getAllOperations() {
-        return Observable.fromIterable(persistenceService.getAllOperations());
+    public Flux<OperationDTO> getAllOperations() {
+        return Flux.fromIterable(persistenceService.getAllOperations());
     }
 
     public void setPersistenceService(OperationPersistenceService persistenceService) {
