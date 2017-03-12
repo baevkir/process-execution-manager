@@ -19,13 +19,13 @@ public class OperationContextFactoryTest {
 
     @Test
     public void testDefaultContext() {
-        OperationContext context = OperationContextFactory.newInstance().setId(BigInteger.ZERO).createContext();
+        OperationContext context = OperationContextFactory.create().setId(BigInteger.ZERO).createContext();
         Assert.assertNotNull(context);
     }
 
     @Test
     public void testCustomContext() {
-        OperationContext context = OperationContextFactory.newInstance()
+        OperationContext context = OperationContextFactory.create()
                 .setId(BigInteger.ZERO)
                 .setContextClass(MathOperationContext.class)
                 .createContext();
@@ -34,7 +34,7 @@ public class OperationContextFactoryTest {
 
     @Test
     public void testStringCustomContext() {
-        OperationContext context = OperationContextFactory.newInstance()
+        OperationContext context = OperationContextFactory.create()
                 .setId(BigInteger.ZERO)
                 .setContextClass("com.pem.logic.MathOperationContext")
                 .createContext();

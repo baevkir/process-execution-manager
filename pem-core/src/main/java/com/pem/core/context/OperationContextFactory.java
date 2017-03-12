@@ -15,7 +15,7 @@ public class OperationContextFactory {
     private OperationContextFactory() {
     }
 
-    public static OperationContextFactory newInstance() {
+    public static OperationContextFactory create() {
         return new OperationContextFactory();
     }
 
