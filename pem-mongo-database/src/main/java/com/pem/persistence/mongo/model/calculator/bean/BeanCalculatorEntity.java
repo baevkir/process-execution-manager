@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 
 public abstract class BeanCalculatorEntity extends CalculatorEntity {
 
-    @Indexed(unique = true)
+    @Indexed
     private BeanObject bean;
 
     private boolean active;

@@ -19,10 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = FongoConfig.class)
@@ -38,18 +35,24 @@ public class OperationServiceTest {
     @Test
     public void testSaveToDBOperation() {
         int operationsSize = operationPersistenceService.getAllOperations().size();
-        OperationDTO operationEntity1 = createSimpleBeanOperation();
-        OperationDTO queryOperation1 = operationPersistenceService.getOperation(operationEntity1.getId());
+        SyncCompositeOperationDTO operationEntity1 = new SyncCompositeOperationDTO();
+        operationEntity1.setOperations(Collections.singletonList(createSimpleBeanOperation()));
+        OperationDTO queryOperation1 = operationPersistenceService.getOperation(
+                operationPersistenceService.createOperation(operationEntity1).getId());
+
         Assert.assertEquals(operationEntity1.getClass(), queryOperation1.getClass());
 
-        OperationDTO operationEntity2 = createSimpleBeanOperation();
-        OperationDTO queryOperation2 = operationPersistenceService.getOperation(operationEntity2.getId());
+        SyncCompositeOperationDTO operationEntity2 = new SyncCompositeOperationDTO();
+        operationEntity2.setOperations(Collections.singletonList(createSimpleBeanOperation()));
+        OperationDTO queryOperation2 = operationPersistenceService.getOperation(
+                operationPersistenceService.createOperation(operationEntity2).getId());
+
         Assert.assertEquals(operationEntity2.getClass(), queryOperation2.getClass());
 
         int operationsSizeAfter = operationPersistenceService.getAllOperations().size();
 
-        Assert.assertNotEquals(operationEntity1.getId(), operationEntity2.getId());
-        Assert.assertEquals(operationsSizeAfter - operationsSize, 2);
+        Assert.assertNotEquals(queryOperation2.getId(), queryOperation1.getId());
+        Assert.assertEquals(operationsSizeAfter, operationsSize + 4);
     }
 
     @Test
@@ -62,7 +65,7 @@ public class OperationServiceTest {
         compositeOperationEntity.setOperations(operationEntities);
 
         OperationDTO newCompositeOperationEntity = operationPersistenceService.createOperation(compositeOperationEntity);
-        OperationDTO queryOperation = operationPersistenceService.getOperation(newCompositeOperationEntity.getId());
+         OperationDTO queryOperation = operationPersistenceService.getOperation(newCompositeOperationEntity.getId());
         Assert.assertEquals(newCompositeOperationEntity.getClass(), queryOperation.getClass());
     }
 

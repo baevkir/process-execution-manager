@@ -1,8 +1,6 @@
 package com.pem.persistence.mongo.model.common;
 
 import org.joda.time.DateTime;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 public abstract class BaseEntity extends IdentifiableEntity {
@@ -12,10 +10,10 @@ public abstract class BaseEntity extends IdentifiableEntity {
 
     private String description;
 
-    @CreatedDate
+//    @CreatedDate
     private DateTime createdWhen;
 
-    @LastModifiedDate
+//    @LastModifiedDate
     private DateTime modifyWhen;
 
     public String getName() {

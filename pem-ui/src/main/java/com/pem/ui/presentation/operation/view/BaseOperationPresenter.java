@@ -44,8 +44,8 @@ public class BaseOperationPresenter<O extends OperationDTO, V extends BaseOperat
         if (operation.getId() == null) {
             CreateOperationEvent event = new CreateOperationEvent(operation);
             event.getSingle().subscribe(createdOperation -> {
-                navigateToOperation(createdOperation.getId());
-                listPresenter.loadAllOperations();
+//                navigateToOperation(createdOperation.getId());
+//                listPresenter.loadAllOperations();
             });
 
             return event;

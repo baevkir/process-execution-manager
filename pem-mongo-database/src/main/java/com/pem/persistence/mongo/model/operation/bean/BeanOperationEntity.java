@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 
 public class BeanOperationEntity extends OperationEntity {
 
-    @Indexed(unique = true)
+    @Indexed
     private BeanObject bean;
 
     private boolean active;

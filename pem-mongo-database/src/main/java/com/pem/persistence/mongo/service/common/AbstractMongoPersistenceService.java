@@ -21,6 +21,10 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
 
     private ConverterFactory converterFactory;
 
+    private Class<O> objectClass;
+
+    private Class<E> entityClass;
+
     public void setConverterFactory(ConverterFactory converterFactory) {
         this.converterFactory = converterFactory;
     }
@@ -31,7 +35,7 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
         Assert.notNull(object, "Entity equals NULL.");
         object.setId(null);
         E entity = convertToEntity(object);
-        return convertToObject(getRepository().save(entity));
+        return convertToObject(getRepository().insert(entity));
     }
 
     protected void update(O object){
@@ -51,7 +55,10 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
         Assert.notNull(id, "Id is empty, can`t find Entity.");
         LOGGER.debug("Start to find object for {}", id);
         E entity = getRepository().findOne(id);
-        Assert.notNull(entity, String.format("Can't find %s by ID s.", getObjectClass().getName(), id));
+        if (entity == null) {
+            LOGGER.warn("Can't find {} by ID {}.", getEntityClass().getName(), id);
+            return null;
+        }
 
         return convertToObject(entity);
     }
@@ -109,19 +116,23 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
     }
 
     private Class<E> getEntityClass() {
-        Class converterClass = this.getClass();
-        Class[] generics = GenericTypeResolver.resolveTypeArguments(converterClass, AbstractMongoPersistenceService.class);
-        Class tClass = generics[1];
+        if (entityClass == null) {
+            Class converterClass = this.getClass();
+            Class[] generics = GenericTypeResolver.resolveTypeArguments(converterClass, AbstractMongoPersistenceService.class);
+            entityClass = generics[1];
+        }
 
-        return tClass;
+        return entityClass;
     }
 
     private Class<O> getObjectClass() {
-        Class converterClass = this.getClass();
-        Class[] generics = GenericTypeResolver.resolveTypeArguments(converterClass, AbstractMongoPersistenceService.class);
-        Class tClass = generics[0];
+        if (objectClass == null) {
+            Class converterClass = this.getClass();
+            Class[] generics = GenericTypeResolver.resolveTypeArguments(converterClass, AbstractMongoPersistenceService.class);
+            objectClass = generics[0];
+        }
 
-        return tClass;
+        return objectClass;
     }
 
 
