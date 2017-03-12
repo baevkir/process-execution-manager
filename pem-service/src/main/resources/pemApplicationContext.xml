@@ -13,7 +13,6 @@
     <import resource="classpath:/config/operation-config.xml"/>
     <import resource="classpath:/config/database-syncronization-context.xml"/>
     <import resource="classpath:/config/service-config.xml"/>
-    <import resource="classpath:/config/events-config.xml"/>
 
     <bean id="operationContextProxy" class="com.pem.logic.common.proxy.OperationContextProxy"/>
 
