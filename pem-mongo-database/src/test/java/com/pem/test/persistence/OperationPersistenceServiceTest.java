@@ -1,4 +1,4 @@
-package com.pem.test.service;
+package com.pem.test.persistence;
 
 import com.pem.model.calculator.bean.BinaryBeanCalculatorDTO;
 import com.pem.model.calculator.common.CalculatorDTO;
@@ -23,7 +23,7 @@ import java.util.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = FongoConfig.class)
-public class OperationServiceTest {
+public class OperationPersistenceServiceTest {
 
     private TestEntityCreator creator = new TestEntityCreator();
 

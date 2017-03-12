@@ -1,4 +1,4 @@
-package com.pem.test.service;
+package com.pem.test.persistence;
 
 import com.pem.model.proccess.ExecutionProcessDTO;
 import com.pem.persistence.api.service.process.ProcessPersistenceService;
@@ -15,7 +15,7 @@ import java.util.Collections;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = FongoConfig.class)
-public class ProcessorServiceTest {
+public class ProcessorPersistenceServiceTest {
 
     private TestEntityCreator creator = new TestEntityCreator();
 
