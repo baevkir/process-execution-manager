@@ -6,9 +6,10 @@ import com.pem.persistence.mongo.model.calculator.common.CalculatorEntity;
 import com.pem.persistence.mongo.repository.calculator.CalculatorRepository;
 import com.pem.persistence.mongo.service.common.AbstractMongoPersistenceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
-import java.util.List;
 
 public class MongoCalculatorPersistenceService extends AbstractMongoPersistenceService<CalculatorDTO, CalculatorEntity> implements CalculatorPersistenceService {
 
@@ -21,32 +22,32 @@ public class MongoCalculatorPersistenceService extends AbstractMongoPersistenceS
     }
 
     @Override
-    public CalculatorDTO createCalculator(CalculatorDTO operation) {
+    public Mono<CalculatorDTO> createCalculator(CalculatorDTO operation) {
         return create(operation);
     }
 
     @Override
-    public void updateCalculator(CalculatorDTO operation) {
-        update(operation);
+    public Mono<Void> updateCalculator(CalculatorDTO operation) {
+        return update(operation);
     }
 
     @Override
-    public CalculatorDTO getCalculator(BigInteger id) {
+    public Mono<CalculatorDTO> getCalculator(BigInteger id) {
         return getOne(id);
     }
 
     @Override
-    public List<CalculatorDTO> getAllCalculators() {
+    public Flux<CalculatorDTO> getAllCalculators() {
         return getAll();
     }
 
     @Override
-    public <C extends CalculatorDTO> List<C> getCalculatorsByType(final Class<C> targetClass) {
+    public <C extends CalculatorDTO> Flux<C> getCalculatorsByType(final Class<C> targetClass) {
         return getAllByType(targetClass);
     }
 
     @Override
-    public void deleteCalculator(BigInteger id) {
-        delete(id);
+    public Mono<Void> deleteCalculator(BigInteger id) {
+        return delete(id);
     }
 }

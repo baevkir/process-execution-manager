@@ -7,6 +7,7 @@ import com.pem.persistence.mongo.model.proccess.record.ExecutionRecordEntity;
 import com.pem.persistence.mongo.repository.process.ExecutionRecordRepository;
 import com.pem.persistence.mongo.service.common.AbstractMongoPersistenceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import reactor.core.publisher.Mono;
 
 public class MongoExecutionRecordPersistenceService extends AbstractMongoPersistenceService<ExecutionRecordDTO, ExecutionRecordEntity> implements ExecutionRecordPersistenceService {
 
@@ -19,19 +20,20 @@ public class MongoExecutionRecordPersistenceService extends AbstractMongoPersist
     }
 
     @Override
-    public ExecutionRecordDTO createExecutionRecord(ExecutionRecordDTO executionRecord) {
+    public Mono<ExecutionRecordDTO> createExecutionRecord(ExecutionRecordDTO executionRecord) {
         return create(executionRecord);
     }
 
     @Override
-    public void updateExecutionRecord(ExecutionRecordDTO executionRecord) {
-        update(executionRecord);
+    public Mono<Void> updateExecutionRecord(ExecutionRecordDTO executionRecord) {
+        return update(executionRecord);
     }
 
     @Override
-    public ExecutionRecordDTO findExecutionRecordByPk(ExecutionRecordPK pk) {
-        ExecutionRecordEntity executionRecordEntity = getRepository().findExecutionRecordByPk(pk);
-        return convertToObject(executionRecordEntity);
+    public Mono<ExecutionRecordDTO> findExecutionRecordByPk(ExecutionRecordPK pk) {
+        return Mono.just(pk)
+                .map(currentPk -> getRepository().findExecutionRecordByPk(pk))
+                .map(entity -> convertToObject(entity));
     }
 
 }

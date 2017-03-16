@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import reactor.test.StepVerifier;
 
 import java.math.BigInteger;
 import java.util.*;
@@ -34,22 +35,22 @@ public class OperationPersistenceServiceTest {
 
     @Test
     public void testSaveToDBOperation() {
-        int operationsSize = operationPersistenceService.getAllOperations().size();
+        long operationsSize = operationPersistenceService.getAllOperations().count().block();
         SyncCompositeOperationDTO operationEntity1 = new SyncCompositeOperationDTO();
         operationEntity1.setOperations(Collections.singletonList(createSimpleBeanOperation()));
         OperationDTO queryOperation1 = operationPersistenceService.getOperation(
-                operationPersistenceService.createOperation(operationEntity1).getId());
+                operationPersistenceService.createOperation(operationEntity1).block().getId()).block();
 
         Assert.assertEquals(operationEntity1.getClass(), queryOperation1.getClass());
 
         SyncCompositeOperationDTO operationEntity2 = new SyncCompositeOperationDTO();
         operationEntity2.setOperations(Collections.singletonList(createSimpleBeanOperation()));
         OperationDTO queryOperation2 = operationPersistenceService.getOperation(
-                operationPersistenceService.createOperation(operationEntity2).getId());
+                operationPersistenceService.createOperation(operationEntity2).block().getId()).block();
 
         Assert.assertEquals(operationEntity2.getClass(), queryOperation2.getClass());
 
-        int operationsSizeAfter = operationPersistenceService.getAllOperations().size();
+        long operationsSizeAfter = operationPersistenceService.getAllOperations().count().block();
 
         Assert.assertNotEquals(queryOperation2.getId(), queryOperation1.getId());
         Assert.assertEquals(operationsSizeAfter, operationsSize + 4);
@@ -64,8 +65,8 @@ public class OperationPersistenceServiceTest {
         operationEntities.add(createSimpleBeanOperation());
         compositeOperationEntity.setOperations(operationEntities);
 
-        OperationDTO newCompositeOperationEntity = operationPersistenceService.createOperation(compositeOperationEntity);
-         OperationDTO queryOperation = operationPersistenceService.getOperation(newCompositeOperationEntity.getId());
+        OperationDTO newCompositeOperationEntity = operationPersistenceService.createOperation(compositeOperationEntity).block();
+        OperationDTO queryOperation = operationPersistenceService.getOperation(newCompositeOperationEntity.getId()).block();
         Assert.assertEquals(newCompositeOperationEntity.getClass(), queryOperation.getClass());
     }
 
@@ -79,18 +80,23 @@ public class OperationPersistenceServiceTest {
             innerOperationIds.add(state.getValue().getId());
         }
 
-        operationPersistenceService.deleteOperation(id);
+        operationPersistenceService.deleteOperation(id).block();
 
-        OperationDTO testOperation = operationPersistenceService.getOperation(id);
-        Assert.assertNull(testOperation);
+        StepVerifier.create(operationPersistenceService.getOperation(id))
+                .expectNextCount(0)
+                .expectComplete()
+                .verify();
 
         for (BigInteger innerId : innerOperationIds) {
-            OperationDTO innerOperation = operationPersistenceService.getOperation(innerId);
+            OperationDTO innerOperation = operationPersistenceService.getOperation(innerId).block();
             Assert.assertNotNull(innerOperation);
 
-            operationPersistenceService.deleteOperation(innerOperation.getId());
+            operationPersistenceService.deleteOperation(innerOperation.getId()).block();
 
-            Assert.assertNull(operationPersistenceService.getOperation(innerId));
+            StepVerifier.create(operationPersistenceService.getOperation(innerId))
+                    .expectNextCount(1)
+                    .expectComplete()
+                    .verify();
         }
 
     }
@@ -101,14 +107,14 @@ public class OperationPersistenceServiceTest {
         createSimpleBeanOperation();
         createBinaryConditionOperationEntity();
 
-        List<OperationDTO> fullList = operationPersistenceService.getAllOperations();
+        List<OperationDTO> fullList = operationPersistenceService.getAllOperations().collectList().block();
         Assert.assertTrue(fullList.size() != 0);
 
-        List<BeanOperationDTO> beanOperationEntities = operationPersistenceService.getOperationsByType(BeanOperationDTO.class);
+        List<BeanOperationDTO> beanOperationEntities = operationPersistenceService.getOperationsByType(BeanOperationDTO.class).collectList().block();
         Assert.assertTrue(beanOperationEntities.size() != 0);
         Assert.assertTrue(beanOperationEntities.size() != fullList.size());
 
-        List<BinaryConditionOperationDTO> conditionOperationEntities = operationPersistenceService.getOperationsByType(BinaryConditionOperationDTO.class);
+        List<BinaryConditionOperationDTO> conditionOperationEntities = operationPersistenceService.getOperationsByType(BinaryConditionOperationDTO.class).collectList().block();
         Assert.assertTrue(conditionOperationEntities.size() != 0);
         Assert.assertTrue(conditionOperationEntities.size() != fullList.size());
     }
@@ -123,8 +129,8 @@ public class OperationPersistenceServiceTest {
         beanOperationDTO.setActive(!oldStatus);
         beanOperationDTO.setName(oldName + " new");
         beanOperationDTO.setDescription(oldDescription + " new");
-        operationPersistenceService.updateOperation(beanOperationDTO);
-        BeanOperationDTO queryBeanOperation = (BeanOperationDTO) operationPersistenceService.getOperation(beanOperationDTO.getId());
+        operationPersistenceService.updateOperation(beanOperationDTO).subscribe();
+        BeanOperationDTO queryBeanOperation = (BeanOperationDTO) operationPersistenceService.getOperation(beanOperationDTO.getId()).block();
 
         Assert.assertNotEquals(oldName, queryBeanOperation.getName());
         Assert.assertNotEquals(oldDescription, queryBeanOperation.getDescription());
@@ -136,7 +142,7 @@ public class OperationPersistenceServiceTest {
         operationEntity.setName("Test operation.");
         operationEntity.setDescription("Test description.");
 
-        CalculatorDTO calculator = calculatorPersistenceService.createCalculator(creator.createRandomBinaryCalculator());
+        CalculatorDTO calculator = calculatorPersistenceService.createCalculator(creator.createRandomBinaryCalculator()).block();
         operationEntity.setCalculator(calculator);
 
         Map<Boolean, OperationDTO> states = new HashMap<>();
@@ -144,7 +150,7 @@ public class OperationPersistenceServiceTest {
         states.putAll(createSimpleBinaryState(false));
         operationEntity.setStates(states);
 
-        return (BinaryConditionOperationDTO) operationPersistenceService.createOperation(operationEntity);
+        return (BinaryConditionOperationDTO) operationPersistenceService.createOperation(operationEntity).block();
     }
 
     private Map<Boolean, OperationDTO> createSimpleBinaryState(Boolean value) {
@@ -154,11 +160,11 @@ public class OperationPersistenceServiceTest {
     }
 
     private BeanOperationDTO createSimpleBeanOperation() {
-        return (BeanOperationDTO) operationPersistenceService.createOperation(creator.createRandomSimpleBeanOperation());
+        return (BeanOperationDTO) operationPersistenceService.createOperation(creator.createRandomSimpleBeanOperation()).block();
     }
 
     private BinaryBeanCalculatorDTO createBinaryCalculator() {
-        return (BinaryBeanCalculatorDTO) calculatorPersistenceService.createCalculator(creator.createRandomBinaryCalculator());
+        return (BinaryBeanCalculatorDTO) calculatorPersistenceService.createCalculator(creator.createRandomBinaryCalculator()).block();
     }
 
 }

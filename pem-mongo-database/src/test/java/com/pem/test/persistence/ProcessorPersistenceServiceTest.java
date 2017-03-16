@@ -28,10 +28,10 @@ public class ProcessorPersistenceServiceTest {
         processEntity.setName("Test Process");
         processEntity.setExecutionOperation(creator.createBinaryConditionOperationEntity());
         processEntity.setExecutionRecords(Collections.EMPTY_LIST);
-        ExecutionProcessDTO newProcessEntity = processPersistenceService.createProcess(processEntity);
+        ExecutionProcessDTO newProcessEntity = processPersistenceService.createProcess(processEntity).block();
         Assert.assertNotNull(newProcessEntity.getExecutionOperation());
 
-        ExecutionProcessDTO queryProcess = processPersistenceService.getProcess(newProcessEntity.getId());
+        ExecutionProcessDTO queryProcess = processPersistenceService.getProcess(newProcessEntity.getId()).block();
         Assert.assertNotNull(queryProcess.getExecutionOperation());
     }
 }

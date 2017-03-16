@@ -1,7 +1,5 @@
 package com.pem.persistence.mongo.service.common;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
 import com.pem.core.common.converter.factory.ConverterFactory;
 import com.pem.core.common.converter.impl.Converter;
 import com.pem.model.common.IdentifiableDTO;
@@ -11,9 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.util.Assert;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO, E extends IdentifiableEntity> {
 
@@ -31,66 +32,73 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
 
     protected abstract CommonMongoRepository<E> getRepository();
 
-    protected O create(O object){
-        Assert.notNull(object, "Entity equals NULL.");
-        object.setId(null);
-        E entity = convertToEntity(object);
-        return convertToObject(getRepository().insert(entity));
+    protected Mono<O> create(O monoObject) {
+        Assert.notNull(monoObject, "Entity equals NULL.");
+        return Mono.just(monoObject)
+                .doOnNext(object -> object.setId(null))
+                .map(object -> convertToEntity(object))
+                .map(entity -> getRepository().insert(entity))
+                .map(entity -> convertToObject(entity));
     }
 
-    protected void update(O object){
-        Assert.notNull(object, "Entity equals NULL.");
-        Assert.notNull(object.getId(), "Id is empty, can`t create Entity.");
-        E entity = convertToEntity(object);
-        E updated = getRepository().save(entity);
-        LOGGER.trace("Updated {}.", updated);
+    protected Mono<Void> update(O monoObject) {
+        Assert.notNull(monoObject, "Entity equals NULL.");
+        return Mono.just(monoObject)
+                .doOnNext(object -> Assert.notNull(object.getId(), "Id is empty, can`t create Entity."))
+                .map(object -> convertToEntity(object))
+                .map(entity -> getRepository().save(entity))
+                .doOnNext(entity -> LOGGER.trace("Updated {}.", entity))
+                .then();
     }
 
-    protected List<O> saveList(List<O> objects){
-        List<E> entities = getRepository().save(convertAllToEntities(objects));
-        return convertAllToObjects(entities);
-    }
-
-    protected O getOne(BigInteger id){
+    protected Mono<O> getOne(BigInteger id) {
         Assert.notNull(id, "Id is empty, can`t find Entity.");
         LOGGER.debug("Start to find object for {}", id);
-        E entity = getRepository().findOne(id);
-        if (entity == null) {
-            LOGGER.warn("Can't find {} by ID {}.", getEntityClass().getName(), id);
-            return null;
-        }
 
-        return convertToObject(entity);
+        return Mono.just(id)
+                .map(currentId -> Optional.ofNullable(getRepository().findOne(currentId)))
+                .map(objectOptional -> {
+                    if (!objectOptional.isPresent()) {
+                        LOGGER.warn("Can't find {} by ID {}.", getEntityClass().getName(), id);
+                    }
+
+                    return objectOptional.map(entity -> convertToObject(entity)).orElse(null);
+                });
     }
 
-    protected List<O> getAll(){
-        return convertAllToObjects(getRepository().findAll());
+    protected Flux<O> getAll() {
+        return Flux.fromIterable(getRepository().findAll())
+                .map(entity -> convertToObject(entity));
     }
 
-    protected <T extends O> List<T> getAllByType(final Class<T> targetClass) {
-        Assert.notNull(targetClass,"Class is NULL, can`t find Entities." );
+    protected <T extends O> Flux<T> getAllByType(final Class<T> targetClass) {
+        Assert.notNull(targetClass, "Class is NULL, can`t find Entities.");
 
-        Converter<T, E> converter = converterFactory.getConverter(targetClass, getEntityClass());
-        Class converterClass = converter.getClass();
-        Class[] generics = GenericTypeResolver.resolveTypeArguments(converterClass, Converter.class);
-        Class<E> targetEntityClass = generics[1];
+        Flux<E> flux = Flux.create(fluxSink -> {
+            Converter<T, E> converter = converterFactory.getConverter(targetClass, getEntityClass());
+            Class converterClass = converter.getClass();
+            Class[] generics = GenericTypeResolver.resolveTypeArguments(converterClass, Converter.class);
+            Class<E> targetEntityClass = generics[1];
 
-        String className = targetEntityClass.getCanonicalName();
-        List<E> operationEntities = getRepository().findByImplementation(className);
+            String className = targetEntityClass.getCanonicalName();
+            List<E> operationEntities = getRepository().findByImplementation(className);
+            operationEntities
+                    .stream()
+                    .forEach(entity -> fluxSink.next(entity));
+            fluxSink.complete();
+        });
 
-        return FluentIterable.from(operationEntities).transform(new Function<E, T>() {
-            @Override
-            public T apply(E input) {
-                O object = convertToObject(input);
 
-                Assert.isInstanceOf(targetClass, object);
-                return targetClass.cast(object);
-            }
-        }).toList();
+        return flux.map(entity -> convertToObject(entity))
+                .cast(targetClass);
     }
-    protected void delete(BigInteger id){
+
+    protected Mono<Void> delete(BigInteger id) {
         Assert.notNull(id, "Id is empty, can`t delete Entity.");
-        getRepository().delete(id);
+
+        return Mono.just(id)
+                .doOnNext(currentId -> getRepository().delete(currentId))
+                .then();
     }
 
     protected ConverterFactory getConverterFactory() {
@@ -103,16 +111,6 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
 
     protected O convertToObject(E entity) {
         return converterFactory.convert(entity, getObjectClass());
-    }
-
-    protected List<E> convertAllToEntities(List<O> objects) {
-        final Class<E> entityClass = getEntityClass();
-        return FluentIterable.from(objects).transform(input -> converterFactory.convert(input, entityClass)).toList();
-    }
-
-    protected List<O> convertAllToObjects(List<E> entities) {
-        final Class<O> objectClass = getObjectClass();
-        return FluentIterable.from(entities).transform(input -> converterFactory.convert(input, objectClass)).toList();
     }
 
     private Class<E> getEntityClass() {

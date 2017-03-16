@@ -10,6 +10,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import java.math.BigInteger;
 
@@ -24,23 +26,45 @@ public class CalculatorPersistenceServiceTest {
 
     @Test
     public void testSaveToDBCalculator() {
-        CalculatorDTO calculatorEntity = createBinaryCalculator();
-        CalculatorDTO queryCalculator = calculatorPersistenceService.getCalculator(calculatorEntity.getId());
-        Assert.assertEquals(calculatorEntity.getClass(), queryCalculator.getClass());
+        Mono<CalculatorDTO> createResult = createBinaryCalculator();
+
+        createResult.doOnNext(calculatorDTO -> {
+            Mono<CalculatorDTO> getResult = calculatorPersistenceService.getCalculator(calculatorDTO.getId());
+
+            getResult.doOnNext(queryCalculator -> Assert.assertEquals(calculatorDTO.getClass(), queryCalculator.getClass()));
+        });
+
+        StepVerifier.create(createResult)
+                .expectNextCount(1)
+                .expectComplete()
+                .verify();
     }
 
     @Test
     public void testDeleteOperation() {
-        CalculatorDTO calculatorEntity = createBinaryCalculator();
-        BigInteger id = calculatorEntity.getId();
+        Mono<CalculatorDTO> createResult = createBinaryCalculator();
 
-        calculatorPersistenceService.deleteCalculator(id);
 
-        CalculatorDTO testOperation = calculatorPersistenceService.getCalculator(id);
-        Assert.assertNull(testOperation);
+        createResult.doOnNext(calculatorDTO -> {
+            BigInteger id = calculatorDTO.getId();
+            calculatorPersistenceService.deleteCalculator(id).subscribe();
+
+            Mono<CalculatorDTO> getResult = calculatorPersistenceService.getCalculator(id);
+
+            StepVerifier.create(getResult)
+                    .expectNextCount(0)
+                    .expectComplete()
+                    .verify();
+        });
+
+
+        StepVerifier.create(createResult)
+                .expectNextCount(1)
+                .expectComplete()
+                .verify();
     }
 
-    private CalculatorDTO createBinaryCalculator() {
+    private Mono<CalculatorDTO> createBinaryCalculator() {
         return calculatorPersistenceService.createCalculator(creator.createRandomBinaryCalculator());
     }
 }

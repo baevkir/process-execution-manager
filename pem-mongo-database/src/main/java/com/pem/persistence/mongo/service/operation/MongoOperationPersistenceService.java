@@ -8,9 +8,10 @@ import com.pem.persistence.mongo.service.common.AbstractMongoPersistenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
-import java.util.List;
 
 public class MongoOperationPersistenceService extends AbstractMongoPersistenceService<OperationDTO, OperationEntity> implements OperationPersistenceService {
 
@@ -25,32 +26,32 @@ public class MongoOperationPersistenceService extends AbstractMongoPersistenceSe
     }
 
     @Override
-    public OperationDTO createOperation(OperationDTO operationObject) {
+    public Mono<OperationDTO> createOperation(OperationDTO operationObject) {
         return create(operationObject);
     }
 
     @Override
-    public void updateOperation(OperationDTO operationEntity) {
-        update(operationEntity);
+    public Mono<Void> updateOperation(OperationDTO operationEntity) {
+        return update(operationEntity);
     }
 
     @Override
-    public OperationDTO getOperation(BigInteger id) {
+    public Mono<OperationDTO> getOperation(BigInteger id) {
         return getOne(id);
     }
 
     @Override
-    public List<OperationDTO> getAllOperations() {
+    public Flux<OperationDTO> getAllOperations() {
         return getAll();
     }
 
     @Override
-    public <O extends OperationDTO> List<O> getOperationsByType(final Class<O> targetClass) {
+    public <O extends OperationDTO> Flux<O> getOperationsByType(final Class<O> targetClass) {
         return getAllByType(targetClass);
     }
 
     @Override
-    public void deleteOperation(BigInteger id) {
-        delete(id);
+    public Mono<Void> deleteOperation(BigInteger id) {
+        return delete(id);
     }
 }
