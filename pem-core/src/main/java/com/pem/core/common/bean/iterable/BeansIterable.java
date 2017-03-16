@@ -27,40 +27,28 @@ public class BeansIterable<S> {
 
     public BeansIterable<S> filter(final Predicate<S> predicate) {
         Assert.notNull(predicate, "Predicate cannot be NULL.");
-        return new BeansIterable<>(beans.filter(new Predicate<Map.Entry<String, S>>() {
-            @Override
-            public boolean apply(Map.Entry<String, S> input) {
-                return predicate.apply(input.getValue());
-            }
-        }));
+        return new BeansIterable<>(beans.filter(input -> predicate.apply(input.getValue())));
     }
 
     public void forEach(final Consumer<S> consumer) {
         Assert.notNull(consumer, "Consumer cannot be NULL.");
-        FluentIterable iterable = beans.transform(new Function<Map.Entry<String,S>, Map.Entry<String,S>>() {
-            @Override
-            public Map.Entry<String,S> apply(Map.Entry<String, S> input) {
-                S value = input.getValue();
-                LOGGER.trace("Value: {}.", value);
-                consumer.accept(value);
-                return input;
-            }
+        beans.forEach(input -> {
+            S value = input.getValue();
+            LOGGER.trace("Value: {}.", value);
+            consumer.accept(value);
         });
-        iterable.toList();
     }
 
     public Set<BeanObject> transformToBeanObjects(final Function<S, String> nameFunction) {
         Assert.notNull(nameFunction, "Name Function cannot be NULL.");
-        return beans.transform(new Function<Map.Entry<String, S>, BeanObject>() {
-            @Override
-            public BeanObject apply(Map.Entry<String, S> input) {
-                String beanName = input.getKey();
-                LOGGER.trace("Add BeanObject with name {}", beanName);
-                return BeanObjectBuilder.newInstance()
-                        .setBeanName(beanName)
-                        .setName(nameFunction.apply(input.getValue()))
-                        .build();
-            }
+        return beans.transform(input -> {
+            String beanName = input.getKey();
+            LOGGER.trace("Add BeanObject with name {}", beanName);
+            return BeanObjectBuilder.newInstance()
+                    .setBeanName(beanName)
+                    .setName(nameFunction.apply(input.getValue()))
+                    .build();
+
         }).toSet();
     }
 }
