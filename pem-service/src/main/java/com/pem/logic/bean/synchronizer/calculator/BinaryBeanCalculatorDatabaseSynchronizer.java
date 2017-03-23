@@ -20,7 +20,10 @@ public class BinaryBeanCalculatorDatabaseSynchronizer extends CalculatorDatabase
 
     @Override
     public void handle() {
-        List<BinaryBeanCalculatorDTO> calculators = getCalculatorPersistenceService().getCalculatorsByType(BinaryBeanCalculatorDTO.class);
+        List<BinaryBeanCalculatorDTO> calculators = getCalculatorPersistenceService()
+                .getCalculatorsByType(BinaryBeanCalculatorDTO.class)
+                .collectList()
+                .block();
 
         Set<BeanObject> beanObjects = new HashSet<>(getCalculatorProvider().getAllCalculatorBeanObjects(BinaryCalculator.class));
 

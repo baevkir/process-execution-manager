@@ -23,7 +23,10 @@ public class BeanOperationDatabaseSynchronizer implements LaunchEventHandler {
 
     @Override
     public void handle() {
-        List<BeanOperationDTO> operations = operationPersistenceService.getOperationsByType(BeanOperationDTO.class);
+        List<BeanOperationDTO> operations = operationPersistenceService
+                .getOperationsByType(BeanOperationDTO.class)
+                .collectList()
+                .block();
 
         Set<BeanObject> beanObjects = new HashSet<>(operationProvider.getAllOperationBeanObjects());
 
@@ -48,7 +51,7 @@ public class BeanOperationDatabaseSynchronizer implements LaunchEventHandler {
             return;
         }
         operation.setActive(active);
-        operationPersistenceService.updateOperation(operation);
+        operationPersistenceService.updateOperation(operation).subscribe();
     }
 
     private void createOperation(BeanObject beanObject){
@@ -58,7 +61,7 @@ public class BeanOperationDatabaseSynchronizer implements LaunchEventHandler {
         operation.setName(beanObject.getName());
         operation.setBean(beanObject);
 
-        operationPersistenceService.createOperation(operation);
+        operationPersistenceService.createOperation(operation).subscribe();
     }
 
     public void setOperationProvider(OperationProvider operationProvider) {

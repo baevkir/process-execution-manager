@@ -20,7 +20,10 @@ public class IntegerBeanCalculatorDatabaseSynchronizer extends CalculatorDatabas
 
     @Override
     public void handle() {
-        List<IntegerBeanCalculatorDTO> calculators = getCalculatorPersistenceService().getCalculatorsByType(IntegerBeanCalculatorDTO.class);
+        List<IntegerBeanCalculatorDTO> calculators = getCalculatorPersistenceService()
+                .getCalculatorsByType(IntegerBeanCalculatorDTO.class)
+                .collectList()
+                .block();
 
         Set<BeanObject> beanObjects = new HashSet<>(getCalculatorProvider().getAllCalculatorBeanObjects(IntegerCalculator.class));
 

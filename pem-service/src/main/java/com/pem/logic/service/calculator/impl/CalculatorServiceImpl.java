@@ -5,9 +5,10 @@ import com.pem.model.calculator.common.CalculatorDTO;
 import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
-import java.util.List;
 
 public class CalculatorServiceImpl implements CalculatorService {
 
@@ -16,31 +17,31 @@ public class CalculatorServiceImpl implements CalculatorService {
     private CalculatorPersistenceService persistenceService;
 
     @Override
-    public CalculatorDTO createCalculator(CalculatorDTO calculatorDTO) {
+    public Mono<CalculatorDTO> createCalculator(CalculatorDTO calculatorDTO) {
         LOGGER.debug("Create new Calculator: {}.", calculatorDTO);
         return persistenceService.createCalculator(calculatorDTO);
     }
 
     @Override
-    public void updateCalculator(CalculatorDTO calculatorDTO) {
+    public Mono<Void> updateCalculator(CalculatorDTO calculatorDTO) {
         LOGGER.debug("Update Calculator: {}.", calculatorDTO);
-        persistenceService.updateCalculator(calculatorDTO);
+        return persistenceService.updateCalculator(calculatorDTO);
     }
 
     @Override
-    public void deleteCalculator(BigInteger id) {
+    public  Mono<Void> deleteCalculator(BigInteger id) {
         LOGGER.debug("Delete Calculator by id: {}.", id);
-        persistenceService.deleteCalculator(id);
+        return persistenceService.deleteCalculator(id);
     }
 
     @Override
-    public CalculatorDTO getCalculator(BigInteger id) {
+    public Mono<CalculatorDTO> getCalculator(BigInteger id) {
         LOGGER.debug("Get Calculator by id: {}.", id);
         return persistenceService.getCalculator(id);
     }
 
     @Override
-    public List<CalculatorDTO> getAllCalculators() {
+    public Flux<CalculatorDTO> getAllCalculators() {
         LOGGER.debug("Get All ConditionCalculators.");
         return persistenceService.getAllCalculators();
     }

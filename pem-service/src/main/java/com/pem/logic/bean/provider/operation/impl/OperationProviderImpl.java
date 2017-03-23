@@ -1,7 +1,5 @@
 package com.pem.logic.bean.provider.operation.impl;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.pem.core.common.bean.BeanObject;
 import com.pem.core.common.bean.iterable.BeansIterable;
 import com.pem.core.common.utils.ApplicationContextWrapper;
@@ -48,29 +46,23 @@ public class OperationProviderImpl implements OperationProvider, ApplicationCont
         }
         beans.putAll(findGlobalOperationsInContext(applicationContext));
 
-        BeansIterable iterable = BeansIterable.fromBeans(beans).filter(new Predicate<Operation>() {
-            @Override
-            public boolean apply(Operation input) {
-                Class<Operation> clazz = (Class<Operation>) AopProxyUtils.ultimateTargetClass(input);
-                RegisterGlobalOperation annotation = clazz.getAnnotation(RegisterGlobalOperation.class);
+        BeansIterable iterable = BeansIterable.fromBeans(beans).filter(input -> {
+            Class<Operation> clazz = (Class<Operation>) AopProxyUtils.ultimateTargetClass(input);
+            RegisterGlobalOperation annotation = clazz.getAnnotation(RegisterGlobalOperation.class);
 
-                if (annotation.all()) {
-                    return true;
-                }
-                List<String> executors = Arrays.asList(annotation.executors());
-                return executors.contains(applicationId);
+            if (annotation.all()) {
+                return true;
             }
+            List<String> executors = Arrays.asList(annotation.executors());
+            return executors.contains(applicationId);
         });
 
-        return iterable.transformToBeanObjects(new Function<Operation, String>() {
-            @Override
-            public String apply(Operation input) {
-                Class clazz = AopProxyUtils.ultimateTargetClass(input);
-                RegisterGlobalOperation annotation = (RegisterGlobalOperation) clazz.getAnnotation(RegisterGlobalOperation.class);
-                String name = annotation.value();
-                LOGGER.trace("Presentation name for bean {}", name);
-                return name;
-            }
+        return iterable.transformToBeanObjects(input -> {
+            Class clazz = AopProxyUtils.ultimateTargetClass(input);
+            RegisterGlobalOperation annotation = (RegisterGlobalOperation) clazz.getAnnotation(RegisterGlobalOperation.class);
+            String name = annotation.value();
+            LOGGER.trace("Presentation name for bean {}", name);
+            return name;
         });
     }
 

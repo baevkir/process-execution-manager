@@ -18,30 +18,30 @@ public class OperationServiceImpl implements OperationService {
     @Override
     public Mono<OperationDTO> createOperation(OperationDTO operation) {
         LOGGER.debug("Create new Operation: {}.", operation);
-        return Mono.fromCallable(() -> persistenceService.createOperation(operation));
+        return persistenceService.createOperation(operation);
     }
 
     @Override
     public Mono<Void> updateOperation(OperationDTO operation) {
         LOGGER.debug("Update Operation: {}.", operation);
-        return Mono.fromRunnable(() -> persistenceService.updateOperation(operation));
+        return persistenceService.updateOperation(operation);
     }
 
     @Override
     public Mono<Void> deleteOperation(BigInteger id) {
         LOGGER.debug("Delete Operation by id: {}.", id);
-        return Mono.fromRunnable(() ->  persistenceService.deleteOperation(id));
+        return persistenceService.deleteOperation(id);
     }
 
     @Override
     public Mono<OperationDTO> getOperation(BigInteger id) {
         LOGGER.debug("Get Operation by id: {}.", id);
-        return Mono.fromCallable(() -> persistenceService.getOperation(id));
+        return persistenceService.getOperation(id);
     }
 
     @Override
     public Flux<OperationDTO> getAllOperations() {
-        return Flux.fromIterable(persistenceService.getAllOperations());
+        return persistenceService.getAllOperations();
     }
 
     public void setPersistenceService(OperationPersistenceService persistenceService) {

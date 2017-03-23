@@ -1,14 +1,15 @@
 package com.pem.logic.service.calculator;
 
 import com.pem.model.calculator.common.CalculatorDTO;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
-import java.util.List;
 
 public interface CalculatorService {
-    CalculatorDTO createCalculator(CalculatorDTO calculatorDTO);
-    void updateCalculator(CalculatorDTO calculatorDTO);
-    void deleteCalculator(BigInteger id);
-    CalculatorDTO getCalculator(BigInteger id);
-    List<CalculatorDTO> getAllCalculators();
+    Mono<CalculatorDTO> createCalculator(CalculatorDTO calculatorDTO);
+    Mono<Void> updateCalculator(CalculatorDTO calculatorDTO);
+    Mono<Void> deleteCalculator(BigInteger id);
+    Mono<CalculatorDTO> getCalculator(BigInteger id);
+    Flux<CalculatorDTO> getAllCalculators();
 }

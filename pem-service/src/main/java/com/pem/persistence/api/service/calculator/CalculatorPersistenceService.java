@@ -1,15 +1,16 @@
 package com.pem.persistence.api.service.calculator;
 
 import com.pem.model.calculator.common.CalculatorDTO;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
-import java.util.List;
 
 public interface CalculatorPersistenceService {
-    CalculatorDTO createCalculator(CalculatorDTO calculator);
-    void updateCalculator(CalculatorDTO calculator);
-    CalculatorDTO getCalculator(BigInteger id);
-    List<CalculatorDTO> getAllCalculators();
-    <C extends CalculatorDTO> List<C> getCalculatorsByType(final Class<C> targetClass);
-    void deleteCalculator(BigInteger id);
+    Mono<CalculatorDTO> createCalculator(CalculatorDTO calculator);
+    Mono<Void> updateCalculator(CalculatorDTO calculator);
+    Mono<CalculatorDTO> getCalculator(BigInteger id);
+    Flux<CalculatorDTO> getAllCalculators();
+    <C extends CalculatorDTO> Flux<C> getCalculatorsByType(final Class<C> targetClass);
+    Mono<Void> deleteCalculator(BigInteger id);
 }

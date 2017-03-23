@@ -1,15 +1,16 @@
 package com.pem.persistence.api.service.operation;
 
 import com.pem.model.operation.common.OperationDTO;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
-import java.util.List;
 
 public interface OperationPersistenceService {
-    OperationDTO createOperation(OperationDTO operation);
-    void updateOperation(OperationDTO operation);
-    OperationDTO getOperation(BigInteger id);
-    List<OperationDTO> getAllOperations();
-    <O extends OperationDTO> List<O> getOperationsByType(Class<O> targetClass);
-    void deleteOperation(BigInteger id);
+    Mono<OperationDTO> createOperation(OperationDTO operation);
+    Mono<Void> updateOperation(OperationDTO operation);
+    Mono<OperationDTO> getOperation(BigInteger id);
+    Flux<OperationDTO> getAllOperations();
+    <O extends OperationDTO> Flux<O> getOperationsByType(Class<O> targetClass);
+    Mono<Void> deleteOperation(BigInteger id);
 }

@@ -1,13 +1,14 @@
 package com.pem.persistence.api.service.process;
 
 import com.pem.model.proccess.ExecutionProcessDTO;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
-import java.util.List;
 
 public interface ProcessPersistenceService {
-    ExecutionProcessDTO createProcess(ExecutionProcessDTO processEntity);
-    void updateProcess(ExecutionProcessDTO processEntity);
-    ExecutionProcessDTO getProcess(BigInteger id);
-    List<ExecutionProcessDTO> getAllProcesses();
+    Mono<ExecutionProcessDTO> createProcess(ExecutionProcessDTO processEntity);
+    Mono<Void> updateProcess(ExecutionProcessDTO processEntity);
+    Mono<ExecutionProcessDTO> getProcess(BigInteger id);
+    Flux<ExecutionProcessDTO> getAllProcesses();
 }

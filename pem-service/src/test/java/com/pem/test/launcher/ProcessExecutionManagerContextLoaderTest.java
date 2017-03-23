@@ -13,12 +13,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class ProcessExecutionManagerContextLoaderTest {
 
     @Autowired
-    public PemServiceProvider contextLoader;
+    private PemServiceProvider serviceProvider;
 
     @Test
     public void processExecutionManagerContextLoaderTest() {
-        Assert.assertNotNull(contextLoader.getCalculatorService());
-        Assert.assertNotNull(contextLoader.getOperationService());
-        Assert.assertNotNull(contextLoader.getExecutionProcessService());
+        Assert.assertNotNull(serviceProvider.getCalculatorService());
+        Assert.assertNotNull(serviceProvider.getOperationService());
+        Assert.assertNotNull(serviceProvider.getExecutionProcessService());
     }
 }

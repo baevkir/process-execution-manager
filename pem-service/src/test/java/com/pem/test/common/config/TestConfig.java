@@ -1,11 +1,11 @@
 package com.pem.test.common.config;
 
-import com.pem.logic.*;
 import com.pem.core.calculator.BinaryCalculator;
 import com.pem.core.calculator.IntegerCalculator;
 import com.pem.core.context.OperationContext;
 import com.pem.core.operation.basic.AbstractOperation;
 import com.pem.core.operation.basic.Operation;
+import com.pem.logic.*;
 import com.pem.test.common.GlobalOperation;
 import org.junit.Assert;
 import org.springframework.context.annotation.*;
