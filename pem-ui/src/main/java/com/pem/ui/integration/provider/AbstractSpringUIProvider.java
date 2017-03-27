@@ -32,8 +32,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class AbstractSpringUIProvider extends UIProvider {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSpringUIProvider.class);
 
-    private final Map<String, Class<? extends UI>> pathToUIMap = new ConcurrentHashMap<String, Class<? extends UI>>();
-    private final Map<String, Class<? extends UI>> wildcardPathToUIMap = new ConcurrentHashMap<String, Class<? extends UI>>();
+    private final Map<String, Class<? extends UI>> pathToUIMap = new ConcurrentHashMap<>();
+    private final Map<String, Class<? extends UI>> wildcardPathToUIMap = new ConcurrentHashMap<>();
 
     private ServletContext servletContext;
 

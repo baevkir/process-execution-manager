@@ -63,10 +63,10 @@
             <artifactId>vaadin-spring</artifactId>
         </dependency>
 
-        <!-- rxjava -->
+        <!-- reactor -->
         <dependency>
-            <groupId>io.reactivex.rxjava2</groupId>
-            <artifactId>rxjava</artifactId>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
         </dependency>
     </dependencies>
 
