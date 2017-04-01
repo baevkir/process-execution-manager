@@ -11,12 +11,11 @@ import org.springframework.util.Assert;
 import reactor.core.publisher.Flux;
 
 
-
 public class VaadinReactor {
 
     public static Flux<Button.ClickEvent> buttonClickPublisher(Button button) {
         Assert.notNull(button);
-        return Flux.create(emitter ->  button.addClickListener(event -> emitter.next(event)));
+        return Flux.create(emitter -> button.addClickListener(event -> emitter.next(event)));
     }
 
     public static Flux<ItemClickEvent> tableClickPublisher(Table table) {
@@ -28,7 +27,7 @@ public class VaadinReactor {
     }
 
     private static Flux<Property.ValueChangeEvent> fieldEditPublisher(Field<?> field) {
-        return Flux.create(emitter ->  field.addValueChangeListener(event -> emitter.next(event)));
+        return Flux.create(emitter -> field.addValueChangeListener(event -> emitter.next(event)));
     }
 
     public static Flux<FieldGroup.CommitEvent> binderPostCommitPublisher(BeanFieldGroup binder) {
@@ -39,7 +38,9 @@ public class VaadinReactor {
 
             @Override
             public void postCommit(FieldGroup.CommitEvent commitEvent) throws FieldGroup.CommitException {
-                emitter.next(commitEvent);
+                if (!emitter.isCancelled()) {
+                    emitter.next(commitEvent);
+                }
             }
         }));
     }

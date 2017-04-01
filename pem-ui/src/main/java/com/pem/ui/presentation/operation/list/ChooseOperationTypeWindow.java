@@ -28,7 +28,7 @@ public class ChooseOperationTypeWindow extends Window {
 
     public Mono<OperationViewObject> getPublisher() {
         return VaadinReactor.buttonClickPublisher(okButton).next()
-                .transform(clickEvent -> getValue())
+                .then(clickEvent -> getValue())
                 .doOnSuccess(value -> close());
     }
 

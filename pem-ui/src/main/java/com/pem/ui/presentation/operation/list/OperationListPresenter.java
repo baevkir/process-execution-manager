@@ -40,12 +40,12 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
         OperationList operationList = getView().getOperationList();
         eventPublisher.filter(event -> !operationList.isDataLoaded())
                 .cast(EventObject.class)
-                .concatWith(operationList.getRefreshPublisher())
+                .mergeWith(operationList.getRefreshPublisher())
                 .map(eventObject -> operationService.getAllOperations())
                 .subscribe(operationFlux -> operationList.load(operationFlux));
 
         getOperationPublisher(eventPublisher)
-                .concatWith(getNewOperationPublisher())
+                .mergeWith(getNewOperationPublisher())
                 .subscribe(operation -> openOperationForm(operation));
     }
 
@@ -86,12 +86,12 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
                 .doOnSuccess(signal -> getView().openOperation(operationForm))
                 .subscribe();
     }
+
     private Mono<OperationViewObject> openChooseOperationTypeWindow() {
+
         return Mono.just(chooseOperationTypeWindow)
-                .doOnNext(window -> UI.getCurrent().addWindow(window))
-                .flatMap(window -> window.getPublisher())
-                .next();
+                .doOnSuccess(window -> UI.getCurrent().addWindow(window))
+                .doOnSuccess(window -> window.setVisible(true))
+                .flatMap(window -> window.getPublisher()).single();
     }
-
-
 }

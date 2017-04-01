@@ -78,7 +78,7 @@ public abstract class AbstractBeanForm<B> extends CustomComponent implements Bea
             binder.commit();
             bottomToolbar.setVisible(false);
         } catch (FieldGroup.CommitException exception) {
-            throw new RuntimeException(exception);
+            Notification.show(exception.getLocalizedMessage(), Notification.Type.ERROR_MESSAGE);
         }
     }
 

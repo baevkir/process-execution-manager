@@ -19,8 +19,8 @@ public class OperationList extends HorizontalLayout {
     private static final String COLUMN_STATUS = "active";
 
     private boolean dataLoaded;
-    private Flux<Button.ClickEvent> newOperationPublisher;
-    private Flux<Button.ClickEvent> refreshPublisher;
+    private Button newOperationButton;
+    private Button refreshButton;
 
     private final Table operationTable = new Table();
     private final BeanItemContainer<OperationDTO> operationContainer = new BeanItemContainer<>(OperationDTO.class);
@@ -36,11 +36,11 @@ public class OperationList extends HorizontalLayout {
     }
 
     public Flux<Button.ClickEvent> getNewOperationPublisher() {
-        return newOperationPublisher;
+        return VaadinReactor.buttonClickPublisher(newOperationButton);
     }
 
     public Flux<Button.ClickEvent> getRefreshPublisher() {
-        return refreshPublisher;
+        return VaadinReactor.buttonClickPublisher(refreshButton);
     }
 
     @PostConstruct
@@ -79,15 +79,13 @@ public class OperationList extends HorizontalLayout {
     }
 
     private Button createNewOperationButton() {
-        Button newOperation = new Button("New operation");
-        newOperationPublisher = VaadinReactor.buttonClickPublisher(newOperation);
-        return newOperation;
+        newOperationButton = new Button("New operation");
+        return newOperationButton;
     }
 
     private Button createRefreshButton() {
-        Button refresh = new Button("Refresh");
-        refreshPublisher = VaadinReactor.buttonClickPublisher(refresh);
-        return refresh;
+        refreshButton = new Button("Refresh");
+        return refreshButton;
     }
 
     private void navigateToOperation(BigInteger operationId) {
