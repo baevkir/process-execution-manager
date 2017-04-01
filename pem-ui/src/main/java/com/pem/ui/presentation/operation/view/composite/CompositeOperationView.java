@@ -35,14 +35,12 @@ public class CompositeOperationView extends BaseOperationView<SyncCompositeOpera
         operationsSelect.setRequired(true);
         operationsSelect.setLeftColumnCaption("Available");
         operationsSelect.setRightColumnCaption("Selected");
-
-        operationsSelect.setContainerDataSource(operationsContainer);
-        operationsSelect.setItemCaptionPropertyId("name");
     }
 
     @Override
     protected Layout createFormComponent() {
         operationsContainer = new BeanItemContainer<>(OperationDTO.class);
+        operationsSelect.setContainerDataSource(operationsContainer);
         HorizontalLayout mainLayout = new HorizontalLayout();
 
         FormLayout leftFormLayout = new FormLayout();
