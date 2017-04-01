@@ -3,16 +3,17 @@ package com.pem.ui.presentation.operation.view.composite;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.operation.composite.SyncCompositeOperationDTO;
 import com.pem.ui.presentation.common.view.provider.BeanFormView;
+import com.pem.ui.presentation.common.view.provider.OperationView;
 import com.pem.ui.presentation.operation.view.BaseOperationView;
 import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @BeanFormView(SyncCompositeOperationDTO.class)
-@com.pem.ui.presentation.common.view.provider.OperationView("Consistent composite operation")
+@OperationView("Consistent composite operation")
 public class CompositeOperationView extends BaseOperationView<SyncCompositeOperationDTO> {
 
     @Autowired
@@ -20,6 +21,8 @@ public class CompositeOperationView extends BaseOperationView<SyncCompositeOpera
 
     @PropertyId("operations")
     private TwinColSelect operationsSelect = new TwinColSelect("Operations");
+
+    private BeanItemContainer<OperationDTO> operationsContainer;
 
     @Override
     protected CompositeOperationPresenter getPresenter() {
@@ -32,11 +35,14 @@ public class CompositeOperationView extends BaseOperationView<SyncCompositeOpera
         operationsSelect.setRequired(true);
         operationsSelect.setLeftColumnCaption("Available");
         operationsSelect.setRightColumnCaption("Selected");
+
+        operationsSelect.setContainerDataSource(operationsContainer);
+        operationsSelect.setItemCaptionPropertyId("name");
     }
 
     @Override
     protected Layout createFormComponent() {
-        initFormElements();
+        operationsContainer = new BeanItemContainer<>(OperationDTO.class);
         HorizontalLayout mainLayout = new HorizontalLayout();
 
         FormLayout leftFormLayout = new FormLayout();
@@ -57,8 +63,10 @@ public class CompositeOperationView extends BaseOperationView<SyncCompositeOpera
         return mainLayout;
     }
 
-    public void  load(List<OperationDTO> operations) {
-        operationsSelect.setContainerDataSource(new BeanItemContainer<>(OperationDTO.class, operations));
-        operationsSelect.setItemCaptionPropertyId("name");
+    public Mono<Void> load(Flux<OperationDTO> operationsPublisher) {
+        return operationsPublisher.doOnSubscribe(subscription -> operationsSelect.removeAllItems())
+                .doOnSubscribe(subscription -> operationsSelect.setItemCaptionPropertyId("name"))
+                .doOnNext(operation -> operationsContainer.addBean(operation))
+                .then();
     }
 }

@@ -1,6 +1,6 @@
 package com.pem.ui.presentation.operation.list;
 
-import com.pem.ui.presentation.common.rx.RxVaadin;
+import com.pem.ui.presentation.common.reactor.VaadinReactor;
 import com.pem.ui.presentation.common.view.provider.OperationViewObject;
 import com.pem.ui.presentation.common.view.provider.PemViewProvider;
 import com.vaadin.data.util.BeanItemContainer;
@@ -10,8 +10,8 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.Window;
-import io.reactivex.Observable;
 import org.springframework.beans.factory.annotation.Autowired;
+import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
 
@@ -22,19 +22,19 @@ public class ChooseOperationTypeWindow extends Window {
     @Autowired
     private PemViewProvider viewProvider;
 
-    private Observable<Button.ClickEvent> okButtonObservable;
+    private Button okButton;
 
     private ListSelect operationTypes = new ListSelect();
 
-    public Observable<Button.ClickEvent> getOkButtonObservable() {
-        return okButtonObservable;
+    public Mono<OperationViewObject> getPublisher() {
+        return VaadinReactor.buttonClickPublisher(okButton).next()
+                .transform(clickEvent -> getValue())
+                .doOnSuccess(value -> close());
     }
 
-    public OperationViewObject getValue() {
-        if (operationTypes.getValue() == null) {
-            return null;
-        }
-        return  (OperationViewObject) operationTypes.getValue();
+    private Mono<OperationViewObject> getValue() {
+        return Mono.justOrEmpty(operationTypes.getValue())
+                .cast(OperationViewObject.class);
     }
 
     @PostConstruct
@@ -60,8 +60,7 @@ public class ChooseOperationTypeWindow extends Window {
     }
 
     private Button createOKButton() {
-        Button okButton = new Button("OK");
-        okButtonObservable = RxVaadin.buttonClickObservable(okButton);
+        okButton = new Button("OK");
         return okButton;
     }
 }

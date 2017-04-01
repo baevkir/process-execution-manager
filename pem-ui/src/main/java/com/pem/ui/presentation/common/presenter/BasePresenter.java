@@ -11,14 +11,11 @@ public abstract class BasePresenter<V extends View> {
 
     private V view;
 
-    public final void bind(V view) {
+    public void bind(V view) {
         Assert.notNull(view, "Can't bind NULL view.");
         LOGGER.debug("Bind view {} to presenter {}.", view.getClass(), getClass());
         this.view = view;
-        initViewHandlers();
     }
-
-    protected abstract void initViewHandlers();
 
     protected V getView() {
         return view;

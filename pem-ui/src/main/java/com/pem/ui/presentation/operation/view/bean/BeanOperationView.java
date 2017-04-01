@@ -30,7 +30,6 @@ public class BeanOperationView extends BaseOperationView<BeanOperationDTO> {
 
     @Override
     protected Layout createFormComponent() {
-        initFormElements();
         FormLayout formLayout = new FormLayout();
         formLayout.addComponent(getNameField());
 

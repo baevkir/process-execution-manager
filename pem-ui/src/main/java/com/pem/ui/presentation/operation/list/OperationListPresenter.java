@@ -1,28 +1,30 @@
 package com.pem.ui.presentation.operation.list;
 
-import com.pem.logic.rx.eventbus.ServiceEventBus;
-import com.pem.logic.rx.subscriber.operation.event.GetOperationEvent;
-import com.pem.logic.rx.subscriber.operation.event.GetOperationListEvent;
+import com.pem.logic.service.operation.OperationService;
 import com.pem.model.operation.common.OperationDTO;
 import com.pem.ui.presentation.common.presenter.BasePresenter;
+import com.pem.ui.presentation.common.view.provider.OperationViewObject;
 import com.pem.ui.presentation.common.view.provider.PemViewProvider;
 import com.pem.ui.presentation.operation.view.BaseOperationView;
-import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.UI;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
+import java.util.EventObject;
 
 @SpringComponent
 @UIScope
 public class OperationListPresenter extends BasePresenter<OperationListView> {
 
     @Autowired
-    private ServiceEventBus serviceEventBus;
+    private OperationService operationService;
 
     @Autowired
     private PemViewProvider viewProvider;
@@ -31,77 +33,65 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
     private ChooseOperationTypeWindow chooseOperationTypeWindow;
 
     @Override
-    protected void initViewHandlers() {
-        OperationList operationList = getView().getOperationList();
-        getView().getViewObservable()
-                .filter(event -> !operationList.isDataLoaded())
-                .subscribe(event -> loadAllOperations());
+    public void bind(OperationListView view) {
+        super.bind(view);
+        Flux<ViewChangeListener.ViewChangeEvent> eventPublisher = view.getViewChangePublisher();
 
-        getView().getViewObservable()
-                .map(event -> event.getParameters())
-                .filter(parameters -> StringUtils.isNotEmpty(parameters) && StringUtils.isNumeric(parameters))
+        OperationList operationList = getView().getOperationList();
+        eventPublisher.filter(event -> !operationList.isDataLoaded())
+                .cast(EventObject.class)
+                .concatWith(operationList.getRefreshPublisher())
+                .map(eventObject -> operationService.getAllOperations())
+                .subscribe(operationFlux -> operationList.load(operationFlux));
+
+        getOperationPublisher(eventPublisher)
+                .concatWith(getNewOperationPublisher())
+                .subscribe(operation -> openOperationForm(operation));
+    }
+
+    private Flux<OperationDTO> getOperationPublisher(Flux<ViewChangeListener.ViewChangeEvent> eventPublisher) {
+        return eventPublisher.map(event -> event.getParameters())
+                .filter(parameters -> StringUtils.isNotEmpty(parameters))
+                .filter(parameters -> StringUtils.isNumeric(parameters))
                 .map(parameters -> new BigInteger(parameters))
-                .subscribe(operationId -> openOperationForm(operationId));
-
-        operationList.getSelectObservable()
-                .filter(event -> event.getItem() != null)
-                .map(event -> (OperationDTO) event.getItemId())
-                .map(operation -> operation.getId())
-                .subscribe(operationId -> navigateToOperation(operationId));
-
-        operationList.getCreateButtonObservable()
-                .subscribe(clickEvent -> openChooseOperationTypeWindow());
-
-        chooseOperationTypeWindow.getOkButtonObservable()
-                .filter(clickEvent -> chooseOperationTypeWindow.getValue() != null)
-                .map(clickEvent -> chooseOperationTypeWindow.getValue().getOperationType())
-                .subscribe(operationType -> {
-                    openOperationForm(operationType);
-                    chooseOperationTypeWindow.close();
-                });
-
+                .flatMap(operationId -> operationService.getOperation(operationId));
     }
 
-    public void loadAllOperations() {
-        OperationList operationList = getView().getOperationList();
-        GetOperationListEvent event = new GetOperationListEvent();
-        event.getObservable().toList().subscribe(operations -> operationList.load(operations));
-        serviceEventBus.post(event);
+    private Flux<OperationDTO> getNewOperationPublisher() {
+        return getView().getOperationList().getNewOperationPublisher()
+                .flatMap(clickEvent -> openChooseOperationTypeWindow())
+                .map(operationViewObject -> operationViewObject.getOperationType())
+                .map(operationType -> newOperation(operationType));
     }
 
-    private void openOperationForm(BigInteger operationId) {
-        GetOperationEvent event = new GetOperationEvent(operationId);
-        event.getSingle().subscribe(operation -> openOperationForm(operation));
-        serviceEventBus.post(event);
-    }
-
-    private void openOperationForm(Class<? extends OperationDTO> operationType) {
+    private OperationDTO newOperation(Class<? extends OperationDTO> operationType) {
         Assert.notNull(operationType);
         try {
-            OperationDTO operation = operationType.newInstance();
-            openOperationForm(operation);
+            return operationType.newInstance();
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
     }
 
-    private void openOperationForm(OperationDTO operation) {
-        View operationView = viewProvider.getView(operation.getClass());
-
-        Assert.notNull(operationView);
-        Assert.isInstanceOf(BaseOperationView.class, operationView);
-
-        BaseOperationView operationForm = (BaseOperationView) operationView;
-        operationForm.bind(operation);
-
-        getView().openOperation(operationForm);
+    private void openOperationForm(OperationDTO source) {
+        Mono.just(source)
+                .map(operation -> viewProvider.getView(operation.getClass()))
+                .doOnNext(operationView -> Assert.notNull(operationView))
+                .cast(BaseOperationView.class)
+                .subscribe(operationForm -> bindToForm(source, operationForm));
     }
 
-    private void openChooseOperationTypeWindow() {
-        UI.getCurrent().addWindow(chooseOperationTypeWindow);
+    private void bindToForm(OperationDTO source, BaseOperationView operationForm) {
+        operationForm.bind(source)
+                .doOnSuccess(signal -> getView().openOperation(operationForm))
+                .subscribe();
+    }
+    private Mono<OperationViewObject> openChooseOperationTypeWindow() {
+        return Mono.just(chooseOperationTypeWindow)
+                .doOnNext(window -> UI.getCurrent().addWindow(window))
+                .flatMap(window -> window.getPublisher())
+                .next();
     }
 
-    private void navigateToOperation(BigInteger operationId) {
-        UI.getCurrent().getNavigator().navigateTo(OperationListView.VIEW_NAME + "/" + operationId);
-    }
+
 }
