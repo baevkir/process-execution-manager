@@ -23,10 +23,10 @@ public class DoWhileOperationImpl extends AbstractPredicateLoopOperation impleme
                 .doOnSuccess(operationContext -> LOGGER.debug("Finish execute {} in context {}.", getClass(), operationContext));
     }
 
-    private Flux<Long> repeatPublisher(Flux<Long> publisher, Mono<OperationContext> context) {
-        return getPredicate().apply(context)
-                .doOnNext(result -> LOGGER.debug("Predication result: {}.", result))
-                .filter(result -> BooleanUtils.isTrue(result))
-                .flatMap(result -> publisher);
+    private Flux<?> repeatPublisher(Flux<Long> publisher, Mono<OperationContext> context) {
+        return publisher.doOnNext(count -> LOGGER.debug("Try to execute attempt: {}.", count))
+                .flatMap(count -> getPredicate().apply(context))
+                .doOnNext(result ->  LOGGER.debug("Predicate result: {}.", result))
+                .filter(result -> BooleanUtils.isTrue(result));
     }
 }
