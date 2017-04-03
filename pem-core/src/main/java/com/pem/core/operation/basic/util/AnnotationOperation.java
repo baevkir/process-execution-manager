@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ReflectionUtils;
+import reactor.core.publisher.Mono;
 
 import java.lang.reflect.Method;
 
@@ -19,18 +20,21 @@ public abstract class AnnotationOperation extends AbstractOperation implements O
     private ReflectionManager reflectionManager;
 
     @Override
-    public void execute(OperationContext context) {
+    public Mono<OperationContext> execute(Mono<OperationContext> context) {
         LOGGER.trace("Start to execute Operation {}.", this.getClass());
-        ReflectionManager reflectionManager = getReflectionManager();
-        Method method = reflectionManager.getMethod(this.getClass());
-        String resultParam = reflectionManager.getResultParam(method);
+        return context.doOnNext(operationContext -> {
+            ReflectionManager reflectionManager = getReflectionManager();
+            Method method = reflectionManager.getMethod(this.getClass());
+            String resultParam = reflectionManager.getResultParam(method);
 
-        Object[] args = reflectionManager.getArguments(method, context);
-        ReflectionUtils.makeAccessible(method);
-        Object result = ReflectionUtils.invokeMethod(method, this, args);
-        if (StringUtils.isNotEmpty(resultParam)) {
-            context.setContextParam(resultParam, result);
-        }
+            Object[] args = reflectionManager.getArguments(method, operationContext);
+            ReflectionUtils.makeAccessible(method);
+            Object result = ReflectionUtils.invokeMethod(method, this, args);
+            if (StringUtils.isNotEmpty(resultParam)) {
+                operationContext.setContextParam(resultParam, result);
+            }
+        });
+
     }
 
     protected ReflectionManager createReflectionManager() {

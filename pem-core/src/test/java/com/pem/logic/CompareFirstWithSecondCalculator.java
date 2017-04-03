@@ -1,11 +1,12 @@
 package com.pem.logic;
 
-import com.pem.core.calculator.IntegerCalculator;
+import com.pem.core.trigger.Trigger;
 import com.pem.core.context.OperationContext;
+import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
 
-public class CompareFirstWithSecondCalculator implements IntegerCalculator {
+public class CompareFirstWithSecondCalculator implements Trigger {
 
     private BigInteger id;
 
@@ -20,8 +21,8 @@ public class CompareFirstWithSecondCalculator implements IntegerCalculator {
     }
 
     @Override
-    public Integer calculate(OperationContext context) {
-        MathOperationContext mathContext = new MathOperationContext(context);
-        return mathContext.getFirstParam().compareTo(mathContext.getSecondParam());
-    }
+    public Mono<Integer> apply(Mono<OperationContext> context) {
+        return context.map(operationContext -> new MathOperationContext(operationContext))
+                .map(mathContext -> mathContext.getFirstParam().compareTo(mathContext.getSecondParam()));
+      }
 }

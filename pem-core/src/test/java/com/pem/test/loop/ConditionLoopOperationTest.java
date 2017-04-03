@@ -1,14 +1,13 @@
 package com.pem.test.loop;
 
-import com.pem.logic.MathOperationContext;
-import com.pem.logic.MultiplyOperation;
 import com.pem.config.AppConfig;
 import com.pem.core.context.OperationContext;
 import com.pem.core.operation.basic.Operation;
-import com.pem.core.calculator.BinaryCalculator;
-import com.pem.core.operation.loop.condition.ConditionLoopOperation;
 import com.pem.core.operation.loop.condition.DoWhileOperationImpl;
 import com.pem.core.operation.loop.condition.WhileOperationImpl;
+import com.pem.core.predicate.Predicate;
+import com.pem.logic.MathOperationContext;
+import com.pem.logic.MultiplyOperation;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -25,15 +25,15 @@ import java.math.BigInteger;
 public class ConditionLoopOperationTest {
 
     private Operation multiplyOperation;
-    private BinaryCalculator calculator;
-    private BinaryCalculator calculatorFalse;
+    private Predicate predicate;
+    private Predicate predicateFalse;
 
     @Before
     public void setUp() {
 
         multiplyOperation = new MultiplyOperation();
 
-        calculator = new BinaryCalculator() {
+        predicate = new Predicate() {
 
             private BigInteger id;
 
@@ -48,13 +48,13 @@ public class ConditionLoopOperationTest {
             }
 
             @Override
-            public Boolean calculate(OperationContext context) {
-                MathOperationContext contextWrapper = new MathOperationContext(context);
-                return contextWrapper.getResult().compareTo(BigDecimal.valueOf(100)) == -1;
+            public Mono<Boolean> apply(Mono<OperationContext> context) {
+                return context.map(operationContext -> new MathOperationContext(operationContext))
+                        .map(contextWrapper -> contextWrapper.getResult().compareTo(BigDecimal.valueOf(100)) == -1);
             }
         };
 
-        calculatorFalse = new BinaryCalculator() {
+        predicateFalse = new Predicate() {
             private BigInteger id;
 
             @Override
@@ -68,42 +68,44 @@ public class ConditionLoopOperationTest {
             }
 
             @Override
-            public Boolean calculate(OperationContext context) {
-               return false;
+            public Mono<Boolean> apply(Mono<OperationContext> context) {
+                return Mono.just(false);
             }
         };
     }
+
     @Test
     public void testWhileOperation() {
-        ConditionLoopOperation loopOperation = new WhileOperationImpl();
-        loopOperation.setOperation(multiplyOperation);
-        loopOperation.setCalculator(calculator);
+        Mono<OperationContext> context = Mono.just(new MathOperationContext())
+                .doOnSuccess(operationContext -> operationContext.setFirstParam(BigDecimal.valueOf(2)))
+                .doOnSuccess(operationContext -> operationContext.setResult(BigDecimal.valueOf(2)))
+                .doOnSuccess(operationContext -> operationContext.open())
+                .cast(OperationContext.class);
 
-        MathOperationContext context = new MathOperationContext();
-        context.setFirstParam(BigDecimal.valueOf(2));
-        context.setResult(BigDecimal.valueOf(2));
-        context.open();
-
-        loopOperation.execute(context);
-        context.close();
-
-        Assert.assertEquals(context.getResult(), BigDecimal.valueOf(128));
+        Mono.just(new WhileOperationImpl())
+                .doOnSuccess(whileOperation -> whileOperation.setOperation(multiplyOperation))
+                .doOnSuccess(whileOperation -> whileOperation.setPredicate(predicate))
+                .flatMap(whileOperation -> whileOperation.execute(context))
+                .map(operationContext -> new MathOperationContext(operationContext)).single()
+                .doOnSuccess(operationContext -> operationContext.close())
+                .subscribe(operationContext -> Assert.assertEquals(operationContext.getResult(), BigDecimal.valueOf(128)));
     }
 
     @Test
     public void testDoWhileOperation() {
-        ConditionLoopOperation loopOperation = new DoWhileOperationImpl();
-        loopOperation.setOperation(multiplyOperation);
-        loopOperation.setCalculator(calculatorFalse);
+        Mono<OperationContext> context = Mono.just(new MathOperationContext())
+                .doOnSuccess(mathContext -> mathContext.setFirstParam(BigDecimal.valueOf(2)))
+                .doOnSuccess(mathContext -> mathContext.setResult(BigDecimal.valueOf(2)))
+                .doOnSuccess(mathContext -> mathContext.open())
+                .cast(OperationContext.class);
 
-        MathOperationContext context = new MathOperationContext();
-        context.setFirstParam(BigDecimal.valueOf(2));
-        context.setResult(BigDecimal.valueOf(2));
-        context.open();
+        Mono.just(new DoWhileOperationImpl())
+                .doOnSuccess(doWhileOperation -> doWhileOperation.setOperation(multiplyOperation))
+                .doOnSuccess(doWhileOperation -> doWhileOperation.setPredicate(predicateFalse))
+                .flatMap(doWhileOperation -> doWhileOperation.execute(context)).single()
+                .map(operationContext -> new MathOperationContext(operationContext))
+                .doOnSuccess(operationContext -> operationContext.close())
+                .subscribe(operationContext -> Assert.assertEquals(operationContext.getResult(), BigDecimal.valueOf(4)));
 
-        loopOperation.execute(context);
-        context.close();
-
-        Assert.assertEquals(context.getResult(), BigDecimal.valueOf(4));
     }
 }

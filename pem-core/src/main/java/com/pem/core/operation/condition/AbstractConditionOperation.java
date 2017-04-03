@@ -1,46 +1,41 @@
 package com.pem.core.operation.condition;
 
-import com.pem.core.calculator.Calculator;
 import com.pem.core.context.OperationContext;
 import com.pem.core.operation.basic.AbstractOperation;
 import com.pem.core.operation.basic.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
+import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractConditionOperation<S, C extends Calculator<S>> extends AbstractOperation implements ConditionOperation<S, C> {
+public abstract class AbstractConditionOperation<C> extends AbstractOperation implements ConditionOperation<C> {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractConditionOperation.class);
 
-    private final Map<S, Operation> conditions = new HashMap<>();
+    private final Map<C, Operation> conditions = new HashMap<>();
 
-    private Calculator<S> calculator;
+    protected abstract Mono<C> calculateCondition(Mono<OperationContext> context);
 
     @Override
-    public void execute(OperationContext context) {
-        S state = calculator.calculate(context);
-        Assert.notNull(state, String.format("Can't calculate condition for %s.", getClass()));
-
-        Operation operation = getOperationForState(state);
-        operation.execute(context);
+    public Mono<OperationContext> execute(Mono<OperationContext> context) {
+        return calculateCondition(context)
+                .doOnSuccess(condition -> Assert.notNull(condition, String.format("Can't apply condition for %s.", getClass())))
+                .map(condition -> getOperationForCondition(condition))
+                .flatMap(operation -> operation.execute(context))
+                .single();
     }
 
     @Override
-    public void addCondition(S state, Operation operation) {
-        conditions.put(state, operation);
+    public void addCondition(C condition, Operation operation) {
+        conditions.put(condition, operation);
     }
 
-    @Override
-    public void setCalculator(C calculator) {
-        this.calculator = calculator;
-    }
-
-    private Operation getOperationForState(S state) {
-        LOGGER.debug("Start to find Operation for condition {}.", state);
-        Operation operation = conditions.get(state);
-        Assert.notNull(operation, String.format("Can't find Operation for condition %s.", state));
+    private Operation getOperationForCondition(C condition) {
+        LOGGER.debug("Start to find Operation for trigger {}.", condition);
+        Operation operation = conditions.get(condition);
+        Assert.notNull(operation, String.format("Can't find Operation for Condition %s.", condition));
         return operation;
     }
 

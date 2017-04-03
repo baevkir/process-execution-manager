@@ -1,10 +1,11 @@
 package com.pem.test.loop;
 
-import com.pem.logic.*;
 import com.pem.config.AppConfig;
+import com.pem.core.context.OperationContext;
 import com.pem.core.operation.basic.Operation;
-import com.pem.core.operation.loop.counter.CounterLoopOperation;
 import com.pem.core.operation.loop.counter.CounterLoopOperationImpl;
+import com.pem.logic.MathOperationContext;
+import com.pem.logic.MultiplyOperation;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 
@@ -23,25 +25,23 @@ public class CounterLoopOperationTest {
 
     @Before
     public void setUp() {
-
         multiplyOperation = new MultiplyOperation();
-
-
     }
+
     @Test
     public void testCounterLoopOperation() {
-        CounterLoopOperation loopOperation = new CounterLoopOperationImpl();
-        loopOperation.setCount(4);
-        loopOperation.setOperation(multiplyOperation);
+        Mono<OperationContext> context = Mono.just(new MathOperationContext())
+                .doOnNext(operationContext -> operationContext.setFirstParam(BigDecimal.valueOf(2)))
+                .doOnNext(operationContext -> operationContext.setResult(BigDecimal.valueOf(2)))
+                .doOnNext(operationContext -> operationContext.open())
+                .cast(OperationContext.class);
 
-        MathOperationContext context = new MathOperationContext();
-        context.setFirstParam(BigDecimal.valueOf(2));
-        context.setResult(BigDecimal.valueOf(2));
-        context.open();
-
-        loopOperation.execute(context);
-        context.close();
-
-        Assert.assertEquals(context.getResult(), BigDecimal.valueOf(32));
+        Mono.just(new CounterLoopOperationImpl())
+                .doOnNext(counterLoopOperation -> counterLoopOperation.setCount(4))
+                .doOnNext(counterLoopOperation -> counterLoopOperation.setOperation(multiplyOperation))
+                .flatMap(counterLoopOperation -> counterLoopOperation.execute(context))
+                .doOnNext(operationContext -> operationContext.close())
+                .map(operationContext -> new MathOperationContext(operationContext))
+                .subscribe(operationContext -> Assert.assertEquals(operationContext.getResult(), BigDecimal.valueOf(32)));
     }
 }
