@@ -1,13 +1,12 @@
 package com.pem.core.common.converter.factory.impl;
 
-import com.pem.core.common.bean.iterable.BeansIterable;
+import com.pem.core.common.bean.BeansStream;
 import com.pem.core.common.converter.factory.ConverterFactory;
 import com.pem.core.common.converter.impl.Converter;
 import com.pem.core.common.converter.impl.RegisterInConverterFactory;
 import com.pem.core.common.utils.ApplicationContextWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.context.ApplicationContext;
@@ -15,7 +14,6 @@ import org.springframework.context.ApplicationContextAware;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 public abstract class AutoInitConverterFactory implements ConverterFactory, ApplicationContextAware, BeanNameAware {
@@ -40,16 +38,14 @@ public abstract class AutoInitConverterFactory implements ConverterFactory, Appl
     @PostConstruct
     public void initConverters() {
         ApplicationContextWrapper contextWrapper = new ApplicationContextWrapper(applicationContext);
-        Map<String, Converter> converters = contextWrapper.findBeanByAnnotation(RegisterInConverterFactory.class, Converter.class);
+        Map<String, Converter> converters = contextWrapper.findBeansByAnnotation(RegisterInConverterFactory.class, Converter.class);
 
-        BeansIterable.fromBeans(converters).forEach(converter -> {
-            Class<? extends Converter> clazz = (Class<? extends Converter>) AopProxyUtils.ultimateTargetClass(converter);
-            RegisterInConverterFactory annotation = clazz.getAnnotation(RegisterInConverterFactory.class);
-            List<String> factories = Arrays.asList(annotation.factories());
-            if (factories.contains(converterFactoryName)) {
-                setConverter(converter);
-            }
-        });
+        BeansStream.fromBeans(converters)
+                .filterWithAnnotation(RegisterInConverterFactory.class)
+                .filter(entry -> {
+                    RegisterInConverterFactory annotation = entry.getBeanAnnotation(RegisterInConverterFactory.class).get();
+                    return Arrays.asList(annotation.factories()).contains(entry.getBeanName());
+                }).forEach(entry -> setConverter(entry.getBean()));
     }
 
     protected abstract <T, S> void setConverter(Converter<S, T> converter);

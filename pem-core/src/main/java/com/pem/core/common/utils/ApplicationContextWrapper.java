@@ -1,6 +1,5 @@
 package com.pem.core.common.utils;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +8,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.util.Assert;
 
 import java.lang.annotation.Annotation;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 public class ApplicationContextWrapper {
 
@@ -25,30 +27,34 @@ public class ApplicationContextWrapper {
         return applicationContext;
     }
 
-    public <T, A extends Annotation> Map<String, T> findBeanByAnnotation(final Class<A> annotation, Class<T> targetClass) {
-       return findBeanByAnnotation(annotation, targetClass, null);
+    public Optional<ApplicationContextWrapper> getParent() {
+        return Optional.ofNullable(applicationContext.getParent())
+                .map(parentContext -> new ApplicationContextWrapper(parentContext));
     }
 
-    public <T, A extends Annotation> Map<String, T> findBeanByAnnotation(final Class<A> annotation, Class<T> targetClass, final Predicate<T> predicate) {
+    public <T, A extends Annotation> Map<String, T> findBeansByAnnotation(final Class<A> annotation, Class<T> targetClass) {
+        return findBeansByAnnotation(annotation, targetClass, null);
+    }
+
+    public <T, A extends Annotation> Map<String, T> findBeansByAnnotation(Class<A> annotation, Class<T> targetClass, Predicate<T> predicate) {
         Assert.notNull(annotation);
         Assert.notNull(targetClass);
-        Map<String, T> beans = applicationContext.getBeansOfType(targetClass, true, true);
+        Map<String, T> beans = new HashMap<>();
+        getParent().ifPresent(parentContextWrapper -> beans.putAll(parentContextWrapper.findBeansByAnnotation(annotation, targetClass)));
+        beans.putAll(applicationContext.getBeansOfType(targetClass, true, true));
         LOGGER.trace("Try to Find beans {} with annotation {}.", targetClass, annotation);
 
-        return Maps.filterEntries(beans, new Predicate<Map.Entry<String, T>>() {
-            @Override
-            public boolean apply(Map.Entry<String, T> input) {
-                T value = input.getValue();
-                Class clazz = AopProxyUtils.ultimateTargetClass(value);
-                if (!clazz.isAnnotationPresent(annotation)) {
-                    return false;
-                }
-                if (predicate == null) {
-                    return true;
-                }
-
-                return predicate.apply(input.getValue());
+        return Maps.filterEntries(beans, input -> {
+            T value = input.getValue();
+            Class clazz = AopProxyUtils.ultimateTargetClass(value);
+            if (!clazz.isAnnotationPresent(annotation)) {
+                return false;
             }
+            if (predicate == null) {
+                return true;
+            }
+
+            return predicate.test(input.getValue());
         });
     }
 
@@ -66,12 +72,12 @@ public class ApplicationContextWrapper {
 
     public <B> String getBeanName(B bean) {
         Class<B> beanClass = (Class<B>) bean.getClass();
+
         Map<String, B> beans = applicationContext.getBeansOfType(beanClass, true, true);
-        for (Map.Entry<String, B> entry : beans.entrySet()) {
-            if (entry.getValue() == bean) {
-                return entry.getKey();
-            }
-        }
-        throw new RuntimeException("Can't find currant Bean name.");
+        return beans.entrySet().stream()
+                .filter(entry -> entry.getValue() == bean)
+                .map(entry -> entry.getKey())
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Can't find currant Bean name."));
     }
 }
