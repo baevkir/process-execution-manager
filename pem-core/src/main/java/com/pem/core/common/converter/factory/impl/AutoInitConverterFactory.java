@@ -41,11 +41,9 @@ public abstract class AutoInitConverterFactory implements ConverterFactory, Appl
         Map<String, Converter> converters = contextWrapper.findBeansByAnnotation(RegisterInConverterFactory.class, Converter.class);
 
         BeansStream.fromBeans(converters)
-                .filterWithAnnotation(RegisterInConverterFactory.class)
-                .filter(entry -> {
-                    RegisterInConverterFactory annotation = entry.getBeanAnnotation(RegisterInConverterFactory.class).get();
-                    return Arrays.asList(annotation.factories()).contains(entry.getBeanName());
-                }).forEach(entry -> setConverter(entry.getBean()));
+                .filterWithAnnotation(RegisterInConverterFactory.class,
+                        (annotation, entry) -> Arrays.asList(annotation.factories()).contains(converterFactoryName))
+                .forEach(entry -> setConverter(entry.getBean()));
     }
 
     protected abstract <T, S> void setConverter(Converter<S, T> converter);

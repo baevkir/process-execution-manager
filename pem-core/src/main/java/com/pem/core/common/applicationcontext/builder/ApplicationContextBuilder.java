@@ -96,7 +96,7 @@ public class ApplicationContextBuilder {
             Object beanObject = entry.getValue();
 
             Assert.hasText(beanName, "Can't register Singleton Bean for Empty Bean Name");
-            Assert.notNull(beanObject, "Can't register Singleton Bean for Null Bean Object");
+            Assert.notNull(beanObject, String.format("Can't register Singleton Bean %s for Null Bean Object", beanName));
 
             LOGGER.debug("Register Singleton Bean: {}.", beanName);
             beanFactory.registerSingleton(beanName, beanObject);

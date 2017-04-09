@@ -21,20 +21,23 @@ public abstract class AnnotationOperation extends AbstractOperation implements O
 
     @Override
     public Mono<OperationContext> execute(Mono<OperationContext> context) {
-        LOGGER.trace("Start to execute Operation {}.", this.getClass());
-        return context.doOnNext(operationContext -> {
-            ReflectionManager reflectionManager = getReflectionManager();
-            Method method = reflectionManager.getMethod(this.getClass());
-            String resultParam = reflectionManager.getResultParam(method);
+        LOGGER.trace("Start to execute Operation {}.", getClass());
+        return context.map(operationContext -> executeAnnotatedMethod(operationContext));
 
-            Object[] args = reflectionManager.getArguments(method, operationContext);
-            ReflectionUtils.makeAccessible(method);
-            Object result = ReflectionUtils.invokeMethod(method, this, args);
-            if (StringUtils.isNotEmpty(resultParam)) {
-                operationContext.setContextParam(resultParam, result);
-            }
-        });
+    }
 
+    protected OperationContext executeAnnotatedMethod(OperationContext operationContext) {
+        ReflectionManager reflectionManager = getReflectionManager();
+        Method method = reflectionManager.getMethod(getClass());
+        String resultParam = reflectionManager.getResultParam(method);
+
+        Object[] args = reflectionManager.getArguments(method, operationContext);
+        ReflectionUtils.makeAccessible(method);
+        Object result = ReflectionUtils.invokeMethod(method, this, args);
+        if (StringUtils.isNotEmpty(resultParam)) {
+            operationContext.setContextParam(resultParam, result);
+        }
+        return operationContext;
     }
 
     protected ReflectionManager createReflectionManager() {

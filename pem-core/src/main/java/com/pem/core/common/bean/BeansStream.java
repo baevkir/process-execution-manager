@@ -9,6 +9,7 @@ import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -41,6 +42,12 @@ public class BeansStream<B> {
         return new BeansStream<>(beans
                 .filter(entry -> entry.getBeanAnnotation(beanAnnotation)
                         .filter(predicate).isPresent()));
+    }
+
+    public <A extends Annotation> BeansStream<B> filterWithAnnotation(Class<A> beanAnnotation, BiPredicate<A, Entry<B>> predicate) {
+        return new BeansStream<>(beans
+                .filter(entry -> entry.getBeanAnnotation(beanAnnotation)
+                        .filter(annotation -> predicate.test(annotation, entry)).isPresent()));
     }
 
     public BeansStream<B> filter(Predicate<Entry<B>> predicate) {
