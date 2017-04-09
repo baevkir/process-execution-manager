@@ -1,12 +1,12 @@
 package com.pem.ui.presentation.common.view.provider;
 
-import com.pem.model.operation.common.OperationDTO;
+import com.pem.model.operation.common.OperationObject;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 public class OperationViewObject {
     private String name;
-    private Class<? extends OperationDTO> operationType;
+    private Class<? extends OperationObject> operationType;
 
     public String getName() {
         return name;
@@ -16,11 +16,11 @@ public class OperationViewObject {
         this.name = name;
     }
 
-    public Class<? extends OperationDTO> getOperationType() {
+    public Class<? extends OperationObject> getOperationType() {
         return operationType;
     }
 
-    public void setOperationType(Class<? extends OperationDTO> operationType) {
+    public void setOperationType(Class<? extends OperationObject> operationType) {
         this.operationType = operationType;
     }
 

@@ -1,7 +1,7 @@
 package com.pem.ui.presentation.operation.list;
 
 import com.pem.logic.service.operation.OperationService;
-import com.pem.model.operation.common.OperationDTO;
+import com.pem.model.operation.common.OperationObject;
 import com.pem.ui.presentation.common.presenter.BasePresenter;
 import com.pem.ui.presentation.common.view.provider.OperationViewObject;
 import com.pem.ui.presentation.common.view.provider.PemViewProvider;
@@ -49,7 +49,7 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
                 .subscribe(operation -> openOperationForm(operation));
     }
 
-    private Flux<OperationDTO> getOperationPublisher(Flux<ViewChangeListener.ViewChangeEvent> eventPublisher) {
+    private Flux<OperationObject> getOperationPublisher(Flux<ViewChangeListener.ViewChangeEvent> eventPublisher) {
         return eventPublisher.map(event -> event.getParameters())
                 .filter(parameters -> StringUtils.isNotEmpty(parameters))
                 .filter(parameters -> StringUtils.isNumeric(parameters))
@@ -57,14 +57,14 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
                 .flatMap(operationId -> operationService.getOperation(operationId));
     }
 
-    private Flux<OperationDTO> getNewOperationPublisher() {
+    private Flux<OperationObject> getNewOperationPublisher() {
         return getView().getOperationList().getNewOperationPublisher()
                 .flatMap(clickEvent -> openChooseOperationTypeWindow())
                 .map(operationViewObject -> operationViewObject.getOperationType())
                 .map(operationType -> newOperation(operationType));
     }
 
-    private OperationDTO newOperation(Class<? extends OperationDTO> operationType) {
+    private OperationObject newOperation(Class<? extends OperationObject> operationType) {
         Assert.notNull(operationType);
         try {
             return operationType.newInstance();
@@ -73,7 +73,7 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
         }
     }
 
-    private void openOperationForm(OperationDTO source) {
+    private void openOperationForm(OperationObject source) {
         Mono.just(source)
                 .map(operation -> viewProvider.getView(operation.getClass()))
                 .doOnNext(operationView -> Assert.notNull(operationView))
@@ -81,7 +81,7 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
                 .subscribe(operationForm -> bindToForm(source, operationForm));
     }
 
-    private void bindToForm(OperationDTO source, BaseOperationView operationForm) {
+    private void bindToForm(OperationObject source, BaseOperationView operationForm) {
         operationForm.bind(source)
                 .doOnSuccess(signal -> getView().openOperation(operationForm))
                 .subscribe();

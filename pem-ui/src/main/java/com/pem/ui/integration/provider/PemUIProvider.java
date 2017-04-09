@@ -53,7 +53,7 @@ public class PemUIProvider extends AbstractSpringUIProvider implements Applicati
                 .addParentBeans(parentBeans)
                 .addXMLConfiguration("config/pem-vaadin-ui-config.xml")
                 .addSingletonBean(SERVICE_PROVIDER_BEAN, serviceProvider)
-                .addSingletonBean(CALCULATOR_SERVICE_BEAN, serviceProvider.getCalculatorService())
+                .addSingletonBean(CALCULATOR_SERVICE_BEAN, serviceProvider.getTriggerService())
                 .addSingletonBean(OPERATION_SERVICE_BEAN, serviceProvider.getOperationService())
                 .addSingletonBean(PROCESS_SERVICE_BEAN, serviceProvider.getExecutionProcessService());
 

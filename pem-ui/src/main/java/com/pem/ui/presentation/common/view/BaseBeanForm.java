@@ -1,10 +1,10 @@
 package com.pem.ui.presentation.common.view;
 
-import com.pem.model.common.BaseDTO;
+import com.pem.model.common.BaseObject;
 import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.ui.*;
 
-public abstract class BaseBeanForm<B extends BaseDTO> extends AbstractBeanForm<B> {
+public abstract class BaseBeanForm<B extends BaseObject> extends AbstractBeanForm<B> {
 
     @PropertyId("name")
     private TextField nameField = new TextField("Name");

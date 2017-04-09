@@ -1,6 +1,6 @@
 package com.pem.ui.presentation.process;
 
-import com.pem.model.proccess.ExecutionProcessDTO;
+import com.pem.model.proccess.ExecutionProcessObject;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -21,9 +21,9 @@ public class ProcessesList extends HorizontalLayout {
 
     private boolean dataLoaded;
     private final Table processesTable = new Table();
-    private final BeanItemContainer<ExecutionProcessDTO> processesContainer = new BeanItemContainer<>(ExecutionProcessDTO.class);
+    private final BeanItemContainer<ExecutionProcessObject> processesContainer = new BeanItemContainer<>(ExecutionProcessObject.class);
 
-    public void load(List<ExecutionProcessDTO> process) {
+    public void load(List<ExecutionProcessObject> process) {
         processesContainer.removeAllItems();
         processesContainer.addAll(process);
         dataLoaded = true;
@@ -58,7 +58,7 @@ public class ProcessesList extends HorizontalLayout {
         processesTable.addListener(new ItemClickEvent.ItemClickListener() {
             @Override
             public void itemClick(ItemClickEvent event) {
-                ExecutionProcessDTO process = (ExecutionProcessDTO) event.getItemId();
+                ExecutionProcessObject process = (ExecutionProcessObject) event.getItemId();
                 UI.getCurrent().getNavigator().navigateTo(ProcessMainView.VIEW_NAME + "/" + process.getId());
             }
         });

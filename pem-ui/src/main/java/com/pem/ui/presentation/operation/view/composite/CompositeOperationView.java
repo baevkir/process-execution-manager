@@ -1,6 +1,6 @@
 package com.pem.ui.presentation.operation.view.composite;
 
-import com.pem.model.operation.common.OperationDTO;
+import com.pem.model.operation.common.OperationObject;
 import com.pem.model.operation.composite.SyncCompositeOperationDTO;
 import com.pem.ui.presentation.common.view.provider.BeanFormView;
 import com.pem.ui.presentation.common.view.provider.OperationView;
@@ -22,7 +22,7 @@ public class CompositeOperationView extends BaseOperationView<SyncCompositeOpera
     @PropertyId("operations")
     private TwinColSelect operationsSelect = new TwinColSelect("Operations");
 
-    private BeanItemContainer<OperationDTO> operationsContainer;
+    private BeanItemContainer<OperationObject> operationsContainer;
 
     @Override
     protected CompositeOperationPresenter getPresenter() {
@@ -39,7 +39,7 @@ public class CompositeOperationView extends BaseOperationView<SyncCompositeOpera
 
     @Override
     protected Layout createFormComponent() {
-        operationsContainer = new BeanItemContainer<>(OperationDTO.class);
+        operationsContainer = new BeanItemContainer<>(OperationObject.class);
         operationsSelect.setContainerDataSource(operationsContainer);
         HorizontalLayout mainLayout = new HorizontalLayout();
 
@@ -61,7 +61,7 @@ public class CompositeOperationView extends BaseOperationView<SyncCompositeOpera
         return mainLayout;
     }
 
-    public Mono<Void> load(Flux<OperationDTO> operationsPublisher) {
+    public Mono<Void> load(Flux<OperationObject> operationsPublisher) {
         return operationsPublisher.doOnSubscribe(subscription -> operationsSelect.removeAllItems())
                 .doOnSubscribe(subscription -> operationsSelect.setItemCaptionPropertyId("name"))
                 .doOnNext(operation -> operationsContainer.addBean(operation))

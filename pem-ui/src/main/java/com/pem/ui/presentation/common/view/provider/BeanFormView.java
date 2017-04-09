@@ -1,6 +1,6 @@
 package com.pem.ui.presentation.common.view.provider;
 
-import com.pem.model.common.BaseDTO;
+import com.pem.model.common.BaseObject;
 import com.vaadin.spring.annotation.SpringView;
 
 import java.lang.annotation.Documented;
@@ -12,5 +12,5 @@ import java.lang.annotation.Target;
 @Documented
 @SpringView
 public @interface BeanFormView {
-    Class<? extends BaseDTO> value();
+    Class<? extends BaseObject> value();
 }

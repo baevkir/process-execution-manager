@@ -1,7 +1,7 @@
 package com.pem.ui.presentation.common.view.provider;
 
-import com.pem.model.common.BaseDTO;
-import com.pem.model.operation.common.OperationDTO;
+import com.pem.model.common.BaseObject;
+import com.pem.model.operation.common.OperationObject;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.navigator.SpringViewProvider;
@@ -25,7 +25,7 @@ public class PemSpringViewProvider extends SpringViewProvider implements PemView
     }
 
     @Override
-    public View getView(Class<? extends BaseDTO> beanDTOType) {
+    public View getView(Class<? extends BaseObject> beanDTOType) {
         String viewName = beanDTOType.getCanonicalName();
         return getView(viewName);
     }
@@ -62,14 +62,14 @@ public class PemSpringViewProvider extends SpringViewProvider implements PemView
         }
 
         Class<?> operationClass = beanFormViewAnnotation.value();
-        if (!OperationDTO.class.isAssignableFrom(operationClass)) {
-            LOGGER.warn("beanClass {} has BaseOperationView annotation but BeanView annotation value is not Assignable from OperationDTO class!", beanClass);
+        if (!OperationObject.class.isAssignableFrom(operationClass)) {
+            LOGGER.warn("beanClass {} has BaseOperationView annotation but BeanView annotation value is not Assignable from OperationObject class!", beanClass);
             return;
         }
 
         OperationViewObject operationViewObject = new OperationViewObject();
         operationViewObject.setName(operationAnnotation.value());
-        operationViewObject.setOperationType((Class<? extends OperationDTO>) operationClass);
+        operationViewObject.setOperationType((Class<? extends OperationObject>) operationClass);
         operationViews.add(operationViewObject);
     }
 }

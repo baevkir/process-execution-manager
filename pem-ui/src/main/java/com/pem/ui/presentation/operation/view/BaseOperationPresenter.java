@@ -1,7 +1,7 @@
 package com.pem.ui.presentation.operation.view;
 
 import com.pem.logic.service.operation.OperationService;
-import com.pem.model.operation.common.OperationDTO;
+import com.pem.model.operation.common.OperationObject;
 import com.pem.ui.presentation.common.presenter.BaseBeanPresenter;
 import com.pem.ui.presentation.common.reactor.VaadinReactor;
 import com.pem.ui.presentation.operation.list.OperationListView;
@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
 
-public class BaseOperationPresenter<O extends OperationDTO, V extends BaseOperationView<O>> extends BaseBeanPresenter<O, V> {
+public class BaseOperationPresenter<O extends OperationObject, V extends BaseOperationView<O>> extends BaseBeanPresenter<O, V> {
 
     @Autowired
     private OperationService operationService;

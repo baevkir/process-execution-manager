@@ -1,6 +1,6 @@
 package com.pem.ui.presentation.operation.list;
 
-import com.pem.model.operation.common.OperationDTO;
+import com.pem.model.operation.common.OperationObject;
 import com.pem.ui.presentation.common.reactor.VaadinReactor;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -23,9 +23,9 @@ public class OperationList extends HorizontalLayout {
     private Button refreshButton;
 
     private final Table operationTable = new Table();
-    private final BeanItemContainer<OperationDTO> operationContainer = new BeanItemContainer<>(OperationDTO.class);
+    private final BeanItemContainer<OperationObject> operationContainer = new BeanItemContainer<>(OperationObject.class);
 
-    public void load(Flux<OperationDTO> operationPublisher) {
+    public void load(Flux<OperationObject> operationPublisher) {
         operationPublisher.doOnSubscribe(subscription -> operationContainer.removeAllItems())
                 .doOnSubscribe(subscription -> dataLoaded = true)
                 .subscribe(operation -> operationContainer.addBean(operation));
@@ -66,7 +66,7 @@ public class OperationList extends HorizontalLayout {
         VaadinReactor.tableClickPublisher(operationTable)
                 .map(itemClickEvent -> itemClickEvent.getItemId())
                 .filter(itemId -> itemId != null)
-                .cast(OperationDTO.class)
+                .cast(OperationObject.class)
                 .map(operation -> operation.getId())
                 .subscribe(operationId -> navigateToOperation(operationId));
     }
