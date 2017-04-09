@@ -3,8 +3,8 @@ package com.pem.test.provider;
 
 import com.pem.core.operation.basic.Operation;
 import com.pem.core.operation.composite.SyncCompositeOperation;
-import com.pem.core.operation.condition.BinaryConditionOperation;
-import com.pem.core.operation.condition.IntegerConditionOperation;
+import com.pem.core.operation.condition.predicate.PredicateOperation;
+import com.pem.core.operation.condition.trigger.TriggerOperation;
 import com.pem.core.operation.loop.condition.DoWhileOperation;
 import com.pem.core.operation.loop.condition.WhileOperation;
 import com.pem.core.operation.loop.counter.CounterLoopOperation;
@@ -35,8 +35,8 @@ public class OperationProviderTest {
     @Before
     public void setUp() {
         commonOperations.add(SyncCompositeOperation.class);
-        commonOperations.add(BinaryConditionOperation.class);
-        commonOperations.add(IntegerConditionOperation.class);
+        commonOperations.add(PredicateOperation.class);
+        commonOperations.add(TriggerOperation.class);
         commonOperations.add(CounterLoopOperation.class);
         commonOperations.add(DoWhileOperation.class);
         commonOperations.add(WhileOperation.class);

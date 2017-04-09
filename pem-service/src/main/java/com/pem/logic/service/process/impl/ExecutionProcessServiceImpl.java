@@ -1,12 +1,13 @@
 package com.pem.logic.service.process.impl;
 
 import com.pem.core.common.converter.factory.ConverterFactory;
+import com.pem.core.context.OperationContext;
 import com.pem.core.context.OperationContextFactory;
 import com.pem.logic.service.process.ExecutionProcessService;
 import com.pem.logic.service.process.executor.ProcessExecutor;
-import com.pem.model.operation.common.OperationDTO;
-import com.pem.model.proccess.ExecutionProcessDTO;
-import com.pem.persistence.api.service.process.ProcessPersistenceService;
+import com.pem.model.operation.common.OperationObject;
+import com.pem.model.proccess.ExecutionProcessObject;
+import com.pem.persistence.api.manager.PersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
@@ -17,42 +18,44 @@ import java.math.BigInteger;
 public class ExecutionProcessServiceImpl implements ExecutionProcessService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExecutionProcessServiceImpl.class);
 
-    private ProcessPersistenceService persistenceService;
+    private PersistenceManager persistenceManager;
     private ConverterFactory converterFactory;
     private ProcessExecutor operationExecutor;
 
     @Override
-    public Mono<ExecutionProcessDTO> createExecutionProcess(OperationDTO operationEntity) {
-        LOGGER.debug("Create new ExecutionProcessDTO for: {}.", operationEntity);
-        ExecutionProcessDTO processEntity = converterFactory.convert(operationEntity, OperationDTO.class, ExecutionProcessDTO.class);
-        return persistenceService.createProcess(processEntity);
+    public Mono<ExecutionProcessObject> createExecutionProcess(OperationObject operationObject) {
+        LOGGER.debug("Create new ExecutionProcessObject for: {}.", operationObject);
+        return Mono.just(operationObject)
+                .map(operation -> converterFactory.convert(operation, OperationObject.class, ExecutionProcessObject.class))
+                .flatMap(processObject -> persistenceManager.create(processObject))
+                .single();
     }
 
     @Override
-    public Mono<Void> updateExecutionProcess(ExecutionProcessDTO processEntity) {
-        LOGGER.debug("Update ExecutionProcessDTO: {}.", processEntity);
-         return persistenceService.updateProcess(processEntity);
+    public Mono<Void> updateExecutionProcess(ExecutionProcessObject processEntity) {
+        LOGGER.debug("Update ExecutionProcessObject: {}.", processEntity);
+         return persistenceManager.update(processEntity);
     }
 
     @Override
-    public Mono<Void> executeProcess(ExecutionProcessDTO executionProcess, OperationContextFactory contextFactory) {
-       return Mono.fromRunnable(() -> operationExecutor.execute(executionProcess, contextFactory));
+    public Mono<OperationContext> executeProcess(ExecutionProcessObject executionProcess, Mono<OperationContextFactory> contextFactory) {
+       return operationExecutor.execute(executionProcess, contextFactory);
     }
 
     @Override
-    public Mono<ExecutionProcessDTO> getExecutionProcess(BigInteger id) {
-        LOGGER.debug("Get ExecutionProcessDTO: {}.", id);
-        return persistenceService.getProcess(id);
+    public Mono<ExecutionProcessObject> getExecutionProcess(BigInteger id) {
+        LOGGER.debug("Get ExecutionProcessObject: {}.", id);
+        return persistenceManager.getById(id, ExecutionProcessObject.class);
     }
 
     @Override
-    public Flux<ExecutionProcessDTO> getAllExecutionProcesses() {
+    public Flux<ExecutionProcessObject> getAllExecutionProcesses() {
         LOGGER.debug("Get All ExecutionProcesses.");
-        return persistenceService.getAllProcesses();
+        return persistenceManager.getAll(ExecutionProcessObject.class);
     }
 
-    public void setPersistenceService(ProcessPersistenceService persistenceService) {
-        this.persistenceService = persistenceService;
+    public void setPersistenceManager(PersistenceManager persistenceManager) {
+        this.persistenceManager = persistenceManager;
     }
 
     public void setOperationExecutor(ProcessExecutor operationExecutor) {

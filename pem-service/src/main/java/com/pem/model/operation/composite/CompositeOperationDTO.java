@@ -1,18 +1,18 @@
 package com.pem.model.operation.composite;
 
-import com.pem.model.operation.common.OperationDTO;
+import com.pem.model.operation.common.OperationObject;
 
 import java.util.List;
 
-public abstract class CompositeOperationDTO extends OperationDTO {
+public abstract class CompositeOperationDTO extends OperationObject {
 
-    private List<OperationDTO> operations;
+    private List<OperationObject> operations;
 
-    public List<OperationDTO> getOperations() {
+    public List<OperationObject> getOperations() {
         return operations;
     }
 
-    public void setOperations(List<OperationDTO> operations) {
+    public void setOperations(List<OperationObject> operations) {
         this.operations = operations;
     }
 

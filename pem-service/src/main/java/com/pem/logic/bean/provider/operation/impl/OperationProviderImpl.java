@@ -1,25 +1,29 @@
 package com.pem.logic.bean.provider.operation.impl;
 
 import com.pem.core.common.bean.BeanObject;
-import com.pem.core.common.bean.iterable.BeansIterable;
+import com.pem.core.common.bean.BeanObjectBuilder;
+import com.pem.core.common.bean.BeansStream;
 import com.pem.core.common.utils.ApplicationContextWrapper;
 import com.pem.core.operation.basic.Operation;
 import com.pem.logic.bean.provider.operation.OperationProvider;
 import com.pem.logic.common.ServiceConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class OperationProviderImpl implements OperationProvider, ApplicationContextAware {
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationProviderImpl.class);
     private static final String OPERATION_BEAN_PREF = ServiceConstants.CUSTOM_OPERATION_BEAN_PREF;
 
-    private ApplicationContext applicationContext;
+    private ApplicationContextWrapper contextWrapper;
 
     @Override
     public <O extends Operation> O createCommonOperation(Class<O> operationClass) {
@@ -32,38 +36,34 @@ public class OperationProviderImpl implements OperationProvider, ApplicationCont
 
     @Override
     public <O extends Operation> O createOperation(String beanName, Class<O> operationClass) {
-        ApplicationContextWrapper wrapper = new ApplicationContextWrapper(applicationContext);
-        return wrapper.getPrototypeBeanByType(beanName, operationClass);
+        return contextWrapper.getPrototypeBeanByType(beanName, operationClass);
     }
 
     @Override
     public Set<BeanObject> getAllOperationBeanObjects() {
         LOGGER.debug("Get All OperationBeanObjects .");
-        final String applicationId = applicationContext.getId();
-        Map<String, Operation> beans = new HashMap<>();
-        if (applicationContext.getParent() != null) {
-            beans.putAll(findGlobalOperationsInContext(applicationContext.getParent()));
+        final String applicationId = contextWrapper.getApplicationContext().getId();
+        Map<String, Operation> beans = contextWrapper.findBeansByAnnotation(GlobalOperation.class, Operation.class);
+
+        return BeansStream.fromBeans(beans)
+                .filterWithAnnotation(GlobalOperation.class, annotation -> checkAnnotation(annotation, applicationId))
+                .transform(operationEntry -> transformToBeanObject(operationEntry))
+                .collect(Collectors.toSet());
+    }
+
+    private boolean checkAnnotation(GlobalOperation annotation, String applicationId) {
+        if (annotation.all()) {
+            return true;
         }
-        beans.putAll(findGlobalOperationsInContext(applicationContext));
+        List<String> executors = Arrays.asList(annotation.executors());
+        return executors.contains(applicationId);
+    }
 
-        BeansIterable iterable = BeansIterable.fromBeans(beans).filter(input -> {
-            Class<Operation> clazz = (Class<Operation>) AopProxyUtils.ultimateTargetClass(input);
-            RegisterGlobalOperation annotation = clazz.getAnnotation(RegisterGlobalOperation.class);
-
-            if (annotation.all()) {
-                return true;
-            }
-            List<String> executors = Arrays.asList(annotation.executors());
-            return executors.contains(applicationId);
-        });
-
-        return iterable.transformToBeanObjects(input -> {
-            Class clazz = AopProxyUtils.ultimateTargetClass(input);
-            RegisterGlobalOperation annotation = (RegisterGlobalOperation) clazz.getAnnotation(RegisterGlobalOperation.class);
-            String name = annotation.value();
-            LOGGER.trace("Presentation name for bean {}", name);
-            return name;
-        });
+    private BeanObject transformToBeanObject(BeansStream.Entry<Operation> operationEntry) {
+        return BeanObjectBuilder.newInstance()
+                .setBeanName(operationEntry.getBeanName())
+                .setName(operationEntry.getBeanAnnotation(GlobalOperation.class).get().value())
+                .build();
     }
 
     private <O extends Operation> String getCommonOperationName(Class<O> operationClass) {
@@ -72,13 +72,8 @@ public class OperationProviderImpl implements OperationProvider, ApplicationCont
         return OPERATION_BEAN_PREF + className;
     }
 
-    private Map<String, Operation> findGlobalOperationsInContext(ApplicationContext context) {
-        ApplicationContextWrapper wrapper = new ApplicationContextWrapper(context);
-        return wrapper.findBeanByAnnotation(RegisterGlobalOperation.class, Operation.class);
-    }
-
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
+        this.contextWrapper = new ApplicationContextWrapper(applicationContext);
     }
 }

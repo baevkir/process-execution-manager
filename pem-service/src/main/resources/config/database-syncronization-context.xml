@@ -5,20 +5,20 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="pem.operationDatabaseSynchronizer"
-          class="com.pem.logic.bean.synchronizer.operation.BeanOperationDatabaseSynchronizer">
-        <property name="operationPersistenceService" ref="operationPersistenceService"/>
-        <property name="operationProvider" ref="operationProvider"/>
+          class="com.pem.logic.bean.synchronizer.OperationDatabaseSynchronizer">
+        <property name="persistenceManager" ref="pem.persistenceManager"/>
+        <property name="operationProvider" ref="pem.operationProvider"/>
     </bean>
 
-    <bean id="binaryCalculatorDatabaseSynchronizer"
-          class="com.pem.logic.bean.synchronizer.calculator.BinaryBeanCalculatorDatabaseSynchronizer">
-        <property name="calculatorPersistenceService" ref="calculatorPersistenceService"/>
-        <property name="calculatorProvider" ref="calculatorProvider"/>
+    <bean id="pem.predicateDatabaseSynchronizer"
+          class="com.pem.logic.bean.synchronizer.PredicateDatabaseSynchronizer">
+        <property name="persistenceManager" ref="pem.persistenceManager"/>
+        <property name="predicateProvider" ref="pem.predicateProvider"/>
     </bean>
 
-    <bean id="integerBeanCalculatorDatabaseSynchronizer"
-          class="com.pem.logic.bean.synchronizer.calculator.IntegerBeanCalculatorDatabaseSynchronizer">
-        <property name="calculatorPersistenceService" ref="calculatorPersistenceService"/>
-        <property name="calculatorProvider" ref="calculatorProvider"/>
+    <bean id="pem.triggerDatabaseSynchronizer"
+          class="com.pem.logic.bean.synchronizer.TriggerDatabaseSynchronizer">
+        <property name="persistenceManager" ref="pem.persistenceManager"/>
+        <property name="triggerProvider" ref="pem.triggerProvider"/>
     </bean>
 </beans>

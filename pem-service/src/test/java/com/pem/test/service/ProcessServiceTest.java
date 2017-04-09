@@ -1,8 +1,9 @@
 package com.pem.test.service;
 
 import com.pem.core.context.OperationContextFactory;
+import com.pem.logic.common.utils.IdGenerator;
 import com.pem.logic.service.process.ExecutionProcessService;
-import com.pem.model.proccess.ExecutionProcessDTO;
+import com.pem.model.proccess.ExecutionProcessObject;
 import com.pem.test.common.TestEntityCreator;
 import com.pem.test.common.config.TestConfig;
 import org.junit.Test;
@@ -14,7 +15,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+
+import static com.pem.logic.MathOperationContext.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
@@ -26,7 +30,7 @@ public class ProcessServiceTest {
 
     @Test
     public void testCreateEvent() {
-        Mono<ExecutionProcessDTO> result = executionProcessService.createExecutionProcess(creator.createSimpleBeanOperation());
+        Mono<ExecutionProcessObject> result = executionProcessService.createExecutionProcess(creator.createSimpleBeanOperation());
         StepVerifier.create(result)
                 .expectNextCount(1)
                 .expectComplete()
@@ -35,7 +39,7 @@ public class ProcessServiceTest {
 
     @Test
     public void testUpdateEvent() {
-        Mono<Void> result = executionProcessService.updateExecutionProcess(new ExecutionProcessDTO());
+        Mono<Void> result = executionProcessService.updateExecutionProcess(new ExecutionProcessObject());
         StepVerifier.create(result)
                 .expectNextCount(0)
                 .expectComplete()
@@ -44,16 +48,26 @@ public class ProcessServiceTest {
 
     @Test
     public void testExecuteEvent() {
-        Mono<Void> result = executionProcessService.executeProcess(new ExecutionProcessDTO(), OperationContextFactory.create());
-        StepVerifier.create(result)
-                .expectNextCount(0)
+        Mono<OperationContextFactory> contextFactory = Mono.just(OperationContextFactory.create())
+                .doOnSuccess(operationContextFactory -> operationContextFactory.setContextParam(FIRST_PARAM, BigDecimal.ONE))
+                .doOnSuccess(operationContextFactory -> operationContextFactory.setContextParam(SECOND_PARAM, BigDecimal.ONE));
+
+        Mono<BigDecimal> resultMono = Mono.just(new ExecutionProcessObject())
+                .doOnSuccess(processObject -> processObject.setId(IdGenerator.generateId()))
+                .doOnSuccess(processObject -> processObject.setExecutionOperation(creator.createSimpleBeanOperation()))
+                .flatMap(processObject -> executionProcessService.executeProcess(processObject, contextFactory))
+                .single()
+                .map(operationContext -> operationContext.getContextParam(RESULT_PARAM, BigDecimal.class));
+
+        StepVerifier.create(resultMono)
+                .expectNext(new BigDecimal(2))
                 .expectComplete()
                 .verify();
     }
 
     @Test
     public void testGetOneEvent() {
-        Mono<ExecutionProcessDTO> result = executionProcessService.getExecutionProcess(BigInteger.ONE);
+        Mono<ExecutionProcessObject> result = executionProcessService.getExecutionProcess(BigInteger.ONE);
         StepVerifier.create(result)
                 .expectNextCount(1)
                 .expectComplete()
@@ -62,7 +76,7 @@ public class ProcessServiceTest {
 
     @Test
     public void testProcessListEvent() {
-        Flux<ExecutionProcessDTO> result = executionProcessService.getAllExecutionProcesses();
+        Flux<ExecutionProcessObject> result = executionProcessService.getAllExecutionProcesses();
         StepVerifier.create(result)
                 .expectNextCount(10)
                 .expectComplete()

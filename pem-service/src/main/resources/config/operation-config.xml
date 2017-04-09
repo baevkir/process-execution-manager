@@ -8,12 +8,12 @@
           class="com.pem.core.operation.composite.SyncCompositeOperationImp"
           scope="prototype"/>
 
-    <bean id="pem.custom-operation.BinaryConditionOperation"
-          class="com.pem.core.operation.condition.BinaryConditionOperationImpl"
+    <bean id="pem.custom-operation.PredicateOperation"
+          class="com.pem.core.operation.condition.predicate.PredicateOperationImpl"
           scope="prototype"/>
 
-    <bean id="pem.custom-operation.IntegerConditionOperation"
-          class="com.pem.core.operation.condition.IntegerConditionOperationImpl"
+    <bean id="pem.custom-operation.TriggerOperation"
+          class="com.pem.core.operation.condition.trigger.TriggerOperationImpl"
           scope="prototype"/>
 
     <bean id="pem.custom-operation.CounterLoopOperation"
@@ -28,10 +28,12 @@
           class="com.pem.core.operation.loop.condition.WhileOperationImpl"
           scope="prototype"/>
 
-    <bean id="operationProvider"
+    <bean id="pem.operationProvider"
           class="com.pem.logic.bean.provider.operation.impl.OperationProviderImpl"/>
 
-    <bean id="calculatorProvider"
-          class="com.pem.logic.bean.provider.calculator.impl.CalculatorProviderImpl"/>
+    <bean id="pem.triggerProvider"
+          class="com.pem.logic.bean.provider.trigger.impl.TriggerProviderImpl"/>
 
+    <bean id="pem.predicateProvider"
+          class="com.pem.logic.bean.provider.predicate.impl.PredicateProviderImpl"/>
 </beans>

@@ -1,7 +1,7 @@
 package com.pem.integration.provider;
 
 import com.pem.core.common.applicationcontext.builder.ApplicationContextBuilder;
-import com.pem.logic.service.calculator.CalculatorService;
+import com.pem.logic.service.trigger.TriggerService;
 import com.pem.logic.service.operation.OperationService;
 import com.pem.logic.service.process.ExecutionProcessService;
 import com.pem.persistence.api.provider.PemPersistenceServiceProvider;
@@ -18,10 +18,7 @@ import java.util.Map;
 public class PemServiceProviderImpl implements PemServiceProvider, ApplicationContextAware, BeanNameAware {
     private static final Logger LOGGER = LoggerFactory.getLogger(PemServiceProviderImpl.class);
     private static final String PERSISTENCE_SERVICE_PROVIDER_BEAN = "persistenceServiceProvider";
-    private static final String CALCULATOR_PERSISTENCE_SERVICE_BEAN = "calculatorPersistenceService";
-    private static final String OPERATION_PERSISTENCE_SERVICE_BEAN = "operationPersistenceService";
-    private static final String EXECUTION_RECORD_PERSISTENCE_SERVICE_BEAN = "executionRecordPersistenceService";
-    private static final String PROCESS_PERSISTENCE_SERVICE_BEAN = "processPersistenceService";
+    private static final String PERSISTENCE_MANAGER = "pem.persistenceManager";
 
     private ApplicationContext parentContext;
     private ApplicationContext applicationContext;
@@ -30,8 +27,8 @@ public class PemServiceProviderImpl implements PemServiceProvider, ApplicationCo
     private Map<String, String> parentBeans;
 
     @Override
-    public CalculatorService getCalculatorService() {
-        return applicationContext.getBean(CalculatorService.class);
+    public TriggerService getTriggerService() {
+        return applicationContext.getBean(TriggerService.class);
     }
 
     @Override
@@ -60,18 +57,14 @@ public class PemServiceProviderImpl implements PemServiceProvider, ApplicationCo
     @PostConstruct
     void initApplicationContext() {
         LOGGER.trace("Start to load ProcessExecutionManagerContext.");
-        ApplicationContextBuilder contextBuilder = new ApplicationContextBuilder()
+        applicationContext = new ApplicationContextBuilder()
                 .setContextId(applicationName)
                 .setParentContext(parentContext)
                 .addXMLConfiguration("pemApplicationContext.xml")
                 .addParentBeans(parentBeans)
                 .addSingletonBean(PERSISTENCE_SERVICE_PROVIDER_BEAN, persistenceServiceProvider)
-                .addSingletonBean(CALCULATOR_PERSISTENCE_SERVICE_BEAN, persistenceServiceProvider.getCalculatorPersistenceService())
-                .addSingletonBean(OPERATION_PERSISTENCE_SERVICE_BEAN, persistenceServiceProvider.getOperationPersistenceService())
-                .addSingletonBean(EXECUTION_RECORD_PERSISTENCE_SERVICE_BEAN, persistenceServiceProvider.getExecutionRecordPersistenceService())
-                .addSingletonBean(PROCESS_PERSISTENCE_SERVICE_BEAN, persistenceServiceProvider.getProcessPersistenceService());
-
-        applicationContext = contextBuilder.build();
+                .addSingletonBean(PERSISTENCE_MANAGER, persistenceServiceProvider.getPersistenceManager())
+                .build();
     }
 
     protected ApplicationContext getApplicationContext() {

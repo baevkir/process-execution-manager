@@ -2,7 +2,7 @@ package com.pem.test.service;
 
 import com.pem.integration.provider.PemServiceProviderImpl;
 import com.pem.logic.service.operation.OperationService;
-import com.pem.model.operation.common.OperationDTO;
+import com.pem.model.operation.common.OperationObject;
 import com.pem.test.common.TestEntityCreator;
 import com.pem.test.common.config.TestConfig;
 import org.junit.Test;
@@ -31,7 +31,7 @@ public class OperationServiceTest {
 
     @Test
     public void testCreateEvent() {
-        Mono<OperationDTO> result = operationService.createOperation(creator.createSimpleBeanOperation());
+        Mono<OperationObject> result = operationService.createOperation(creator.createSimpleBeanOperation());
 
         StepVerifier.create(result)
                 .expectNextCount(1)
@@ -61,7 +61,7 @@ public class OperationServiceTest {
 
     @Test
     public void testGetOperation() {
-        Mono<OperationDTO> result = operationService.getOperation(BigInteger.ONE);
+        Mono<OperationObject> result = operationService.getOperation(BigInteger.ONE);
 
         StepVerifier.create(result)
                 .expectNextCount(1)
@@ -71,7 +71,7 @@ public class OperationServiceTest {
 
     @Test
     public void testGetAllOperation() {
-        Flux<OperationDTO> result = operationService.getAllOperations();
+        Flux<OperationObject> result = operationService.getAllOperations();
         StepVerifier.create(result)
                 .expectNextCount(10)
                 .expectComplete()

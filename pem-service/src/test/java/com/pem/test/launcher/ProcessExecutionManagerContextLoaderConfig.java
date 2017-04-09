@@ -3,12 +3,9 @@ package com.pem.test.launcher;
 import com.pem.core.operation.basic.Operation;
 import com.pem.integration.provider.PemServiceProvider;
 import com.pem.integration.provider.PemServiceProviderImpl;
+import com.pem.persistence.api.manager.PersistenceManager;
 import com.pem.persistence.api.provider.PemPersistenceServiceProvider;
-import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
-import com.pem.persistence.api.service.operation.OperationPersistenceService;
-import com.pem.persistence.api.service.process.ExecutionRecordPersistenceService;
-import com.pem.persistence.api.service.process.ProcessPersistenceService;
-import com.pem.test.common.GlobalOperation;
+import com.pem.test.common.GlobalTestOperation;
 import com.pem.test.common.config.PersistenceMockConfig;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,35 +19,18 @@ import org.springframework.context.annotation.Scope;
 public class ProcessExecutionManagerContextLoaderConfig {
 
     @Autowired
-    private CalculatorPersistenceService calculatorPersistenceService;
-
-    @Autowired
-    private OperationPersistenceService operationPersistenceService;
-
-    @Autowired
-    private ExecutionRecordPersistenceService executionRecordPersistenceService;
-
-    @Autowired
-    private ProcessPersistenceService processPersistenceService;
+    private PersistenceManager persistenceManager;
 
     @Bean
     @Scope("prototype")
     public Operation globalOperation() {
-        return new GlobalOperation();
+        return new GlobalTestOperation();
     }
 
     @Bean
     public PemPersistenceServiceProvider persistenceServiceProvider(){
         PemPersistenceServiceProvider persistenceServiceProvider = Mockito.mock(PemPersistenceServiceProvider.class);
-
-        Mockito.when(persistenceServiceProvider.getCalculatorPersistenceService()).thenReturn(calculatorPersistenceService);
-
-        Mockito.when(persistenceServiceProvider.getOperationPersistenceService()).thenReturn(operationPersistenceService);
-
-        Mockito.when(persistenceServiceProvider.getExecutionRecordPersistenceService()).thenReturn(executionRecordPersistenceService);
-
-        Mockito.when(persistenceServiceProvider.getProcessPersistenceService()).thenReturn(processPersistenceService);
-
+        Mockito.when(persistenceServiceProvider.getPersistenceManager()).thenReturn(persistenceManager);
         return persistenceServiceProvider;
     }
 

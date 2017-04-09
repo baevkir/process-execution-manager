@@ -17,7 +17,7 @@ public class ProcessExecutionManagerContextLoaderTest {
 
     @Test
     public void processExecutionManagerContextLoaderTest() {
-        Assert.assertNotNull(serviceProvider.getCalculatorService());
+        Assert.assertNotNull(serviceProvider.getTriggerService());
         Assert.assertNotNull(serviceProvider.getOperationService());
         Assert.assertNotNull(serviceProvider.getExecutionProcessService());
     }

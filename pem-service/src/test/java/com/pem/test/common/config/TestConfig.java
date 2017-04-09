@@ -1,14 +1,15 @@
 package com.pem.test.common.config;
 
-import com.pem.core.calculator.BinaryCalculator;
-import com.pem.core.calculator.IntegerCalculator;
+import com.pem.core.predicate.Predicate;
+import com.pem.core.trigger.Trigger;
 import com.pem.core.context.OperationContext;
 import com.pem.core.operation.basic.AbstractOperation;
 import com.pem.core.operation.basic.Operation;
 import com.pem.logic.*;
-import com.pem.test.common.GlobalOperation;
+import com.pem.test.common.GlobalTestOperation;
 import org.junit.Assert;
 import org.springframework.context.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
 
@@ -48,22 +49,23 @@ public class TestConfig {
         return new AbstractOperation() {
 
             @Override
-            public void execute(OperationContext context) {
-                Assert.assertTrue(context.isOpen());
+            public Mono<OperationContext> execute(Mono<OperationContext> context) {
+                return context.doOnSuccess(operationContext -> Assert.assertNotNull(operationContext))
+                        .doOnSuccess(operationContext -> Assert.assertTrue(operationContext.isOpen()));
             }
         };
     }
 
     @Bean
     @Scope("prototype")
-    public IntegerCalculator compareFirstWithSecondCalculator() {
+    public Trigger compareFirstWithSecondCalculator() {
         return new CompareFirstWithSecondCalculator();
     }
 
     @Bean("testBinaryConditionCalculator")
     @Scope("prototype")
-    public BinaryCalculator testBinaryConditionCalculator() {
-        return new BinaryCalculator() {
+    public Predicate testBinaryConditionCalculator() {
+        return new Predicate() {
             private BigInteger id;
 
             @Override
@@ -76,16 +78,16 @@ public class TestConfig {
                 this.id = id;
             }
             @Override
-            public Boolean calculate(OperationContext context) {
-                return true;
+            public Mono<Boolean> apply(Mono<OperationContext> context) {
+                return Mono.just(true);
             }
         };
     }
 
     @Bean("testIntegerConditionCalculator")
     @Scope("prototype")
-    public IntegerCalculator testIntegerConditionCalculator() {
-        return new IntegerCalculator() {
+    public Trigger testIntegerConditionCalculator() {
+        return new Trigger() {
             private BigInteger id;
 
             @Override
@@ -99,8 +101,8 @@ public class TestConfig {
             }
 
             @Override
-            public Integer calculate(OperationContext context) {
-                return 0;
+            public Mono<Integer> apply(Mono<OperationContext> context) {
+                return Mono.just(0);
             }
         };
     }
@@ -108,6 +110,6 @@ public class TestConfig {
     @Bean
     @Scope("prototype")
     public Operation globalOperation() {
-        return new GlobalOperation();
+        return new GlobalTestOperation();
     }
 }

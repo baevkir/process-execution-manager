@@ -1,14 +1,14 @@
 package com.pem.test.common;
 
-import com.pem.model.calculator.bean.BinaryBeanCalculatorDTO;
-import com.pem.model.calculator.bean.IntegerBeanCalculatorDTO;
+import com.pem.model.operation.bean.BeanOperationObject;
+import com.pem.model.operation.common.OperationObject;
+import com.pem.model.predicate.bean.BeanPredicateObject;
+import com.pem.model.trigger.bean.BeanTriggerObject;
 import com.pem.core.common.bean.BeanObject;
 import com.pem.core.common.bean.BeanObjectBuilder;
-import com.pem.model.operation.bean.BeanOperationDTO;
-import com.pem.model.operation.common.OperationDTO;
 import com.pem.model.operation.composite.SyncCompositeOperationDTO;
-import com.pem.model.operation.condition.BinaryConditionOperationDTO;
-import com.pem.model.operation.condition.IntegerConditionOperationDTO;
+import com.pem.model.operation.condition.PredicateOperationObject;
+import com.pem.model.operation.condition.TriggerOperationObject;
 
 import java.util.*;
 
@@ -16,60 +16,60 @@ public class TestEntityCreator {
 
     private Random random = new Random();
 
-    public BinaryBeanCalculatorDTO createBinaryCalculator() {
-        return createBinaryCalculator("testBinaryConditionCalculator");
+    public BeanPredicateObject createPredicate() {
+        return createPredicate("testBinaryConditionCalculator");
     }
 
-    public BinaryBeanCalculatorDTO createRandomBinaryCalculator() {
-        return createBinaryCalculator(String.valueOf(random.nextInt()));
+    public BeanPredicateObject createRandomBinaryCalculator() {
+        return createPredicate(String.valueOf(random.nextInt()));
     }
 
-    public IntegerBeanCalculatorDTO createIntegerCalculator() {
-        return createIntegerCalculator("testIntegerConditionCalculator");
+    public BeanTriggerObject createTrigger() {
+        return createTrigger("testIntegerConditionCalculator");
     }
 
-    public IntegerBeanCalculatorDTO createRandomIntegerCalculator() {
-        return createIntegerCalculator(String.valueOf(random.nextInt()));
+    public BeanTriggerObject createRandomTrigger() {
+        return createTrigger(String.valueOf(random.nextInt()));
     }
-    public BeanOperationDTO createSimpleBeanOperation() {
+    public BeanOperationObject createSimpleBeanOperation() {
         return createSimpleBeanOperation("sumOperation");
     }
 
-    public BeanOperationDTO createRandomSimpleBeanOperation() {
+    public BeanOperationObject createRandomSimpleBeanOperation() {
         return createSimpleBeanOperation(String.valueOf(random.nextInt()));
     }
-    public BinaryConditionOperationDTO createBinaryConditionOperationEntity(){
-        BinaryConditionOperationDTO operationEntity = new BinaryConditionOperationDTO();
+    public PredicateOperationObject createPredicateOperation(){
+        PredicateOperationObject operationEntity = new PredicateOperationObject();
         operationEntity.setName("Test operation " + random.nextLong());
         operationEntity.setDescription("Test description " + random.nextLong());
 
-        Map<Boolean, OperationDTO> states = new HashMap<>();
+        Map<Boolean, OperationObject> states = new HashMap<>();
         states.putAll(createSimpleBinaryState(true));
         states.putAll(createSimpleBinaryState(false));
         operationEntity.setStates(states);
 
-        operationEntity.setCalculator(createBinaryCalculator());
+        operationEntity.setPredicate(createPredicate());
         return operationEntity;
     }
 
-    public IntegerConditionOperationDTO createIntegerConditionOperationEntity(){
-        IntegerConditionOperationDTO operationEntity = new IntegerConditionOperationDTO();
+    public TriggerOperationObject createIntegerConditionOperationEntity(){
+        TriggerOperationObject operationEntity = new TriggerOperationObject();
         operationEntity.setName("Test operation " + random.nextLong());
         operationEntity.setDescription("Test description " + random.nextLong());
 
-        Map<Integer, OperationDTO> states = new HashMap<>();
+        Map<Integer, OperationObject> states = new HashMap<>();
         states.putAll(createSimpleIntegerState(0));
         states.putAll(createSimpleIntegerState(1));
         operationEntity.setStates(states);
 
-        operationEntity.setCalculator(createIntegerCalculator());
+        operationEntity.setTrigger(createTrigger());
         return operationEntity;
     }
 
     public SyncCompositeOperationDTO createSyncCompositeOperationEntity() {
         SyncCompositeOperationDTO operationEntity = new SyncCompositeOperationDTO();
         operationEntity.setName("Test composite operation " + random.nextLong());
-        List<OperationDTO> operationEntities = new ArrayList<>();
+        List<OperationObject> operationEntities = new ArrayList<>();
         operationEntities.add(createSimpleBeanOperation());
         operationEntities.add(createSimpleBeanOperation());
         operationEntities.add(createSimpleBeanOperation());
@@ -79,20 +79,20 @@ public class TestEntityCreator {
         return operationEntity;
     }
 
-    private Map<Boolean, OperationDTO> createSimpleBinaryState(Boolean value) {
-        Map<Boolean, OperationDTO> state = new HashMap<>();
+    private Map<Boolean, OperationObject> createSimpleBinaryState(Boolean value) {
+        Map<Boolean, OperationObject> state = new HashMap<>();
         state.put(value, createSimpleBeanOperation());
         return state;
     }
 
-    private Map<Integer, OperationDTO> createSimpleIntegerState(Integer value) {
-        Map<Integer, OperationDTO> state = new HashMap<>();
+    private Map<Integer, OperationObject> createSimpleIntegerState(Integer value) {
+        Map<Integer, OperationObject> state = new HashMap<>();
         state.put(value, createSimpleBeanOperation());
         return state;
     }
 
-    private BeanOperationDTO createSimpleBeanOperation(String beanName) {
-        BeanOperationDTO operationEntity = new BeanOperationDTO();
+    private BeanOperationObject createSimpleBeanOperation(String beanName) {
+        BeanOperationObject operationEntity = new BeanOperationObject();
         operationEntity.setName("Test operation " + random.nextLong());
         operationEntity.setDescription("Test description " + random.nextLong());
 
@@ -107,10 +107,10 @@ public class TestEntityCreator {
         return operationEntity;
     }
 
-    private BinaryBeanCalculatorDTO createBinaryCalculator(String beanName) {
-        BinaryBeanCalculatorDTO calculatorEntity = new BinaryBeanCalculatorDTO();
-        calculatorEntity.setName("Test Calculator " + random.nextLong());
-        calculatorEntity.setDescription("Test Calculator description " + random.nextLong());
+    private BeanPredicateObject createPredicate(String beanName) {
+        BeanPredicateObject calculatorEntity = new BeanPredicateObject();
+        calculatorEntity.setName("Test Condition " + random.nextLong());
+        calculatorEntity.setDescription("Test Condition description " + random.nextLong());
 
         BeanObject bean = BeanObjectBuilder.newInstance()
                 .setBeanName(beanName)
@@ -121,10 +121,10 @@ public class TestEntityCreator {
         return calculatorEntity;
     }
 
-    private IntegerBeanCalculatorDTO createIntegerCalculator(String beanName) {
-        IntegerBeanCalculatorDTO calculatorEntity = new IntegerBeanCalculatorDTO();
-        calculatorEntity.setName("Test Calculator " + random.nextLong());
-        calculatorEntity.setDescription("Test Calculator description " + random.nextLong());
+    private BeanTriggerObject createTrigger(String beanName) {
+        BeanTriggerObject calculatorEntity = new BeanTriggerObject();
+        calculatorEntity.setName("Test Condition " + random.nextLong());
+        calculatorEntity.setDescription("Test Condition description " + random.nextLong());
 
         BeanObject bean = BeanObjectBuilder.newInstance()
                 .setBeanName(beanName)

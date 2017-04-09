@@ -1,21 +1,22 @@
 package com.pem.logic.service.process;
 
+import com.pem.core.context.OperationContext;
 import com.pem.core.context.OperationContextFactory;
-import com.pem.model.operation.common.OperationDTO;
-import com.pem.model.proccess.ExecutionProcessDTO;
+import com.pem.model.operation.common.OperationObject;
+import com.pem.model.proccess.ExecutionProcessObject;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
 
 public interface ExecutionProcessService {
-    Mono<ExecutionProcessDTO> createExecutionProcess(OperationDTO operationEntity);
+    Mono<ExecutionProcessObject> createExecutionProcess(OperationObject operationEntity);
 
-    Mono<Void> updateExecutionProcess(ExecutionProcessDTO processEntity);
+    Mono<Void> updateExecutionProcess(ExecutionProcessObject processEntity);
 
-    Mono<Void> executeProcess(ExecutionProcessDTO executionProcess, OperationContextFactory contextFactory);
+    Mono<OperationContext> executeProcess(ExecutionProcessObject executionProcess, Mono<OperationContextFactory> contextFactory);
 
-    Mono<ExecutionProcessDTO> getExecutionProcess(BigInteger id);
+    Mono<ExecutionProcessObject> getExecutionProcess(BigInteger id);
 
-    Flux<ExecutionProcessDTO> getAllExecutionProcesses();
+    Flux<ExecutionProcessObject> getAllExecutionProcesses();
 }

@@ -6,56 +6,56 @@
 
     <bean id="pem.service.ConverterFactory" class="com.pem.core.common.converter.factory.impl.TwoKeyConverterFactory"/>
 
-    <bean id="beanOperationConverter" class="com.pem.logic.converter.operation.basic.BeanOperationConverter">
-        <property name="operationProvider" ref="operationProvider"/>
+    <bean id="pem.beanOperationConverter" class="com.pem.logic.converter.operation.basic.BeanOperationConverter">
+        <property name="operationProvider" ref="pem.operationProvider"/>
     </bean>
 
-    <bean id="binaryCalculatorConverter" class="com.pem.logic.converter.calculator.BinaryCalculatorConverter">
-        <property name="calculatorProvider" ref="calculatorProvider"/>
+    <bean id="pem.predicateConverter" class="com.pem.logic.converter.predicate.PredicateConverter">
+        <property name="predicateProvider" ref="pem.predicateProvider"/>
     </bean>
 
-    <bean id="integerCalculatorConverter" class="com.pem.logic.converter.calculator.IntegerCalculatorConverter">
-        <property name="calculatorProvider" ref="calculatorProvider"/>
+    <bean id="pem.triggerConverter" class="com.pem.logic.converter.trigger.TriggerConverter">
+        <property name="triggerProvider" ref="pem.triggerProvider"/>
     </bean>
 
-    <bean id="syncCompositeOperationConverter"
+    <bean id="pem.syncCompositeOperationConverter"
           class="com.pem.logic.converter.operation.composite.SyncCompositeOperationConverter">
-        <property name="operationProvider" ref="operationProvider"/>
+        <property name="operationProvider" ref="pem.operationProvider"/>
         <property name="converterFactory" ref="pem.service.ConverterFactory"/>
     </bean>
 
-    <bean id="binaryConditionOperationConverter"
-          class="com.pem.logic.converter.operation.condition.BinaryConditionOperationConverter">
-        <property name="operationProvider" ref="operationProvider"/>
+    <bean id="pem.predicateOperationConverter"
+          class="com.pem.logic.converter.operation.predicate.PredicateOperationConverter">
+        <property name="operationProvider" ref="pem.operationProvider"/>
         <property name="converterFactory" ref="pem.service.ConverterFactory"/>
     </bean>
 
-    <bean id="integerConditionOperationConverter"
-          class="com.pem.logic.converter.operation.condition.IntegerConditionOperationConverter">
-        <property name="operationProvider" ref="operationProvider"/>
+    <bean id="pem.triggerOperationConverter"
+          class="com.pem.logic.converter.operation.condition.TriggerOperationConverter">
+        <property name="operationProvider" ref="pem.operationProvider"/>
         <property name="converterFactory" ref="pem.service.ConverterFactory"/>
     </bean>
 
-    <bean id="counterLoopOperationConverter"
+    <bean id="pem.counterLoopOperationConverter"
           class="com.pem.logic.converter.operation.loop.CounterLoopOperationConverter">
-        <property name="operationProvider" ref="operationProvider"/>
+        <property name="operationProvider" ref="pem.operationProvider"/>
         <property name="converterFactory" ref="pem.service.ConverterFactory"/>
     </bean>
 
-    <bean id="doWhileOperationConverter" class="com.pem.logic.converter.operation.loop.DoWhileOperationConverter">
-        <property name="operationProvider" ref="operationProvider"/>
+    <bean id="pem.doWhileOperationConverter" class="com.pem.logic.converter.operation.loop.DoWhileOperationConverter">
+        <property name="operationProvider" ref="pem.operationProvider"/>
         <property name="converterFactory" ref="pem.service.ConverterFactory"/>
     </bean>
 
-    <bean id="whileOperationConverter" class="com.pem.logic.converter.operation.loop.WhileOperationConverter">
-        <property name="operationProvider" ref="operationProvider"/>
+    <bean id="pem.whileOperationConverter" class="com.pem.logic.converter.operation.loop.WhileOperationConverter">
+        <property name="operationProvider" ref="pem.operationProvider"/>
         <property name="converterFactory" ref="pem.service.ConverterFactory"/>
     </bean>
 
-    <bean id="fromOperationEntityToProcessConverter"
-          class="com.pem.logic.converter.process.FromOperationDTOToProcessConverter"/>
+    <bean id="pem.fromOperationObjectToProcessConverter"
+          class="com.pem.logic.converter.process.FromOperationObjectToProcessConverter"/>
 
-    <bean id="fromOperationToProcessConverter"
+    <bean id="pem.fromOperationToProcessConverter"
           class="com.pem.logic.converter.process.FromOperationToProcessConverter"/>
 
 </beans>
