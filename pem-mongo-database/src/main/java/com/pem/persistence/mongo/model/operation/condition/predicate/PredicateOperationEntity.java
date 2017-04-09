@@ -1,11 +1,11 @@
-package com.pem.persistence.mongo.model.operation.loop.condition;
+package com.pem.persistence.mongo.model.operation.condition.predicate;
 
-import com.pem.persistence.mongo.model.operation.loop.LoopOperationEntity;
+import com.pem.persistence.mongo.model.operation.condition.ConditionOperationEntity;
+import com.pem.persistence.mongo.model.operation.condition.state.BooleanState;
 import com.pem.persistence.mongo.model.predicate.common.PredicateEntity;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-public class ConditionLoopOperationEntity extends LoopOperationEntity {
-
+public class PredicateOperationEntity extends ConditionOperationEntity<BooleanState> {
     @DBRef
     private PredicateEntity predicate;
 
@@ -19,7 +19,7 @@ public class ConditionLoopOperationEntity extends LoopOperationEntity {
 
     @Override
     public String toString() {
-        return "ConditionLoopOperationEntity{" +
+        return "PredicateOperationEntity{" +
                 "predicate=" + predicate +
                 "} " + super.toString();
     }

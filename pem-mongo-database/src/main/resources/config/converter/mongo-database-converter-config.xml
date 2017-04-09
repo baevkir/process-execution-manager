@@ -3,99 +3,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <import resource="classpath:config/converter/mongo-operation-converter-config.xml"/>
+    <import resource="classpath:config/converter/mongo-trigger-converter-config.xml"/>
+    <import resource="classpath:config/converter/mongo-predicate-converter-config.xml"/>
+    <import resource="classpath:config/converter/mongo-process-converter-config.xml"/>
+
     <bean id="pem.mongodb.ConverterFactory" class="com.pem.core.common.converter.factory.impl.OneKeyConverterFactory"/>
 
-    <bean id="fromBeanOperationEntityToDTOConverter"
-          class="com.pem.persistence.mongo.converter.operation.bean.FromBeanOperationEntityToDTOConverter"/>
-
-    <bean id="fromBeanOperationDTOToEntityConverter"
-          class="com.pem.persistence.mongo.converter.operation.bean.FromBeanOperationDTOToEntityConverter"/>
-
-    <bean id="fromSyncCompositeDTOToEntityOperationConverter"
-          class="com.pem.persistence.mongo.converter.operation.composite.FromSyncCompositeDTOToEntityOperationConverter">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
-
-    <bean id="fromSyncCompositeEntityToDTOOperationConverter"
-          class="com.pem.persistence.mongo.converter.operation.composite.FromSyncCompositeEntityToDTOOperationConverter">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
-
-    <bean id="fromBinaryConditionOperationDTOToEntityConverter"
-          class="com.pem.persistence.mongo.converter.operation.condition.FromBinaryConditionOperationEntityToDTOConverter">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
-
-    <bean id="fromBinaryConditionOperationEntityToDTOConverter"
-          class="com.pem.persistence.mongo.converter.operation.condition.FromBinaryConditionOperationDTOToEntityConverter">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
-
-    <bean id="fromBinaryCalculatorDTOToEntityConverter"
-          class="com.pem.persistence.mongo.converter.calculator.bean.FromBinaryBeanCalculatorDTOToEntityConverter"/>
-
-    <bean id="fromBinaryCalculatorEntityToDTOConverter"
-          class="com.pem.persistence.mongo.converter.calculator.bean.FromBinaryBeanCalculatorEntityToDTOConverter"/>
-
-    <bean id="fromIntegerConditionOperationDTOToEntityConverter"
-          class="com.pem.persistence.mongo.converter.operation.condition.FromIntegerConditionOperationDTOToEntityConverter">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
-
-    <bean id="fromIntegerConditionOperationEntityToDTOConverter"
-          class="com.pem.persistence.mongo.converter.operation.condition.FromIntegerConditionOperationEntityToDTOConverter">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
-
-    <bean id="fromIntegerCalculatorDTOToEntityConverter"
-          class="com.pem.persistence.mongo.converter.calculator.bean.FromIntegerBeanCalculatorDTOToEntityConverter"/>
-
-    <bean id="fromIntegerCalculatorEntityToDTOConverter"
-          class="com.pem.persistence.mongo.converter.calculator.bean.FromIntegerBeanCalculatorEntityToDTOConverter"/>
-
-    <bean id="fromCounterLoopOperationDTOToEntityConverter"
-          class="com.pem.persistence.mongo.converter.operation.loop.counter.FromCounterLoopOperationDTOToEntityConverter">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
-
-    <bean id="fromCounterLoopOperationEntityToDTOConverter"
-          class="com.pem.persistence.mongo.converter.operation.loop.counter.FromCounterLoopOperationEntityToDTOConverter">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
-
-    <bean id="fromDoWhileOperationDTOToEntityConverter"
-          class="com.pem.persistence.mongo.converter.operation.loop.condition.FromDoWhileOperationDTOToEntityConverter">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
-
-    <bean id="fromDoWhileOperationEntityToDTOConverter"
-          class="com.pem.persistence.mongo.converter.operation.loop.condition.FromDoWhileOperationEntityToDTOConverter">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
-
-    <bean id="fromWhileOperationDTOToEntityConverter"
-          class="com.pem.persistence.mongo.converter.operation.loop.condition.FromWhileOperationDTOToEntityConverter">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
-
-    <bean id="fromWhileOperationEntityToDTOConverter"
-          class="com.pem.persistence.mongo.converter.operation.loop.condition.FromWhileOperationEntityToDTOConverter">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
-
-    <bean id="fromProcessDTOToEntityConverter"
-          class="com.pem.persistence.mongo.converter.process.FromProcessDTOToEntityConverter">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
-
-    <bean id="fromProcessEntityToDTOConverter"
-          class="com.pem.persistence.mongo.converter.process.FromProcessEntityToDTOConverter">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
-
-    <bean id="fromRecordDTOToEntityConverter"
-          class="com.pem.persistence.mongo.converter.process.record.FromRecordDTOToEntityConverter"/>
-
-    <bean id="fromRecordEntityToDTOConverter"
-          class="com.pem.persistence.mongo.converter.process.record.FromRecordEntityToDTOConverter"/>
 </beans>

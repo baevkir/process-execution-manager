@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--Process-->
+    <bean id="pem.fromProcessEntityToObjectConverter"
+          class="com.pem.persistence.mongo.converter.process.FromProcessEntityToObjectConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+    <bean id="pem.fromProcessObjectToEntityConverter"
+          class="com.pem.persistence.mongo.converter.process.FromProcessObjectToEntityConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <!--Record-->
+    <bean id="pem.fromRecordEntityToObjectConverter"
+          class="com.pem.persistence.mongo.converter.process.record.FromRecordEntityToObjectConverter"/>
+    <bean id="pem.fromRecordObjectToEntityConverter"
+          class="com.pem.persistence.mongo.converter.process.record.FromRecordObjectToEntityConverter"/>
+</beans>

@@ -1,6 +1,6 @@
 package com.pem.test.persistence;
 
-import com.pem.model.proccess.ExecutionProcessDTO;
+import com.pem.model.proccess.ExecutionProcessObject;
 import com.pem.persistence.api.service.process.ProcessPersistenceService;
 import com.pem.test.common.FongoConfig;
 import com.pem.test.common.TestEntityCreator;
@@ -24,14 +24,14 @@ public class ProcessorPersistenceServiceTest {
 
     @Test
     public void testSaveToDBProcess() {
-        ExecutionProcessDTO processEntity = new ExecutionProcessDTO();
+        ExecutionProcessObject processEntity = new ExecutionProcessObject();
         processEntity.setName("Test Process");
-        processEntity.setExecutionOperation(creator.createBinaryConditionOperationEntity());
+        processEntity.setExecutionOperation(creator.createPredicateOperation());
         processEntity.setExecutionRecords(Collections.EMPTY_LIST);
-        ExecutionProcessDTO newProcessEntity = processPersistenceService.createProcess(processEntity).block();
+        ExecutionProcessObject newProcessEntity = processPersistenceService.create(processEntity).block();
         Assert.assertNotNull(newProcessEntity.getExecutionOperation());
 
-        ExecutionProcessDTO queryProcess = processPersistenceService.getProcess(newProcessEntity.getId()).block();
+        ExecutionProcessObject queryProcess = processPersistenceService.getById(newProcessEntity.getId()).block();
         Assert.assertNotNull(queryProcess.getExecutionOperation());
     }
 }

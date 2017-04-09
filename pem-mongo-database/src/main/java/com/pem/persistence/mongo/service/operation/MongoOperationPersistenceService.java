@@ -1,23 +1,18 @@
 package com.pem.persistence.mongo.service.operation;
 
-import com.pem.model.operation.common.OperationDTO;
+import com.pem.model.operation.common.OperationObject;
 import com.pem.persistence.api.service.operation.OperationPersistenceService;
 import com.pem.persistence.mongo.model.operation.common.OperationEntity;
 import com.pem.persistence.mongo.repository.operation.OperationRepository;
 import com.pem.persistence.mongo.service.common.AbstractMongoPersistenceService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
 
-public class MongoOperationPersistenceService extends AbstractMongoPersistenceService<OperationDTO, OperationEntity> implements OperationPersistenceService {
+public class MongoOperationPersistenceService extends AbstractMongoPersistenceService<OperationObject, OperationEntity> implements OperationPersistenceService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractMongoPersistenceService.class);
-
-    @Autowired
     private OperationRepository repository;
 
     @Override
@@ -26,32 +21,37 @@ public class MongoOperationPersistenceService extends AbstractMongoPersistenceSe
     }
 
     @Override
-    public Mono<OperationDTO> createOperation(OperationDTO operationObject) {
-        return create(operationObject);
+    public Mono<OperationObject> create(OperationObject operationObject) {
+        return internalCreate(operationObject);
     }
 
     @Override
-    public Mono<Void> updateOperation(OperationDTO operationEntity) {
-        return update(operationEntity);
+    public Mono<Void> update(OperationObject operationEntity) {
+        return internalUpdate(operationEntity);
     }
 
     @Override
-    public Mono<OperationDTO> getOperation(BigInteger id) {
-        return getOne(id);
+    public Mono<OperationObject> getById(BigInteger id) {
+        return internalGetById(id);
     }
 
     @Override
-    public Flux<OperationDTO> getAllOperations() {
-        return getAll();
+    public Flux<OperationObject> getAll() {
+        return internalGetAll();
     }
 
     @Override
-    public <O extends OperationDTO> Flux<O> getOperationsByType(final Class<O> targetClass) {
-        return getAllByType(targetClass);
+    public <O extends OperationObject> Flux<O> getAllByType(final Class<O> targetClass) {
+        return internalGetAllByType(targetClass);
     }
 
     @Override
-    public Mono<Void> deleteOperation(BigInteger id) {
-        return delete(id);
+    public Mono<Void> delete(BigInteger id) {
+        return internalDelete(id);
+    }
+
+    @Autowired
+    public void setRepository(OperationRepository repository) {
+        this.repository = repository;
     }
 }

@@ -5,33 +5,33 @@ import com.pem.persistence.mongo.model.operation.common.OperationEntity;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 @JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="type")
-public abstract class AbstractState<C> {
-    private C conditionValue;
+public abstract class AbstractState<S> {
+    private S state;
 
     @DBRef
-    private OperationEntity operationEntity;
+    private OperationEntity operation;
 
-    public C getConditionValue() {
-        return conditionValue;
+    public S getState() {
+        return state;
     }
 
-    public void setConditionValue(C conditionValue) {
-        this.conditionValue = conditionValue;
+    public void setState(S state) {
+        this.state = state;
     }
 
-    public OperationEntity getOperationEntity() {
-        return operationEntity;
+    public OperationEntity getOperation() {
+        return operation;
     }
 
-    public void setOperationEntity(OperationEntity operationEntity) {
-        this.operationEntity = operationEntity;
+    public void setOperation(OperationEntity operation) {
+        this.operation = operation;
     }
 
     @Override
     public String toString() {
         return "AbstractState{" +
-                "conditionValue=" + conditionValue +
-                ", operationEntity=" + operationEntity +
+                "state=" + state +
+                ", operation=" + operation +
                 '}';
     }
 }

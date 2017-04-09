@@ -1,11 +1,8 @@
 package com.pem.persistence.mongo.provider;
 
 import com.pem.core.common.applicationcontext.builder.ApplicationContextBuilder;
+import com.pem.persistence.api.manager.PersistenceManager;
 import com.pem.persistence.api.provider.PemPersistenceServiceProvider;
-import com.pem.persistence.api.service.calculator.CalculatorPersistenceService;
-import com.pem.persistence.api.service.operation.OperationPersistenceService;
-import com.pem.persistence.api.service.process.ExecutionRecordPersistenceService;
-import com.pem.persistence.api.service.process.ProcessPersistenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -25,23 +22,8 @@ public class MongoPersistenceServiceProvider implements PemPersistenceServicePro
     private MongoDbFactory mongoDbFactory;
 
     @Override
-    public CalculatorPersistenceService getCalculatorPersistenceService() {
-        return applicationContext.getBean(CalculatorPersistenceService.class);
-    }
-
-    @Override
-    public OperationPersistenceService getOperationPersistenceService() {
-        return applicationContext.getBean(OperationPersistenceService.class);
-    }
-
-    @Override
-    public ExecutionRecordPersistenceService getExecutionRecordPersistenceService() {
-        return applicationContext.getBean(ExecutionRecordPersistenceService.class);
-    }
-
-    @Override
-    public ProcessPersistenceService getProcessPersistenceService() {
-        return applicationContext.getBean(ProcessPersistenceService.class);
+    public PersistenceManager getPersistenceManager() {
+        return applicationContext.getBean(PersistenceManager.class);
     }
 
     @Override
@@ -55,8 +37,8 @@ public class MongoPersistenceServiceProvider implements PemPersistenceServicePro
 
     @PostConstruct
     void initPersistenceApplicationContext() {
-        Assert.notNull(parentContext, "Can't create PersistenceApplicationContext without parent context.");
-        Assert.notNull(mongoDbFactory, "Can't create PersistenceApplicationContext without mongoDbFactory.");
+        Assert.notNull(parentContext, "Can't internalCreate PersistenceApplicationContext without parent context.");
+        Assert.notNull(mongoDbFactory, "Can't internalCreate PersistenceApplicationContext without mongoDbFactory.");
 
         ApplicationContextBuilder contextBuilder = new ApplicationContextBuilder()
                 .setParentContext(parentContext)

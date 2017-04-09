@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="pem.operationPersistenceService"
+          class="com.pem.persistence.mongo.service.operation.MongoOperationPersistenceService">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+
+    <bean id="pem.triggerPersistenceService"
+          class="com.pem.persistence.mongo.service.trigger.MongoTriggerPersistenceService">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <bean id="pem.predicatePersistenceService"
+          class="com.pem.persistence.mongo.service.predicate.MongoPredicatePersistenceService">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <bean id="pem.executionRecordPersistenceService"
+          class="com.pem.persistence.mongo.service.process.MongoExecutionRecordPersistenceService">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <bean id="pem.processPersistenceService"
+          class="com.pem.persistence.mongo.service.process.MongoProcessPersistenceService">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+</beans>

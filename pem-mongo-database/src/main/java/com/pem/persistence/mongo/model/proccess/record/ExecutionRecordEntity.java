@@ -71,7 +71,7 @@ public class ExecutionRecordEntity extends IdentifiableEntity {
     public String toString() {
         return "ExecutionRecordEntity{" +
                 "pk=" + pk +
-                ", state=" + state +
+                ", trigger=" + state +
                 ", version=" + version +
                 ", createdWhen=" + createdWhen +
                 ", modifyWhen=" + modifyWhen +

@@ -1,6 +1,6 @@
 package com.pem.test.provider;
 
-import com.pem.model.operation.common.OperationDTO;
+import com.pem.model.operation.common.OperationObject;
 import com.pem.persistence.api.provider.PemPersistenceServiceProvider;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,14 +20,9 @@ public class MongoPersistenceServiceProviderTest {
 
     @Test
     public void testPersistenceServiceProvider () {
-        Assert.assertNotNull(persistenceServiceProvider.getCalculatorPersistenceService());
-        Assert.assertNotNull(persistenceServiceProvider.getOperationPersistenceService());
-        Assert.assertNotNull(persistenceServiceProvider.getProcessPersistenceService());
-        Assert.assertNotNull(persistenceServiceProvider.getExecutionRecordPersistenceService());
+        Assert.assertNotNull(persistenceServiceProvider.getPersistenceManager());
+        Flux<OperationObject> operations = persistenceServiceProvider.getPersistenceManager().getAll(OperationObject.class);
 
-        Flux<OperationDTO> operations = persistenceServiceProvider.getOperationPersistenceService().getAllOperations();
-
-        Assert.assertNotNull(operations);
         StepVerifier.create(operations)
                 .expectComplete()
                 .verify();

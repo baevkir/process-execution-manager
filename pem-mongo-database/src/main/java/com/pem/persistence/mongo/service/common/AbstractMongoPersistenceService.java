@@ -2,7 +2,7 @@ package com.pem.persistence.mongo.service.common;
 
 import com.pem.core.common.converter.factory.ConverterFactory;
 import com.pem.core.common.converter.impl.Converter;
-import com.pem.model.common.IdentifiableDTO;
+import com.pem.model.common.IdentifiableObject;
 import com.pem.persistence.mongo.common.CommonMongoRepository;
 import com.pem.persistence.mongo.model.common.IdentifiableEntity;
 import org.slf4j.Logger;
@@ -13,10 +13,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO, E extends IdentifiableEntity> {
+public abstract class AbstractMongoPersistenceService<O extends IdentifiableObject, E extends IdentifiableEntity> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractMongoPersistenceService.class);
 
@@ -32,7 +31,7 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
 
     protected abstract CommonMongoRepository<E> getRepository();
 
-    protected Mono<O> create(O monoObject) {
+    protected Mono<O> internalCreate(O monoObject) {
         Assert.notNull(monoObject, "Entity equals NULL.");
         return Mono.just(monoObject)
                 .doOnNext(object -> object.setId(null))
@@ -41,17 +40,17 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
                 .map(entity -> convertToObject(entity));
     }
 
-    protected Mono<Void> update(O monoObject) {
+    protected Mono<Void> internalUpdate(O monoObject) {
         Assert.notNull(monoObject, "Entity equals NULL.");
         return Mono.just(monoObject)
-                .doOnNext(object -> Assert.notNull(object.getId(), "Id is empty, can`t create Entity."))
+                .doOnNext(object -> Assert.notNull(object.getId(), "Id is empty, can`t internalCreate Entity."))
                 .map(object -> convertToEntity(object))
                 .map(entity -> getRepository().save(entity))
                 .doOnNext(entity -> LOGGER.trace("Updated {}.", entity))
                 .then();
     }
 
-    protected Mono<O> getOne(BigInteger id) {
+    protected Mono<O> internalGetById(BigInteger id) {
         Assert.notNull(id, "Id is empty, can`t find Entity.");
         LOGGER.debug("Start to find object for {}", id);
 
@@ -66,12 +65,12 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
                 });
     }
 
-    protected Flux<O> getAll() {
+    protected Flux<O> internalGetAll() {
         return Flux.fromIterable(getRepository().findAll())
                 .map(entity -> convertToObject(entity));
     }
 
-    protected <T extends O> Flux<T> getAllByType(final Class<T> targetClass) {
+    protected <T extends O> Flux<T> internalGetAllByType(final Class<T> targetClass) {
         Assert.notNull(targetClass, "Class is NULL, can`t find Entities.");
 
         Flux<E> flux = Flux.create(fluxSink -> {
@@ -81,10 +80,7 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
             Class<E> targetEntityClass = generics[1];
 
             String className = targetEntityClass.getCanonicalName();
-            List<E> operationEntities = getRepository().findByImplementation(className);
-            operationEntities
-                    .stream()
-                    .forEach(entity -> fluxSink.next(entity));
+            getRepository().findByImplementation(className).forEach(entity -> fluxSink.next(entity));
             fluxSink.complete();
         });
 
@@ -93,8 +89,8 @@ public abstract class AbstractMongoPersistenceService<O extends IdentifiableDTO,
                 .cast(targetClass);
     }
 
-    protected Mono<Void> delete(BigInteger id) {
-        Assert.notNull(id, "Id is empty, can`t delete Entity.");
+    protected Mono<Void> internalDelete(BigInteger id) {
+        Assert.notNull(id, "Id is empty, can`t internalDelete Entity.");
 
         return Mono.just(id)
                 .doOnNext(currentId -> getRepository().delete(currentId))

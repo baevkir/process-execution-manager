@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--Bean-->
+    <bean id="pem.fromBeanOperationEntityToObjectConverter"
+          class="com.pem.persistence.mongo.converter.operation.bean.FromBeanOperationEntityToObjectConverter"/>
+    <bean id="pem.fromBeanOperationObjectToEntityConverter"
+          class="com.pem.persistence.mongo.converter.operation.bean.FromBeanOperationObjectToEntityConverter"/>
+
+    <!--Sync Composite-->
+    <bean id="pem.fromSyncCompositeObjectToEntityOperationConverter"
+          class="com.pem.persistence.mongo.converter.operation.composite.FromSyncCompositeObjectToEntityOperationConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <bean id="pem.fromSyncCompositeEntityToObjectOperationConverter"
+          class="com.pem.persistence.mongo.converter.operation.composite.FromSyncCompositeEntityToObjectOperationConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <!--Predicate-->
+    <bean id="pem.fromPredicateOperationEntityToObjectConverter"
+          class="com.pem.persistence.mongo.converter.operation.predicate.FromPredicateOperationEntityToObjectConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+    <bean id="pem.fromPredicateOperationObjectToEntityConverter"
+          class="com.pem.persistence.mongo.converter.operation.predicate.FromPredicateOperationObjectToEntityConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <!--Trigger-->
+    <bean id="pem.fromTriggerOperationEntityToObjectConverter"
+          class="com.pem.persistence.mongo.converter.operation.trigger.FromTriggerOperationEntityToObjectConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+    <bean id="pem.fromTriggerOperationObjectToEntityConverter"
+          class="com.pem.persistence.mongo.converter.operation.trigger.FromTriggerOperationObjectToEntityConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <!--Counte Loop-->
+    <bean id="pem.fromCounterLoopOperationEntityToObjectConverter"
+          class="com.pem.persistence.mongo.converter.operation.loop.counter.FromCounterLoopOperationEntityToObjectConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+    <bean id="pem.fromCounterLoopOperationObjectToEntityConverter"
+          class="com.pem.persistence.mongo.converter.operation.loop.counter.FromCounterLoopOperationObjectToEntityConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <!--Do While Loop-->
+    <bean id="pem.fromDoWhileOperationEntityToObjectConverter"
+          class="com.pem.persistence.mongo.converter.operation.loop.condition.FromDoWhileOperationEntityToObjectConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+    <bean id="pem.fromDoWhileOperationObjectToEntityConverter"
+          class="com.pem.persistence.mongo.converter.operation.loop.condition.FromDoWhileOperationObjectToEntityConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+    <!--While Loop-->
+    <bean id="pem.fromWhileOperationEntityToObjectConverter"
+          class="com.pem.persistence.mongo.converter.operation.loop.condition.FromWhileOperationEntityToObjectConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+    <bean id="pem.fromWhileOperationObjectToEntityConverter"
+          class="com.pem.persistence.mongo.converter.operation.loop.condition.FromWhileOperationObjectToEntityConverter">
+        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
+    </bean>
+
+</beans>

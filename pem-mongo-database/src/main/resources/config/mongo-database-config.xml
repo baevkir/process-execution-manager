@@ -7,7 +7,7 @@
           http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <import resource="classpath:config/converter/mongo-database-converter-config.xml"/>
-
+    <import resource="classpath:config/mongo-service-config.xml"/>
     <mongo:mapping-converter id="pem.mongoConverter" db-factory-ref="pem.mongoDbFactory"/>
 
     <mongo:auditing mapping-context-ref="mappingContext" set-dates="true" modify-on-creation="true"/>
@@ -20,24 +20,5 @@
         <constructor-arg name="mongoConverter" ref="pem.mongoConverter"/>
     </bean>
 
-    <bean id="operationPersistenceService"
-          class="com.pem.persistence.mongo.service.operation.MongoOperationPersistenceService">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
-
-
-    <bean id="calculatorPersistenceService"
-          class="com.pem.persistence.mongo.service.calculator.MongoCalculatorPersistenceService">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
-
-    <bean id="executionRecordPersistenceService"
-          class="com.pem.persistence.mongo.service.process.MongoExecutionRecordPersistenceService">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
-
-    <bean id="processPersistenceService"
-          class="com.pem.persistence.mongo.service.process.MongoProcessPersistenceService">
-        <property name="converterFactory" ref="pem.mongodb.ConverterFactory"/>
-    </bean>
+    <bean id="pem.persistenceManager" class="com.pem.persistence.api.manager.impl.PersistenceManagerImpl"/>
 </beans>
