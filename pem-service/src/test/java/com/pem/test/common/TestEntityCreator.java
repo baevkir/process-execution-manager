@@ -20,7 +20,7 @@ public class TestEntityCreator {
         return createPredicate("testBinaryConditionCalculator");
     }
 
-    public BeanPredicateObject createRandomBinaryCalculator() {
+    public BeanPredicateObject createRandomPredicate() {
         return createPredicate(String.valueOf(random.nextInt()));
     }
 
@@ -52,7 +52,7 @@ public class TestEntityCreator {
         return operationEntity;
     }
 
-    public TriggerOperationObject createIntegerConditionOperationEntity(){
+    public TriggerOperationObject createTriggerOperationEntity(){
         TriggerOperationObject operationEntity = new TriggerOperationObject();
         operationEntity.setName("Test operation " + random.nextLong());
         operationEntity.setDescription("Test description " + random.nextLong());

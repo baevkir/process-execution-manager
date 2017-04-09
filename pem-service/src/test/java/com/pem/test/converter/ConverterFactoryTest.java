@@ -58,7 +58,7 @@ public class ConverterFactoryTest {
 
     @Test
     public void testConverterIntegerConditionOperation() {
-        TriggerOperationObject operationEntity = creator.createIntegerConditionOperationEntity();
+        TriggerOperationObject operationEntity = creator.createTriggerOperationEntity();
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
         Assert.assertNotNull(operation);
         Assert.assertTrue(operation instanceof TriggerOperation);
@@ -68,7 +68,7 @@ public class ConverterFactoryTest {
     public void testCounterLoopOperationConverter() {
         CounterLoopOperationObject operationEntity = new CounterLoopOperationObject();
         operationEntity.setCount(100);
-        operationEntity.setOperation(creator.createIntegerConditionOperationEntity());
+        operationEntity.setOperation(creator.createTriggerOperationEntity());
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
         Assert.assertNotNull(operation);
         Assert.assertTrue(operation instanceof CounterLoopOperation);
@@ -87,7 +87,7 @@ public class ConverterFactoryTest {
     @Test
     public void testWhileOperationConverter() {
         WhileLoopOperationObject operationEntity = new WhileLoopOperationObject();
-        operationEntity.setOperation(creator.createIntegerConditionOperationEntity());
+        operationEntity.setOperation(creator.createTriggerOperationEntity());
         operationEntity.setPredicate(creator.createPredicate());
         Operation operation = converterFactory.convert(operationEntity, Operation.class);
         Assert.assertNotNull(operation);

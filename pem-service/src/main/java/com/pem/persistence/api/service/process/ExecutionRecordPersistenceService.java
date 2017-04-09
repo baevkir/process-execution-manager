@@ -12,5 +12,5 @@ public interface ExecutionRecordPersistenceService  extends
         CreateService<ExecutionRecordObject>,
         UpdateService<ExecutionRecordObject> {
 
-    Mono<ExecutionRecordObject> findExecutionRecordByPk(ExecutionRecordPK pk);
+    Mono<ExecutionRecordObject> findByPk(ExecutionRecordPK pk);
 }
