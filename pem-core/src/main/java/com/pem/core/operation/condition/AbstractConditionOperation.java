@@ -21,7 +21,7 @@ public abstract class AbstractConditionOperation<C> extends AbstractOperation im
     @Override
     public Mono<OperationContext> execute(Mono<OperationContext> context) {
         return calculateCondition(context)
-                .doOnSuccess(condition -> Assert.notNull(condition, String.format("Can't apply condition for %s.", getClass())))
+                .doOnSuccess(condition -> Assert.notNull(condition, String.format("Can't apply trigger for %s.", getClass())))
                 .map(condition -> getOperationForCondition(condition))
                 .flatMap(operation -> operation.execute(context))
                 .single();
