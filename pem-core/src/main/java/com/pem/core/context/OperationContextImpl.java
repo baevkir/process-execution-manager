@@ -6,13 +6,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 import java.math.BigInteger;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class OperationContextImpl implements OperationContext {
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationContextImpl.class);
     private boolean isOpen = false;
-    private Map<String, Object> contextParams = new HashMap<>();
+    private Map<String, Object> contextParams = new ConcurrentHashMap<>();
     private BigInteger id;
 
     @Override
