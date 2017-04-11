@@ -38,7 +38,8 @@ public class PersistenceManagerImpl implements PersistenceManager, ApplicationCo
     public <O extends BaseObject> Mono<Void> update(O object) {
         return getServiceForType(object.getClass(), UpdateService.class)
                 .map(updateService -> (UpdateService<O>) updateService)
-                .flatMap(updateService -> updateService.update(object)).single();
+                .flatMap(updateService -> updateService.update(object))
+                .then();
     }
 
     @Override

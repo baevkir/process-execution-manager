@@ -7,6 +7,8 @@ import com.pem.ui.presentation.operation.view.BaseOperationPresenter;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.ViewScope;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -14,6 +16,8 @@ import reactor.core.publisher.Mono;
 @SpringComponent
 @ViewScope
 public class CompositeOperationPresenter extends BaseOperationPresenter<SyncCompositeOperationDTO, CompositeOperationView> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CompositeOperationPresenter.class);
 
     @Autowired
     private OperationService operationService;

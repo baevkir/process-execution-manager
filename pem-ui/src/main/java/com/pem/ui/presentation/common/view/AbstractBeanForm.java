@@ -79,6 +79,7 @@ public abstract class AbstractBeanForm<B> extends CustomComponent implements Bea
             bottomToolbar.setVisible(false);
         } catch (FieldGroup.CommitException exception) {
             Notification.show(exception.getLocalizedMessage(), Notification.Type.ERROR_MESSAGE);
+            throw new RuntimeException(exception);
         }
     }
 
