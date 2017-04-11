@@ -99,6 +99,8 @@ public class AnnotatedOperationTest {
 
         @OperationMethod(result = RESULT_PARAM)
         public BigDecimal testOperation(@Param(value = SECOND_PARAM, mandatory = true) BigDecimal secondParam) {
+            Assert.assertNotNull(firstParam);
+            Assert.assertNotNull(secondParam);
             return firstParam.add(secondParam);
         }
     }
