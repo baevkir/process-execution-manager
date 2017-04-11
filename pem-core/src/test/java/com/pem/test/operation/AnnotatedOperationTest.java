@@ -94,10 +94,11 @@ public class AnnotatedOperationTest {
 
     private class TestOperationTwoParams extends AnnotationOperation {
 
-        @OperationMethod(result = RESULT_PARAM)
-        public BigDecimal testOperation(@Param(value = FIRST_PARAM, mandatory = true) BigDecimal firstParam,
-                                        @Param(value = SECOND_PARAM, mandatory = true) BigDecimal secondParam) {
+        @Param(value = FIRST_PARAM, mandatory = true)
+        private BigDecimal firstParam;
 
+        @OperationMethod(result = RESULT_PARAM)
+        public BigDecimal testOperation(@Param(value = SECOND_PARAM, mandatory = true) BigDecimal secondParam) {
             return firstParam.add(secondParam);
         }
     }
