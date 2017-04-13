@@ -2,14 +2,16 @@ package com.pem.ui.presentation.operation.view;
 
 import com.pem.logic.service.operation.OperationService;
 import com.pem.model.operation.common.OperationObject;
+import com.pem.ui.presentation.common.navigator.NavigationParams;
+import com.pem.ui.presentation.common.navigator.UINavigator;
 import com.pem.ui.presentation.common.presenter.BaseBeanPresenter;
 import com.pem.ui.presentation.common.reactor.VaadinReactor;
 import com.pem.ui.presentation.operation.list.OperationListView;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
@@ -20,6 +22,9 @@ public class BaseOperationPresenter<O extends OperationObject, V extends BaseOpe
 
     @Autowired
     private OperationService operationService;
+
+    @Autowired
+    private UINavigator navigator;
 
     @Override
     public Mono<BeanFieldGroup<O>> bindBean(O bean) {
@@ -41,7 +46,13 @@ public class BaseOperationPresenter<O extends OperationObject, V extends BaseOpe
     }
 
     private void navigateToOperation(BigInteger operationId) {
-        UI.getCurrent().getNavigator().navigateTo(OperationListView.VIEW_NAME + "/" + operationId);
+        Assert.notNull(operationId, "Cannot navigate. Operation is NULL");
+        NavigationParams params = NavigationParams.builder()
+                .setViewName(OperationListView.VIEW_NAME)
+                .addUrlParam(NavigationParams.ID_PARAM, operationId.toString())
+                .addUrlParam(NavigationParams.REFRESH_LIST_PARAM)
+                .build();
+        navigator.navigate(params);
     }
 
 }

@@ -2,11 +2,12 @@ package com.pem.ui.presentation.operation.list;
 
 import com.pem.logic.service.operation.OperationService;
 import com.pem.model.operation.common.OperationObject;
+import com.pem.ui.presentation.common.navigator.NavigationParams;
+import com.pem.ui.presentation.common.navigator.UINavigator;
 import com.pem.ui.presentation.common.presenter.BasePresenter;
 import com.pem.ui.presentation.common.view.provider.OperationViewObject;
 import com.pem.ui.presentation.common.view.provider.PemViewProvider;
 import com.pem.ui.presentation.operation.view.BaseOperationView;
-import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.UI;
@@ -17,11 +18,13 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
-import java.util.EventObject;
 
 @SpringComponent
 @UIScope
 public class OperationListPresenter extends BasePresenter<OperationListView> {
+
+    @Autowired
+    private UINavigator navigator;
 
     @Autowired
     private OperationService operationService;
@@ -35,11 +38,11 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
     @Override
     public void bind(OperationListView view) {
         super.bind(view);
-        Flux<ViewChangeListener.ViewChangeEvent> eventPublisher = view.getViewChangePublisher();
+        Flux<NavigationParams> eventPublisher = navigator.onViewChange();
 
         OperationList operationList = getView().getOperationList();
-        eventPublisher.filter(event -> !operationList.isDataLoaded())
-                .cast(EventObject.class)
+        eventPublisher.filter(event -> !operationList.isDataLoaded() || event.hasUrlParam(NavigationParams.REFRESH_LIST_PARAM))
+                .cast(Object.class)
                 .mergeWith(operationList.getRefreshPublisher())
                 .map(eventObject -> operationService.getAllOperations())
                 .subscribe(operationFlux -> operationList.load(operationFlux));
@@ -49,8 +52,9 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
                 .subscribe(operation -> openOperationForm(operation));
     }
 
-    private Flux<OperationObject> getOperationPublisher(Flux<ViewChangeListener.ViewChangeEvent> eventPublisher) {
-        return eventPublisher.map(event -> event.getParameters())
+    private Flux<OperationObject> getOperationPublisher(Flux<NavigationParams> eventPublisher) {
+        return eventPublisher
+                .map(params -> params.getUrlParam(NavigationParams.ID_PARAM).orElse(""))
                 .filter(parameters -> StringUtils.isNotEmpty(parameters))
                 .filter(parameters -> StringUtils.isNumeric(parameters))
                 .map(parameters -> new BigInteger(parameters))

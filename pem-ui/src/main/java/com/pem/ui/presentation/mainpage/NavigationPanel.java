@@ -1,10 +1,13 @@
 package com.pem.ui.presentation.mainpage;
 
+import com.pem.ui.presentation.common.navigator.NavigationParams;
+import com.pem.ui.presentation.common.navigator.UINavigator;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 
@@ -12,20 +15,18 @@ import javax.annotation.PostConstruct;
 @SpringComponent
 public class NavigationPanel extends HorizontalLayout {
 
+    @Autowired
+    private UINavigator navigator;
+
     public void addNavigationButton(String caption, final String viewName) {
         Button button = new Button(caption);
-        button.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                doNavigate(viewName);
-            }
-        });
+        button.addClickListener((Button.ClickListener) event -> doNavigate(viewName));
 
         addComponent(button);
     }
 
     private void doNavigate(String viewName) {
-        getUI().getNavigator().navigateTo(viewName);
+        navigator.navigate(NavigationParams.builder().setViewName(viewName).build());
     }
 
     @PostConstruct

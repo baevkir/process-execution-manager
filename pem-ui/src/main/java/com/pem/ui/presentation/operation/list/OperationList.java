@@ -1,11 +1,15 @@
 package com.pem.ui.presentation.operation.list;
 
 import com.pem.model.operation.common.OperationObject;
+import com.pem.ui.presentation.common.navigator.NavigationParams;
+import com.pem.ui.presentation.common.navigator.UINavigator;
 import com.pem.ui.presentation.common.reactor.VaadinReactor;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import reactor.core.publisher.Flux;
 
 import javax.annotation.PostConstruct;
@@ -17,6 +21,9 @@ public class OperationList extends HorizontalLayout {
 
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_STATUS = "active";
+
+    @Autowired
+    private UINavigator navigator;
 
     private boolean dataLoaded;
     private Button newOperationButton;
@@ -89,6 +96,11 @@ public class OperationList extends HorizontalLayout {
     }
 
     private void navigateToOperation(BigInteger operationId) {
-        UI.getCurrent().getNavigator().navigateTo(OperationListView.VIEW_NAME + "/" + operationId);
+        Assert.notNull(operationId, "Cannot navigate. Operation is NULL");
+        NavigationParams params = NavigationParams.builder()
+                .setViewName(OperationListView.VIEW_NAME)
+                .addUrlParam(NavigationParams.ID_PARAM, operationId.toString())
+                .build();
+        navigator.navigate(params);
     }
 }
