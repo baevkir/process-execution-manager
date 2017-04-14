@@ -38,10 +38,12 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
     @Override
     public void bind(OperationListView view) {
         super.bind(view);
-        Flux<NavigationParams> eventPublisher = navigator.onViewChange();
+        Flux<NavigationParams> eventPublisher = navigator.onViewChange()
+                .filter(params -> params.getViewName().equals(OperationListView.VIEW_NAME));
 
         OperationList operationList = getView().getOperationList();
-        eventPublisher.filter(event -> !operationList.isDataLoaded() || event.hasUrlParam(NavigationParams.REFRESH_LIST_PARAM))
+        eventPublisher
+                .filter(event -> !operationList.isDataLoaded() || event.hasUrlParam(NavigationParams.REFRESH_LIST_PARAM))
                 .cast(Object.class)
                 .mergeWith(operationList.getRefreshPublisher())
                 .map(eventObject -> operationService.getAllOperations())
@@ -85,7 +87,7 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
                 .subscribe(operationForm -> bindToForm(source, operationForm));
     }
 
-    private void bindToForm(OperationObject source, BaseOperationView operationForm) {
+    private <O extends OperationObject> void bindToForm(O source, BaseOperationView<O> operationForm) {
         operationForm.bind(source)
                 .doOnSuccess(signal -> getView().openOperation(operationForm))
                 .subscribe();
