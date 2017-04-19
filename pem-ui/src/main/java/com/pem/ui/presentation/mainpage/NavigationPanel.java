@@ -1,7 +1,7 @@
 package com.pem.ui.presentation.mainpage;
 
 import com.pem.ui.presentation.common.navigator.NavigationParams;
-import com.pem.ui.presentation.common.navigator.UINavigator;
+import com.pem.ui.presentation.common.navigator.NavigationManager;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
@@ -16,7 +16,7 @@ import javax.annotation.PostConstruct;
 public class NavigationPanel extends HorizontalLayout {
 
     @Autowired
-    private UINavigator navigator;
+    private NavigationManager navigator;
 
     public void addNavigationButton(String caption, final String viewName) {
         Button button = new Button(caption);

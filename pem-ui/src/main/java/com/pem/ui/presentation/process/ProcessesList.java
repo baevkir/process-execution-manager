@@ -1,8 +1,9 @@
 package com.pem.ui.presentation.process;
 
 import com.pem.model.proccess.ExecutionProcessObject;
+import com.pem.ui.presentation.common.navigator.NavigationConst;
 import com.pem.ui.presentation.common.navigator.NavigationParams;
-import com.pem.ui.presentation.common.navigator.UINavigator;
+import com.pem.ui.presentation.common.navigator.NavigationManager;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -26,7 +27,7 @@ public class ProcessesList extends HorizontalLayout {
     private final BeanItemContainer<ExecutionProcessObject> processesContainer = new BeanItemContainer<>(ExecutionProcessObject.class);
 
     @Autowired
-    private UINavigator navigator;
+    private NavigationManager navigator;
 
     public void load(List<ExecutionProcessObject> process) {
         processesContainer.removeAllItems();
@@ -64,7 +65,7 @@ public class ProcessesList extends HorizontalLayout {
             ExecutionProcessObject process = (ExecutionProcessObject) event.getItemId();
             NavigationParams params = NavigationParams.builder()
                     .setViewName(ProcessMainView.VIEW_NAME)
-                    .addUrlParam(NavigationParams.ID_PARAM, process.getId().toString())
+                    .addUrlParam(NavigationConst.ID_PARAM, process.getId().toString())
                     .build();
             navigator.navigate(params);
         });

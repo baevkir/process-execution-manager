@@ -1,8 +1,9 @@
 package com.pem.ui.presentation.operation.list;
 
 import com.pem.model.operation.common.OperationObject;
+import com.pem.ui.presentation.common.navigator.NavigationConst;
+import com.pem.ui.presentation.common.navigator.NavigationManager;
 import com.pem.ui.presentation.common.navigator.NavigationParams;
-import com.pem.ui.presentation.common.navigator.UINavigator;
 import com.pem.ui.presentation.common.reactor.VaadinReactor;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -13,7 +14,8 @@ import org.springframework.util.Assert;
 import reactor.core.publisher.Flux;
 
 import javax.annotation.PostConstruct;
-import java.math.BigInteger;
+
+import static com.pem.ui.presentation.common.navigator.NavigationConst.NEW_OBJECT_VALUE;
 
 @UIScope
 @SpringComponent
@@ -23,9 +25,8 @@ public class OperationList extends HorizontalLayout {
     private static final String COLUMN_STATUS = "active";
 
     @Autowired
-    private UINavigator navigator;
+    private NavigationManager navigator;
 
-    private boolean dataLoaded;
     private Button newOperationButton;
     private Button refreshButton;
 
@@ -34,16 +35,7 @@ public class OperationList extends HorizontalLayout {
 
     public void load(Flux<OperationObject> operationPublisher) {
         operationPublisher.doOnSubscribe(subscription -> operationContainer.removeAllItems())
-                .doOnSubscribe(subscription -> dataLoaded = true)
                 .subscribe(operation -> operationContainer.addBean(operation));
-    }
-
-    public boolean isDataLoaded() {
-        return dataLoaded;
-    }
-
-    public Flux<Button.ClickEvent> getNewOperationPublisher() {
-        return VaadinReactor.buttonClickPublisher(newOperationButton);
     }
 
     public Flux<Button.ClickEvent> getRefreshPublisher() {
@@ -52,7 +44,6 @@ public class OperationList extends HorizontalLayout {
 
     @PostConstruct
     void init() {
-        dataLoaded = false;
         VerticalLayout mainLayout = new VerticalLayout();
         addComponent(mainLayout);
 
@@ -75,7 +66,10 @@ public class OperationList extends HorizontalLayout {
                 .filter(itemId -> itemId != null)
                 .cast(OperationObject.class)
                 .map(operation -> operation.getId())
-                .subscribe(operationId -> navigateToOperation(operationId));
+                .subscribe(operationId -> navigateToOperation(operationId.toString()));
+
+        VaadinReactor.buttonClickPublisher(newOperationButton)
+                .subscribe(clickEvent -> navigateToOperation(NEW_OBJECT_VALUE));
     }
 
     private Layout createTopToolbar() {
@@ -95,11 +89,11 @@ public class OperationList extends HorizontalLayout {
         return refreshButton;
     }
 
-    private void navigateToOperation(BigInteger operationId) {
+    private void navigateToOperation(String operationId) {
         Assert.notNull(operationId, "Cannot navigate. Operation is NULL");
         NavigationParams params = NavigationParams.builder()
                 .setViewName(OperationListView.VIEW_NAME)
-                .addUrlParam(NavigationParams.ID_PARAM, operationId.toString())
+                .addUrlParam(NavigationConst.ID_PARAM, operationId)
                 .build();
         navigator.navigate(params);
     }

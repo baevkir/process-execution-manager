@@ -2,10 +2,12 @@ package com.pem.ui.presentation.operation.view;
 
 import com.pem.logic.service.operation.OperationService;
 import com.pem.model.operation.common.OperationObject;
+import com.pem.ui.presentation.common.navigator.NavigationConst;
+import com.pem.ui.presentation.common.navigator.NavigationManager;
 import com.pem.ui.presentation.common.navigator.NavigationParams;
-import com.pem.ui.presentation.common.navigator.UINavigator;
 import com.pem.ui.presentation.common.presenter.BaseBeanPresenter;
 import com.pem.ui.presentation.common.reactor.VaadinReactor;
+import com.pem.ui.presentation.operation.list.OperationListPresenter;
 import com.pem.ui.presentation.operation.list.OperationListView;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import org.slf4j.Logger;
@@ -24,7 +26,10 @@ public class BaseOperationPresenter<O extends OperationObject, V extends BaseOpe
     private OperationService operationService;
 
     @Autowired
-    private UINavigator navigator;
+    private OperationListPresenter operationListPresenter;
+
+    @Autowired
+    private NavigationManager navigator;
 
     @Override
     public Mono<BeanFieldGroup<O>> bindBean(O bean) {
@@ -42,15 +47,17 @@ public class BaseOperationPresenter<O extends OperationObject, V extends BaseOpe
                     return operationService.updateOperation(operation)
                             .then(() -> Mono.just(operation))
                             .doOnNext(currentOperation -> LOGGER.debug("Operation {} updated.", currentOperation));
-                }).subscribe(operation -> navigateToOperation(operation.getId()));
+                }).subscribe(operation -> {
+                    navigateToOperation(operation.getId());
+                    operationListPresenter.reloadOperations();
+                });
     }
 
     private void navigateToOperation(BigInteger operationId) {
         Assert.notNull(operationId, "Cannot navigate. Operation is NULL");
         NavigationParams params = NavigationParams.builder()
                 .setViewName(OperationListView.VIEW_NAME)
-                .addUrlParam(NavigationParams.ID_PARAM, operationId.toString())
-                .addUrlParam(NavigationParams.REFRESH_LIST_PARAM)
+                .addUrlParam(NavigationConst.ID_PARAM, operationId.toString())
                 .build();
         navigator.navigate(params);
     }

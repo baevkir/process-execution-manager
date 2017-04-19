@@ -1,6 +1,7 @@
 package com.pem.ui.presentation.mainpage;
 
-import com.pem.ui.presentation.common.view.provider.PemViewProvider;
+import com.pem.ui.presentation.common.navigator.NavigationManager;
+import com.pem.ui.presentation.common.navigator.NavigationParams;
 import com.pem.ui.presentation.operation.list.OperationListView;
 import com.pem.ui.presentation.process.ProcessMainView;
 import com.vaadin.annotations.Theme;
@@ -19,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class MainPage extends UI {
 
     @Autowired
-    private PemViewProvider viewProvider;
+    private NavigationManager navigationManager;
 
     @Autowired
     private NavigationPanel navigationPanel;
@@ -28,10 +29,6 @@ public class MainPage extends UI {
 
     protected void init(VaadinRequest vaadinRequest) {
         UI.setCurrent(this);
-
-        Navigator navigator = new Navigator(this, contentPanel);
-        navigator.addProvider(viewProvider);
-        setNavigator(navigator);
 
         VerticalLayout root = new VerticalLayout();
         root.setSizeFull();
@@ -46,11 +43,9 @@ public class MainPage extends UI {
 
         root.setExpandRatio(contentPanel, 1.0f);
 
-        if (navigator.getState().isEmpty()) {
-            navigator.navigateTo(OperationListView.VIEW_NAME);
-        } else {
-            navigator.navigateTo(navigator.getState());
+        navigationManager.register(this, new Navigator.SingleComponentContainerViewDisplay(contentPanel));
+        if (navigationManager.getNavigationParams() == null) {
+            navigationManager.navigate(NavigationParams.builder().setViewName(OperationListView.VIEW_NAME).build());
         }
-
     }
 }

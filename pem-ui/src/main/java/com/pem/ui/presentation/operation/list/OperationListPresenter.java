@@ -2,8 +2,9 @@ package com.pem.ui.presentation.operation.list;
 
 import com.pem.logic.service.operation.OperationService;
 import com.pem.model.operation.common.OperationObject;
+import com.pem.ui.presentation.common.navigator.NavigationConst;
 import com.pem.ui.presentation.common.navigator.NavigationParams;
-import com.pem.ui.presentation.common.navigator.UINavigator;
+import com.pem.ui.presentation.common.navigator.NavigationManager;
 import com.pem.ui.presentation.common.presenter.BasePresenter;
 import com.pem.ui.presentation.common.view.provider.OperationViewObject;
 import com.pem.ui.presentation.common.view.provider.PemViewProvider;
@@ -24,7 +25,7 @@ import java.math.BigInteger;
 public class OperationListPresenter extends BasePresenter<OperationListView> {
 
     @Autowired
-    private UINavigator navigator;
+    private NavigationManager navigator;
 
     @Autowired
     private OperationService operationService;
@@ -35,36 +36,40 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
     @Autowired
     private ChooseOperationTypeWindow chooseOperationTypeWindow;
 
+    private boolean isDataLoaded = false;
+
     @Override
     public void bind(OperationListView view) {
         super.bind(view);
-        Flux<NavigationParams> eventPublisher = navigator.onViewChange()
+        Flux<NavigationParams> eventPublisher = navigator.onNavigationChange()
                 .filter(params -> params.getViewName().equals(OperationListView.VIEW_NAME));
 
         OperationList operationList = getView().getOperationList();
-        eventPublisher
-                .filter(event -> !operationList.isDataLoaded() || event.hasUrlParam(NavigationParams.REFRESH_LIST_PARAM))
+        eventPublisher.filter(event -> !isDataLoaded)
                 .cast(Object.class)
                 .mergeWith(operationList.getRefreshPublisher())
-                .map(eventObject -> operationService.getAllOperations())
-                .subscribe(operationFlux -> operationList.load(operationFlux));
+                .subscribe(eventObject -> reloadOperations());
 
-        getOperationPublisher(eventPublisher)
-                .mergeWith(getNewOperationPublisher())
+
+        Flux<String> operationPublisher = eventPublisher
+                .map(params -> params.getUrlParam(NavigationConst.ID_PARAM).orElse(""))
+                .filter(params -> StringUtils.isNotEmpty(params));
+
+        operationPublisher.filter(parameter -> StringUtils.isNumeric(parameter))
+                .map(parameter -> new BigInteger(parameter))
+                .flatMap(operationId -> operationService.getOperation(operationId))
+                .mergeWith(getNewOperationPublisher(operationPublisher))
                 .subscribe(operation -> openOperationForm(operation));
     }
 
-    private Flux<OperationObject> getOperationPublisher(Flux<NavigationParams> eventPublisher) {
-        return eventPublisher
-                .map(params -> params.getUrlParam(NavigationParams.ID_PARAM).orElse(""))
-                .filter(parameters -> StringUtils.isNotEmpty(parameters))
-                .filter(parameters -> StringUtils.isNumeric(parameters))
-                .map(parameters -> new BigInteger(parameters))
-                .flatMap(operationId -> operationService.getOperation(operationId));
+    public void reloadOperations(){
+        isDataLoaded = true;
+        getView().getOperationList().load(operationService.getAllOperations());
     }
 
-    private Flux<OperationObject> getNewOperationPublisher() {
-        return getView().getOperationList().getNewOperationPublisher()
+    private Flux<OperationObject> getNewOperationPublisher(Flux<String> operationPublisher) {
+        return operationPublisher
+                .filter(parameter -> parameter.equals(NavigationConst.NEW_OBJECT_VALUE))
                 .flatMap(clickEvent -> openChooseOperationTypeWindow())
                 .map(operationViewObject -> operationViewObject.getOperationType())
                 .map(operationType -> newOperation(operationType));
@@ -94,10 +99,10 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
     }
 
     private Mono<OperationViewObject> openChooseOperationTypeWindow() {
-
         return Mono.just(chooseOperationTypeWindow)
                 .doOnSuccess(window -> UI.getCurrent().addWindow(window))
                 .doOnSuccess(window -> window.setVisible(true))
                 .flatMap(window -> window.getPublisher()).single();
     }
+        
 }

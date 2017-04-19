@@ -6,7 +6,6 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
@@ -17,8 +16,8 @@ public abstract class AbstractBeanForm<B> extends CustomComponent implements Bea
     private Layout topToolbar;
     private final Panel contentPanel = new Panel();
 
-    private Flux<Button.ClickEvent> submitPublisher;
-    private Flux<Button.ClickEvent> cancelPublisher;
+    private Button submitButton = new Button("Submit");
+    private Button cancelButton = new Button("Cancel");
 
     protected abstract <V extends BeanView<B>> BaseBeanPresenter<B, V> getPresenter();
 
@@ -29,9 +28,18 @@ public abstract class AbstractBeanForm<B> extends CustomComponent implements Bea
     @Override
     public Mono<Void> bind(B bean) {
         return getPresenter().bindBean(bean)
-                .doOnNext(binder -> submitPublisher.filter(event -> binder.isModified()).subscribe(clickEvent -> submit(binder)))
-                .doOnNext(binder -> cancelPublisher.filter(event -> binder.isModified()).subscribe(clickEvent -> cancel(binder)))
-                .doOnSuccess(binder -> VaadinReactor.binderEditPublisher(binder).subscribe(event -> bottomToolbar.setVisible(true)))
+                .doOnNext(binder -> VaadinReactor.buttonClickPublisher(submitButton)
+                        .filter(event -> binder.isModified()).subscribe(clickEvent -> submit(binder)))
+
+                .doOnNext(binder -> VaadinReactor.buttonClickPublisher(cancelButton)
+                        .filter(event -> binder.isModified()).subscribe(clickEvent -> cancel(binder)))
+
+                .doOnSuccess(binder -> VaadinReactor.binderEditPublisher(binder)
+                        .subscribe(event -> bottomToolbar.setVisible(true)))
+
+                .doOnSuccess(binder -> VaadinReactor.binderEditPublisher(binder)
+                        .subscribe(event -> topToolbar.setVisible(false)))
+
                 .doOnSuccess(binder -> initFormElements())
                 .then();
     }
@@ -45,12 +53,6 @@ public abstract class AbstractBeanForm<B> extends CustomComponent implements Bea
     protected Layout createBottomToolbar() {
         HorizontalLayout bottomToolbar = new HorizontalLayout();
         bottomToolbar.setVisible(false);
-
-        Button submitButton = new Button("Submit");
-        submitPublisher = VaadinReactor.buttonClickPublisher(submitButton);
-
-        Button cancelButton = new Button("Cancel");
-        cancelPublisher = VaadinReactor.buttonClickPublisher(cancelButton);
 
         bottomToolbar.addComponent(submitButton);
         bottomToolbar.addComponent(cancelButton);
@@ -77,6 +79,7 @@ public abstract class AbstractBeanForm<B> extends CustomComponent implements Bea
         try {
             binder.commit();
             bottomToolbar.setVisible(false);
+            topToolbar.setVisible(true);
         } catch (FieldGroup.CommitException exception) {
             Notification.show(exception.getLocalizedMessage(), Notification.Type.ERROR_MESSAGE);
             throw new RuntimeException(exception);
@@ -86,6 +89,7 @@ public abstract class AbstractBeanForm<B> extends CustomComponent implements Bea
     private void cancel(BeanFieldGroup<B> binder) {
         binder.discard();
         bottomToolbar.setVisible(false);
+        topToolbar.setVisible(true);
     }
 
 }
