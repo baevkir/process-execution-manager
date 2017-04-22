@@ -1,10 +1,10 @@
 package com.pem.logic.converter.process;
 
-import com.pem.logic.common.ServiceConstants;
-import com.pem.logic.common.utils.IdGenerator;
-import com.pem.core.common.utils.ReflectiveProcessor;
 import com.pem.core.common.converter.impl.Converter;
 import com.pem.core.common.converter.impl.RegisterInConverterFactory;
+import com.pem.core.common.utils.ReflectiveProcessor;
+import com.pem.logic.common.ServiceConstants;
+import com.pem.logic.common.utils.IdGenerator;
 import com.pem.model.common.IdentifiableObject;
 import com.pem.model.operation.common.OperationObject;
 import com.pem.model.proccess.ExecutionProcessObject;
@@ -12,9 +12,12 @@ import com.pem.model.proccess.record.ExecutionRecordObject;
 import com.pem.model.proccess.record.ExecutionRecordPK;
 import com.pem.model.proccess.record.ExecutionRecordState;
 import com.rits.cloning.Cloner;
+import org.apache.log4j.helpers.DateTimeDateFormat;
 
 import java.math.BigInteger;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,12 +25,12 @@ import java.util.List;
 public class FromOperationObjectToProcessConverter implements Converter<OperationObject, ExecutionProcessObject> {
     private Cloner cloner = new Cloner();
     private ReflectiveProcessor<OperationObject> reflectiveProcessor = new ReflectiveProcessor<>();
-
+    private DateFormat dateFormat = DateTimeDateFormat.getDateTimeInstance();
     @Override
     public ExecutionProcessObject convert(OperationObject source) {
         ExecutionProcessObject processEntity = new ExecutionProcessObject();
         processEntity.setId(IdGenerator.generateId());
-        processEntity.setName(source.getName());
+        processEntity.setName(source.getName() + " (" + dateFormat.format(new Date()) + ")");
 
         GenerateIdAction generateIdAction = new GenerateIdAction();
 

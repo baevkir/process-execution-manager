@@ -14,7 +14,6 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.Assert;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
 
@@ -24,7 +23,6 @@ import java.util.Optional;
 public class NavigationManagerImpl implements NavigationManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationListViewImpl.class);
 
-    @Autowired
     private PemViewProvider viewProvider;
 
     private NavigationParams navigationParams;
@@ -98,7 +96,7 @@ public class NavigationManagerImpl implements NavigationManager {
         UI.getCurrent().getNavigator().addViewChangeListener(new ViewChangeListener() {
             @Override
             public boolean beforeViewChange(ViewChangeEvent event) {
-                return !emitter.isCancelled();
+               return true;
             }
 
             @Override
@@ -127,5 +125,10 @@ public class NavigationManagerImpl implements NavigationManager {
             navigationParams = currentParams;
         }
 
+    }
+
+    @Autowired
+    public void setViewProvider(PemViewProvider viewProvider) {
+        this.viewProvider = viewProvider;
     }
 }
