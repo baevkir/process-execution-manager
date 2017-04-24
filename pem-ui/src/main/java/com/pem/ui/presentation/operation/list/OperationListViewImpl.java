@@ -17,10 +17,9 @@ import javax.annotation.PostConstruct;
 public class OperationListViewImpl extends HorizontalLayout implements OperationListView {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationListViewImpl.class);
-    @Autowired
+
     private OperationList operationList;
 
-    @Autowired
     private OperationListPresenter presenter;
 
     private final Panel contentPanel = new Panel();
@@ -34,11 +33,6 @@ public class OperationListViewImpl extends HorizontalLayout implements Operation
         contentPanel.setContent(operationView);
     }
 
-    @Override
-    public OperationList getOperationList() {
-        return operationList;
-    }
-
     @PostConstruct
     void init() {
         setSizeFull();
@@ -47,5 +41,15 @@ public class OperationListViewImpl extends HorizontalLayout implements Operation
         addComponent(contentPanel);
         setExpandRatio(contentPanel, 1.0f);
         presenter.bind(this);
+    }
+
+    @Autowired
+    public void setOperationList(OperationList operationList) {
+        this.operationList = operationList;
+    }
+
+    @Autowired
+    public void setPresenter(OperationListPresenter presenter) {
+        this.presenter = presenter;
     }
 }

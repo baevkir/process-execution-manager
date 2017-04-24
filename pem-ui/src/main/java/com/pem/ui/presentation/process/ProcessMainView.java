@@ -5,5 +5,4 @@ import com.vaadin.navigator.View;
 
 public interface ProcessMainView extends View {
     String VIEW_NAME = "processes";
-    ProcessesList getProcessesList();
 }

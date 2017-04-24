@@ -14,6 +14,7 @@ import reactor.core.publisher.Flux;
 public class ProcessMainPresenter extends BasePresenter<ProcessMainView> {
     private ExecutionProcessService processService;
     private NavigationManager navigator;
+    private ProcessesList processesList;
 
     @Override
     public void bind(ProcessMainView view) {
@@ -26,7 +27,7 @@ public class ProcessMainPresenter extends BasePresenter<ProcessMainView> {
     }
 
     private void reloadProcesses() {
-        getView().getProcessesList().load(processService.getAllExecutionProcesses());
+        processesList.load(processService.getAllExecutionProcesses());
     }
 
     @Autowired
@@ -37,6 +38,11 @@ public class ProcessMainPresenter extends BasePresenter<ProcessMainView> {
     @Autowired
     public void setNavigator(NavigationManager navigator) {
         this.navigator = navigator;
+    }
+
+    @Autowired
+    public void setProcessesList(ProcessesList processesList) {
+        this.processesList = processesList;
     }
 
     //

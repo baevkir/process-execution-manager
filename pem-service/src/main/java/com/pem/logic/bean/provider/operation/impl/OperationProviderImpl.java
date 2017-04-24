@@ -43,15 +43,15 @@ public class OperationProviderImpl implements OperationProvider, ApplicationCont
     public Set<BeanObject> getAllOperationBeanObjects() {
         LOGGER.debug("Get All OperationBeanObjects .");
         final String applicationId = contextWrapper.getApplicationContext().getId();
-        Map<String, Operation> beans = contextWrapper.findBeansByAnnotation(GlobalOperation.class, Operation.class);
+        Map<String, Operation> beans = contextWrapper.findBeansByAnnotation(OperationBean.class, Operation.class);
 
         return BeansStream.fromBeans(beans)
-                .filterWithAnnotation(GlobalOperation.class, annotation -> checkAnnotation(annotation, applicationId))
+                .filterWithAnnotation(OperationBean.class, annotation -> checkAnnotation(annotation, applicationId))
                 .transform(operationEntry -> transformToBeanObject(operationEntry))
                 .collect(Collectors.toSet());
     }
 
-    private boolean checkAnnotation(GlobalOperation annotation, String applicationId) {
+    private boolean checkAnnotation(OperationBean annotation, String applicationId) {
         if (annotation.all()) {
             return true;
         }
@@ -62,7 +62,7 @@ public class OperationProviderImpl implements OperationProvider, ApplicationCont
     private BeanObject transformToBeanObject(BeansStream.Entry<Operation> operationEntry) {
         return BeanObjectBuilder.newInstance()
                 .setBeanName(operationEntry.getBeanName())
-                .setName(operationEntry.getBeanAnnotation(GlobalOperation.class).get().value())
+                .setName(operationEntry.getBeanAnnotation(OperationBean.class).get().value())
                 .build();
     }
 

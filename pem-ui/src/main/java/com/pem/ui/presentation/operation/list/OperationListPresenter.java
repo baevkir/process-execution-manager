@@ -21,9 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.util.function.Tuples;
 
 import java.math.BigInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 @SpringComponent
 @UIScope
@@ -35,6 +35,7 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
     private ExecutionProcessService processService;
     private PemViewProvider viewProvider;
     private ChooseOperationTypeWindow chooseOperationTypeWindow;
+    private OperationList operationList;
 
     @Override
     public void bind(OperationListView view) {
@@ -42,7 +43,6 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
         Flux<NavigationParams> eventPublisher = navigator.onNavigationChange()
                 .filter(params -> params.getViewName().equals(OperationListView.VIEW_NAME));
 
-        OperationList operationList = getView().getOperationList();
         eventPublisher.next()
                 .cast(Object.class)
                 .mergeWith(operationList.getRefreshPublisher())
@@ -53,7 +53,7 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
     }
 
     public void reloadOperations() {
-        getView().getOperationList().load(operationService.getAllOperations());
+        operationList.load(operationService.getAllOperations());
     }
 
     protected void openOperations(Flux<NavigationParams> eventPublisher) {
@@ -62,18 +62,17 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
                 .map(params -> params.getUrlParam(NavigationConst.ID_PARAM).get())
                 .doOnNext(parameter -> Assert.isTrue(StringUtils.isNotEmpty(parameter), "Wrong ID param."));
 
-        AtomicReference<OperationObject> operationReference = new AtomicReference<>();
-        operationPublisher.filter(parameter -> StringUtils.isNumeric(parameter))
+        Flux<OperationObject> openOperationPublisher = operationPublisher
+                .filter(parameter -> StringUtils.isNumeric(parameter))
                 .map(parameter -> new BigInteger(parameter))
                 .flatMap(operationId -> operationService.getOperation(operationId))
-                .mergeWith(getNewOperationPublisher(operationPublisher))
+                .mergeWith(getNewOperationPublisher(operationPublisher));
 
-                .doOnNext(operation -> LOGGER.debug("Open operation: {}", operation))
-                .doOnNext(operation -> operationReference.set(operation))
-                .map(operation -> viewProvider.getView(operation.getClass()))
-                .doOnNext(operationView -> Assert.notNull(operationView, "Cannot find view for operation"))
-                .cast(BaseOperationView.class)
-                .subscribe(operationView -> bindToForm(operationReference.get(), operationView));
+        openOperationPublisher.doOnNext(operation -> LOGGER.debug("Open operation: {}", operation))
+                .map(operation -> Tuples.of(operation, viewProvider.getView(operation.getClass())))
+                .doOnNext(operationTuple -> Assert.notNull(operationTuple.getT2(), "Cannot find view for operation"))
+                .doOnNext(operationTuple -> Assert.isInstanceOf(BaseOperationView.class, operationTuple.getT2(), "View for operation is not BaseOperationView"))
+                .subscribe(operationTuple -> bindToForm(operationTuple.getT1(), (BaseOperationView) operationTuple.getT2()));
     }
 
     protected void createProcess(Flux<NavigationParams> eventPublisher) {
@@ -147,4 +146,8 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
         this.chooseOperationTypeWindow = chooseOperationTypeWindow;
     }
 
+    @Autowired
+    public void setOperationList(OperationList operationList) {
+        this.operationList = operationList;
+    }
 }
