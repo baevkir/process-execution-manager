@@ -13,6 +13,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,8 @@ public class OperationProviderImpl implements OperationProvider, ApplicationCont
     private static final String OPERATION_BEAN_PREF = ServiceConstants.CUSTOM_OPERATION_BEAN_PREF;
 
     private ApplicationContextWrapper contextWrapper;
+
+    private Set<BeanObject> operationBeans;
 
     @Override
     public <O extends Operation> O createCommonOperation(Class<O> operationClass) {
@@ -42,10 +45,15 @@ public class OperationProviderImpl implements OperationProvider, ApplicationCont
     @Override
     public Set<BeanObject> getAllOperationBeanObjects() {
         LOGGER.debug("Get All OperationBeanObjects .");
-        final String applicationId = contextWrapper.getApplicationContext().getId();
+        return operationBeans;
+    }
+
+    @PostConstruct
+    void init() {
+        String applicationId = contextWrapper.getApplicationContext().getId();
         Map<String, Operation> beans = contextWrapper.findBeansByAnnotation(OperationBean.class, Operation.class);
 
-        return BeansStream.fromBeans(beans)
+        operationBeans = BeansStream.fromBeans(beans)
                 .filterWithAnnotation(OperationBean.class, annotation -> checkAnnotation(annotation, applicationId))
                 .transform(operationEntry -> transformToBeanObject(operationEntry))
                 .collect(Collectors.toSet());
@@ -71,6 +79,7 @@ public class OperationProviderImpl implements OperationProvider, ApplicationCont
         LOGGER.trace("Get class name {}.", className);
         return OPERATION_BEAN_PREF + className;
     }
+
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

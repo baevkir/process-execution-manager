@@ -1,9 +1,10 @@
 package com.pem.model.predicate.bean;
 
 import com.pem.core.common.bean.BeanObject;
+import com.pem.core.common.bean.HasBeanObject;
 import com.pem.model.predicate.common.PredicateObject;
 
-public class BeanPredicateObject extends PredicateObject {
+public class BeanPredicateObject extends PredicateObject implements HasBeanObject {
 
     private BeanObject bean;
 

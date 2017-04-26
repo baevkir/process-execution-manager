@@ -1,9 +1,10 @@
 package com.pem.model.operation.bean;
 
 import com.pem.core.common.bean.BeanObject;
+import com.pem.core.common.bean.HasBeanObject;
 import com.pem.model.operation.common.OperationObject;
 
-public class BeanOperationObject extends OperationObject {
+public class BeanOperationObject extends OperationObject implements HasBeanObject {
 
     private BeanObject bean;
 

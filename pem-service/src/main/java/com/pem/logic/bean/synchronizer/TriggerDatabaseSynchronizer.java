@@ -5,76 +5,55 @@ import com.pem.core.common.event.LaunchEventHandler;
 import com.pem.core.common.event.RegisterLaunchEventHandler;
 import com.pem.logic.bean.provider.trigger.TriggerProvider;
 import com.pem.logic.common.ServiceConstants;
+import com.pem.model.predicate.bean.BeanPredicateObject;
 import com.pem.model.trigger.bean.BeanTriggerObject;
 import com.pem.model.trigger.common.TriggerObject;
 import com.pem.persistence.api.manager.PersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @RegisterLaunchEventHandler(facade = ServiceConstants.DATABASE_SYNCHRONIZER_FACADE_NAME)
-public class TriggerDatabaseSynchronizer implements LaunchEventHandler {
+public class TriggerDatabaseSynchronizer  extends AbstractBeanDatabaseSynchronizer<BeanTriggerObject> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TriggerDatabaseSynchronizer.class);
 
     private TriggerProvider triggerProvider;
-    private PersistenceManager persistenceManager;
 
     @Override
     public void handle() {
-        Set<BeanObject> beanObjects = new HashSet<>(triggerProvider.getAllTriggerBeanObjects());
+        Flux<BeanObject> beanObjects = Flux.fromIterable(triggerProvider.getAllTriggerBeanObjects());
+        BeanObjectMapper<BeanTriggerObject> mapper = getMapper(getPersistenceManager().getAllByType(BeanTriggerObject.class), beanObjects);
 
-        persistenceManager.getAllByType(BeanTriggerObject.class)
-                .doOnError(Exception.class, exception -> {
-                    throw new RuntimeException(exception);
-                })
-                .subscribe(triggerObject -> {
-                    if (!beanObjects.contains(triggerObject.getBean())) {
-                        updateStatus(triggerObject, false);
-                        return;
-                    }
+        mapper.getForActivate()
+                .flatMap(operation -> updateStatus(operation, true))
+                .subscribe();
 
-                    updateStatus(triggerObject, true);
-                    beanObjects.remove(triggerObject.getBean());
-                });
+        mapper.getForDeactivate()
+                .flatMap(operation -> updateStatus(operation, false))
+                .subscribe();
 
-        beanObjects.forEach(beanObject -> createTrigger(beanObject));
-    }
-
-    private void updateStatus(TriggerObject triggerObject, boolean active) {
-        LOGGER.debug("Update Status for trigger: {}.", triggerObject);
-        if (active == triggerObject.isActive()) {
-            return;
-        }
-        triggerObject.setActive(active);
-        persistenceManager.update(triggerObject)
-                .doOnError(Exception.class, exception -> {
-                    throw new RuntimeException(exception);
-                })
+        mapper.getForCreate()
+                .flatMap(beanObject -> createTrigger(beanObject))
                 .subscribe();
     }
 
-    private void createTrigger(BeanObject beanObject) {
+    private Mono<Void> createTrigger(BeanObject beanObject) {
         LOGGER.debug("Create new trigger for {}.", beanObject);
         BeanTriggerObject triggerObject = new BeanTriggerObject();
         triggerObject.setActive(true);
         triggerObject.setName(beanObject.getName());
         triggerObject.setBean(beanObject);
 
-        persistenceManager.create(triggerObject)
-                .doOnError(Exception.class, exception -> {
-                    throw new RuntimeException(exception);
-                })
-                .subscribe();
+        return getPersistenceManager().create(triggerObject).then();
     }
 
     public void setTriggerProvider(TriggerProvider triggerProvider) {
         this.triggerProvider = triggerProvider;
     }
 
-    public void setPersistenceManager(PersistenceManager persistenceManager) {
-        this.persistenceManager = persistenceManager;
-    }
 }

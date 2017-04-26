@@ -1,5 +1,6 @@
 package com.pem.test.common.config;
 
+import com.pem.core.common.bean.BeanObject;
 import com.pem.model.operation.bean.BeanOperationObject;
 import com.pem.model.operation.common.OperationObject;
 import com.pem.model.proccess.ExecutionProcessObject;
@@ -31,7 +32,11 @@ public class PersistenceMockConfig {
         TriggerPersistenceService triggerPersistenceService = Mockito.mock(TriggerPersistenceService.class);
 
         Mockito.when(triggerPersistenceService.getAllByType(BeanTriggerObject.class))
-                .thenReturn(Flux.just(Mockito.mock(BeanTriggerObject.class)).repeat(10));
+                .thenReturn(Flux.defer(() -> {
+                    BeanTriggerObject operation = Mockito.mock(BeanTriggerObject.class);
+                    Mockito.when(operation.getBean()).thenReturn(Mockito.mock(BeanObject.class));
+                    return Flux.just(operation);
+                }).repeat(10));
 
         return triggerPersistenceService;
     }
@@ -55,7 +60,12 @@ public class PersistenceMockConfig {
                 .thenReturn(Flux.just(Mockito.mock(OperationObject.class)).repeat(10));
 
         Mockito.when(operationPersistenceService.getAllByType(BeanOperationObject.class))
-                .thenReturn(Flux.just(Mockito.mock(BeanOperationObject.class)).repeat(10));
+                .thenReturn(Flux.defer(() -> {
+                            BeanOperationObject operation = Mockito.mock(BeanOperationObject.class);
+                            Mockito.when(operation.getBean()).thenReturn(Mockito.mock(BeanObject.class));
+                            return Flux.just(operation);
+                        }).repeat(10));
+
 
         return operationPersistenceService;
     }
