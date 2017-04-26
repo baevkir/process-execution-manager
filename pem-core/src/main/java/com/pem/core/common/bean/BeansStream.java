@@ -55,6 +55,12 @@ public class BeansStream<B> {
         return new BeansStream<>(beans.filter(predicate));
     }
 
+
+    public BeansStream<B> calculateName(Function<Entry<B>, String> nameFunction) {
+        Assert.notNull(nameFunction, "Consumer cannot be NULL.");
+        return new BeansStream<>(beans.peek(entry -> entry.setName(nameFunction.apply(entry))));
+    }
+
     public void forEach(Consumer<Entry<B>> consumer) {
         Assert.notNull(consumer, "Consumer cannot be NULL.");
         beans.forEach(consumer);
@@ -64,11 +70,16 @@ public class BeansStream<B> {
         return beans.map(function);
     }
 
+    public Stream<BeanObject> transformToBeanObject() {
+        return beans.map(new BeanObjectTransformer());
+    }
+
     public Stream<Entry<B>> stream() {
         return beans;
     }
 
     public static class Entry<B>{
+        private String name;
         private String beanName;
         private B bean;
         private Class<B> beanClass;
@@ -86,6 +97,14 @@ public class BeansStream<B> {
 
         public B getBean() {
             return bean;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
 
         public Class<B> getBeanClass() {
@@ -110,6 +129,16 @@ public class BeansStream<B> {
                     ", bean=" + bean +
                     ", beanClass=" + beanClass +
                     '}';
+        }
+    }
+
+    class BeanObjectTransformer<E> implements Function<Entry<E>, BeanObject> {
+        @Override
+        public BeanObject apply(Entry<E> entry) {
+            return BeanObjectBuilder.newInstance()
+                    .setBeanName(entry.getBeanName())
+                    .setName(entry.getName())
+                    .build();
         }
     }
 }
