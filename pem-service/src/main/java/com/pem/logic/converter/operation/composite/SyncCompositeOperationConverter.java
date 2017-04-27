@@ -20,7 +20,7 @@ public class SyncCompositeOperationConverter extends AbstractOperationConverter<
 
     @Override
     public Operation convert(SyncCompositeOperationDTO source) {
-        SyncCompositeOperation syncCompositeOperation = getOperationProvider().createCommonOperation(SyncCompositeOperation.class);
+        SyncCompositeOperation syncCompositeOperation = getBeanProvider().createCommonInstance(SyncCompositeOperation.class);
         syncCompositeOperation.setId(source.getId());
 
         for (OperationObject operationEntity: source.getOperations()) {

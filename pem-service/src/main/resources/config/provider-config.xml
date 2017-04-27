@@ -7,27 +7,27 @@
        http://www.springframework.org/schema/util
        http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean id="pem.custom-operation.SyncCompositeOperation"
+    <bean id="pem.custom-bean.SyncCompositeOperation"
           class="com.pem.core.operation.composite.SyncCompositeOperationImp"
           scope="prototype"/>
 
-    <bean id="pem.custom-operation.PredicateOperation"
+    <bean id="pem.custom-bean.PredicateOperation"
           class="com.pem.core.operation.condition.predicate.PredicateOperationImpl"
           scope="prototype"/>
 
-    <bean id="pem.custom-operation.TriggerOperation"
+    <bean id="pem.custom-bean.TriggerOperation"
           class="com.pem.core.operation.condition.trigger.TriggerOperationImpl"
           scope="prototype"/>
 
-    <bean id="pem.custom-operation.CounterLoopOperation"
+    <bean id="pem.custom-bean.CounterLoopOperation"
           class="com.pem.core.operation.loop.counter.CounterLoopOperationImpl"
           scope="prototype"/>
 
-    <bean id="pem.custom-operation.DoWhileOperation"
+    <bean id="pem.custom-bean.DoWhileOperation"
           class="com.pem.core.operation.loop.condition.DoWhileOperationImpl"
           scope="prototype"/>
 
-    <bean id="pem.custom-operation.WhileOperation"
+    <bean id="pem.custom-bean.WhileOperation"
           class="com.pem.core.operation.loop.condition.WhileOperationImpl"
           scope="prototype"/>
 
@@ -40,7 +40,4 @@
     <bean id="pem.beanProvider" class="com.pem.logic.bean.provider.impl.BeanObjectProviderImpl">
         <property name="preloadedClasses" ref="pem.preloadedBeanClasses"/>
     </bean>
-
-    <bean id="pem.operationProvider"
-          class="com.pem.logic.bean.provider.operation.impl.OperationProviderImpl"/>
 </beans>

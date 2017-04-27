@@ -21,7 +21,7 @@ public class WhileOperationConverter extends AbstractOperationConverter<WhileLoo
 
     @Override
     public Operation convert(WhileLoopOperationObject source) {
-        WhileOperation loopOperation = getOperationProvider().createCommonOperation(WhileOperation.class);
+        WhileOperation loopOperation = getBeanProvider().createCommonInstance(WhileOperation.class);
         loopOperation.setId(source.getId());
         loopOperation.setPredicate(converterFactory.convert(source.getPredicate(), Predicate.class));
         loopOperation.setOperation(converterFactory.convert(source.getOperation(), Operation.class));

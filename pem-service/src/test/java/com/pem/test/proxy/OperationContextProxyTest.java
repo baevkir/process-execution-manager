@@ -7,7 +7,7 @@ import com.pem.core.operation.composite.SyncCompositeOperation;
 import com.pem.core.operation.condition.trigger.TriggerOperation;
 import com.pem.logic.CompareFirstWithSecondCalculator;
 import com.pem.logic.MathOperationContext;
-import com.pem.logic.bean.provider.operation.OperationProvider;
+import com.pem.logic.bean.provider.BeanProvider;
 import com.pem.test.common.config.TestConfig;
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class OperationContextProxyTest {
     private Operation checkOpenContextOperation;
 
     @Autowired
-    private OperationProvider provider;
+    private BeanProvider provider;
 
     @Test
     public void testProxyOpenContextOnBaseOperation() {
@@ -42,7 +42,7 @@ public class OperationContextProxyTest {
                 .doOnNext(operationContext -> operationContext.setSecondParam(BigDecimal.valueOf(13)))
                 .cast(OperationContext.class);
 
-        Mono.just(provider.createCommonOperation(SyncCompositeOperation.class))
+        Mono.just(provider.createCommonInstance(SyncCompositeOperation.class))
                 .doOnNext(compositeOperation -> compositeOperation.addOperation(checkOpenContextOperation))
                 .doOnNext(compositeOperation -> compositeOperation.addOperation(sumOperation))
                 .doOnNext(compositeOperation -> compositeOperation.addOperation(checkOpenContextOperation))
@@ -58,7 +58,7 @@ public class OperationContextProxyTest {
                 .doOnNext(operationContext -> operationContext.setSecondParam(BigDecimal.valueOf(13)))
                 .cast(OperationContext.class);
 
-        Mono.just(provider.createCommonOperation(TriggerOperation.class))
+        Mono.just(provider.createCommonInstance(TriggerOperation.class))
                 .doOnNext(triggerOperation -> triggerOperation.addCondition(1, subtractOperation))
                 .doOnNext(triggerOperation -> triggerOperation.addCondition(0, subtractOperation))
                 .doOnNext(triggerOperation -> triggerOperation.addCondition(-1, sumOperation))

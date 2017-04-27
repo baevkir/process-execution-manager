@@ -23,7 +23,7 @@ public class TriggerOperationConverter extends AbstractOperationConverter<Trigge
 
     @Override
     public Operation convert(TriggerOperationObject source) {
-        TriggerOperation triggerOperation = getOperationProvider().createCommonOperation(TriggerOperation.class);
+        TriggerOperation triggerOperation = getBeanProvider().createCommonInstance(TriggerOperation.class);
         triggerOperation.setId(source.getId());
 
         Trigger trigger = converterFactory.convert(source.getTrigger(), Trigger.class);

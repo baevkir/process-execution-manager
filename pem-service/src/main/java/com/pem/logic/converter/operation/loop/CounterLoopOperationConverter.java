@@ -1,12 +1,12 @@
 package com.pem.logic.converter.operation.loop;
 
-import com.pem.logic.common.ServiceConstants;
-import com.pem.model.operation.loop.CounterLoopOperationObject;
+import com.pem.core.common.converter.factory.ConverterFactory;
+import com.pem.core.common.converter.impl.RegisterInConverterFactory;
 import com.pem.core.operation.basic.Operation;
 import com.pem.core.operation.loop.counter.CounterLoopOperation;
-import com.pem.core.common.converter.factory.ConverterFactory;
+import com.pem.logic.common.ServiceConstants;
 import com.pem.logic.converter.operation.common.AbstractOperationConverter;
-import com.pem.core.common.converter.impl.RegisterInConverterFactory;
+import com.pem.model.operation.loop.CounterLoopOperationObject;
 
 @RegisterInConverterFactory(factories = ServiceConstants.CONVERTER_FACTORY_NAME)
 public class CounterLoopOperationConverter extends AbstractOperationConverter<CounterLoopOperationObject> {
@@ -19,7 +19,7 @@ public class CounterLoopOperationConverter extends AbstractOperationConverter<Co
 
     @Override
     public Operation convert(CounterLoopOperationObject source) {
-        CounterLoopOperation loopOperation = getOperationProvider().createCommonOperation(CounterLoopOperation.class);
+        CounterLoopOperation loopOperation = getBeanProvider().createCommonInstance(CounterLoopOperation.class);
         loopOperation.setId(source.getId());
         loopOperation.setCount(source.getCount());
 

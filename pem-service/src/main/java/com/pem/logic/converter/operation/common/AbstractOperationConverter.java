@@ -1,18 +1,18 @@
 package com.pem.logic.converter.operation.common;
 
 import com.pem.core.common.converter.impl.Converter;
-import com.pem.logic.bean.provider.operation.OperationProvider;
 import com.pem.core.operation.basic.Operation;
+import com.pem.logic.bean.provider.BeanProvider;
 
 public abstract class AbstractOperationConverter<S> implements Converter<S, Operation> {
 
-    private OperationProvider operationProvider;
+    private BeanProvider beanProvider;
 
-    public void setOperationProvider(OperationProvider operationProvider) {
-        this.operationProvider = operationProvider;
+    public void setBeanProvider(BeanProvider beanProvider) {
+        this.beanProvider = beanProvider;
     }
 
-    protected OperationProvider getOperationProvider() {
-        return operationProvider;
+    protected BeanProvider getBeanProvider() {
+        return beanProvider;
     }
 }

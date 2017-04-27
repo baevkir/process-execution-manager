@@ -7,7 +7,7 @@
     <bean id="pem.operationDatabaseSynchronizer"
           class="com.pem.logic.bean.synchronizer.OperationDatabaseSynchronizer">
         <property name="persistenceManager" ref="pem.persistenceManager"/>
-        <property name="operationProvider" ref="pem.operationProvider"/>
+        <property name="beanProvider" ref="pem.beanProvider"/>
     </bean>
 
     <bean id="pem.predicateDatabaseSynchronizer"

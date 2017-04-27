@@ -23,7 +23,7 @@ public class PredicateOperationConverter extends AbstractOperationConverter<Pred
 
     @Override
     public Operation convert(PredicateOperationObject source) {
-        PredicateOperation binaryConditionOperation = getOperationProvider().createCommonOperation(PredicateOperation.class);
+        PredicateOperation binaryConditionOperation = getBeanProvider().createCommonInstance(PredicateOperation.class);
         binaryConditionOperation.setId(source.getId());
 
         Predicate predicate = converterFactory.convert(source.getPredicate(), Predicate.class);

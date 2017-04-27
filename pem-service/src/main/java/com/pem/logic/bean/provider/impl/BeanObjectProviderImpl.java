@@ -7,6 +7,7 @@ import com.pem.core.common.bean.BeanObject;
 import com.pem.core.common.bean.BeansStream;
 import com.pem.core.common.utils.ApplicationContextWrapper;
 import com.pem.logic.bean.provider.BeanProvider;
+import com.pem.logic.common.ServiceConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class BeanObjectProviderImpl implements BeanProvider, ApplicationContextAware {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BeanObjectProviderImpl.class);
+    private static final String CUSTOM_BEAN_PREF = ServiceConstants.CUSTOM_BEAN_PREF;
     private ApplicationContextWrapper contextWrapper;
     private String applicationId;
     private LoadingCache<Class<?>, Set<BeanObject>> beanObjectsCache;
@@ -40,6 +42,15 @@ public class BeanObjectProviderImpl implements BeanProvider, ApplicationContextA
     }
 
     @Override
+    public <O> O createCommonInstance(Class<O> type) {
+        LOGGER.trace("Start to create bean {}.", type);
+        String beanName = getCommonBeanName(type);
+        LOGGER.trace("Get Prototype bean {}.", beanName);
+
+        return createInstance(beanName, type);
+    }
+
+    @Override
     public Set<BeanObject> getAllForType(Class type) {
         return beanObjectsCache.getUnchecked(type);
     }
@@ -50,6 +61,12 @@ public class BeanObjectProviderImpl implements BeanProvider, ApplicationContextA
         }
         List<String> executors = Arrays.asList(annotation.executors());
         return executors.contains(applicationId);
+    }
+
+    public static <O> String getCommonBeanName(Class<O> operationClass) {
+        String className = operationClass.getSimpleName();
+        LOGGER.trace("Get class name {}.", className);
+        return CUSTOM_BEAN_PREF + className;
     }
 
     @PostConstruct

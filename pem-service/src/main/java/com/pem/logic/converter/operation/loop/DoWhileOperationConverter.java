@@ -20,7 +20,7 @@ public class DoWhileOperationConverter extends AbstractOperationConverter<DoWhil
 
     @Override
     public Operation convert(DoWhileLoopOperationObject source) {
-        DoWhileOperation loopOperation = getOperationProvider().createCommonOperation(DoWhileOperation.class);
+        DoWhileOperation loopOperation = getBeanProvider().createCommonInstance(DoWhileOperation.class);
         loopOperation.setId(source.getId());
         loopOperation.setPredicate(converterFactory.convert(source.getPredicate(), Predicate.class));
         loopOperation.setOperation(converterFactory.convert(source.getOperation(), Operation.class));
