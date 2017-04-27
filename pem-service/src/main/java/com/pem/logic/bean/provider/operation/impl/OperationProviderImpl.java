@@ -5,6 +5,7 @@ import com.pem.core.common.bean.BeanObjectBuilder;
 import com.pem.core.common.bean.BeansStream;
 import com.pem.core.common.utils.ApplicationContextWrapper;
 import com.pem.core.operation.basic.Operation;
+import com.pem.logic.bean.provider.impl.SpringBeanObject;
 import com.pem.logic.bean.provider.operation.OperationProvider;
 import com.pem.logic.common.ServiceConstants;
 import org.slf4j.Logger;
@@ -51,15 +52,15 @@ public class OperationProviderImpl implements OperationProvider, ApplicationCont
     @PostConstruct
     void init() {
         String applicationId = contextWrapper.getApplicationContext().getId();
-        Map<String, Operation> beans = contextWrapper.findBeansByAnnotation(OperationBean.class, Operation.class);
+        Map<String, Operation> beans = contextWrapper.findBeansByAnnotation(SpringBeanObject.class, Operation.class);
 
         operationBeans = BeansStream.fromBeans(beans)
-                .filterWithAnnotation(OperationBean.class, annotation -> checkAnnotation(annotation, applicationId))
+                .filterWithAnnotation(SpringBeanObject.class, annotation -> checkAnnotation(annotation, applicationId))
                 .transform(operationEntry -> transformToBeanObject(operationEntry))
                 .collect(Collectors.toSet());
     }
 
-    private boolean checkAnnotation(OperationBean annotation, String applicationId) {
+    private boolean checkAnnotation(SpringBeanObject annotation, String applicationId) {
         if (annotation.all()) {
             return true;
         }
@@ -70,7 +71,7 @@ public class OperationProviderImpl implements OperationProvider, ApplicationCont
     private BeanObject transformToBeanObject(BeansStream.Entry<Operation> operationEntry) {
         return BeanObjectBuilder.newInstance()
                 .setBeanName(operationEntry.getBeanName())
-                .setName(operationEntry.getBeanAnnotation(OperationBean.class).get().value())
+                .setName(operationEntry.getBeanAnnotation(SpringBeanObject.class).get().value())
                 .build();
     }
 

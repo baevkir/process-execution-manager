@@ -13,12 +13,12 @@
     <bean id="pem.predicateDatabaseSynchronizer"
           class="com.pem.logic.bean.synchronizer.PredicateDatabaseSynchronizer">
         <property name="persistenceManager" ref="pem.persistenceManager"/>
-        <property name="predicateProvider" ref="pem.predicateProvider"/>
+        <property name="beanProvider" ref="pem.beanProvider"/>
     </bean>
 
     <bean id="pem.triggerDatabaseSynchronizer"
           class="com.pem.logic.bean.synchronizer.TriggerDatabaseSynchronizer">
         <property name="persistenceManager" ref="pem.persistenceManager"/>
-        <property name="triggerProvider" ref="pem.triggerProvider"/>
+        <property name="beanProvider" ref="pem.beanProvider"/>
     </bean>
 </beans>

@@ -1,4 +1,4 @@
-package com.pem.logic.bean.provider.operation.impl;
+package com.pem.logic.bean.provider.impl;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Documented
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public @interface OperationBean {
+public @interface SpringBeanObject {
     String value() default "";
     String[] executors() default "";
     boolean all() default false;

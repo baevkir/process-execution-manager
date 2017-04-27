@@ -2,7 +2,8 @@ package com.pem.logic.bean.synchronizer;
 
 import com.pem.core.common.bean.BeanObject;
 import com.pem.core.common.event.RegisterLaunchEventHandler;
-import com.pem.logic.bean.provider.predicate.PredicateProvider;
+import com.pem.core.predicate.Predicate;
+import com.pem.logic.bean.provider.BeanProvider;
 import com.pem.logic.common.ServiceConstants;
 import com.pem.model.predicate.bean.BeanPredicateObject;
 import org.slf4j.Logger;
@@ -15,11 +16,11 @@ public class PredicateDatabaseSynchronizer extends AbstractBeanDatabaseSynchroni
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PredicateDatabaseSynchronizer.class);
 
-    private PredicateProvider predicateProvider;
+    private BeanProvider beanProvider;
 
     @Override
     public void handle() {
-        Flux<BeanObject> beanObjects = Flux.fromIterable(predicateProvider.getAllPredicateBeanObjects());
+        Flux<BeanObject> beanObjects = Flux.fromIterable(beanProvider.getAllForType(Predicate.class));
         BeanObjectMapper<BeanPredicateObject> mapper = getMapper(getPersistenceManager().getAllByType(BeanPredicateObject.class), beanObjects);
 
         mapper.getForActivate()
@@ -45,8 +46,8 @@ public class PredicateDatabaseSynchronizer extends AbstractBeanDatabaseSynchroni
         return getPersistenceManager().create(predicateObject).then();
     }
 
-    public void setPredicateProvider(PredicateProvider predicateProvider) {
-        this.predicateProvider = predicateProvider;
+    public void setBeanProvider(BeanProvider beanProvider) {
+        this.beanProvider = beanProvider;
     }
 
 }

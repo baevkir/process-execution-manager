@@ -11,11 +11,11 @@
     </bean>
 
     <bean id="pem.predicateConverter" class="com.pem.logic.converter.predicate.PredicateConverter">
-        <property name="predicateProvider" ref="pem.predicateProvider"/>
+        <property name="beanProvider" ref="pem.beanProvider"/>
     </bean>
 
     <bean id="pem.triggerConverter" class="com.pem.logic.converter.trigger.TriggerConverter">
-        <property name="triggerProvider" ref="pem.triggerProvider"/>
+        <property name="beanProvider" ref="pem.beanProvider"/>
     </bean>
 
     <bean id="pem.syncCompositeOperationConverter"
