@@ -6,5 +6,5 @@ import com.pem.model.proccess.ExecutionProcessObject;
 import reactor.core.publisher.Mono;
 
 public interface ProcessExecutor {
-    Mono<OperationContext> execute(ExecutionProcessObject executionProcess, Mono<OperationContextFactory> contextFactory);
+    Mono<OperationContext> execute(ExecutionProcessObject executionProcess, OperationContextFactory contextFactory);
 }

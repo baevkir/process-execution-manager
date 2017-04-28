@@ -14,7 +14,7 @@ public interface ExecutionProcessService {
 
     Mono<Void> updateExecutionProcess(ExecutionProcessObject processEntity);
 
-    Mono<OperationContext> executeProcess(ExecutionProcessObject executionProcess, Mono<OperationContextFactory> contextFactory);
+    Mono<OperationContext> executeProcess(ExecutionProcessObject executionProcess, OperationContextFactory contextFactory);
 
     Mono<ExecutionProcessObject> getExecutionProcess(BigInteger id);
 

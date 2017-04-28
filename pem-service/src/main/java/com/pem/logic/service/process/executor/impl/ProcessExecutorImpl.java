@@ -16,10 +16,10 @@ public class ProcessExecutorImpl implements ProcessExecutor {
     private ConverterFactory converterFactory;
 
     @Override
-    public Mono<OperationContext> execute(ExecutionProcessObject executionProcess, Mono<OperationContextFactory> contextFactory) {
+    public Mono<OperationContext> execute(ExecutionProcessObject executionProcess, OperationContextFactory contextFactory) {
         Mono<OperationContext> context = contextFactory
-                .doOnSuccess(operationContextFactory -> operationContextFactory.setId(executionProcess.getId()))
-                .map(operationContextFactory -> operationContextFactory.createContext())
+                .setId(executionProcess.getId())
+                .createContext()
                 .doOnSuccess(operationContext -> operationContext.open());
 
         return Mono.just(executionProcess)
@@ -36,5 +36,4 @@ public class ProcessExecutorImpl implements ProcessExecutor {
     public void setConverterFactory(ConverterFactory converterFactory) {
         this.converterFactory = converterFactory;
     }
-
 }

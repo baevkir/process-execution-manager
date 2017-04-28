@@ -31,10 +31,15 @@
           class="com.pem.core.operation.loop.condition.WhileOperationImpl"
           scope="prototype"/>
 
+    <bean id="pem.custom-bean.OperationContext"
+          class="com.pem.core.context.OperationContextImpl"
+          scope="prototype"/>
+
     <utils:set id="pem.preloadedBeanClasses">
         <value>com.pem.core.operation.basic.Operation</value>
         <value>com.pem.core.predicate.Predicate</value>
         <value>com.pem.core.trigger.Trigger</value>
+        <value>com.pem.core.context.OperationContext</value>
     </utils:set>
 
     <bean id="pem.beanProvider" class="com.pem.logic.bean.provider.impl.BeanObjectProviderImpl">

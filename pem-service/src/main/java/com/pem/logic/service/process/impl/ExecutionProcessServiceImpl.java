@@ -38,7 +38,7 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService {
     }
 
     @Override
-    public Mono<OperationContext> executeProcess(ExecutionProcessObject executionProcess, Mono<OperationContextFactory> contextFactory) {
+    public Mono<OperationContext> executeProcess(ExecutionProcessObject executionProcess, OperationContextFactory contextFactory) {
        return operationExecutor.execute(executionProcess, contextFactory);
     }
 
@@ -65,4 +65,5 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService {
     public void setConverterFactory(ConverterFactory converterFactory) {
         this.converterFactory = converterFactory;
     }
+
 }

@@ -2,6 +2,7 @@ package com.pem.core.context;
 
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
+import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -19,16 +20,12 @@ public class OperationContextFactory {
         return new OperationContextFactory();
     }
 
-    public OperationContext createContext() {
+    public Mono<OperationContext> createContext() {
         Assert.notNull(contextClass, "Context class undefined.");
         Assert.notNull(id, "Can't create context without ID.");
-        OperationContext context = createInstance();
-        context.setId(id);
-        for (Map.Entry<String, Object> paramEntry : contextParams.entrySet()) {
-            context.setContextParam(paramEntry.getKey(), paramEntry.getValue());
-        }
-
-        return context;
+        return Mono.just(createInstance())
+                .doOnNext(context -> context.setId(id))
+                .doOnNext(context ->  copyParamsToContext(context));
     }
 
     public OperationContextFactory setId(BigInteger id) {
@@ -54,6 +51,10 @@ public class OperationContextFactory {
         return setContextClass(getContextClassByName(contextClassName));
     }
 
+    private void copyParamsToContext(OperationContext context) {
+        contextParams.entrySet()
+                .forEach(paramEntry -> context.setContextParam(paramEntry.getKey(), paramEntry.getValue()));
+    }
     private Class<? extends OperationContext> getContextClassByName(String contextClassName) {
         try {
             Class clazz = Class.forName(contextClassName);

@@ -48,9 +48,9 @@ public class ProcessServiceTest {
 
     @Test
     public void testExecuteEvent() {
-        Mono<OperationContextFactory> contextFactory = Mono.just(OperationContextFactory.create())
-                .doOnSuccess(operationContextFactory -> operationContextFactory.setContextParam(FIRST_PARAM, BigDecimal.ONE))
-                .doOnSuccess(operationContextFactory -> operationContextFactory.setContextParam(SECOND_PARAM, BigDecimal.ONE));
+        OperationContextFactory contextFactory = OperationContextFactory.create()
+                .setContextParam(FIRST_PARAM, BigDecimal.ONE)
+                .setContextParam(SECOND_PARAM, BigDecimal.ONE);
 
         Mono<BigDecimal> resultMono = Mono.just(new ExecutionProcessObject())
                 .doOnSuccess(processObject -> processObject.setId(IdGenerator.generateId()))
