@@ -20,5 +20,10 @@
         <property name="converterFactory" ref="pem.service.ConverterFactory"/>
         <property name="persistenceManager" ref="pem.persistenceManager"/>
         <property name="operationExecutor" ref="pem.operationExecutor"/>
+        <property name="operationContextService" ref="pem.operationContextService"/>
+    </bean>
+
+    <bean id="pem.operationContextService" class="com.pem.logic.service.context.impl.OperationContextServiceImpl">
+        <property name="beanProvider" ref="pem.beanProvider"/>
     </bean>
  </beans>

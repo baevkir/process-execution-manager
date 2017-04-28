@@ -1,7 +1,8 @@
 package com.pem.test.service;
 
-import com.pem.core.context.OperationContextFactory;
+import com.pem.logic.common.context.OperationContextFactory;
 import com.pem.logic.common.utils.IdGenerator;
+import com.pem.logic.service.context.OperationContextService;
 import com.pem.logic.service.process.ExecutionProcessService;
 import com.pem.model.proccess.ExecutionProcessObject;
 import com.pem.test.common.TestEntityCreator;
@@ -26,6 +27,9 @@ public class ProcessServiceTest {
     @Autowired
     private ExecutionProcessService executionProcessService;
 
+    @Autowired
+    private OperationContextService operationContextService;
+
     private TestEntityCreator creator = new TestEntityCreator();
 
     @Test
@@ -48,7 +52,7 @@ public class ProcessServiceTest {
 
     @Test
     public void testExecuteEvent() {
-        OperationContextFactory contextFactory = OperationContextFactory.create()
+        OperationContextFactory contextFactory = operationContextService.getContextFactory()
                 .setContextParam(FIRST_PARAM, BigDecimal.ONE)
                 .setContextParam(SECOND_PARAM, BigDecimal.ONE);
 

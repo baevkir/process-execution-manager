@@ -2,7 +2,8 @@ package com.pem.logic.service.process.impl;
 
 import com.pem.core.common.converter.factory.ConverterFactory;
 import com.pem.core.context.OperationContext;
-import com.pem.core.context.OperationContextFactory;
+import com.pem.logic.common.context.OperationContextFactory;
+import com.pem.logic.service.context.OperationContextService;
 import com.pem.logic.service.process.ExecutionProcessService;
 import com.pem.logic.service.process.executor.ProcessExecutor;
 import com.pem.model.operation.common.OperationObject;
@@ -21,6 +22,7 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService {
     private PersistenceManager persistenceManager;
     private ConverterFactory converterFactory;
     private ProcessExecutor operationExecutor;
+    private OperationContextService operationContextService;
 
     @Override
     public Mono<ExecutionProcessObject> createExecutionProcess(OperationObject operationObject) {
@@ -40,6 +42,11 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService {
     @Override
     public Mono<OperationContext> executeProcess(ExecutionProcessObject executionProcess, OperationContextFactory contextFactory) {
        return operationExecutor.execute(executionProcess, contextFactory);
+    }
+
+    @Override
+    public Mono<OperationContext> executeProcess(ExecutionProcessObject executionProcess) {
+        return operationExecutor.execute(executionProcess, operationContextService.getContextFactory());
     }
 
     @Override
@@ -66,4 +73,7 @@ public class ExecutionProcessServiceImpl implements ExecutionProcessService {
         this.converterFactory = converterFactory;
     }
 
+    public void setOperationContextService(OperationContextService operationContextService) {
+        this.operationContextService = operationContextService;
+    }
 }

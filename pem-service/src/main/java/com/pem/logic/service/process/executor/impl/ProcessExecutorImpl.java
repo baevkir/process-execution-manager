@@ -2,7 +2,7 @@ package com.pem.logic.service.process.executor.impl;
 
 import com.pem.core.common.converter.factory.ConverterFactory;
 import com.pem.core.context.OperationContext;
-import com.pem.core.context.OperationContextFactory;
+import com.pem.logic.common.context.OperationContextFactory;
 import com.pem.core.operation.basic.Operation;
 import com.pem.logic.service.process.executor.ProcessExecutor;
 import com.pem.model.proccess.ExecutionProcessObject;
