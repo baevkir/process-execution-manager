@@ -1,9 +1,10 @@
 package com.pem.ui.presentation.process;
 
+import com.pem.ui.presentation.process.form.ProcessFormView;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.Panel;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -13,24 +14,23 @@ public class ProcessMainViewImpl extends HorizontalLayout implements ProcessMain
 
     private ProcessMainPresenter presenter;
     private ProcessesList processesList;
-    private TabSheet processTabSheet;
+    private final Panel contentPanel = new Panel();
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
     }
 
-    private void initProcessTabSheet() {
-        processTabSheet = new TabSheet();
-
+    @Override
+    public void openProcess(ProcessFormView operationView) {
+        contentPanel.setContent(operationView);
     }
 
     @PostConstruct
     void init() {
         setSizeFull();
-
         addComponent(processesList);
-        initProcessTabSheet();
-        addComponent(processTabSheet);
+        addComponent(contentPanel);
+        setExpandRatio(contentPanel, 1.0f);
         presenter.bind(this);
     }
 

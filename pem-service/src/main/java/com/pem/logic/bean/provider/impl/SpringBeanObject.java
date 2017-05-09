@@ -12,6 +12,7 @@ import java.lang.annotation.*;
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public @interface SpringBeanObject {
+    String name() default "";
     String value() default "";
     String[] executors() default "";
     boolean all() default false;

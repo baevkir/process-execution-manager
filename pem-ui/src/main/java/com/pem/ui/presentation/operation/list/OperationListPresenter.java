@@ -56,7 +56,7 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
         operationList.load(operationService.getAllOperations());
     }
 
-    protected void openOperations(Flux<NavigationParams> eventPublisher) {
+    private void openOperations(Flux<NavigationParams> eventPublisher) {
         Flux<String> operationPublisher = eventPublisher
                 .filter(params -> params.hasUrlParam(NavigationConst.ID_PARAM))
                 .map(params -> params.getUrlParam(NavigationConst.ID_PARAM).get())
@@ -75,9 +75,9 @@ public class OperationListPresenter extends BasePresenter<OperationListView> {
                 .subscribe(operationTuple -> bindToForm(operationTuple.getT1(), (BaseOperationView) operationTuple.getT2()));
     }
 
-    protected void createProcess(Flux<NavigationParams> eventPublisher) {
-        eventPublisher.filter(params -> params.hasUrlParam(NavigationConst.CREATE_PROCCESS_PARAM))
-                .map(params -> params.getUrlParam(NavigationConst.CREATE_PROCCESS_PARAM).get())
+    private void createProcess(Flux<NavigationParams> eventPublisher) {
+        eventPublisher.filter(params -> params.hasUrlParam(NavigationConst.CREATE_PROCESS_PARAM))
+                .map(params -> params.getUrlParam(NavigationConst.CREATE_PROCESS_PARAM).get())
                 .doOnNext(parameter -> Assert.isTrue(StringUtils.isNotEmpty(parameter), "Wrong param for creation process"))
                 .doOnNext(parameter -> Assert.isTrue(StringUtils.isNumeric(parameter), "Wrong param for creation process"))
                 .map(parameter -> new BigInteger(parameter))

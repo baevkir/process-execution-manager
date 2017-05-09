@@ -3,6 +3,8 @@ package com.pem.core.common.bean;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import java.util.Optional;
+
 public class BeanObject {
     private String name;
     private String beanName;
@@ -25,10 +27,7 @@ public class BeanObject {
 
     @Override
     public String toString() {
-        return "BeanObject{" +
-                "name='" + name + '\'' +
-                ", beanName='" + beanName + '\'' +
-                '}';
+        return Optional.ofNullable(name).orElse(beanName);
     }
 
     @Override

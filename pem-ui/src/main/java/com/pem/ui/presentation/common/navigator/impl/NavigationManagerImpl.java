@@ -51,7 +51,9 @@ public class NavigationManagerImpl implements NavigationManager {
     @Override
     public Flux<NavigationParams> onNavigationChange() {
         return Flux.merge(onViewChange(), onUriChange())
-                .doOnNext(params -> LOGGER.debug("Fire Navigation Change with params {}.", params));
+                .distinctUntilChanged()
+                .doOnNext(params -> LOGGER.debug("Fire Navigation Change with params {}.", params))
+                .log();
     }
 
     @Override
@@ -68,6 +70,7 @@ public class NavigationManagerImpl implements NavigationManager {
 
     private Flux<NavigationParams> onViewChange() {
         return Flux.<ViewChangeListener.ViewChangeEvent>create(emitter -> addNavigationListener(emitter))
+                .distinctUntilChanged()
                 .doOnNext(event -> LOGGER.debug("Handle event: {}.", event))
                 .map(event -> mapToNavigationParams(event))
                 .log().retry();
@@ -75,6 +78,7 @@ public class NavigationManagerImpl implements NavigationManager {
 
     private Flux<NavigationParams> onUriChange() {
         return Flux.<Page.UriFragmentChangedEvent>create(emitter -> addUriChangeListener(emitter))
+                .distinctUntilChanged()
                 .doOnNext(event -> LOGGER.debug("Handle event: {}.", event))
                 .map(event -> mapToNavigationParams(event))
                 .log().retry();
@@ -111,7 +115,7 @@ public class NavigationManagerImpl implements NavigationManager {
     }
 
     class PemNavigationStateManager extends Navigator.UriFragmentManager {
-        public PemNavigationStateManager(Page page) {
+        PemNavigationStateManager(Page page) {
             super(page);
         }
 

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Scope;
 import reactor.core.publisher.Mono;
 
 
-@SpringBeanObject(value = "Test global operation.", all = true)
+@SpringBeanObject(name = "Test global operation.", all = true)
 @Scope(scopeName = "prototype")
 public class GlobalTestOperation extends AbstractOperation implements Operation {
 

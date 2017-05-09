@@ -35,6 +35,7 @@ public class OperationList extends HorizontalLayout {
 
     public void load(Flux<OperationObject> operationPublisher) {
         operationPublisher.doOnSubscribe(subscription -> operationContainer.removeAllItems())
+                .sort((first, second) -> Boolean.compare(second.isActive(), first.isActive()))
                 .subscribe(operation -> operationContainer.addBean(operation));
     }
 

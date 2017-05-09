@@ -35,7 +35,7 @@ public abstract class BaseOperationView<O extends OperationObject> extends BaseB
                         .filter(clickEvent -> isCreateProcessAvailable(bean))
                         .map(clickEvent -> NavigationParams.builder())
                         .doOnNext(builder -> builder.setViewName(OperationListView.VIEW_NAME))
-                        .doOnNext(builder -> builder.addUrlParam(NavigationConst.CREATE_PROCCESS_PARAM, String.valueOf(bean.getId())))
+                        .doOnNext(builder -> builder.addUrlParam(NavigationConst.CREATE_PROCESS_PARAM, String.valueOf(bean.getId())))
                         .subscribe(builder -> navigator.navigate(builder.build())));
     }
 
