@@ -11,7 +11,7 @@ public class SyncCompositeOperationImp extends AbstractCompositeOperation implem
     private static final Logger LOGGER = LoggerFactory.getLogger(SyncCompositeOperationImp.class);
 
     @Override
-    public Mono<OperationContext> execute(Mono<OperationContext> context) {
+    public Mono<OperationContext> execute(OperationContext context) {
         LOGGER.debug("Start {}.", getClass());
         return Flux.fromIterable(getOperations())
                 .doOnNext(operation -> LOGGER.debug("Start to execute {}", operation.getClass()))

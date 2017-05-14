@@ -5,5 +5,5 @@ import com.pem.core.context.OperationContext;
 import reactor.core.publisher.Mono;
 
 public interface Trigger extends Identifiable {
-    Mono<Integer> apply(Mono<OperationContext> context);
+    Mono<Integer> apply(OperationContext context);
 }

@@ -17,7 +17,7 @@ public class CounterLoopOperationImpl extends AbstractOperation implements Count
     private Operation operation;
 
     @Override
-    public Mono<OperationContext> execute(Mono<OperationContext> context) {
+    public Mono<OperationContext> execute(OperationContext context) {
         Assert.notNull(count, String.format("Can`t execute %s. Count isn't specified.", getClass()));
         Assert.notNull(operation, String.format("Can`t execute %s. Operation isn't specified.", getClass()));
         Assert.isTrue(count > 0, String.format("Can`t execute %s. Count less then 0.", getClass()));

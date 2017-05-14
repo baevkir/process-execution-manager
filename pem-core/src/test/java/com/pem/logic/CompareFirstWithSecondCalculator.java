@@ -21,8 +21,9 @@ public class CompareFirstWithSecondCalculator implements Trigger {
     }
 
     @Override
-    public Mono<Integer> apply(Mono<OperationContext> context) {
-        return context.map(operationContext -> new MathOperationContext(operationContext))
+    public Mono<Integer> apply(OperationContext context) {
+        return Mono.just(context)
+                .map(operationContext -> new MathOperationContext(operationContext))
                 .map(mathContext -> mathContext.getFirstParam().compareTo(mathContext.getSecondParam()));
       }
 }

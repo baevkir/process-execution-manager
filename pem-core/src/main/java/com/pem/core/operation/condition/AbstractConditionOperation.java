@@ -16,10 +16,10 @@ public abstract class AbstractConditionOperation<C> extends AbstractOperation im
 
     private final Map<C, Operation> conditions = new HashMap<>();
 
-    protected abstract Mono<C> calculateCondition(Mono<OperationContext> context);
+    protected abstract Mono<C> calculateCondition(OperationContext context);
 
     @Override
-    public Mono<OperationContext> execute(Mono<OperationContext> context) {
+    public Mono<OperationContext> execute(OperationContext context) {
         return calculateCondition(context)
                 .doOnSuccess(condition -> Assert.notNull(condition, String.format("Can't apply trigger for %s.", getClass())))
                 .map(condition -> getOperationForCondition(condition))

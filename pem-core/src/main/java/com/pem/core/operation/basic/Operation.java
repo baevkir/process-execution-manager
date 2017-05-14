@@ -5,5 +5,5 @@ import com.pem.core.context.OperationContext;
 import reactor.core.publisher.Mono;
 
 public interface Operation extends Identifiable {
-    Mono<OperationContext> execute(Mono<OperationContext> context);
+    Mono<OperationContext> execute(OperationContext context);
 }

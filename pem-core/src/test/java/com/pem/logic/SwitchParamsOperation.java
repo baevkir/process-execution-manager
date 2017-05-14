@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 
 public class SwitchParamsOperation extends AbstractOperation implements Operation {
     @Override
-    public Mono<OperationContext> execute(Mono<OperationContext> context) {
-        return context.map(operationContext -> new MathOperationContext(operationContext))
+    public Mono<OperationContext> execute(OperationContext context) {
+        return Mono.just(context).map(operationContext -> new MathOperationContext(operationContext))
                 .doOnNext(mathContext -> {
                     BigDecimal firstParam = mathContext.getFirstParam();
                     BigDecimal secondParam = mathContext.getSecondParam();

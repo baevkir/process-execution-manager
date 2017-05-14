@@ -7,7 +7,8 @@ import com.pem.core.context.OperationContext;
 import com.pem.core.operation.basic.util.AnnotationOperation;
 import com.pem.core.operation.basic.util.reflection.annotions.OperationMethod;
 import com.pem.core.operation.basic.util.reflection.annotions.Param;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ReflectionUtils;
@@ -30,6 +31,8 @@ public class AnnotationOperationInvokerImpl implements AnnotationOperationInvoke
         fillOperationParameters(context);
         Method invokerMethod = getMethod(operation.getClass());
         Object[] arguments = getArguments(invokerMethod, context);
+
+        ReflectionUtils.makeAccessible(invokerMethod);
         Object result = ReflectionUtils.invokeMethod(invokerMethod, operation, arguments);
 
         String resultParam = getResultParam(invokerMethod);
@@ -40,8 +43,7 @@ public class AnnotationOperationInvokerImpl implements AnnotationOperationInvoke
     }
 
     private void fillOperationParameters(OperationContext context) {
-        Arrays.stream(operation.getClass().getDeclaredFields())
-                .filter(field -> field.isAnnotationPresent(Param.class))
+        FieldUtils.getFieldsListWithAnnotation(operation.getClass(), Param.class).stream()
                 .peek(field -> ReflectionUtils.makeAccessible(field))
                 .forEach(field -> {
                     Object value = getParamFromContext(field.getAnnotation(Param.class), context);
@@ -51,10 +53,9 @@ public class AnnotationOperationInvokerImpl implements AnnotationOperationInvoke
 
     private Method getMethod(Class clazz) {
         LOGGER.trace("Start to find OperationMethod in class {}.", clazz);
-        return Arrays.stream(clazz.getDeclaredMethods())
+        return Arrays.stream(clazz.getMethods())
                 .filter(method -> method.isAnnotationPresent(OperationMethod.class))
                 .peek(method -> LOGGER.debug("Find OperationMethod {} for class {}.", method, clazz))
-                .peek(method -> ReflectionUtils.makeAccessible(method))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException(String.format("Can't execute %s. There is no class annotated @OperationMethod.", clazz)));
     }

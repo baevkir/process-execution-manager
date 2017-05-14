@@ -21,7 +21,7 @@ public class PredicateOperationImpl extends AbstractConditionOperation<Boolean> 
     }
 
     @Override
-    protected Mono<Boolean> calculateCondition(Mono<OperationContext> context) {
+    protected Mono<Boolean> calculateCondition(OperationContext context) {
         LOGGER.debug("Apply Predicate {} to context", predicate);
         return predicate.apply(context);
     }

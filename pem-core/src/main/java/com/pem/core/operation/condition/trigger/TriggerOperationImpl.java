@@ -19,7 +19,7 @@ public class TriggerOperationImpl extends AbstractConditionOperation<Integer> im
     }
 
     @Override
-    protected Mono<Integer> calculateCondition(Mono<OperationContext> context) {
+    protected Mono<Integer> calculateCondition(OperationContext context) {
         LOGGER.debug("Apply Trigger {} to context", trigger);
         return trigger.apply(context);
     }

@@ -16,9 +16,10 @@ public abstract class AnnotationOperation extends AbstractOperation implements O
     private AnnotationOperationInvoker operationInvoker;
 
     @Override
-    public Mono<OperationContext> execute(Mono<OperationContext> context) {
-        LOGGER.trace("Start to execute Operation {}.", getClass());
-        return context.map(operationContext -> getInvoker().invoke(operationContext));
+    public Mono<OperationContext> execute(OperationContext context) {
+        return Mono.just(context)
+                .doOnNext(operationContext -> LOGGER.trace("Start to execute Operation {}.", getClass()))
+                .map(operationContext -> getInvoker().invoke(operationContext));
 
     }
 

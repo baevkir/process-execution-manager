@@ -5,5 +5,5 @@ import com.pem.core.context.OperationContext;
 import reactor.core.publisher.Mono;
 
 public interface Predicate extends Identifiable {
-    Mono<Boolean> apply(Mono<OperationContext> context);
+    Mono<Boolean> apply(OperationContext context);
 }

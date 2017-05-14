@@ -8,7 +8,6 @@ import com.pem.core.operation.loop.condition.WhileOperationImpl;
 import com.pem.core.predicate.Predicate;
 import com.pem.logic.MathOperationContext;
 import com.pem.logic.MultiplyOperation;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,9 +15,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Objects;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AppConfig.class, loader = AnnotationConfigContextLoader.class)
@@ -48,8 +49,8 @@ public class ConditionLoopOperationTest {
             }
 
             @Override
-            public Mono<Boolean> apply(Mono<OperationContext> context) {
-                return context.map(operationContext -> new MathOperationContext(operationContext))
+            public Mono<Boolean> apply(OperationContext context) {
+                return Mono.just(context).map(operationContext -> new MathOperationContext(operationContext))
                         .map(contextWrapper -> contextWrapper.getResult().compareTo(BigDecimal.valueOf(100)) == -1);
             }
         };
@@ -68,7 +69,7 @@ public class ConditionLoopOperationTest {
             }
 
             @Override
-            public Mono<Boolean> apply(Mono<OperationContext> context) {
+            public Mono<Boolean> apply(OperationContext context) {
                 return Mono.just(false);
             }
         };
@@ -76,36 +77,39 @@ public class ConditionLoopOperationTest {
 
     @Test
     public void testWhileOperation() {
-        Mono<OperationContext> context = Mono.just(new MathOperationContext())
-                .doOnSuccess(operationContext -> operationContext.setFirstParam(BigDecimal.valueOf(2)))
-                .doOnSuccess(operationContext -> operationContext.setResult(BigDecimal.valueOf(2)))
-                .doOnSuccess(operationContext -> operationContext.open())
-                .cast(OperationContext.class);
+        WhileOperationImpl operation = new WhileOperationImpl();
+        operation.setOperation(multiplyOperation);
+        operation.setPredicate(predicate);
 
-        Mono.just(new WhileOperationImpl())
-                .doOnSuccess(whileOperation -> whileOperation.setOperation(multiplyOperation))
-                .doOnSuccess(whileOperation -> whileOperation.setPredicate(predicate))
-                .flatMap(whileOperation -> whileOperation.execute(context))
-                .map(operationContext -> new MathOperationContext(operationContext)).single()
-                .doOnSuccess(operationContext -> operationContext.close())
-                .subscribe(operationContext -> Assert.assertEquals(operationContext.getResult(), BigDecimal.valueOf(128)));
+        Mono<MathOperationContext> result = Mono.just(new MathOperationContext())
+                .doOnSuccess(mathContext -> mathContext.setFirstParam(BigDecimal.valueOf(2)))
+                .doOnSuccess(mathContext -> mathContext.setResult(BigDecimal.valueOf(2)))
+                .doOnSuccess(mathContext -> mathContext.open())
+                .flatMap(context -> operation.execute(context))
+                .doOnNext(operationContext -> operationContext.close())
+                .map(operationContext -> new MathOperationContext(operationContext)).single();
+
+        StepVerifier.create(result)
+                .expectNextMatches(operationContext -> Objects.equals(operationContext.getResult(), BigDecimal.valueOf(128)))
+                .verifyComplete();
     }
 
     @Test
     public void testDoWhileOperation() {
-        Mono<OperationContext> context = Mono.just(new MathOperationContext())
+        DoWhileOperationImpl doWhileOperation = new DoWhileOperationImpl();
+        doWhileOperation.setOperation(multiplyOperation);
+        doWhileOperation.setPredicate(predicateFalse);
+
+        Mono<MathOperationContext> result = Mono.just(new MathOperationContext())
                 .doOnSuccess(mathContext -> mathContext.setFirstParam(BigDecimal.valueOf(2)))
                 .doOnSuccess(mathContext -> mathContext.setResult(BigDecimal.valueOf(2)))
                 .doOnSuccess(mathContext -> mathContext.open())
-                .cast(OperationContext.class);
+                .flatMap(context -> doWhileOperation.execute(context))
+                .doOnNext(operationContext -> operationContext.close())
+                .map(operationContext -> new MathOperationContext(operationContext)).single();
 
-        Mono.just(new DoWhileOperationImpl())
-                .doOnSuccess(doWhileOperation -> doWhileOperation.setOperation(multiplyOperation))
-                .doOnSuccess(doWhileOperation -> doWhileOperation.setPredicate(predicateFalse))
-                .flatMap(doWhileOperation -> doWhileOperation.execute(context)).single()
-                .map(operationContext -> new MathOperationContext(operationContext))
-                .doOnSuccess(operationContext -> operationContext.close())
-                .subscribe(operationContext -> Assert.assertEquals(operationContext.getResult(), BigDecimal.valueOf(4)));
-
+        StepVerifier.create(result)
+                .expectNextMatches(operationContext -> Objects.equals(operationContext.getResult(), BigDecimal.valueOf(4)))
+                .verifyComplete();
     }
 }

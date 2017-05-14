@@ -12,7 +12,7 @@ public class WhileOperationImpl extends AbstractPredicateLoopOperation implement
     private static final Logger LOGGER = LoggerFactory.getLogger(WhileOperationImpl.class);
 
     @Override
-    public Mono<OperationContext> execute(Mono<OperationContext> context) {
+    public Mono<OperationContext> execute(OperationContext context) {
         Assert.notNull(getPredicate(), String.format("Can`t execute %s. Condition isn't specified.", getClass()));
         Assert.notNull(getOperation(), String.format("Can`t execute %s. Operation isn't specified.", getClass()));
 
@@ -20,8 +20,8 @@ public class WhileOperationImpl extends AbstractPredicateLoopOperation implement
                 .doOnNext(result -> LOGGER.debug("Predicate result: {}.", result))
                 .filter(result -> BooleanUtils.isTrue(result))
                 .doOnNext(result -> LOGGER.debug("Start to execute operation."))
-                .flatMap(result -> getOperation().execute(context)).single()
-                .repeatWhenEmpty(longFlux -> longFlux);
+                .flatMap(result -> executeWithPredicate(context, result))
+                .doOnNext(operationContext -> LOGGER.debug("WhileOperation is finished."))
+                .single();
     }
-
 }
