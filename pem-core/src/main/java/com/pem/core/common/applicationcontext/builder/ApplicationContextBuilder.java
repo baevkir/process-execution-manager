@@ -26,7 +26,7 @@ public class ApplicationContextBuilder {
     private String contextId;
     private ApplicationContext parentContext;
     private List<String> xmlConfigurations = new ArrayList<>();
-    private final Map<String, String> parentBeans = new HashMap<>();
+    private final Map<String, String> overrideBeans = new HashMap<>();
     private final Map<String, Object> singletonBeans = new HashMap<>();
 
     public ApplicationContextBuilder setParentContext(ApplicationContext parentContext) {
@@ -34,14 +34,14 @@ public class ApplicationContextBuilder {
         return this;
     }
 
-    public ApplicationContextBuilder addParentBean(String name, String nameInParentContext) {
-        parentBeans.put(name, nameInParentContext);
+    public ApplicationContextBuilder addOverrideBean(String name, String nameInParentContext) {
+        overrideBeans.put(name, nameInParentContext);
         return this;
     }
 
-    public ApplicationContextBuilder addParentBeans(Map<String, String> beansToAdd) {
+    public ApplicationContextBuilder addOverrideBeans(Map<String, String> beansToAdd) {
         if (MapUtils.isNotEmpty(beansToAdd)) {
-            parentBeans.putAll(beansToAdd);
+            overrideBeans.putAll(beansToAdd);
         }
         return this;
     }
@@ -66,6 +66,7 @@ public class ApplicationContextBuilder {
 
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
         registerSingletonBeans(beanFactory);
+        registerXMLConfigurations(beanFactory);
         registerParentContextBeans(beanFactory);
 
         GenericApplicationContext context = new AnnotationConfigApplicationContext(beanFactory);
@@ -75,15 +76,13 @@ public class ApplicationContextBuilder {
         }
 
         context.setParent(parentContext);
-
-        registerXMLConfigurations(context);
         context.refresh();
 
         return context;
     }
 
-    private void registerXMLConfigurations(GenericApplicationContext context) {
-        XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(context);
+    private void registerXMLConfigurations(DefaultListableBeanFactory beanFactory) {
+        XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(beanFactory);
         for (String xmlConfiguration : xmlConfigurations) {
             xmlReader.loadBeanDefinitions(new ClassPathResource(xmlConfiguration));
         }
@@ -106,7 +105,7 @@ public class ApplicationContextBuilder {
     private void registerParentContextBeans(ConfigurableListableBeanFactory beanFactory) {
         Assert.isInstanceOf(DefaultListableBeanFactory.class, beanFactory);
         DefaultListableBeanFactory listableBeanFactory = (DefaultListableBeanFactory) beanFactory;
-        for (Map.Entry<String, String> entry : parentBeans.entrySet()) {
+        for (Map.Entry<String, String> entry : overrideBeans.entrySet()) {
             String beanName = entry.getKey();
             String parentBeanName = entry.getValue();
 

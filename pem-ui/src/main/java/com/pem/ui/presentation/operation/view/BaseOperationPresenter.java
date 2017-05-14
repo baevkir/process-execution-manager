@@ -2,6 +2,7 @@ package com.pem.ui.presentation.operation.view;
 
 import com.pem.logic.service.operation.OperationService;
 import com.pem.model.operation.common.OperationObject;
+import com.pem.ui.common.binder.PemBeanFieldGroup;
 import com.pem.ui.presentation.common.navigator.NavigationConst;
 import com.pem.ui.presentation.common.navigator.NavigationManager;
 import com.pem.ui.presentation.common.navigator.NavigationParams;
@@ -22,17 +23,14 @@ public class BaseOperationPresenter<O extends OperationObject, V extends BaseOpe
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseOperationPresenter.class);
 
-    @Autowired
     private OperationService operationService;
 
-    @Autowired
     private OperationListPresenter operationListPresenter;
 
-    @Autowired
     private NavigationManager navigator;
 
     @Override
-    public Mono<BeanFieldGroup<O>> bindBean(O bean) {
+    public Mono<PemBeanFieldGroup<O>> bindBean(O bean) {
         return super.bindBean(bean).doOnNext(binder -> initSavePublisher(binder));
     }
 
@@ -62,4 +60,18 @@ public class BaseOperationPresenter<O extends OperationObject, V extends BaseOpe
         navigator.navigate(params);
     }
 
+    @Autowired
+    public void setOperationService(OperationService operationService) {
+        this.operationService = operationService;
+    }
+
+    @Autowired
+    public void setOperationListPresenter(OperationListPresenter operationListPresenter) {
+        this.operationListPresenter = operationListPresenter;
+    }
+
+    @Autowired
+    public void setNavigator(NavigationManager navigator) {
+        this.navigator = navigator;
+    }
 }

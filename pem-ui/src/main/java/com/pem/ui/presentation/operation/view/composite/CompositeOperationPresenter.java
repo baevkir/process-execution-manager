@@ -3,8 +3,8 @@ package com.pem.ui.presentation.operation.view.composite;
 import com.pem.logic.service.operation.OperationService;
 import com.pem.model.operation.common.OperationObject;
 import com.pem.model.operation.composite.SyncCompositeOperationDTO;
+import com.pem.ui.common.binder.PemBeanFieldGroup;
 import com.pem.ui.presentation.operation.view.BaseOperationPresenter;
-import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.ViewScope;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ public class CompositeOperationPresenter extends BaseOperationPresenter<SyncComp
     private OperationService operationService;
 
     @Override
-    public Mono<BeanFieldGroup<SyncCompositeOperationDTO>> bindBean(SyncCompositeOperationDTO bean) {
+    public Mono<PemBeanFieldGroup<SyncCompositeOperationDTO>> bindBean(SyncCompositeOperationDTO bean) {
         return getView().load(getAllOperationsExceptCurrent(bean))
                 .then(super.bindBean(bean));
     }

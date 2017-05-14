@@ -25,14 +25,14 @@ public class PemUIProvider extends AbstractSpringUIProvider implements Applicati
     private ApplicationContext parentContext;
     private ApplicationContext applicationContext;
     private PemServiceProvider serviceProvider;
-    private Map<String, String> parentBeans;
+    private Map<String, String> overrideBeans;
 
     public void setServiceProvider(PemServiceProvider serviceProvider) {
         this.serviceProvider = serviceProvider;
     }
 
-    public void setParentBeans(Map<String, String> parentBeans) {
-        this.parentBeans = parentBeans;
+    public void setOverrideBeans(Map<String, String> overrideBeans) {
+        this.overrideBeans = overrideBeans;
     }
 
     public ConverterFactory getDataConverterFactory(){
@@ -50,7 +50,7 @@ public class PemUIProvider extends AbstractSpringUIProvider implements Applicati
         LOGGER.trace("Start to load PemUIProvider.");
         ApplicationContextBuilder contextBuilder = new ApplicationContextBuilder()
                 .setParentContext(parentContext)
-                .addParentBeans(parentBeans)
+                .addOverrideBeans(overrideBeans)
                 .addXMLConfiguration("config/pem-vaadin-ui-config.xml")
                 .addSingletonBean(SERVICE_PROVIDER_BEAN, serviceProvider)
                 .addSingletonBean(CALCULATOR_SERVICE_BEAN, serviceProvider.getTriggerService())

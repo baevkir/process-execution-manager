@@ -20,17 +20,17 @@ public class ProcessExecutorImpl implements ProcessExecutor {
         Mono<OperationContext> context = contextFactory
                 .setId(executionProcess.getId())
                 .createContext()
-                .doOnSuccess(operationContext -> operationContext.open());
+                .doOnNext(operationContext -> operationContext.open());
 
         return Mono.just(executionProcess)
                 .map(executionProcessObject -> executionProcess.getExecutionOperation())
                 .map(executionOperation -> converterFactory.convert(executionOperation, Operation.class))
-                .doOnSuccess(executionOperation -> LOGGER.trace("Start to execute operation {}.", executionOperation))
-                .doOnSuccess(operation -> LOGGER.debug("Start execute operation in context {}.", executionProcess.getId()))
+                .doOnNext(executionOperation -> LOGGER.trace("Start to execute operation {}.", executionOperation))
+                .doOnNext(operation -> LOGGER.debug("Start execute operation in context {}.", executionProcess.getId()))
                 .flatMap(executionOperation -> executionOperation.execute(context))
                 .single()
-                .doOnSuccess(operationContext -> operationContext.close())
-                .doOnSuccess(operationContext -> LOGGER.debug("Finish execute operation in context {}.", executionProcess.getId()));
+                .doOnNext(operationContext -> operationContext.close())
+                .doOnNext(operationContext -> LOGGER.debug("Finish execute operation in context {}.", executionProcess.getId()));
     }
 
     public void setConverterFactory(ConverterFactory converterFactory) {

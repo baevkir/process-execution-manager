@@ -24,7 +24,7 @@ public class PemServiceProviderImpl implements PemServiceProvider, ApplicationCo
     private ApplicationContext applicationContext;
     private String applicationName;
     private PemPersistenceServiceProvider persistenceServiceProvider;
-    private Map<String, String> parentBeans;
+    private Map<String, String> overrideBeans;
 
     @Override
     public TriggerService getTriggerService() {
@@ -46,8 +46,8 @@ public class PemServiceProviderImpl implements PemServiceProvider, ApplicationCo
         parentContext = applicationContext;
     }
 
-    public void setParentBeans(Map<String, String> beans) {
-        this.parentBeans = beans;
+    public void setOverrideBeans(Map<String, String> beans) {
+        this.overrideBeans = beans;
     }
 
     public void setPersistenceServiceProvider(PemPersistenceServiceProvider persistenceServiceProvider) {
@@ -61,7 +61,7 @@ public class PemServiceProviderImpl implements PemServiceProvider, ApplicationCo
                 .setContextId(applicationName)
                 .setParentContext(parentContext)
                 .addXMLConfiguration("pemApplicationContext.xml")
-                .addParentBeans(parentBeans)
+                .addOverrideBeans(overrideBeans)
                 .addSingletonBean(PERSISTENCE_SERVICE_PROVIDER_BEAN, persistenceServiceProvider)
                 .addSingletonBean(PERSISTENCE_MANAGER, persistenceServiceProvider.getPersistenceManager())
                 .build();
