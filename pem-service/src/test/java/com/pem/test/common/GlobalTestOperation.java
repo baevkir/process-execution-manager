@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 public class GlobalTestOperation extends AbstractOperation implements Operation {
 
     @Override
-    public Mono<OperationContext> execute(Mono<OperationContext> context) {
-        return context;
+    public Mono<OperationContext> execute(OperationContext context) {
+        return Mono.just(context);
     }
 }

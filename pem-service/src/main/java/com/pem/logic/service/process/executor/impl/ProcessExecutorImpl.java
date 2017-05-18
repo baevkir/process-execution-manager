@@ -8,6 +8,7 @@ import com.pem.logic.service.process.executor.ProcessExecutor;
 import com.pem.model.proccess.ExecutionProcessObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public class ProcessExecutorImpl implements ProcessExecutor {
@@ -22,12 +23,14 @@ public class ProcessExecutorImpl implements ProcessExecutor {
                 .createContext()
                 .doOnNext(operationContext -> operationContext.open());
 
-        return Mono.just(executionProcess)
+        Flux<Operation> operations = Flux.just(executionProcess)
                 .map(executionProcessObject -> executionProcess.getExecutionOperation())
                 .map(executionOperation -> converterFactory.convert(executionOperation, Operation.class))
                 .doOnNext(executionOperation -> LOGGER.trace("Start to execute operation {}.", executionOperation))
-                .doOnNext(operation -> LOGGER.debug("Start execute operation in context {}.", executionProcess.getId()))
-                .flatMap(executionOperation -> executionOperation.execute(context))
+                .doOnNext(operation -> LOGGER.debug("Start execute operation in context {}.", executionProcess.getId()));
+
+        return operations.zipWith(context, (operation, operationContext) -> operation.execute(operationContext))
+                .flatMap(contextMono -> contextMono)
                 .single()
                 .doOnNext(operationContext -> operationContext.close())
                 .doOnNext(operationContext -> LOGGER.debug("Finish execute operation in context {}.", executionProcess.getId()));

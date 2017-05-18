@@ -49,8 +49,9 @@ public class TestConfig {
         return new AbstractOperation() {
 
             @Override
-            public Mono<OperationContext> execute(Mono<OperationContext> context) {
-                return context.doOnSuccess(operationContext -> Assert.assertNotNull(operationContext))
+            public Mono<OperationContext> execute(OperationContext context) {
+                return Mono.just(context)
+                        .doOnSuccess(operationContext -> Assert.assertNotNull(operationContext))
                         .doOnSuccess(operationContext -> Assert.assertTrue(operationContext.isOpen()));
             }
         };
@@ -78,7 +79,7 @@ public class TestConfig {
                 this.id = id;
             }
             @Override
-            public Mono<Boolean> apply(Mono<OperationContext> context) {
+            public Mono<Boolean> apply(OperationContext context) {
                 return Mono.just(true);
             }
         };
@@ -101,7 +102,7 @@ public class TestConfig {
             }
 
             @Override
-            public Mono<Integer> apply(Mono<OperationContext> context) {
+            public Mono<Integer> apply(OperationContext context) {
                 return Mono.just(0);
             }
         };
