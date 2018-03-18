@@ -1,4 +1,4 @@
-package com.pem.core.common.utils;
+package com.pem.core.common.applicationcontext;
 
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;

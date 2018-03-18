@@ -1,6 +1,6 @@
 package com.pem.persistence.mongo.provider;
 
-import com.pem.core.common.applicationcontext.builder.ApplicationContextBuilder;
+import com.pem.core.common.applicationcontext.ApplicationContextBuilder;
 import com.pem.persistence.api.manager.PersistenceManager;
 import com.pem.persistence.api.provider.PemPersistenceServiceProvider;
 import org.slf4j.Logger;

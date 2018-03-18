@@ -1,6 +1,6 @@
 package com.pem.integration.provider;
 
-import com.pem.core.common.applicationcontext.builder.ApplicationContextBuilder;
+import com.pem.core.common.applicationcontext.ApplicationContextBuilder;
 import com.pem.logic.service.trigger.TriggerService;
 import com.pem.logic.service.operation.OperationService;
 import com.pem.logic.service.process.ExecutionProcessService;

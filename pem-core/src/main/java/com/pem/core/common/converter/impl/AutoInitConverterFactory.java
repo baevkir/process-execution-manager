@@ -4,7 +4,7 @@ import com.pem.core.common.applicationcontext.bean.BeansStream;
 import com.pem.core.common.converter.ConverterFactory;
 import com.pem.core.common.converter.Converter;
 import com.pem.core.common.converter.RegisterInConverterFactory;
-import com.pem.core.common.utils.ApplicationContextWrapper;
+import com.pem.core.common.applicationcontext.ApplicationContextWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;

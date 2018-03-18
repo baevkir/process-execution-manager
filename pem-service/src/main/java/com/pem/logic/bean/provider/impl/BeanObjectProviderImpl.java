@@ -5,7 +5,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.pem.core.common.applicationcontext.bean.BeanObject;
 import com.pem.core.common.applicationcontext.bean.BeansStream;
-import com.pem.core.common.utils.ApplicationContextWrapper;
+import com.pem.core.common.applicationcontext.ApplicationContextWrapper;
 import com.pem.logic.bean.provider.BeanProvider;
 import com.pem.logic.common.ServiceConstants;
 import org.slf4j.Logger;
