@@ -75,20 +75,27 @@ public class ApplicationContextBuilder {
     }
 
     /**
-     *
-     * @param path
-     * @return
+     * Method add XML configuration to Builded context
+     * @param path - path to xml file with Spring configuration
      */
     public ApplicationContextBuilder addXMLConfiguration(String path) {
         xmlConfigurations.add(path);
         return this;
     }
 
+    /**
+     * Sets context id to identify context
+     * @param contextId
+     */
     public ApplicationContextBuilder setContextId(String contextId) {
         this.contextId = contextId;
         return this;
     }
 
+    /**
+     * Build method to create {@link ApplicationContext} with preconfigured parameters.
+     * @return ApplicationContext
+     */
     public ApplicationContext build() {
         Assert.notNull(parentContext, "Can't create Child Application Context. Parent Context is NULL.");
 
