@@ -1,6 +1,6 @@
 package com.pem.test.common.config;
 
-import com.pem.core.common.bean.BeanObject;
+import com.pem.core.common.applicationcontext.bean.BeanObject;
 import com.pem.model.operation.bean.BeanOperationObject;
 import com.pem.model.operation.common.OperationObject;
 import com.pem.model.proccess.ExecutionProcessObject;

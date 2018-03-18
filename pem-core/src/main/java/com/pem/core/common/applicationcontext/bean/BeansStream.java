@@ -1,4 +1,4 @@
-package com.pem.core.common.bean;
+package com.pem.core.common.applicationcontext.bean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +15,12 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+/**
+ * Utility class that helps to analyze BeansMap
+ *
+ * @param <B> - type of Beans
+ * @see BeanObject
+ */
 public class BeansStream<B> {
     private static final Logger LOGGER = LoggerFactory.getLogger(BeansStream.class);
 
@@ -24,6 +30,13 @@ public class BeansStream<B> {
         this.beans = beans;
     }
 
+    /**
+     * Create {@link BeansStream} with BeanMap
+     *
+     * @param beans
+     * @param <E>   - type of Beans
+     * @return BeansStream
+     */
     public static <E> BeansStream<E> fromBeans(Map<String, E> beans) {
         Assert.notNull(beans, "Can`t create Stream beans are NULL.");
         Stream<Entry<E>> stream = beans.entrySet().stream()
@@ -33,29 +46,60 @@ public class BeansStream<B> {
         return new BeansStream<>(stream);
     }
 
+    /**
+     * Filter all beans that contain annotation
+     *
+     * @param beanAnnotation - annotation to filter
+     * @return new BeansStream
+     */
     public BeansStream<B> filterWithAnnotation(Class<? extends Annotation> beanAnnotation) {
         return new BeansStream<>(beans
                 .filter(entry -> entry.getBeanAnnotation(beanAnnotation).isPresent()));
     }
 
+    /**
+     * Filter all beans that contain annotation and corresponds to predicate
+     *
+     * @param beanAnnotation - annotation to filter
+     * @param predicate      - predicate to correspond
+     * @return new BeansStream
+     */
     public <A extends Annotation> BeansStream<B> filterWithAnnotation(Class<A> beanAnnotation, Predicate<A> predicate) {
         return new BeansStream<>(beans
                 .filter(entry -> entry.getBeanAnnotation(beanAnnotation)
                         .filter(predicate).isPresent()));
     }
 
+    /**
+     * Filter all beans that contain annotation and corresponds to predicate
+     *
+     * @param beanAnnotation - annotation to filter
+     * @param predicate      - predicate to correspond
+     * @return new BeansStream
+     */
     public <A extends Annotation> BeansStream<B> filterWithAnnotation(Class<A> beanAnnotation, BiPredicate<A, Entry<B>> predicate) {
         return new BeansStream<>(beans
                 .filter(entry -> entry.getBeanAnnotation(beanAnnotation)
                         .filter(annotation -> predicate.test(annotation, entry)).isPresent()));
     }
 
+    /**
+     * Filter bean stream by predicate
+     *
+     * @param predicate
+     * @return new BeansStream
+     */
     public BeansStream<B> filter(Predicate<Entry<B>> predicate) {
         Assert.notNull(predicate, "Predicate cannot be NULL.");
         return new BeansStream<>(beans.filter(predicate));
     }
 
-
+    /**
+     * Set bean name calculator for each {@link BeansStream.Entry}
+     *
+     * @param nameFunction - name calculator
+     * @return new BeansStream
+     */
     public BeansStream<B> calculateName(Function<Entry<B>, String> nameFunction) {
         Assert.notNull(nameFunction, "Consumer cannot be NULL.");
         return new BeansStream<>(beans.peek(entry -> entry.setName(nameFunction.apply(entry))));
@@ -66,10 +110,21 @@ public class BeansStream<B> {
         beans.forEach(consumer);
     }
 
+    /**
+     * Transform {@link BeansStream} to {@link Stream} using transformation {@link Function}
+     *
+     * @param function - transformayion function
+     * @param <T>      - type of the result stream
+     * @return new {@link Stream}
+     */
     public <T> Stream<T> transform(Function<Entry<B>, T> function) {
         return beans.map(function);
     }
 
+    /**
+     * Transforms {@link BeansStream} to {@link Stream} of {@link BeanObject}
+     * @return new Stream of BeanObjects
+     */
     public Stream<BeanObject> transformToBeanObject() {
         return beans.map(new BeanObjectTransformer());
     }
@@ -78,7 +133,11 @@ public class BeansStream<B> {
         return beans;
     }
 
-    public static class Entry<B>{
+    /**
+     * Class store information about bean in {@link BeansStream}
+     * @param <B> - type of beam in the entry
+     */
+    public static class Entry<B> {
         private String name;
         private String beanName;
         private B bean;
@@ -116,7 +175,7 @@ public class BeansStream<B> {
                 return Optional.of((A) annotations.get(beanAnnotation));
             }
 
-            Optional<A> annotationOptional =  Optional.ofNullable(beanClass.getAnnotation(beanAnnotation));
+            Optional<A> annotationOptional = Optional.ofNullable(beanClass.getAnnotation(beanAnnotation));
             annotationOptional.ifPresent(annotation -> annotations.put(beanAnnotation, annotation));
 
             return annotationOptional;

@@ -1,10 +1,13 @@
-package com.pem.core.common.bean;
+package com.pem.core.common.applicationcontext.bean;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import java.util.Optional;
 
+/**
+ * POJO that keeps reference to Spring Bean
+ */
 public class BeanObject {
     private String name;
     private String beanName;

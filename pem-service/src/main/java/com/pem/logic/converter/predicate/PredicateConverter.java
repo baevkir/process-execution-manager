@@ -1,7 +1,7 @@
 package com.pem.logic.converter.predicate;
 
-import com.pem.core.common.converter.impl.Converter;
-import com.pem.core.common.converter.impl.RegisterInConverterFactory;
+import com.pem.core.common.converter.Converter;
+import com.pem.core.common.converter.RegisterInConverterFactory;
 import com.pem.core.predicate.Predicate;
 import com.pem.logic.bean.provider.BeanProvider;
 import com.pem.logic.common.ServiceConstants;

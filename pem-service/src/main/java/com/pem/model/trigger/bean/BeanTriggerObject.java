@@ -1,7 +1,7 @@
 package com.pem.model.trigger.bean;
 
-import com.pem.core.common.bean.BeanObject;
-import com.pem.core.common.bean.HasBeanObject;
+import com.pem.core.common.applicationcontext.bean.BeanObject;
+import com.pem.core.common.applicationcontext.bean.HasBeanObject;
 import com.pem.model.trigger.common.TriggerObject;
 
 public class BeanTriggerObject extends TriggerObject implements HasBeanObject {

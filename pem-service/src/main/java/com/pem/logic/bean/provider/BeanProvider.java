@@ -1,6 +1,6 @@
 package com.pem.logic.bean.provider;
 
-import com.pem.core.common.bean.BeanObject;
+import com.pem.core.common.applicationcontext.bean.BeanObject;
 
 import java.util.Set;
 

@@ -1,7 +1,7 @@
 package com.pem.test.provider;
 
 
-import com.pem.core.common.bean.BeanObject;
+import com.pem.core.common.applicationcontext.bean.BeanObject;
 import com.pem.core.operation.basic.Operation;
 import com.pem.core.operation.composite.SyncCompositeOperation;
 import com.pem.core.operation.condition.predicate.PredicateOperation;

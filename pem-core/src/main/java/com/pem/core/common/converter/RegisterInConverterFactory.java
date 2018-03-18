@@ -1,4 +1,4 @@
-package com.pem.core.common.converter.impl;
+package com.pem.core.common.converter;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

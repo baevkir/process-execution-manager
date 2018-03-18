@@ -1,6 +1,6 @@
 package com.pem.logic.bean.synchronizer;
 
-import com.pem.core.common.bean.BeanObject;
+import com.pem.core.common.applicationcontext.bean.BeanObject;
 import com.pem.core.common.event.RegisterLaunchEventHandler;
 import com.pem.core.trigger.Trigger;
 import com.pem.logic.bean.provider.BeanProvider;

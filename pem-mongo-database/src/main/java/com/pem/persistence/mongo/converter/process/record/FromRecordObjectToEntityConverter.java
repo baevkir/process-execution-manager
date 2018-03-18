@@ -1,7 +1,7 @@
 package com.pem.persistence.mongo.converter.process.record;
 
-import com.pem.core.common.converter.impl.Converter;
-import com.pem.core.common.converter.impl.RegisterInConverterFactory;
+import com.pem.core.common.converter.Converter;
+import com.pem.core.common.converter.RegisterInConverterFactory;
 import com.pem.model.proccess.record.ExecutionRecordObject;
 import com.pem.persistence.mongo.common.PemMongoConstants;
 import com.pem.persistence.mongo.converter.common.ConverterTemplateMethods;

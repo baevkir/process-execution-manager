@@ -1,4 +1,4 @@
-package com.pem.core.common.bean;
+package com.pem.core.common.applicationcontext.bean;
 
 import com.pem.core.common.utils.NamingUtils;
 import org.apache.commons.lang.StringUtils;
@@ -6,8 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
+/**
+ * Builder that helps to create {@link BeanObject}
+ */
 public class BeanObjectBuilder {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(BeanObjectBuilder.class);
 
     private String name;

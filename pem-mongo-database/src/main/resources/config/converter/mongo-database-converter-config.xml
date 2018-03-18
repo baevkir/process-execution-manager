@@ -8,6 +8,6 @@
     <import resource="classpath:config/converter/mongo-predicate-converter-config.xml"/>
     <import resource="classpath:config/converter/mongo-process-converter-config.xml"/>
 
-    <bean id="pem.mongodb.ConverterFactory" class="com.pem.core.common.converter.factory.impl.OneKeyConverterFactory"/>
+    <bean id="pem.mongodb.ConverterFactory" class="com.pem.core.common.converter.impl.OneKeyConverterFactory"/>
 
 </beans>

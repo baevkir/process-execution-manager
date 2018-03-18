@@ -1,6 +1,6 @@
 package com.pem.logic.service.context.impl;
 
-import com.pem.core.common.bean.BeanObject;
+import com.pem.core.common.applicationcontext.bean.BeanObject;
 import com.pem.core.context.OperationContext;
 import com.pem.logic.bean.provider.BeanProvider;
 import com.pem.logic.common.context.OperationContextFactory;

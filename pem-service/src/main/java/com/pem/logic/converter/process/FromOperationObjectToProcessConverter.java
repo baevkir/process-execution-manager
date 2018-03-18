@@ -1,7 +1,7 @@
 package com.pem.logic.converter.process;
 
-import com.pem.core.common.converter.impl.Converter;
-import com.pem.core.common.converter.impl.RegisterInConverterFactory;
+import com.pem.core.common.converter.Converter;
+import com.pem.core.common.converter.RegisterInConverterFactory;
 import com.pem.core.common.utils.ReflectiveProcessor;
 import com.pem.logic.common.ServiceConstants;
 import com.pem.logic.common.utils.IdGenerator;

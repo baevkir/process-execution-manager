@@ -1,6 +1,6 @@
 package com.pem.logic.converter.operation.basic;
 
-import com.pem.core.common.converter.impl.RegisterInConverterFactory;
+import com.pem.core.common.converter.RegisterInConverterFactory;
 import com.pem.core.operation.basic.Operation;
 import com.pem.logic.common.ServiceConstants;
 import com.pem.logic.converter.operation.common.AbstractOperationConverter;

@@ -1,13 +1,13 @@
 package com.pem.logic.converter.process;
 
-import com.pem.core.common.converter.impl.Converter;
-import com.pem.core.common.converter.impl.RegisterInConverterFactory;
+import com.pem.core.common.converter.Converter;
+import com.pem.core.common.converter.RegisterInConverterFactory;
 import com.pem.core.common.utils.ApplicationContextWrapper;
 import com.pem.core.operation.basic.Operation;
 import com.pem.logic.common.ServiceConstants;
 import com.pem.logic.common.utils.IdGenerator;
-import com.pem.core.common.bean.BeanObject;
-import com.pem.core.common.bean.BeanObjectBuilder;
+import com.pem.core.common.applicationcontext.bean.BeanObject;
+import com.pem.core.common.applicationcontext.bean.BeanObjectBuilder;
 import com.pem.model.operation.bean.BeanOperationObject;
 import com.pem.model.proccess.ExecutionProcessObject;
 import com.pem.model.proccess.record.ExecutionRecordObject;

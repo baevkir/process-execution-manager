@@ -1,7 +1,7 @@
 package com.pem.logic.bean.synchronizer;
 
-import com.pem.core.common.bean.BeanObject;
-import com.pem.core.common.bean.HasBeanObject;
+import com.pem.core.common.applicationcontext.bean.BeanObject;
+import com.pem.core.common.applicationcontext.bean.HasBeanObject;
 import com.pem.core.common.event.LaunchEventHandler;
 import com.pem.model.common.BaseObjectWithStatus;
 import com.pem.persistence.api.manager.PersistenceManager;

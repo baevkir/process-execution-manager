@@ -2,9 +2,9 @@ package com.pem.logic.converter.operation.predicate;
 
 import com.pem.core.predicate.Predicate;
 import com.pem.logic.common.ServiceConstants;
-import com.pem.core.common.converter.factory.ConverterFactory;
+import com.pem.core.common.converter.ConverterFactory;
 import com.pem.logic.converter.operation.common.AbstractOperationConverter;
-import com.pem.core.common.converter.impl.RegisterInConverterFactory;
+import com.pem.core.common.converter.RegisterInConverterFactory;
 import com.pem.model.operation.common.OperationObject;
 import com.pem.model.operation.condition.PredicateOperationObject;
 import com.pem.core.operation.basic.Operation;

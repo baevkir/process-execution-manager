@@ -1,7 +1,7 @@
 package com.pem.persistence.mongo.service.common;
 
-import com.pem.core.common.converter.factory.ConverterFactory;
-import com.pem.core.common.converter.impl.Converter;
+import com.pem.core.common.converter.ConverterFactory;
+import com.pem.core.common.converter.Converter;
 import com.pem.model.common.IdentifiableObject;
 import com.pem.persistence.mongo.common.CommonMongoRepository;
 import com.pem.persistence.mongo.model.common.IdentifiableEntity;

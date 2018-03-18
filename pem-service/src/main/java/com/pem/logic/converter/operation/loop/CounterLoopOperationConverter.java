@@ -1,7 +1,7 @@
 package com.pem.logic.converter.operation.loop;
 
-import com.pem.core.common.converter.factory.ConverterFactory;
-import com.pem.core.common.converter.impl.RegisterInConverterFactory;
+import com.pem.core.common.converter.ConverterFactory;
+import com.pem.core.common.converter.RegisterInConverterFactory;
 import com.pem.core.operation.basic.Operation;
 import com.pem.core.operation.loop.counter.CounterLoopOperation;
 import com.pem.logic.common.ServiceConstants;
