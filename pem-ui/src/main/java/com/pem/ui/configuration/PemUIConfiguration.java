@@ -1,7 +1,7 @@
 package com.pem.ui.configuration;
 
-import com.pem.ui.presentation.common.view.provider.PemSpringViewProvider;
-import com.pem.ui.presentation.common.view.provider.PemViewProvider;
+import com.pem.ui.integration.viewprovider.PemSpringViewProvider;
+import com.pem.ui.integration.viewprovider.PemViewProvider;
 import com.vaadin.spring.annotation.EnableVaadin;
 import com.vaadin.spring.annotation.UIScope;
 import org.springframework.beans.BeansException;

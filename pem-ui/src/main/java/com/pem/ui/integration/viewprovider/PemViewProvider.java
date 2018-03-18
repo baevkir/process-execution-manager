@@ -1,4 +1,4 @@
-package com.pem.ui.presentation.common.view.provider;
+package com.pem.ui.integration.viewprovider;
 
 import com.pem.model.common.BaseObject;
 import com.vaadin.navigator.View;

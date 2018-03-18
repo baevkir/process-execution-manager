@@ -2,7 +2,7 @@ package com.pem.ui.presentation.common.navigator.impl;
 
 import com.pem.ui.presentation.common.navigator.NavigationManager;
 import com.pem.ui.presentation.common.navigator.NavigationParams;
-import com.pem.ui.presentation.common.view.provider.PemViewProvider;
+import com.pem.ui.integration.viewprovider.PemViewProvider;
 import com.pem.ui.presentation.operation.list.OperationListViewImpl;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
@@ -119,12 +119,12 @@ public class NavigationManagerImpl implements NavigationManager {
             super(page);
         }
 
-        @Override
+//        @Override
         public void uriFragmentChanged(Page.UriFragmentChangedEvent event) {
             NavigationParams currentParams = NavigationParams.builder().setFromNavigationState(getState()).build();
             if (navigationParams == null
                     || !StringUtils.equals(currentParams.getViewName(), navigationParams.getViewName())) {
-                super.uriFragmentChanged(event);
+//                super.uriFragmentChanged(event);
             }
             navigationParams = currentParams;
         }

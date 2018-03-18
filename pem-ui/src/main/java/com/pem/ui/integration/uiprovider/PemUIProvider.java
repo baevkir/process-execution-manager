@@ -1,9 +1,8 @@
-package com.pem.ui.integration.provider;
+package com.pem.ui.integration.uiprovider;
 
 import com.pem.core.common.applicationcontext.builder.ApplicationContextBuilder;
 import com.pem.integration.provider.PemServiceProvider;
 import com.pem.integration.provider.PemServiceProviderImpl;
-import com.vaadin.data.util.converter.ConverterFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -33,10 +32,6 @@ public class PemUIProvider extends AbstractSpringUIProvider implements Applicati
 
     public void setOverrideBeans(Map<String, String> overrideBeans) {
         this.overrideBeans = overrideBeans;
-    }
-
-    public ConverterFactory getDataConverterFactory(){
-        return getApplicationContext().getBean(ConverterFactory.class);
     }
 
     @Override

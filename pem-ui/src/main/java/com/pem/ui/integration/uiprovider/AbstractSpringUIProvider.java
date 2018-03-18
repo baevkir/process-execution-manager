@@ -1,4 +1,4 @@
-package com.pem.ui.integration.provider;
+package com.pem.ui.integration.uiprovider;
 
 import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.UIClassSelectionEvent;

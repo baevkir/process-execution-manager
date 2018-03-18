@@ -5,7 +5,6 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 
@@ -22,7 +21,7 @@ public class ProcessMainViewImpl extends HorizontalLayout implements ProcessMain
 
     @Override
     public void openProcess(ProcessFormView operationView) {
-        contentPanel.setContent(operationView);
+//        contentPanel.setContent(operationView);
     }
 
     @PostConstruct
@@ -31,15 +30,15 @@ public class ProcessMainViewImpl extends HorizontalLayout implements ProcessMain
         addComponent(processesList);
         addComponent(contentPanel);
         setExpandRatio(contentPanel, 1.0f);
-        presenter.bind(this);
+//        presenter.bind(this);
     }
 
-    @Autowired
+//    @Autowired
     public void setPresenter(ProcessMainPresenter presenter) {
         this.presenter = presenter;
     }
 
-    @Autowired
+//    @Autowired
     public void setProcessesList(ProcessesList processesList) {
         this.processesList = processesList;
     }

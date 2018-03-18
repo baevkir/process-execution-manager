@@ -6,25 +6,25 @@
             http://www.springframework.org/schema/util
             http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <util:set id="convertersSet" value-type="com.vaadin.data.util.converter.Converter">
-        <bean class="com.vaadin.data.util.converter.StringToDoubleConverter"/>
-        <bean class="com.vaadin.data.util.converter.StringToFloatConverter"/>
-        <bean class="com.vaadin.data.util.converter.StringToIntegerConverter"/>
-        <bean class="com.vaadin.data.util.converter.StringToLongConverter"/>
-        <bean class="com.vaadin.data.util.converter.StringToBigDecimalConverter"/>
-        <bean class="com.vaadin.data.util.converter.StringToBooleanConverter"/>
-        <bean class="com.vaadin.data.util.converter.StringToDateConverter"/>
-        <bean class="com.vaadin.data.util.converter.StringToEnumConverter"/>
-        <bean class="com.vaadin.data.util.converter.StringToBigIntegerConverter"/>
-        <bean class="com.vaadin.data.util.converter.StringToShortConverter"/>
-        <bean class="com.vaadin.data.util.converter.StringToByteConverter"/>
-        <bean class="com.vaadin.data.util.converter.DateToLongConverter"/>
-        <bean class="com.vaadin.data.util.converter.DateToSqlDateConverter"/>
-        <bean class="com.pem.ui.integration.converter.DateToDateTimeConverter"/>
-        <bean class="com.pem.ui.integration.converter.SetToListConverter"/>
-    </util:set>
+    <!--<util:set id="convertersSet" value-type="com.vaadin.dataLoad.util.converter.Converter">-->
+        <!--<bean class="com.vaadin.dataLoad.util.converter.StringToDoubleConverter"/>-->
+        <!--<bean class="com.vaadin.dataLoad.util.converter.StringToFloatConverter"/>-->
+        <!--<bean class="com.vaadin.dataLoad.util.converter.StringToIntegerConverter"/>-->
+        <!--<bean class="com.vaadin.dataLoad.util.converter.StringToLongConverter"/>-->
+        <!--<bean class="com.vaadin.dataLoad.util.converter.StringToBigDecimalConverter"/>-->
+        <!--<bean class="com.vaadin.dataLoad.util.converter.StringToBooleanConverter"/>-->
+        <!--<bean class="com.vaadin.dataLoad.util.converter.StringToDateConverter"/>-->
+        <!--<bean class="com.vaadin.dataLoad.util.converter.StringToEnumConverter"/>-->
+        <!--<bean class="com.vaadin.dataLoad.util.converter.StringToBigIntegerConverter"/>-->
+        <!--<bean class="com.vaadin.dataLoad.util.converter.StringToShortConverter"/>-->
+        <!--<bean class="com.vaadin.dataLoad.util.converter.StringToByteConverter"/>-->
+        <!--<bean class="com.vaadin.dataLoad.util.converter.DateToLongConverter"/>-->
+        <!--<bean class="com.vaadin.dataLoad.util.converter.DateToSqlDateConverter"/>-->
+        <!--<bean class="com.pem.ui.integration.converter.DateToDateTimeConverter"/>-->
+        <!--<bean class="com.pem.ui.integration.converter.SetToListConverter"/>-->
+    <!--</util:set>-->
 
     <bean id="converterFactory" class="com.pem.ui.integration.converter.PemConverterFactory">
-        <property name="converters" ref="convertersSet"/>
+        <!--<property name="converters" ref="convertersSet"/>-->
     </bean>
 </beans>

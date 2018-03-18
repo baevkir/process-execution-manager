@@ -1,6 +1,6 @@
 package com.pem.ui.integration;
 
-import com.pem.ui.integration.provider.PemUIProvider;
+import com.pem.ui.integration.uiprovider.PemUIProvider;
 import com.vaadin.server.*;
 import com.vaadin.spring.server.SpringVaadinServlet;
 import com.vaadin.spring.server.SpringVaadinServletService;
@@ -19,29 +19,19 @@ public class PemUIServlet extends SpringVaadinServlet {
 
     @Override
     protected void servletInitialized() throws ServletException {
-        getService().addSessionInitListener(new SessionInitListener() {
-
-            private static final long serialVersionUID = -6307820453486668084L;
-
-            @Override
-            public void sessionInit(SessionInitEvent sessionInitEvent)
-                    throws ServiceException {
-
-                VaadinSession session = sessionInitEvent.getSession();
-                List<UIProvider> uiProviders = new ArrayList<>(session.getUIProviders());
-                for (UIProvider provider : uiProviders) {
-                    if (DefaultUIProvider.class.getCanonicalName().equals(provider.getClass().getCanonicalName())) {
-                        session.removeUIProvider(provider);
-                    }
+        getService().addSessionInitListener(sessionInitEvent -> {
+            VaadinSession session = sessionInitEvent.getSession();
+            List<UIProvider> uiProviders = new ArrayList<>(session.getUIProviders());
+            for (UIProvider provider : uiProviders) {
+                if (DefaultUIProvider.class.getCanonicalName().equals(provider.getClass().getCanonicalName())) {
+                    session.removeUIProvider(provider);
                 }
-
-                WebApplicationContext context = getWebApplicationContext(session);
-                PemUIProvider provider = context.getBean(uiProviderBeanName, PemUIProvider.class);
-                Assert.notNull(provider, "Can't find UIProvider.");
-                session.addUIProvider(provider);
-                session.setConverterFactory(provider.getDataConverterFactory());
-
             }
+
+            WebApplicationContext context = getWebApplicationContext(session);
+            PemUIProvider provider = context.getBean(uiProviderBeanName, PemUIProvider.class);
+            Assert.notNull(provider, "Can't find UIProvider.");
+            session.addUIProvider(provider);
         });
     }
 
