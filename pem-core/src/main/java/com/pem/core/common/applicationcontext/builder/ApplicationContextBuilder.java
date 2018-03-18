@@ -20,6 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Utility Builder class for comfortable realtime dynamic spring context creation
+ */
 public class ApplicationContextBuilder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationContextBuilder.class);
@@ -29,16 +32,31 @@ public class ApplicationContextBuilder {
     private final Map<String, String> overrideBeans = new HashMap<>();
     private final Map<String, Object> singletonBeans = new HashMap<>();
 
+    /**
+     * Set parent context for builded context
+     * @param parentContext
+     */
     public ApplicationContextBuilder setParentContext(ApplicationContext parentContext) {
         this.parentContext = parentContext;
         return this;
     }
 
-    public ApplicationContextBuilder addOverrideBean(String name, String nameInParentContext) {
+    /**
+     * Add bean that should be overridden from parent context
+     * @param name - Bean name in builded context that should be overridden
+     * @param nameInParentContext - Bean name from Parent Context that should override our bean
+     */
+     public ApplicationContextBuilder addOverrideBean(String name, String nameInParentContext) {
         overrideBeans.put(name, nameInParentContext);
         return this;
     }
 
+    /**
+     * Bulk method ta add beasn that should be overridden from parent context
+     * @param beansToAdd - Map that describe bean to override configuration.
+     *                   {@param Map.Entry.key}   - Bean name in builded context that should be overridden
+     *                   {@param Map.Entry.value} - Bean name from Parent Context that should override our bean
+     */
     public ApplicationContextBuilder addOverrideBeans(Map<String, String> beansToAdd) {
         if (MapUtils.isNotEmpty(beansToAdd)) {
             overrideBeans.putAll(beansToAdd);
@@ -46,11 +64,21 @@ public class ApplicationContextBuilder {
         return this;
     }
 
+    /**
+     * Add bean to register in builded context
+     * @param name - Bean name in builded context
+     * @param bean - Instance of bean to be registered in builded context
+     */
     public ApplicationContextBuilder addSingletonBean(String name, Object bean) {
         singletonBeans.put(name, bean);
         return this;
     }
 
+    /**
+     *
+     * @param path
+     * @return
+     */
     public ApplicationContextBuilder addXMLConfiguration(String path) {
         xmlConfigurations.add(path);
         return this;
