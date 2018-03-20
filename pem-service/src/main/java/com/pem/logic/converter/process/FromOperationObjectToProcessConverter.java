@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 
 @RegisterInConverterFactory(factories = ServiceConstants.CONVERTER_FACTORY_NAME)
 public class FromOperationObjectToProcessConverter implements Converter<OperationObject, ExecutionProcessObject> {
@@ -36,6 +37,7 @@ public class FromOperationObjectToProcessConverter implements Converter<Operatio
 
         OperationObject executionOperation = reflectiveProcessor
                 .setSource(cloner.deepClone(source))
+                .setPredicate(object -> !(object instanceof IdentifiableObject))
                 .setAction(generateIdAction)
                 .process();
 
@@ -64,7 +66,7 @@ public class FromOperationObjectToProcessConverter implements Converter<Operatio
         return result;
     }
 
-    private class GenerateIdAction implements ReflectiveProcessor.HandleAction {
+    private class GenerateIdAction implements Consumer<Object> {
 
         private List<BigInteger> generatedIds = new LinkedList<>();
 
@@ -73,10 +75,7 @@ public class FromOperationObjectToProcessConverter implements Converter<Operatio
         }
 
         @Override
-        public void execute(Object object) {
-            if (!(object instanceof IdentifiableObject)) {
-                return;
-            }
+        public void accept(Object object) {
             IdentifiableObject entity = (IdentifiableObject) object;
             BigInteger newId = IdGenerator.generateId();
             generatedIds.add(newId);

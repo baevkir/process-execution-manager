@@ -27,7 +27,7 @@ public class LaunchEventBus implements ApplicationContextAware, BeanNameAware {
     private ApplicationContext applicationContext;
 
     @PostConstruct
-    public void init() {
+    void init() {
         fillEventHandlers();
         fireEvent();
     }

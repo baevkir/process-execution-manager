@@ -4,6 +4,9 @@ import com.google.common.base.CaseFormat;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.util.Assert;
 
+/**
+ * Utility class that helps to build names for objects using name conventions.
+ */
 public class NamingUtils {
 
     public static String getHumanReadableName(String name, CaseFormat caseFormat) {

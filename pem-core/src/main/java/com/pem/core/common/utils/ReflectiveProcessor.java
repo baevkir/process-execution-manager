@@ -1,5 +1,6 @@
 package com.pem.core.common.utils;
 
+import com.google.common.collect.ImmutableList;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,41 +16,68 @@ import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
+/**
+ * Utility class to process POJO reflectively for each not primitive params of this object and his childs.
+ *
+ * @param <S> - type of object to process
+ */
 public class ReflectiveProcessor<S> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ReflectiveProcessor.class);
-    private static final List<Class> UNPROCESSED_CLASSES = new ArrayList<>();
-    private S source;
-    private HandleAction action;
+    private static final List<Class> UNPROCESSED_CLASSES = ImmutableList.<Class>builder()
+            .add(Object.class)
+            .add(BigInteger.class)
+            .add(BigDecimal.class)
+            .add(String.class)
+            .add(Date.class)
+            .add(DateTime.class)
+            .build();
 
-    static {
-        UNPROCESSED_CLASSES.add(BigInteger.class);
-        UNPROCESSED_CLASSES.add(BigDecimal.class);
-        UNPROCESSED_CLASSES.add(String.class);
-        UNPROCESSED_CLASSES.add(Date.class);
-        UNPROCESSED_CLASSES.add(DateTime.class);
-    }
+    private S source;
+    private Consumer<Object> action = object -> {
+    };
+    private Predicate<Object> predicate = object -> true;
 
     public S process() {
-        Assert.notNull(source);
-        Assert.notNull(action);
+        Assert.notNull(source, "Source object should not be a null.");
 
         handle(source);
         return source;
     }
 
+    /**
+     * Set object to process
+     *
+     * @param source - object to process
+     * @return this
+     */
     public ReflectiveProcessor<S> setSource(S source) {
         this.source = source;
         return this;
     }
 
-    public ReflectiveProcessor<S> setAction(HandleAction action) {
+    /**
+     * Set reflection action that be performed to each object
+     *
+     * @param action - reflection action
+     * @return this
+     */
+    public ReflectiveProcessor<S> setAction(Consumer<Object> action) {
         this.action = action;
         return this;
     }
 
-    public interface HandleAction {
-        void execute(Object object);
+    /**
+     * Set predicate to filter classes tha we should to process
+     *
+     * @param predicate - reflection predicate
+     * @return this
+     */
+    public ReflectiveProcessor<S> setPredicate(Predicate<Object> predicate) {
+        this.predicate = predicate;
+        return this;
     }
 
     private void handle(Object object) {
@@ -71,15 +99,18 @@ public class ReflectiveProcessor<S> {
             return;
         }
 
-        action.execute(object);
+        if (predicate.test(object)) {
+            action.accept(object);
+        }
 
         List<PropertyDescriptor> properties = getProperties(object);
-        for (PropertyDescriptor property : properties) {
+        for (PropertyDescriptor property : properties){
             Method getMethod = property.getReadMethod();
             ReflectionUtils.makeAccessible(getMethod);
             Object value = ReflectionUtils.invokeMethod(getMethod, object);
             handle(value);
         }
+
     }
 
     private void handleCollection(Collection collection) {
@@ -138,7 +169,7 @@ public class ReflectiveProcessor<S> {
         return result;
     }
 
-    private boolean unprocessedClass(Class clazz){
+    private boolean unprocessedClass(Class clazz) {
         if (Object.class.equals(clazz)) {
             return true;
         }
